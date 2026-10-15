@@ -410,6 +410,33 @@
       </div>
       <!-- Dialogue Lines Container -->
       <div id="dialogueContainer" class="space-y-4"></div>
+
+      <section class="bg-white rounded-3xl border border-indigo-100 shadow-sm p-4 sm:p-6 space-y-4" aria-labelledby="dialoguePracticeTitle">
+        <div>
+          <h3 id="dialoguePracticeTitle" class="text-lg font-extrabold text-slate-900">✍️ Luyện trả lời theo bài hội thoại</h3>
+          <p class="text-sm text-slate-500 mt-1">Hệ thống lấy câu trong bài đang học làm bài luyện dịch. Phản hồi hiện tại chạy trực tiếp trên thiết bị và mang tính gợi ý, chưa thay thế việc chấm ngữ nghĩa bằng AI.</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <label for="dialoguePracticeMode" class="text-sm font-semibold text-slate-700">Hình thức:</label>
+          <select id="dialoguePracticeMode" onchange="newDialoguePracticeQuestion()" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm">
+            <option value="translate">Luyện dịch</option><option value="comprehension">Đọc hiểu bài thoại</option>
+          </select>
+          <label for="dialoguePracticeLang" class="text-sm font-semibold text-slate-700">Ngôn ngữ trả lời:</label>
+          <select id="dialoguePracticeLang" onchange="newDialoguePracticeQuestion()" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm">
+            <option value="vn">Tiếng Việt</option><option value="en">English</option><option value="cn">中文</option>
+          </select>
+          <button onclick="newDialoguePracticeQuestion()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-xl">Câu hỏi khác</button>
+        </div>
+        <div class="rounded-2xl bg-indigo-50 border border-indigo-100 p-4">
+          <p id="dialoguePracticeProgress" class="text-xs text-indigo-700 font-bold mb-2"></p>
+          <p class="text-xs uppercase tracking-wide text-slate-500 font-bold mb-2">Câu gốc trong bài học</p>
+          <p id="dialoguePracticeSource" class="text-lg font-bold text-slate-900 leading-relaxed"></p>
+          <p id="dialoguePracticeInstruction" class="text-sm text-slate-600 mt-2"></p>
+        </div>
+        <textarea id="dialoguePracticeAnswer" rows="3" class="w-full border-2 border-slate-200 rounded-2xl p-3 text-base focus:outline-none focus:border-indigo-500" placeholder="Viết câu trả lời của bạn..."></textarea>
+        <button onclick="checkDialoguePracticeAnswer()" class="w-full sm:w-auto px-5 py-3 bg-slate-900 hover:bg-slate-700 text-white font-bold rounded-xl">Kiểm tra câu trả lời</button>
+        <div id="dialoguePracticeFeedback" class="hidden rounded-2xl border p-4 text-sm space-y-2" aria-live="polite"></div>
+      </section>
     </section>
 
     <!-- ==================== TAB 3: GRAMMAR ==================== -->
@@ -1508,11 +1535,15 @@
         return `<option value="${lang}">${label}</option>`;
       }).join('');
       select.value = choices.includes(previous) ? previous : (choices[0] || 'Tiếng Trung');
+      // Keep the target in the two study languages. Answer/meaning language follows
+      // the UI language through getQuizSupportLanguage().
+      if (!choices.includes(select.value)) select.value = choices[0] || 'Tiếng Trung';
     }
 
     function getQuizSupportLanguage() {
-      const target = getQuizTargetLanguage();
-      return getQuizStudyLanguages().find(lang => lang !== target) || getUiBaseLanguage();
+      // Answer/meaning language must follow the app interface language.
+      // The selected target language remains one of the two languages being learned.
+      return getUiBaseLanguage();
     }
 
     function getLocalizedQuizLabel(key, fallback) {
@@ -1958,6 +1989,161 @@
           ${line.en ? `<p class="mt-2 text-sm text-slate-600 italic leading-relaxed"><span class="font-bold not-italic text-xs uppercase tracking-wide text-slate-500">English</span><br>${escapeDialogueHtml(line.en)}</p>` : ''}
         </article>
       `).join('');
+      if (typeof newDialoguePracticeQuestion === 'function') newDialoguePracticeQuestion();
+    }
+
+    let dialoguePracticeLineIndex = 0;
+    let dialoguePracticeQuestion = null;
+
+    function getCurrentDialogue() {
+      const select = document.getElementById('dialogueLessonSelector');
+      const key = select && select.value ? select.value : Object.keys(DIALOGUES_DB)[0];
+      return { key, dialogue: DIALOGUES_DB[key] || DIALOGUES_DB[Object.keys(DIALOGUES_DB)[0]] };
+    }
+
+    function getComprehensionQuestions(dialogueKey, lang) {
+      const questions = {
+        zh_l16: [
+          {
+            q: { vn: 'Nga gặp lại bạn cũ ở đâu và đang làm gì?', en: 'Where was Nga, and what was she doing when she met her old friend?', cn: '阿娥在哪里、做什么的时候遇见了老朋友？' },
+            a: { vn: 'Nga gặp bạn cũ trên đường khi đang đi mua đồ.', en: 'Nga met her old friend on the street while shopping.', cn: '阿娥在路上买东西的时候遇见了老朋友。' },
+            keywords: { vn: ['nga','đường','mua đồ'], en: ['street','shopping'], cn: ['阿娥','路上','买东西'] }
+          },
+          {
+            q: { vn: 'Họ đã bao lâu không gặp nhau?', en: 'How long had they not seen each other?', cn: '他们有几年没见面了？' },
+            a: { vn: 'Họ đã mấy năm không gặp nhau.', en: 'They had not seen each other for several years.', cn: '他们好几年不见了。' },
+            keywords: { vn: ['mấy năm','không gặp'], en: ['several years','not seen'], cn: ['好几年','不见'] }
+          },
+          {
+            q: { vn: 'Nga hiện đang làm việc ở công ty nào?', en: 'Which company does Nga work for now?', cn: '阿娥现在在哪家公司工作？' },
+            a: { vn: 'Nga hiện đang làm ở công ty Đại Đồng.', en: 'Nga now works at Datong Company.', cn: '阿娥现在在大同公司工作。' },
+            keywords: { vn: ['đại đồng'], en: ['datong'], cn: ['大同'] }
+          },
+          {
+            q: { vn: 'Công ty của Nga sản xuất sản phẩm gì?', en: 'What does Nga’s company manufacture?', cn: '阿娥的公司生产什么产品？' },
+            a: { vn: 'Công ty sản xuất quạt điện.', en: 'The company manufactures electric fans.', cn: ['电风扇'] }
+          },
+          {
+            q: { vn: 'Vì sao anh Hùng muốn đổi công việc?', en: 'Why does Mr. Xiong want to change jobs?', cn: '雄先生为什么想换工作？' },
+            a: { vn: 'Vì công việc hiện tại ít cơ hội phát triển, lương thấp và áp lực lớn.', en: 'Because there is little room for growth, the salary is low, and the pressure is high.', cn: '因为目前的工作发展不大、薪资太少，而且压力太大。' },
+            keywords: { vn: ['phát triển','lương','áp lực'], en: ['growth','salary','pressure'], cn: ['发展','薪资','压力'] }
+          },
+          {
+            q: { vn: 'Nga làm chức vụ gì ở công ty?', en: 'What is Nga’s position at the company?', cn: '阿娥在公司担任什么职务？' },
+            a: { vn: 'Nga làm thu mua.', en: 'Nga works in purchasing.', cn: '阿娥做采购。' },
+            keywords: { vn: ['thu mua'], en: ['purchasing'], cn: ['采购'] }
+          },
+          {
+            q: { vn: 'Nga đưa cho anh Hùng thông tin liên lạc nào?', en: 'What contact information does Nga give Mr. Xiong?', cn: '阿娥给了雄先生什么联系方式？' },
+            a: { vn: 'Nga đưa cho anh Hùng danh thiếp có số điện thoại di động.', en: 'She gives him a business card with her mobile number.', cn: '阿娥给了他一张有手机号码的名片。' },
+            keywords: { vn: ['danh thiếp','điện thoại'], en: ['business card','mobile number'], cn: ['名片','手机号码'] }
+          }
+        ]
+      };
+      return questions[dialogueKey] || [];
+    }
+
+    function newDialoguePracticeQuestion() {
+      const { key, dialogue } = getCurrentDialogue();
+      if (!dialogue || !dialogue.lines || !dialogue.lines.length) return;
+      const lang = document.getElementById('dialoguePracticeLang').value;
+      const mode = document.getElementById('dialoguePracticeMode')?.value || 'translate';
+      const sourceEl = document.getElementById('dialoguePracticeSource');
+      const instructionEl = document.getElementById('dialoguePracticeInstruction');
+      const sourceLabel = document.querySelector('label[for="dialoguePracticeLang"]');
+      const sourceHeading = document.querySelector('#dialoguePracticeSource')?.previousElementSibling;
+      const eligible = dialogue.lines.map((line, index) => ({line, index})).filter(x => String(x.line[lang] || '').trim() && String(x.line.cn || '').trim());
+
+      if (mode === 'comprehension') {
+        const qs = getComprehensionQuestions(key, lang);
+        if (!qs.length) {
+          dialoguePracticeQuestion = null;
+          sourceEl.textContent = 'Bài này chưa có bộ câu hỏi đọc hiểu. Hãy chọn Luyện dịch hoặc một bài có câu hỏi đọc hiểu.';
+          instructionEl.textContent = '';
+          document.getElementById('dialoguePracticeProgress').textContent = dialogue.title;
+          document.getElementById('dialoguePracticeAnswer').value = '';
+          document.getElementById('dialoguePracticeFeedback').classList.add('hidden');
+          if (sourceHeading) sourceHeading.textContent = 'Câu hỏi đọc hiểu';
+          return;
+        }
+        let pick = Math.floor(Math.random() * qs.length);
+        if (qs.length > 1 && dialoguePracticeQuestion?.mode === mode && dialoguePracticeQuestion?.questionIndex === pick) pick = (pick + 1) % qs.length;
+        dialoguePracticeQuestion = { mode, questionIndex: pick, item: qs[pick] };
+        dialoguePracticeLineIndex = -1;
+        document.getElementById('dialoguePracticeProgress').textContent = `Đọc hiểu · ${pick + 1} / ${qs.length} · ${dialogue.title}`;
+        if (sourceHeading) sourceHeading.textContent = 'Câu hỏi về nội dung bài thoại';
+        sourceEl.textContent = qs[pick].q[lang] || qs[pick].q.vn;
+        instructionEl.textContent = ({vn:'Hãy trả lời dựa trên thông tin trong bài hội thoại.', en:'Answer using information from the dialogue.', cn:'请根据对话内容回答问题。'})[lang];
+      } else {
+        const sourceLang = lang === 'cn' ? (Math.random() < 0.5 ? 'vn' : 'en') : 'cn';
+        const sourceKey = sourceLang;
+        const eligibleTranslate = dialogue.lines.map((line, index) => ({line, index})).filter(x => String(x.line[sourceKey] || '').trim() && String(x.line[lang] || '').trim() && sourceKey !== lang);
+        if (!eligibleTranslate.length) {
+          dialoguePracticeQuestion = null;
+          sourceEl.textContent = 'Bài này chưa có đủ bản dịch cho cặp ngôn ngữ đã chọn.';
+          instructionEl.textContent = '';
+          return;
+        }
+        let chosen = eligibleTranslate[Math.floor(Math.random() * eligibleTranslate.length)];
+        if (eligibleTranslate.length > 1 && chosen.index === dialoguePracticeLineIndex) chosen = eligibleTranslate[(eligibleTranslate.findIndex(x => x.index === chosen.index) + 1) % eligibleTranslate.length];
+        dialoguePracticeLineIndex = chosen.index;
+        dialoguePracticeQuestion = { mode, lineIndex: chosen.index, sourceLang, item: chosen.line };
+        document.getElementById('dialoguePracticeProgress').textContent = `Dịch câu ${chosen.index + 1} / ${dialogue.lines.length} · ${dialogue.title}`;
+        if (sourceHeading) sourceHeading.textContent = `Câu nguồn (${({cn:'中文',vn:'Tiếng Việt',en:'English'})[sourceLang]})`;
+        sourceEl.textContent = chosen.line[sourceKey];
+        instructionEl.textContent = ({vn:'Hãy dịch câu trên sang tiếng Việt.', en:'Translate the sentence above into English.', cn:'请把上面的句子翻译成中文。'})[lang];
+      }
+      document.getElementById('dialoguePracticeAnswer').value = '';
+      document.getElementById('dialoguePracticeFeedback').classList.add('hidden');
+    }
+
+    function normalizePracticeText(value) {
+      return String(value || '').toLowerCase().normalize('NFKC').replace(/[.,!?;:，。！？；：、“”"'()（）]/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    function checkDialoguePracticeAnswer() {
+      const { dialogue } = getCurrentDialogue();
+      const lang = document.getElementById('dialoguePracticeLang').value;
+      const answer = document.getElementById('dialoguePracticeAnswer').value.trim();
+      const box = document.getElementById('dialoguePracticeFeedback');
+      const question = dialoguePracticeQuestion;
+      if (!question || !answer) { showToast('Vui lòng nhập câu trả lời trước khi kiểm tra.', '⚠️'); return; }
+
+      let expected = '';
+      let keywords = [];
+      if (question.mode === 'comprehension') {
+        expected = String(question.item.a[lang] || question.item.a.vn || '');
+        const raw = question.item.keywords && question.item.keywords[lang];
+        keywords = Array.isArray(raw) ? raw : (raw ? [raw] : []);
+      } else {
+        expected = String(question.item[lang] || '').trim();
+      }
+      const userNorm = normalizePracticeText(answer);
+      const expectedNorm = normalizePracticeText(expected);
+      let coverage = 0;
+      if (keywords.length) {
+        const normalizedKeywords = keywords.map(normalizePracticeText).filter(Boolean);
+        coverage = normalizedKeywords.length ? normalizedKeywords.filter(k => userNorm.includes(k)).length / normalizedKeywords.length : 0;
+      } else {
+        const tokens = expectedNorm.split(/\s+/).filter(t => t.length > 1);
+        const matched = tokens.filter(t => userNorm.includes(t));
+        coverage = tokens.length ? matched.length / tokens.length : (userNorm === expectedNorm ? 1 : 0);
+      }
+      let title, advice, borderClass;
+      if (userNorm === expectedNorm) {
+        title = 'Rất tốt — câu trả lời khớp với câu tham khảo.'; advice = 'Bạn đã diễn đạt đúng theo bản dịch có trong bài học.'; borderClass = 'border-emerald-200 bg-emerald-50 text-emerald-900';
+      } else if (coverage >= 0.5) {
+        title = question.mode === 'comprehension' ? 'Bạn đã nắm được một phần nội dung.' : 'Câu trả lời có một phần nội dung phù hợp.';
+        advice = 'Hãy đối chiếu câu tham khảo. Phần chấm hiện tại dựa trên từ khóa và so khớp văn bản, nên có thể bỏ sót cách diễn đạt đúng khác câu mẫu.';
+        borderClass = 'border-amber-200 bg-amber-50 text-amber-950';
+      } else {
+        title = 'Chưa khớp rõ với câu tham khảo.';
+        advice = question.mode === 'comprehension' ? 'Hãy xem lại đoạn hội thoại liên quan rồi thử trả lời lại bằng thông tin có trong bài.' : 'Kiểm tra lại nghĩa của câu nguồn và thử dịch lại.';
+        borderClass = 'border-rose-200 bg-rose-50 text-rose-950';
+      }
+      box.className = `rounded-2xl border p-4 text-sm space-y-2 ${borderClass}`;
+      box.innerHTML = `<p class="font-extrabold">${escapeDialogueHtml(title)}</p><p>${escapeDialogueHtml(advice)}</p><p class="font-bold mt-2">Câu trả lời tham khảo:</p><p>${escapeDialogueHtml(expected)}</p><p class="text-xs opacity-80">Lưu ý: cách chấm hiện tại chạy trên thiết bị, dựa trên từ khóa/so khớp văn bản; chưa phải AI đánh giá ngữ nghĩa hoặc chẩn đoán lỗi ngữ pháp.</p>`;
+      box.classList.remove('hidden');
     }
 
     function getDialogueAudioContent(line, languageKey) {
@@ -2211,20 +2397,29 @@
     }
 
     function getQuizTextInLanguage(card, language) {
-      if (!card) return '';
+      if (!card || !language) return '';
+      // Sentence cards store Vietnamese in word, Chinese in meaning and English in chinese.
       if (card.cardType === 'sentence') {
-        if (language === 'Tiếng Việt') return card.word || '';
-        if (language === 'Tiếng Trung') return card.meaning || '';
-        if (language === 'Tiếng Anh') return card.chinese || '';
+        if (language === 'Tiếng Việt') return String(card.word || '').trim();
+        if (language === 'Tiếng Trung') return String(card.meaning || '').trim();
+        if (language === 'Tiếng Anh') return String(card.chinese || '').trim();
+        return '';
       }
-      if (language === card.lang) return card.word || '';
-      if (language === 'Tiếng Việt') return card.meaning || '';
-      if (language === 'Tiếng Trung' || language === 'Tiếng Anh') return card.chinese || '';
+      // Vocabulary cards: word is the source-language entry, meaning is Vietnamese,
+      // and chinese is the non-Vietnamese equivalent used by the existing data model.
+      if (language === card.lang) return String(card.word || '').trim();
+      if (language === 'Tiếng Việt') return String(card.meaning || '').trim();
+      if (language === 'Tiếng Trung' || language === 'Tiếng Anh') return String(card.chinese || '').trim();
       return '';
     }
 
     function getQuizTargetLanguage() {
-      return document.getElementById('quizLangFilter')?.value || 'Tiếng Trung';
+      const select = document.getElementById('quizLangFilter');
+      const allowed = getQuizStudyLanguages();
+      if (select && allowed.includes(select.value)) return select.value;
+      const fallback = allowed[0] || 'Tiếng Trung';
+      if (select && [...select.options].some(o => o.value === fallback)) select.value = fallback;
+      return fallback;
     }
 
     function getQuizTargetText(card) {
