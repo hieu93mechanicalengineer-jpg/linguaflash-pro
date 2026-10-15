@@ -812,6 +812,9 @@
             <button onclick="exportToExcel()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-4 py-3 rounded-2xl text-sm flex items-center gap-2 transition" data-i18n="man_btn_export">
               <span>📤 Xuất ra Excel</span>
             </button>
+            <button onclick="exportUpdatedHTML()" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold px-4 py-3 rounded-2xl text-sm flex items-center gap-2 transition shadow" title="Tạo file HTML mới chứa dữ liệu hiện tại">
+              <span>💾 Xuất HTML đã cập nhật</span>
+            </button>
           </div>
         </div>
       </div>
@@ -2931,6 +2934,62 @@
         }
       };
       reader.readAsArrayBuffer(file);
+    }
+
+
+    function exportUpdatedHTML() {
+      try {
+        // Snapshot the current live data, including deletions, edits and per-card SRS progress.
+        const cardsSnapshot = JSON.stringify(allCards).replace(/</g, '\\u003c');
+        const topicsSnapshot = JSON.stringify(customTopics || []).replace(/</g, '\\u003c');
+        const statsSnapshot = JSON.stringify(userStats || { totalReviews: 0, streak: 1 }).replace(/</g, '\\u003c');
+        const stamp = Date.now();
+        let exported = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+        // Replace built-in card data so deleted cards cannot reappear from DEFAULT_CARDS.
+        const dataStart = exported.indexOf('const DEFAULT_CARDS = ');
+        const dataEndAnchor = exported.indexOf('];\n\n    const DIALOGUES_DB', dataStart);
+        if (dataStart < 0 || dataEndAnchor < 0) {
+          showToast('Không thể đóng gói dữ liệu: không tìm thấy vùng dữ liệu gốc.', '⚠️');
+          return;
+        }
+        exported = exported.slice(0, dataStart) +
+          'const DEFAULT_CARDS = ' + cardsSnapshot + ';' +
+          exported.slice(dataEndAnchor + 2);
+
+        // Use fresh storage keys so old browser localStorage cannot resurrect deleted topics/cards.
+        exported = exported.replace(
+          /const STORAGE_KEY = '[^']*';/,
+          "const STORAGE_KEY = 'linguaflash_cards_snapshot_" + stamp + "';"
+        );
+        exported = exported.replace(
+          /const STATS_KEY = '[^']*';/,
+          "const STATS_KEY = 'linguaflash_stats_snapshot_" + stamp + "';"
+        );
+        const customBlockPattern = /const CUSTOM_TOPICS_KEY = '[^']*';\s*let customTopics = \[\];\s*try \{ customTopics = JSON\.parse\(localStorage\.getItem\(CUSTOM_TOPICS_KEY\) \|\| '\[\]'\); if \(!Array\.isArray\(customTopics\)\) customTopics = \[\]; \} catch \(e\) \{ customTopics = \[\]; \}/;
+        exported = exported.replace(
+          customBlockPattern,
+          "const CUSTOM_TOPICS_KEY = 'linguaflash_custom_topics_snapshot_" + stamp + "';\\n    let customTopics = " + topicsSnapshot + ";\\n    try { const storedTopics = localStorage.getItem(CUSTOM_TOPICS_KEY); if (storedTopics) customTopics = JSON.parse(storedTopics); if (!Array.isArray(customTopics)) customTopics = " + topicsSnapshot + "; } catch (e) { customTopics = " + topicsSnapshot + "; }"
+        );
+        exported = exported.replace(
+          /let userStats = \{ totalReviews: 0, streak: 1 \};/,
+          'let userStats = ' + statsSnapshot + ';'
+        );
+
+        const blob = new Blob([exported], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'LinguaFlash_Pro_CapNhat_' + new Date().toISOString().slice(0, 10) + '.html';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+        showToast('Đã xuất HTML mới gồm ' + allCards.length + ' mục và giữ tiến độ SRS.', '💾');
+      } catch (err) {
+        console.error('Export updated HTML failed:', err);
+        showToast('Xuất HTML chưa thành công. Hãy thử lại và kiểm tra bảng điều khiển.', '⚠️');
+      }
     }
 
     function exportToExcel() {
