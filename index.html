@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="LinguaFlash" />
-  <title>LinguaFlash Pro - Version 36 Pronunciation Languages and Dialogue Audio</title>
+  <title>LinguaFlash Pro - Version 38 Mobile Responsive</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- SheetJS for reading/writing Excel (.xlsx) files -->
@@ -46,6 +46,81 @@
       background: #cbd5e1;
       border-radius: 9999px;
     }
+
+
+    /* Version 38: responsive layout fixes for narrow phone screens */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { width: 100%; max-width: 100%; overflow-x: hidden; }
+    body { width: 100%; max-width: 100%; overflow-x: hidden; }
+    img, canvas, video, select, input, textarea { max-width: 100%; }
+    main { min-width: 0; }
+    @media (max-width: 640px) {
+      header > div:first-child {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 12px 14px;
+      }
+      header > div:first-child > div:first-child {
+        flex: 1 1 100%;
+        min-width: 0;
+        gap: 10px;
+      }
+      header > div:first-child > div:first-child > div:last-child { min-width: 0; }
+      header h1 { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 1.05rem; }
+      #headerSubTag { max-width: 100%; white-space: normal; }
+      #headerSubtitle { line-height: 1.35; }
+      header > div:first-child > div:nth-child(2) {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+      }
+      #uiLangSelector { flex: 1 1 145px; min-width: 0; }
+      #headerDueCount { flex-shrink: 0; }
+      header button { max-width: 100%; }
+      main { padding-left: 12px !important; padding-right: 12px !important; padding-top: 14px !important; }
+      #tab-study > .bg-white:first-child { padding: 14px !important; }
+      #tab-study > .bg-white:first-child > div:first-child { align-items: stretch; }
+      #tab-study > .bg-white:first-child .flex.flex-wrap { gap: 8px; }
+      #tab-study select, #tab-dialogue select, #tab-pronunciation select, #tab-quiz select,
+      #tab-manage select, #tab-grammar select { min-width: 0; max-width: 100%; }
+      #flashcardContainer > div.perspective-1000 {
+        height: 340px !important;
+        min-height: 340px;
+        width: 100%;
+      }
+      #flashcardInner { height: 100%; min-height: 0; }
+      #flashcardInner > div { padding: 16px !important; }
+      #frontTopicBadge { max-width: 44vw; overflow-wrap: anywhere; }
+      #frontWord { font-size: clamp(1.8rem, 8vw, 2.5rem) !important; overflow-wrap: anywhere; }
+      #backWordSmall { overflow-wrap: anywhere; }
+      #backExample { overflow-wrap: anywhere; }
+      #flashcardContainer > div.max-w-xl { max-width: 100%; }
+      #flashcardContainer .grid.grid-cols-4 { gap: 6px !important; }
+      #flashcardContainer .grid.grid-cols-4 button { min-width: 0; padding: 10px 3px !important; }
+      #flashcardContainer .grid.grid-cols-4 button span { overflow-wrap: anywhere; text-align: center; }
+      #flashcardContainer .flex.items-center.justify-between.mt-4 { gap: 6px; }
+      #flashcardContainer .flex.items-center.justify-between.mt-4 button { min-width: 0; padding: 10px 8px !important; font-size: 12px !important; flex: 1 1 0; }
+      #flashcardContainer .flex.items-center.justify-between.mt-4 button:nth-child(2) { flex: 1.1 1 0; }
+      #togglePhonetic { flex-shrink: 0; }
+      #tab-dialogue, #tab-grammar, #tab-pronunciation, #tab-quiz, #tab-manage, #tab-stats { overflow-wrap: anywhere; }
+      #tab-dialogue .grid, #tab-grammar .grid, #tab-pronunciation .grid, #tab-quiz .grid, #tab-manage .grid { min-width: 0; }
+      #tab-dialogue input, #tab-dialogue textarea, #tab-grammar input, #tab-grammar textarea,
+      #tab-pronunciation input, #tab-quiz input, #tab-manage input, #tab-manage textarea { min-width: 0; }
+      nav[ class*="fixed bottom-0" ] { padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+      body { padding-bottom: 100px !important; }
+    }
+    @media (max-width: 380px) {
+      #flashcardContainer > div.perspective-1000 { height: 320px !important; min-height: 320px; }
+      #frontTopicBadge { display: none; }
+      #flashcardInner > div { padding: 12px !important; }
+      #flashcardContainer .grid.grid-cols-4 button span:first-child { font-size: 11px !important; }
+      #flashcardContainer .flex.items-center.justify-between.mt-4 button { font-size: 11px !important; padding: 9px 4px !important; }
+    }
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col pb-24 md:pb-8">
