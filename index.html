@@ -1912,7 +1912,7 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
 
     function updateHeaderStats() {
       const now = Date.now();
-      const dueCount = allCards.filter(c => (c.nextReview || 0) <= now).length;
+      const dueCount = allCards.filter(c => (c.repetitions || 0) > 0 && (c.nextReview || 0) <= now).length;
       document.getElementById('headerDueCount').textContent = dueCount;
       document.getElementById('dueFilterCount').textContent = dueCount;
       document.getElementById('headerStreak').textContent = userStats.streak || 1;
@@ -3896,7 +3896,7 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
     function renderStats() {
       const now = Date.now();
       const total = allCards.length;
-      const dueCount = allCards.filter(c => (c.nextReview || 0) <= now).length;
+      const dueCount = allCards.filter(c => (c.repetitions || 0) > 0 && (c.nextReview || 0) <= now).length;
       const sMaster = allCards.filter(c => (c.interval || 0) >= 7).length;
 
       document.getElementById('statTotal').textContent = total;
@@ -3904,8 +3904,12 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
       document.getElementById('statMastered').textContent = sMaster;
       document.getElementById('statReviews').textContent = userStats.totalReviews || 0;
 
-      const sorted = [...allCards].sort((a, b) => (a.nextReview || 0) - (b.nextReview || 0)).slice(0, 8);
+      const sorted = allCards.filter(c => (c.repetitions || 0) > 0).sort((a, b) => (a.nextReview || 0) - (b.nextReview || 0)).slice(0, 8);
       const listEl = document.getElementById('upcomingList');
+      if (!sorted.length) {
+        listEl.innerHTML = '<div class="py-4 text-sm text-slate-500">Bạn chưa có thẻ nào đến lịch ôn.</div>';
+        return;
+      }
       listEl.innerHTML = sorted.map(c => {
         const diffMs = (c.nextReview || 0) - now;
         let timeText = 'Cần ôn ngay';
@@ -3938,7 +3942,7 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
     function appNavGroup(id){if(['dialogue','grammar','pronunciation','quiz','practice'].includes(id))return'practice';if(['manage','library'].includes(id))return'library';return id}
     function setAppNavigationState(id){const g=appNavGroup(id);['home','study','practice','library','stats'].forEach(n=>{document.getElementById('nav-'+n)?.classList.toggle('active',n===g);document.getElementById('mnav-'+n)?.classList.toggle('active',n===g)})}
     function refreshAppLibrary(){const el=document.getElementById('libraryCardCount');if(el&&Array.isArray(allCards))el.textContent=allCards.length.toLocaleString()}
-    function refreshAppHome(){if(!Array.isArray(allCards))return;const s=typeof getDailyGoalSettings==='function'?getDailyGoalSettings():{newLimit:20,reviewLimit:30};const p=typeof getDailyProgress==='function'?getDailyProgress():{newIds:[],reviewIds:[]};const n=new Set(p.newIds||[]).size,r=new Set(p.reviewIds||[]).size,due=allCards.filter(c=>(Number(c.nextReview)||0)<=Date.now()).length;document.getElementById('homeNewProgress')&&(document.getElementById('homeNewProgress').textContent=`${Math.min(n,s.newLimit)} / ${s.newLimit}`);document.getElementById('homeReviewProgress')&&(document.getElementById('homeReviewProgress').textContent=`${Math.min(r,s.reviewLimit)} / ${s.reviewLimit}`);document.getElementById('homeDueCount')&&(document.getElementById('homeDueCount').textContent=due.toLocaleString());document.getElementById('homeTotalCards')&&(document.getElementById('homeTotalCards').textContent=allCards.length.toLocaleString());document.getElementById('homeStreak')&&(document.getElementById('homeStreak').textContent=userStats?.streak||1);const done=Math.min(n,s.newLimit)+Math.min(r,s.reviewLimit),total=Math.max(1,s.newLimit+s.reviewLimit);document.getElementById('homeGoalText')&&(document.getElementById('homeGoalText').textContent=`${done} / ${s.newLimit+s.reviewLimit}`);document.getElementById('homeGoalBar')&&(document.getElementById('homeGoalBar').style.width=Math.min(100,Math.round(done/total*100))+'%');refreshAppLibrary()}
+    function refreshAppHome(){if(!Array.isArray(allCards))return;const s=typeof getDailyGoalSettings==='function'?getDailyGoalSettings():{newLimit:20,reviewLimit:30};const p=typeof getDailyProgress==='function'?getDailyProgress():{newIds:[],reviewIds:[]};const n=new Set(p.newIds||[]).size,r=new Set(p.reviewIds||[]).size,due=allCards.filter(c=>(Number(c.repetitions)||0)>0&&(Number(c.nextReview)||0)<=Date.now()).length;document.getElementById('homeNewProgress')&&(document.getElementById('homeNewProgress').textContent=`${Math.min(n,s.newLimit)} / ${s.newLimit}`);document.getElementById('homeReviewProgress')&&(document.getElementById('homeReviewProgress').textContent=`${Math.min(r,s.reviewLimit)} / ${s.reviewLimit}`);document.getElementById('homeDueCount')&&(document.getElementById('homeDueCount').textContent=due.toLocaleString());document.getElementById('homeTotalCards')&&(document.getElementById('homeTotalCards').textContent=allCards.length.toLocaleString());document.getElementById('homeStreak')&&(document.getElementById('homeStreak').textContent=userStats?.streak||1);const done=Math.min(n,s.newLimit)+Math.min(r,s.reviewLimit),total=Math.max(1,s.newLimit+s.reviewLimit);document.getElementById('homeGoalText')&&(document.getElementById('homeGoalText').textContent=`${done} / ${s.newLimit+s.reviewLimit}`);document.getElementById('homeGoalBar')&&(document.getElementById('homeGoalBar').style.width=Math.min(100,Math.round(done/total*100))+'%');refreshAppLibrary()}
     function openManageAt(anchorId){switchTab('manage');setTimeout(()=>document.getElementById(anchorId)?.scrollIntoView({behavior:'smooth',block:'start'}),80)}
     function addContextBackBar(tabId){const m={dialogue:['practice','back_practice'],grammar:['practice','back_practice'],pronunciation:['practice','back_practice'],quiz:['practice','back_practice'],manage:['library','back_library']};const cfg=m[tabId];if(!cfg)return;const sec=document.getElementById('tab-'+tabId);if(!sec)return;let bar=sec.querySelector(':scope > .app-context-bar');if(!bar){bar=document.createElement('div');bar.className='app-context-bar';bar.innerHTML=`<button type="button" class="app-context-back" data-app-i18n="${cfg[1]}"></button>`;bar.querySelector('button').onclick=()=>switchTab(cfg[0]);sec.insertBefore(bar,sec.firstChild)}updateAppShellLanguage()}
 
