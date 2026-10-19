@@ -1,2 +1,1 @@
-# linguaflash-pro
-LinguaFlash Pro — Multilingual Learning Web App
+LinguaFlash Pro Web v5 - Account and Cloud Sync
