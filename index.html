@@ -794,7 +794,7 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
       <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 class="text-lg font-bold text-slate-900" data-i18n="quiz_header">📝 Kiểm tra & Củng cố Trí nhớ</h2>
-          <p class="text-xs text-slate-500" data-i18n="quiz_desc">Lựa chọn hình thức kiểm tra để rèn luyện từ vựng hiệu quả.</p>
+          <p class="text-xs text-slate-500" data-i18n="quiz_desc">Kiểm tra từ vựng, câu luyện dịch và nội dung hội thoại Gia Hân.</p>
         </div>
         <div class="flex flex-wrap items-center gap-2">
           <select id="quizLangFilter" onchange="populateQuizCategoryDropdown(); startQuiz();" class="bg-slate-50 border border-slate-300 text-sm rounded-xl px-3 py-2 font-medium focus:ring-2 focus:ring-indigo-500"></select>
@@ -807,6 +807,12 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
           <!-- Quiz Subtopic Filter -->
           <select id="quizTopicFilter" onchange="startQuiz()" class="bg-slate-50 border border-slate-300 text-sm rounded-xl px-3 py-2 font-medium focus:ring-2 focus:ring-indigo-500">
             <option value="ALL" data-i18n="opt_all_topics">Tất cả bài học</option>
+          </select>
+
+          <select id="quizContentFilter" onchange="populateQuizCategoryDropdown(); startQuiz();" class="bg-slate-50 border border-slate-300 text-sm rounded-xl px-3 py-2 font-semibold focus:ring-2 focus:ring-indigo-500" title="Chọn loại nội dung kiểm tra">
+            <option value="ALL">📚 Tất cả nội dung</option>
+            <option value="CARDS">🗂️ Từ vựng & câu luyện dịch</option>
+            <option value="DIALOGUE">💬 Hội thoại & đọc hiểu Gia Hân</option>
           </select>
 
           <select id="quizModeSelect" onchange="startQuiz()" class="bg-slate-50 border border-slate-300 text-sm rounded-xl px-3 py-2 font-semibold focus:ring-2 focus:ring-indigo-500">
@@ -2023,13 +2029,81 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
       return dict[key] || fallback;
     }
 
+    function getDialogueQuizProgressMap() {
+      if (!userStats.dialogueQuizProgress || typeof userStats.dialogueQuizProgress !== 'object' || Array.isArray(userStats.dialogueQuizProgress)) {
+        userStats.dialogueQuizProgress = {};
+      }
+      return userStats.dialogueQuizProgress;
+    }
+
+    function getDialogueQuizCards() {
+      const progressMap = getDialogueQuizProgressMap();
+      // If a dialogue sentence already exists as a normal Gia Hân card, do not add a duplicate.
+      const existingChinese = new Set(
+        allCards
+          .filter(c => getCardCategory(c) === 'Gia Hân')
+          .map(c => String(getQuizTextInLanguage(c, 'Tiếng Trung') || '').trim())
+          .filter(Boolean)
+      );
+      const cards = [];
+      Object.entries(DIALOGUES_DB || {}).forEach(([dialogueKey, dialogue]) => {
+        if (!dialogue || dialogue.course !== 'Gia Hân' || !/^zh_l(?:1[6-9]|2\d|30)$/.test(dialogueKey) || !Array.isArray(dialogue.lines)) return;
+        const topic = /^Gia Hân\s*-/i.test(String(dialogue.topic || ''))
+          ? String(dialogue.topic || '').trim()
+          : `Gia Hân - ${String(dialogue.topic || dialogue.title || dialogueKey).trim()}`;
+        dialogue.lines.forEach((line, index) => {
+          const chinese = String(line?.cn || '').trim();
+          const vietnamese = String(line?.vn || '').trim();
+          const english = String(line?.en || '').trim();
+          if (!chinese || (!vietnamese && !english) || existingChinese.has(chinese)) return;
+          const id = `gh_dialogue_quiz_${dialogueKey}_${String(index + 1).padStart(3, '0')}`;
+          const p = progressMap[id] || {};
+          cards.push({
+            id,
+            lang: 'Tiếng Trung',
+            word: vietnamese,
+            phonetic: String(line?.pinyin || '').trim(),
+            meaning: chinese,
+            chinese: english,
+            example: '',
+            exampleTrans: '',
+            topic,
+            category: 'Gia Hân',
+            level: 'Trung cấp 1',
+            interval: Number(p.interval || 0),
+            repetitions: Number(p.repetitions || 0),
+            easeFactor: Number(p.easeFactor || 2.5),
+            nextReview: Number(p.nextReview || 0),
+            lastAnswerQuality: p.lastAnswerQuality,
+            needsReview: p.needsReview === true,
+            lastReviewedAt: Number(p.lastReviewedAt || 0),
+            cardType: 'sentence',
+            quizOnly: true,
+            quizSource: 'giahan_dialogue',
+            sourceLabel: `${dialogue.topic || 'Gia Hân'} · Hội thoại ${index + 1}`,
+            sourceSection: String(line?.section || dialogue.title || ''),
+            speaker: String(line?.speaker || '')
+          });
+        });
+      });
+      return cards;
+    }
+
+    function getQuizSourcePool() {
+      const source = document.getElementById('quizContentFilter')?.value || 'ALL';
+      if (source === 'CARDS') return allCards;
+      const dialogueCards = getDialogueQuizCards();
+      if (source === 'DIALOGUE') return dialogueCards;
+      return [...allCards, ...dialogueCards];
+    }
+
     function populateQuizCategoryDropdown() {
       const catSelect = document.getElementById('quizCategoryFilter');
       if (!catSelect) return;
       const langFilter = document.getElementById('quizLangFilter').value;
-      let pool = allCards;
+      let pool = getQuizSourcePool();
       if (langFilter !== 'ALL') {
-        pool = allCards.filter(c => String(getQuizTextInLanguage(c, langFilter) || '').trim());
+        pool = pool.filter(c => String(getQuizTextInLanguage(c, langFilter) || '').trim());
       }
       const currentCat = catSelect.value;
       const cats = [...new Set(pool.map(c => getCardCategory(c)))];
@@ -2052,7 +2126,7 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
       const selectedCat = catSelect.value;
       const currentSub = subSelect.value;
 
-      let pool = allCards;
+      let pool = getQuizSourcePool();
       if (langFilter !== 'ALL') {
         pool = pool.filter(c => String(getQuizTextInLanguage(c, langFilter) || '').trim());
       }
@@ -3496,7 +3570,7 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
       const catFilter = document.getElementById('quizCategoryFilter').value;
       const topicFilter = document.getElementById('quizTopicFilter').value;
       const supportLanguage = getQuizSupportLanguage();
-      return allCards.filter(card => {
+      return getQuizSourcePool().filter(card => {
         // A quiz card must contain both languages currently being studied.
         if (langFilter !== 'ALL' && !String(getQuizTextInLanguage(card, langFilter) || '').trim()) return false;
         if (!String(getQuizTextInLanguage(card, supportLanguage) || '').trim()) return false;
@@ -3548,8 +3622,13 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
         showToast(`Chủ đề này chỉ có ${pool.length} thẻ. Cần ít nhất 4 thẻ để tạo bài kiểm tra.`, '⚠️');
         return;
       }
-      const sorted = [...pool].sort((a, b) => (a.nextReview || 0) - (b.nextReview || 0));
-      quizDeck = sorted.slice(0, Math.min(10, sorted.length));
+      const now = Date.now();
+      const priority = pool
+        .filter(c => c.needsReview === true || ((Number(c.repetitions) || 0) > 0 && (Number(c.nextReview) || 0) <= now))
+        .sort((a, b) => (Number(a.nextReview) || 0) - (Number(b.nextReview) || 0));
+      const priorityIds = new Set(priority.map(c => c.id));
+      const remaining = pool.filter(c => !priorityIds.has(c.id)).sort(() => Math.random() - 0.5);
+      quizDeck = [...priority, ...remaining].slice(0, Math.min(10, pool.length));
       quizIndex = 0;
       quizScore = 0;
       renderQuizQuestion();
@@ -3737,7 +3816,10 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
 
       document.getElementById('quizProgress').textContent = `Câu hỏi ${quizIndex + 1} / ${quizDeck.length}`;
       document.getElementById('quizScoreBadge').textContent = `Điểm: ${quizScore}/${quizDeck.length}`;
-      document.getElementById('quizLangTag').textContent = `${(QUIZ_LANGUAGE_LABELS[targetLanguage] || {})[currentUiLang] || targetLanguage} ↔ ${(QUIZ_LANGUAGE_LABELS[supportLanguage] || {})[currentUiLang] || supportLanguage}`;
+      const quizSourceSuffix = card.quizSource === 'giahan_dialogue'
+        ? (currentUiLang === 'en' ? ' · 💬 Gia Hân dialogue' : currentUiLang === 'zh' ? ' · 💬 嘉欣会话' : ' · 💬 Hội thoại Gia Hân')
+        : '';
+      document.getElementById('quizLangTag').textContent = `${(QUIZ_LANGUAGE_LABELS[targetLanguage] || {})[currentUiLang] || targetLanguage} ↔ ${(QUIZ_LANGUAGE_LABELS[supportLanguage] || {})[currentUiLang] || supportLanguage}${quizSourceSuffix}`;
       document.getElementById('quizFeedback').classList.add('hidden');
 
       const mcBox = document.getElementById('quizMcOptions');
@@ -3868,6 +3950,18 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
       }
       if (correct) { card.lastAnswerQuality = 2; card.needsReview = false; }
       card.lastReviewedAt = Date.now();
+      if (card.quizOnly === true && card.quizSource === 'giahan_dialogue') {
+        const progressMap = getDialogueQuizProgressMap();
+        progressMap[card.id] = {
+          interval: Number(card.interval || 0),
+          repetitions: Number(card.repetitions || 0),
+          easeFactor: Number(card.easeFactor || 2.5),
+          nextReview: Number(card.nextReview || 0),
+          lastAnswerQuality: card.lastAnswerQuality,
+          needsReview: card.needsReview === true,
+          lastReviewedAt: Number(card.lastReviewedAt || Date.now())
+        };
+      }
       userStats.totalReviews = (userStats.totalReviews || 0) + 1;
       saveData();
     }
@@ -4208,7 +4302,9 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
     d[K.progress]=mergeProgress(l[K.progress]||{},c[K.progress]||{});
     d[K.topics]=mergeTopics(l[K.topics]||[],c[K.topics]||[]);
     d[K.daily]=mergeDaily(l[K.daily]||{},c[K.daily]||{});
-    const ls=l[K.stats]||{}, cs=c[K.stats]||{}; d[K.stats]={...cs,...ls,totalReviews:Math.max(Number(ls.totalReviews||0),Number(cs.totalReviews||0)),streak:Math.max(Number(ls.streak||1),Number(cs.streak||1))};
+    const ls=l[K.stats]||{}, cs=c[K.stats]||{};
+    const dialogueQuizProgress=mergeProgress(ls.dialogueQuizProgress||{},cs.dialogueQuizProgress||{});
+    d[K.stats]={...cs,...ls,dialogueQuizProgress,totalReviews:Math.max(Number(ls.totalReviews||0),Number(cs.totalReviews||0)),streak:Math.max(Number(ls.streak||1),Number(cs.streak||1))};
     d[K.goals]=Object.keys(c[K.goals]||{}).length?c[K.goals]:(l[K.goals]||{});
     d[K.srs]=Object.keys(c[K.srs]||{}).length?c[K.srs]:(l[K.srs]||{});
     return {schemaVersion:1,data:d,clientUpdatedAt:new Date().toISOString()};
