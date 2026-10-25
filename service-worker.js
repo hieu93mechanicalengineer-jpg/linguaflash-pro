@@ -1,8 +1,7 @@
-const CACHE_NAME = 'linguaflash-recovery-v10';
-const APP_ASSETS = [
-  './',
-  './index.html',
-  './app.js',
+const CACHE_NAME = 'linguaflash-lazy-recovery-v11';
+
+// Keep startup shell small. The two largest packs are cached only after the user needs them.
+const CORE_ASSETS = [
   './manifest.webmanifest',
   './supabase-config.js',
   './icons/icon-192.png',
@@ -10,19 +9,91 @@ const APP_ASSETS = [
   './icons/apple-touch-icon.png',
   './data/core-cards.js',
   './data/giahan-tc2-cards.js',
-  './data/huyenanh-level3-4.js',
   './data/dialogues.js',
   './data/giahan-grammar-extra.js',
-  './data/dictionary.js',
-  './data/youtube-podcast.js'
+  './data/youtube-podcast.js',
+  './app.js',
+  './lazy-large-packs.js'
 ];
 
+const LARGE_PACK_PATHS = [
+  '/data/huyenanh-level3-4.js',
+  '/data/dictionary.js'
+];
+
+function isLargePack(url) {
+  return LARGE_PACK_PATHS.some(suffix => url.pathname.endsWith(suffix));
+}
+
+async function transformIndexResponse(response) {
+  if (!response || !response.ok) return response;
+  let html = await response.text();
+
+  // Do not parse ~9.8 MB of optional card data before navigation becomes usable.
+  html = html.replace(
+    '<script src="./data/huyenanh-level3-4.js"></script>',
+    '<script>window.HUYEN_ANH_L3_L4_CARDS = window.HUYEN_ANH_L3_L4_CARDS || [];</script>'
+  );
+  html = html.replace(
+    '<script src="./data/dictionary.js"></script>',
+    '<script>window.TAV_DICTIONARY_CARDS = window.TAV_DICTIONARY_CARDS || [];</script>'
+  );
+  html = html.replace(
+    '<script src="./app.js"></script>',
+    '<script src="./app.js"></script>\n<script src="./lazy-large-packs.js?v=11"></script>'
+  );
+
+  const headers = new Headers(response.headers);
+  headers.set('content-type', 'text/html; charset=utf-8');
+  headers.delete('content-length');
+  headers.delete('content-encoding');
+  return new Response(html, {
+    status: response.status,
+    statusText: response.statusText,
+    headers
+  });
+}
+
+async function fetchTransformedIndex(request) {
+  const cache = await caches.open(CACHE_NAME);
+  try {
+    const network = await fetch(request, { cache: 'no-store' });
+    const transformed = await transformIndexResponse(network);
+    if (transformed && transformed.ok) {
+      await cache.put('./index.html', transformed.clone());
+      await cache.put('./', transformed.clone());
+      try { await cache.put(request, transformed.clone()); } catch (_) {}
+    }
+    return transformed;
+  } catch (err) {
+    return (await cache.match(request)) || (await cache.match('./index.html')) || Response.error();
+  }
+}
+
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_ASSETS)).then(() => self.skipWaiting()));
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    await cache.addAll(CORE_ASSETS);
+
+    // Prepare a transformed offline index during install so recovery never falls back to the heavy startup page.
+    try {
+      const raw = await fetch('./index.html', { cache: 'no-store' });
+      const transformed = await transformIndexResponse(raw);
+      if (transformed && transformed.ok) {
+        await cache.put('./index.html', transformed.clone());
+        await cache.put('./', transformed.clone());
+      }
+    } catch (_) {}
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)));
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener('fetch', event => {
@@ -30,15 +101,39 @@ self.addEventListener('fetch', event => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
 
-  // Recovery build: prefer network for all same-origin files so stale modules/config cannot survive.
   if (url.origin === self.location.origin) {
-    event.respondWith(fetch(req, { cache: 'no-store' }).then(res => {
-      if (res && res.ok && !url.pathname.endsWith('/recovery.html')) {
-        const copy = res.clone();
-        caches.open(CACHE_NAME).then(c => c.put(req, copy));
+    // Every navigation gets the lightweight transformed shell.
+    if (req.mode === 'navigate' || url.pathname.endsWith('/index.html')) {
+      event.respondWith(fetchTransformedIndex(req));
+      return;
+    }
+
+    // Once a large pack has been downloaded, reuse it instead of downloading 4–5 MB every launch.
+    if (isLargePack(url)) {
+      event.respondWith((async () => {
+        const cache = await caches.open(CACHE_NAME);
+        const cached = await cache.match(req);
+        if (cached) return cached;
+        const network = await fetch(req, { cache: 'no-store' });
+        if (network && network.ok) await cache.put(req, network.clone());
+        return network;
+      })());
+      return;
+    }
+
+    // Network-first for the small shell/logic so fixes arrive quickly, with offline fallback.
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      try {
+        const network = await fetch(req, { cache: 'no-store' });
+        if (network && network.ok && !url.pathname.endsWith('/recovery.html')) {
+          await cache.put(req, network.clone());
+        }
+        return network;
+      } catch (_) {
+        return (await cache.match(req)) || Response.error();
       }
-      return res;
-    }).catch(() => caches.match(req).then(r => r || caches.match('./index.html'))));
+    })());
     return;
   }
 
