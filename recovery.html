@@ -5,7 +5,7 @@
 <title>LinguaFlash Recovery</title>
 <style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f8fafc;color:#0f172a;margin:0;display:grid;place-items:center;min-height:100vh;padding:24px}.box{max-width:540px;background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:24px;box-shadow:0 12px 35px rgba(15,23,42,.08)}h1{font-size:22px;margin:0 0 10px}p{line-height:1.5;color:#475569}.ok{color:#047857;font-weight:700}</style>
 </head>
-<body><div class="box"><h1>Đang khôi phục LinguaFlash…</h1><p id="status">Đang dọn cache cũ và cài bộ khởi động nhẹ. Dữ liệu học trong localStorage sẽ được giữ nguyên.</p></div>
+<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang dọn cache cũ và cài bản Học Flashcard nhập đáp án. Dữ liệu học trong localStorage sẽ được giữ nguyên.</p></div>
 <script>
 (async()=>{
   const status=document.getElementById('status');
@@ -23,8 +23,8 @@
 
     if(!('serviceWorker' in navigator)) throw new Error('Trình duyệt không hỗ trợ Service Worker');
 
-    status.textContent='Đang cài bộ khởi động mới…';
-    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=11',{scope:'./',updateViaCache:'none'});
+    status.textContent='Đang cài bản cập nhật mới…';
+    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=12',{scope:'./',updateViaCache:'none'});
     await reg.update().catch(()=>{});
 
     let worker=reg.installing||reg.waiting||reg.active;
@@ -45,9 +45,9 @@
     }
 
     status.className='ok';
-    status.textContent='Đã cài bản khởi động nhẹ. Đang mở LinguaFlash…';
+    status.textContent='Đã cài bản nhập đáp án + tự động đánh giá. Đang mở LinguaFlash…';
     await sleep(500);
-    location.replace('./?recovery=11&t='+Date.now());
+    location.replace('./?recovery=12&t='+Date.now());
   }catch(e){
     console.error(e);
     status.textContent='Recovery gặp lỗi: '+(e&&e.message?e.message:e)+'. Hãy tải lại trang recovery một lần.';
