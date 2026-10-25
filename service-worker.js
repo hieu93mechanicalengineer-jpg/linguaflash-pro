@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-lazy-recovery-v12';
+const CACHE_NAME = 'linguaflash-lazy-recovery-v13';
 
 // Keep startup shell small. The two largest packs are cached only after the user needs them.
 const CORE_ASSETS = [
@@ -26,6 +26,13 @@ function isLargePack(url) {
   return LARGE_PACK_PATHS.some(suffix => url.pathname.endsWith(suffix));
 }
 
+function isAppPageNavigation(request, url) {
+  if (url.pathname.endsWith('/index.html')) return true;
+  if (request.mode !== 'navigate') return false;
+  const leaf = url.pathname.split('/').filter(Boolean).pop() || '';
+  return leaf === 'linguaflash-pro' || leaf === '';
+}
+
 async function transformIndexResponse(response) {
   if (!response || !response.ok) return response;
   let html = await response.text();
@@ -41,7 +48,7 @@ async function transformIndexResponse(response) {
   );
   html = html.replace(
     '<script src="./app.js"></script>',
-    '<script src="./app.js"></script>\n<script src="./lazy-large-packs.js?v=12"></script>\n<script src="./study-answer-mode.js?v=12"></script>'
+    '<script src="./app.js"></script>\n<script src="./lazy-large-packs.js?v=13"></script>\n<script src="./study-answer-mode.js?v=13"></script>'
   );
 
   const headers = new Headers(response.headers);
@@ -103,8 +110,7 @@ self.addEventListener('fetch', event => {
   const url = new URL(req.url);
 
   if (url.origin === self.location.origin) {
-    // Every navigation gets the lightweight transformed shell.
-    if (req.mode === 'navigate' || url.pathname.endsWith('/index.html')) {
+    if (isAppPageNavigation(req, url)) {
       event.respondWith(fetchTransformedIndex(req));
       return;
     }
@@ -122,7 +128,7 @@ self.addEventListener('fetch', event => {
       return;
     }
 
-    // Network-first for the small shell/logic so fixes arrive quickly, with offline fallback.
+    // Network-first for small shell/logic and for recovery.html, with offline fallback.
     event.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
       try {
