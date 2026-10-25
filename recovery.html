@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LinguaFlash Recovery</title>
+<style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f8fafc;color:#0f172a;margin:0;display:grid;place-items:center;min-height:100vh;padding:24px}.box{max-width:520px;background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:24px;box-shadow:0 12px 35px rgba(15,23,42,.08)}h1{font-size:22px;margin:0 0 10px}p{line-height:1.5;color:#475569}.ok{color:#047857;font-weight:700}</style>
+</head>
+<body><div class="box"><h1>Đang khôi phục LinguaFlash…</h1><p id="status">Đang gỡ Service Worker và cache cũ. Dữ liệu học localStorage sẽ được giữ nguyên.</p></div>
+<script>
+(async()=>{
+  const status=document.getElementById('status');
+  try{
+    if('serviceWorker' in navigator){
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r=>r.unregister()));
+    }
+    if('caches' in window){
+      const keys=await caches.keys();
+      await Promise.all(keys.map(k=>caches.delete(k)));
+    }
+    // Remove only settings introduced during the failed experiments. Preserve cards/progress/account auth data.
+    ['linguaflash_study_active_recall_v1','linguaflash_study_preferences_v1'].forEach(k=>localStorage.removeItem(k));
+    status.className='ok';
+    status.textContent='Đã dọn cache cũ. Đang mở lại bản ổn định…';
+    setTimeout(()=>location.replace('./?recovery='+Date.now()),500);
+  }catch(e){
+    console.error(e);
+    status.textContent='Recovery gặp lỗi: '+(e&&e.message?e.message:e)+'. Hãy tải lại trang recovery một lần.';
+  }
+})();
+</script></body></html>
