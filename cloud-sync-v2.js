@@ -157,8 +157,8 @@
   async function pullMergeV2(){
     const local=collectState();
     const [v2,legacy]=await Promise.all([readV2State(),readLegacyState().catch(()=>null)]);
-    let cloud=v2.exists?v2.state:null;
-    if(legacy?.state)cloud=cloud?mergeState(cloud,legacy.state):legacy.state;
+    // Legacy is only a bootstrap source. Once v2 has any data, never merge stale legacy state back in.
+    const cloud=v2.exists?v2.state:(legacy?.state||null);
     const merged=cloud?mergeState(local,cloud):local;
     applyState(merged);
     await pushWholeV2(merged);
