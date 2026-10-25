@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-lazy-recovery-v11';
+const CACHE_NAME = 'linguaflash-lazy-recovery-v12';
 
 // Keep startup shell small. The two largest packs are cached only after the user needs them.
 const CORE_ASSETS = [
@@ -13,7 +13,8 @@ const CORE_ASSETS = [
   './data/giahan-grammar-extra.js',
   './data/youtube-podcast.js',
   './app.js',
-  './lazy-large-packs.js'
+  './lazy-large-packs.js',
+  './study-answer-mode.js'
 ];
 
 const LARGE_PACK_PATHS = [
@@ -40,7 +41,7 @@ async function transformIndexResponse(response) {
   );
   html = html.replace(
     '<script src="./app.js"></script>',
-    '<script src="./app.js"></script>\n<script src="./lazy-large-packs.js?v=11"></script>'
+    '<script src="./app.js"></script>\n<script src="./lazy-large-packs.js?v=12"></script>\n<script src="./study-answer-mode.js?v=12"></script>'
   );
 
   const headers = new Headers(response.headers);
