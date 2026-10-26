@@ -63,6 +63,7 @@
     try {
       if (category === 'TRILINGUAL DICTIONARY' && typeof window.lfLoadDictionaryPack === 'function') await window.lfLoadDictionaryPack();
       else if (category === 'Tiếng Trung Huyền Anh' && typeof window.lfLoadHuyenAnhPack === 'function') await window.lfLoadHuyenAnhPack();
+      else if (category === '__LF_WEAK__' && typeof window.lfLoadAllLargePacks === 'function') await window.lfLoadAllLargePacks();
     } catch (_) {}
   }
 
