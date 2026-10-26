@@ -5,7 +5,7 @@
 <title>LinguaFlash Recovery</title>
 <style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f8fafc;color:#0f172a;margin:0;display:grid;place-items:center;min-height:100vh;padding:24px}.box{max-width:540px;background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:24px;box-shadow:0 12px 35px rgba(15,23,42,.08)}h1{font-size:22px;margin:0 0 10px}p{line-height:1.5;color:#475569}.ok{color:#047857;font-weight:700}</style>
 </head>
-<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v22: Learning Loop + Hội thoại Active Recall. Dữ liệu học, FSRS-6, Sync v2, Continue Session, Từ yếu và Admin Dashboard được giữ nguyên.</p></div>
+<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v23: bổ sung từ vựng Gia Hân – Trung cấp 1 – Bài 17. Dữ liệu học, FSRS-6, Sync v2, Continue Session, Từ yếu, Learning Loop và Admin Dashboard được giữ nguyên.</p></div>
 <script>
 (async()=>{
   const status=document.getElementById('status');
@@ -21,8 +21,8 @@
     }
     ['linguaflash_study_active_recall_v1','linguaflash_study_preferences_v1'].forEach(k=>localStorage.removeItem(k));
     if(!('serviceWorker' in navigator)) throw new Error('Trình duyệt không hỗ trợ Service Worker');
-    status.textContent='Đang cài bản v22…';
-    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=22',{scope:'./',updateViaCache:'none'});
+    status.textContent='Đang cài bản v23…';
+    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=23',{scope:'./',updateViaCache:'none'});
     await reg.update().catch(()=>{});
     let worker=reg.installing||reg.waiting||reg.active;
     if(worker && worker.state!=='activated'){
@@ -35,9 +35,9 @@
       await Promise.race([new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true})),sleep(2500)]);
     }
     status.className='ok';
-    status.textContent='Đã cài v22. Trang Home có Learning Loop 7 bước. Hội thoại có thể ẩn/hiện Hán tự, Pinyin, tiếng Việt và English; khi ẩn Hán tự/VI/EN sẽ có ô nhập để tự kiểm tra. Pinyin chỉ ẩn/hiện, không dùng làm đáp án. Đang mở LinguaFlash…';
+    status.textContent='Đã cài v23. Bài 17 đã có gói từ vựng bổ sung từ sổ tay; từ đã có sẽ tự bỏ qua nên không tạo thẻ trùng và progress cũ được giữ nguyên. Đang mở LinguaFlash…';
     await sleep(500);
-    location.replace('./?recovery=22&t='+Date.now());
+    location.replace('./?recovery=23&t='+Date.now());
   }catch(e){
     console.error(e);
     status.textContent='Recovery gặp lỗi: '+(e&&e.message?e.message:e)+'. Hãy tải lại trang recovery một lần.';
