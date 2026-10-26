@@ -6,6 +6,10 @@
 
   let lastActionAt = 0;
 
+  function buttonFrom(event) {
+    return event.target?.closest?.('#lfLearningLoopBar button') || null;
+  }
+
   function actionFor(button) {
     if (!button) return null;
     const code = String(button.getAttribute('onclick') || '');
@@ -14,6 +18,12 @@
     if (code.includes('lfLearningLoopStop')) return 'stop';
     if (code.includes('lfLearningLoopFinish')) return 'finish';
     return null;
+  }
+
+  function cancel(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation?.();
   }
 
   function run(action) {
@@ -27,24 +37,35 @@
     if (typeof fn === 'function') fn();
   }
 
-  function handle(event) {
-    const button = event.target?.closest?.('#lfLearningLoopBar button');
+  function handlePointer(event) {
+    const button = buttonFrom(event);
     if (!button) return;
     const action = actionFor(button);
     if (!action) return;
 
-    // Handle touch/pointer before the study card or bottom navigation can swallow the click.
     const now = Date.now();
-    if (now - lastActionAt < 350) {
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation?.();
+    cancel(event);
+    if (now - lastActionAt < 350) return;
+    lastActionAt = now;
+    run(action);
+  }
+
+  function handleClick(event) {
+    const button = buttonFrom(event);
+    if (!button) return;
+    const action = actionFor(button);
+    if (!action) return;
+
+    const now = Date.now();
+    // iOS synthesizes a click after pointerup. Swallow it so one tap advances exactly one step.
+    if (now - lastActionAt < 500) {
+      cancel(event);
       return;
     }
+
+    // Keyboard/desktop fallback when no pointerup was seen.
+    cancel(event);
     lastActionAt = now;
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation?.();
     run(action);
   }
 
@@ -56,13 +77,8 @@
     });
   }
 
-  // Pointer events cover modern iOS Safari/PWA. Click is a keyboard/desktop fallback.
-  document.addEventListener('pointerup', handle, true);
-  document.addEventListener('click', event => {
-    // Mouse/keyboard click fallback only. Pointer clicks were already handled above.
-    if (Date.now() - lastActionAt < 450) return;
-    handle(event);
-  }, true);
+  document.addEventListener('pointerup', handlePointer, true);
+  document.addEventListener('click', handleClick, true);
 
   const observer = new MutationObserver(improveButtons);
   observer.observe(document.documentElement, { childList: true, subtree: true });
