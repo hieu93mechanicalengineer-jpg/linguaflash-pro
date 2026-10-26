@@ -3,6 +3,7 @@
   'use strict';
 
   const KEY = 'linguaflash_study_session_v1';
+  const INIT_KEY = 'linguaflash_study_session_cloud_v17_ready';
   const TABLE = 'linguaflash_study_session';
   let cloudClient = null;
   let authSession = null;
@@ -14,7 +15,7 @@
   const parse = (raw, fallback = null) => { try { return raw ? JSON.parse(raw) : fallback; } catch (_) { return fallback; } };
   const readLocal = () => { const v = parse(localStorage.getItem(KEY), null); return v && typeof v === 'object' ? v : null; };
   const writeLocal = state => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} };
-  const clearLocal = () => { try { localStorage.removeItem(KEY); } catch (_) {} };
+  const clearLocal = () => { try { localStorage.removeItem(KEY); localStorage.removeItem(INIT_KEY); } catch (_) {} };
   const newer = (a, b) => !a ? (b || null) : !b ? a : (Number(a.updatedAt || 0) >= Number(b.updatedAt || 0) ? a : b);
 
   function dayKey(ts = Date.now()) {
@@ -145,6 +146,7 @@
         await applySession(chosen);
         if (!cloud || Number(chosen.updatedAt || 0) > Number(cloud.updatedAt || 0)) await writeCloud(chosen).catch(() => {});
       }
+      try { localStorage.setItem(INIT_KEY, '1'); } catch (_) {}
       return !!chosen;
     } finally {
       restoring = false;
@@ -220,11 +222,13 @@
       if (authSession?.user) {
         const local = readLocal();
         const cloud = await readCloud().catch(() => null);
-        const chosen = newer(local, cloud);
+        const alreadyMigrated = localStorage.getItem(INIT_KEY) === '1';
+        const chosen = (cloud && !alreadyMigrated) ? cloud : newer(local, cloud);
         if (chosen) {
           await applySession(chosen);
           if (!cloud || Number(chosen.updatedAt || 0) > Number(cloud.updatedAt || 0)) await writeCloud(chosen).catch(() => {});
         }
+        try { localStorage.setItem(INIT_KEY, '1'); } catch (_) {}
       } else {
         const local = readLocal();
         if (local) await applySession(local);
