@@ -6,9 +6,11 @@
   'use strict';
 
   const originalFlipCard = typeof window.flipCard === 'function' ? window.flipCard : null;
+  const originalRenderCurrentCard = typeof window.renderCurrentCard === 'function' ? window.renderCurrentCard : null;
   if (!originalFlipCard) return;
 
-  let penalizedCardId = null;
+  let activeCardId = null;
+  let penalizedCurrentAttempt = false;
 
   function currentCardId() {
     try {
@@ -20,6 +22,14 @@
     }
   }
 
+  function syncAttempt(cardId = currentCardId()) {
+    if (cardId !== activeCardId) {
+      activeCardId = cardId;
+      penalizedCurrentAttempt = false;
+    }
+    return cardId;
+  }
+
   function uiMessage() {
     let lang = 'vi';
     try { if (typeof currentUiLang === 'string') lang = currentUiLang; } catch (_) {}
@@ -29,7 +39,7 @@
   }
 
   function applyRevealPenalty(cardId) {
-    if (!cardId || penalizedCardId === cardId) return;
+    if (!cardId || penalizedCurrentAttempt) return;
 
     const input = document.getElementById('studyAnswerInput');
     const button = document.getElementById('studyAnswerCheckBtn');
@@ -55,14 +65,31 @@
       if (typeof start === 'number' && typeof end === 'number') input.setSelectionRange(start, end);
     } catch (_) {}
 
-    penalizedCardId = cardId;
+    penalizedCurrentAttempt = true;
   }
 
   window.flipCard = function(...args) {
-    const cardId = currentCardId();
-    const shouldPenalize = !!cardId && penalizedCardId !== cardId;
+    const cardId = syncAttempt();
+    const shouldPenalize = !!cardId && !penalizedCurrentAttempt;
     const result = originalFlipCard.apply(this, args);
     if (shouldPenalize) applyRevealPenalty(cardId);
     return result;
   };
+
+  // Keep the "once per attempt" rule correct when the learner moves to another card
+  // and later comes back to the same card.
+  if (originalRenderCurrentCard) {
+    window.renderCurrentCard = function(...args) {
+      const before = activeCardId;
+      const result = originalRenderCurrentCard.apply(this, args);
+      const after = currentCardId();
+      if (after !== before) {
+        activeCardId = after;
+        penalizedCurrentAttempt = false;
+      }
+      return result;
+    };
+  }
+
+  syncAttempt();
 })();
