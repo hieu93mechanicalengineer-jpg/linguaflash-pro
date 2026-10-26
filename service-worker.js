@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-lazy-recovery-v15';
+const CACHE_NAME = 'linguaflash-lazy-recovery-v16';
 
 // Keep startup shell small. The two largest packs are cached only after the user needs them.
 const CORE_ASSETS = [
@@ -16,6 +16,7 @@ const CORE_ASSETS = [
   './lazy-large-packs.js',
   './study-answer-mode.js',
   './study-filter-prefs.js',
+  './study-session-v1.js',
   './cloud-sync-v2.js'
 ];
 
@@ -50,16 +51,16 @@ async function transformIndexResponse(response) {
   );
   html = html.replace(
     '<script src="./app.js"></script>',
-    '<script src="./app.js"></script>\n<script src="./lazy-large-packs.js?v=15"></script>\n<script src="./study-answer-mode.js?v=15"></script>\n<script src="./study-filter-prefs.js?v=15"></script>'
+    '<script src="./app.js"></script>\n<script src="./lazy-large-packs.js?v=16"></script>\n<script src="./study-answer-mode.js?v=16"></script>\n<script src="./study-filter-prefs.js?v=16"></script>\n<script src="./study-session-v1.js?v=16"></script>'
   );
 
   // Replace the legacy whole-state sync with Sync v2. Sync v2 automatically falls back
   // to the old linguaflash_user_state table until the new Supabase tables are available.
   const legacyCloudSync = /<script id="lf-cloud-sync-script">[\s\S]*?<\/script>/i;
   if (legacyCloudSync.test(html)) {
-    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=15"></script>');
+    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=16"></script>');
   } else if (!html.includes('cloud-sync-v2.js')) {
-    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=15"></script>\n</body>');
+    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=16"></script>\n</body>');
   }
 
   const headers = new Headers(response.headers);
