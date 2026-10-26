@@ -1,11 +1,13 @@
 /* LinguaFlash Continue Session v1
    Restores the same study batch/card within the same local day.
    On a new day, keeps study filters but lets the app build a fresh FSRS/daily-goal batch.
+   The small session object is also mirrored inside tracked stats so Sync v2 can carry it.
 */
 (() => {
   'use strict';
 
   const KEY = 'linguaflash_study_session_v1';
+  const STATS_KEY = 'linguaflash_stats_huyen_anh_v5_correct_excel';
   let restoring = true;
   let saveTimer = null;
 
@@ -14,14 +16,29 @@
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   }
 
+  function parse(raw, fallback = null) {
+    try { return raw ? JSON.parse(raw) : fallback; } catch (_) { return fallback; }
+  }
+
   function readSession() {
+    const local = parse(localStorage.getItem(KEY), null);
+    const stats = parse(localStorage.getItem(STATS_KEY), {}) || {};
+    const cloudMirror = stats.studySession && typeof stats.studySession === 'object' ? stats.studySession : null;
+    if (!local) return cloudMirror;
+    if (!cloudMirror) return local;
+    return Number(cloudMirror.updatedAt || 0) > Number(local.updatedAt || 0) ? cloudMirror : local;
+  }
+
+  function mirrorSessionToTrackedStats(state) {
     try {
-      const raw = localStorage.getItem(KEY);
-      const value = raw ? JSON.parse(raw) : null;
-      return value && typeof value === 'object' ? value : null;
-    } catch (_) {
-      return null;
-    }
+      const stats = parse(localStorage.getItem(STATS_KEY), {}) || {};
+      stats.studySession = state;
+      localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+      try {
+        if (typeof userStats !== 'undefined' && userStats && typeof userStats === 'object') userStats.studySession = state;
+      } catch (_) {}
+      try { if (typeof window.lfQueueCloudSync === 'function') window.lfQueueCloudSync(); } catch (_) {}
+    } catch (_) {}
   }
 
   function currentFilters() {
@@ -67,6 +84,7 @@
     const state = buildSession();
     if (!state) return;
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {}
+    mirrorSessionToTrackedStats(state);
   }
 
   function queueSave(delay = 80) {
@@ -141,6 +159,8 @@
       return;
     }
 
+    // Make the newest mirrored state available locally too.
+    try { localStorage.setItem(KEY, JSON.stringify(session)); } catch (_) {}
     await ensureCategoryLoaded(session.category);
     applySavedFilters(session);
 
