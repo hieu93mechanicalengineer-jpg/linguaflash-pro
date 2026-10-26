@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-lazy-recovery-v16';
+const CACHE_NAME = 'linguaflash-lazy-recovery-v17';
 
 // Keep startup shell small. The two largest packs are cached only after the user needs them.
 const CORE_ASSETS = [
@@ -40,7 +40,6 @@ async function transformIndexResponse(response) {
   if (!response || !response.ok) return response;
   let html = await response.text();
 
-  // Do not parse ~9.8 MB of optional card data before navigation becomes usable.
   html = html.replace(
     '<script src="./data/huyenanh-level3-4.js"></script>',
     '<script>window.HUYEN_ANH_L3_L4_CARDS = window.HUYEN_ANH_L3_L4_CARDS || [];</script>'
@@ -51,16 +50,14 @@ async function transformIndexResponse(response) {
   );
   html = html.replace(
     '<script src="./app.js"></script>',
-    '<script src="./app.js"></script>\n<script src="./lazy-large-packs.js?v=16"></script>\n<script src="./study-answer-mode.js?v=16"></script>\n<script src="./study-filter-prefs.js?v=16"></script>\n<script src="./study-session-v1.js?v=16"></script>'
+    '<script src="./app.js"></script>\n<script src="./lazy-large-packs.js?v=17"></script>\n<script src="./study-answer-mode.js?v=17"></script>\n<script src="./study-filter-prefs.js?v=17"></script>\n<script src="./study-session-v1.js?v=17"></script>'
   );
 
-  // Replace the legacy whole-state sync with Sync v2. Sync v2 automatically falls back
-  // to the old linguaflash_user_state table until the new Supabase tables are available.
   const legacyCloudSync = /<script id="lf-cloud-sync-script">[\s\S]*?<\/script>/i;
   if (legacyCloudSync.test(html)) {
-    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=16"></script>');
+    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=17"></script>');
   } else if (!html.includes('cloud-sync-v2.js')) {
-    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=16"></script>\n</body>');
+    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=17"></script>\n</body>');
   }
 
   const headers = new Headers(response.headers);
@@ -94,8 +91,6 @@ self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
     await cache.addAll(CORE_ASSETS);
-
-    // Prepare a transformed offline index during install so recovery never falls back to the heavy startup page.
     try {
       const raw = await fetch('./index.html', { cache: 'no-store' });
       const transformed = await transformIndexResponse(raw);
@@ -127,7 +122,6 @@ self.addEventListener('fetch', event => {
       return;
     }
 
-    // Once a large pack has been downloaded, reuse it instead of downloading 4–5 MB every launch.
     if (isLargePack(url)) {
       event.respondWith((async () => {
         const cache = await caches.open(CACHE_NAME);
@@ -140,7 +134,6 @@ self.addEventListener('fetch', event => {
       return;
     }
 
-    // Network-first for small shell/logic and for recovery.html, with offline fallback.
     event.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
       try {
