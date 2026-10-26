@@ -1,7 +1,7 @@
 /* LinguaFlash Continue Session v1
    Restores the same study batch/card within the same local day.
    On a new day, keeps study filters but lets the app build a fresh FSRS/daily-goal batch.
-   The small session object is also mirrored inside tracked stats so Sync v2 can carry it.
+   The small session object is mirrored inside tracked stats so Sync v2 can carry it.
 */
 (() => {
   'use strict';
@@ -9,7 +9,9 @@
   const KEY = 'linguaflash_study_session_v1';
   const STATS_KEY = 'linguaflash_stats_huyen_anh_v5_correct_excel';
   let restoring = true;
+  let userTouched = false;
   let saveTimer = null;
+  let lateRestoreTimer = null;
 
   function dayKey(ts = Date.now()) {
     const d = new Date(ts);
@@ -151,28 +153,39 @@
     }
   }
 
-  async function restoreSession() {
-    const session = readSession();
-    if (!session) {
-      restoring = false;
-      queueSave(300);
-      return;
-    }
-
-    // Make the newest mirrored state available locally too.
+  async function applySession(session) {
+    if (!session) return false;
     try { localStorage.setItem(KEY, JSON.stringify(session)); } catch (_) {}
     await ensureCategoryLoaded(session.category);
     applySavedFilters(session);
-
-    // First let the current app rebuild a valid deck for these filters.
     try { if (typeof applyStudyFilters === 'function') applyStudyFilters(); } catch (_) {}
-
-    // Only restore the exact 20-card batch within the same local day.
-    // A new day gets a fresh batch so today's due schedule stays correct.
     restoreSavedBatch(session);
+    return true;
+  }
 
+  async function firstRestore() {
+    const session = readSession();
+    if (session) await applySession(session);
+    // Keep writes suppressed briefly while Cloud Sync v2 may still be pulling a newer session.
+    if (!userTouched) {
+      clearTimeout(lateRestoreTimer);
+      lateRestoreTimer = setTimeout(() => finalRestore().catch(() => { restoring = false; }), 1500);
+    }
+  }
+
+  async function finalRestore() {
+    if (userTouched) return;
+    const newest = readSession();
+    if (newest) await applySession(newest);
     restoring = false;
-    queueSave(150);
+  }
+
+  function markUserTouched() {
+    if (userTouched) return;
+    userTouched = true;
+    clearTimeout(lateRestoreTimer);
+    restoring = false;
+    queueSave(120);
   }
 
   function patchFunction(name, after) {
@@ -194,32 +207,52 @@
     patchFunction('renderCurrentCard', () => queueSave());
     patchFunction('applyStudyFilters', () => queueSave(120));
     patchFunction('switchTab', (_name, args) => {
-      if (args?.[0] === 'study') queueSave(180);
+      if (args?.[0] === 'study') {
+        markUserTouched();
+        queueSave(180);
+      }
     });
   }
 
   function bindLifecycle() {
     ['studyLangFilter', 'studyCategoryFilter', 'studyTopicFilter', 'studyDueOnly', 'togglePhonetic'].forEach(id => {
-      document.getElementById(id)?.addEventListener('change', () => queueSave(150));
+      document.getElementById(id)?.addEventListener('change', () => {
+        markUserTouched();
+        queueSave(150);
+      });
     });
 
+    // Any deliberate interaction with the Study screen means the learner owns the current state;
+    // do not let a late cloud pull jump them backwards after this point.
+    document.getElementById('tab-study')?.addEventListener('pointerdown', markUserTouched, { passive: true });
+
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') saveSession();
+      if (document.visibilityState === 'hidden') {
+        if (restoring) restoring = false;
+        saveSession();
+      }
     });
-    window.addEventListener('pagehide', saveSession);
+    window.addEventListener('pagehide', () => {
+      if (restoring) restoring = false;
+      saveSession();
+    });
   }
 
   patchRuntime();
 
   const start = () => {
     bindLifecycle();
-    // study-filter-prefs restores at ~60 ms; wait until that and app initialization settle.
-    setTimeout(() => restoreSession().catch(() => { restoring = false; }), 220);
+    // study-filter-prefs restores at ~60 ms; start after app/filter initialization settles.
+    setTimeout(() => firstRestore().catch(() => { restoring = false; }), 220);
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
   else start();
 
   window.lfSaveStudySession = saveSession;
-  window.lfRestoreStudySession = restoreSession;
+  window.lfRestoreStudySession = async () => {
+    restoring = true;
+    userTouched = false;
+    await finalRestore();
+  };
 })();
