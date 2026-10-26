@@ -24,22 +24,27 @@ drop policy if exists "lf_meta_select_own" on public.linguaflash_user_meta;
 drop policy if exists "lf_meta_insert_own" on public.linguaflash_user_meta;
 drop policy if exists "lf_meta_update_own" on public.linguaflash_user_meta;
 drop policy if exists "lf_meta_delete_own" on public.linguaflash_user_meta;
-create policy "lf_meta_select_own" on public.linguaflash_user_meta for select to authenticated using (auth.uid() = user_id);
-create policy "lf_meta_insert_own" on public.linguaflash_user_meta for insert to authenticated with check (auth.uid() = user_id);
-create policy "lf_meta_update_own" on public.linguaflash_user_meta for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "lf_meta_delete_own" on public.linguaflash_user_meta for delete to authenticated using (auth.uid() = user_id);
+create policy "lf_meta_select_own" on public.linguaflash_user_meta for select to authenticated using ((select auth.uid()) = user_id);
+create policy "lf_meta_insert_own" on public.linguaflash_user_meta for insert to authenticated with check ((select auth.uid()) = user_id);
+create policy "lf_meta_update_own" on public.linguaflash_user_meta for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "lf_meta_delete_own" on public.linguaflash_user_meta for delete to authenticated using ((select auth.uid()) = user_id);
 
 drop policy if exists "lf_progress_select_own" on public.linguaflash_card_progress;
 drop policy if exists "lf_progress_insert_own" on public.linguaflash_card_progress;
 drop policy if exists "lf_progress_update_own" on public.linguaflash_card_progress;
 drop policy if exists "lf_progress_delete_own" on public.linguaflash_card_progress;
-create policy "lf_progress_select_own" on public.linguaflash_card_progress for select to authenticated using (auth.uid() = user_id);
-create policy "lf_progress_insert_own" on public.linguaflash_card_progress for insert to authenticated with check (auth.uid() = user_id);
-create policy "lf_progress_update_own" on public.linguaflash_card_progress for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "lf_progress_delete_own" on public.linguaflash_card_progress for delete to authenticated using (auth.uid() = user_id);
+create policy "lf_progress_select_own" on public.linguaflash_card_progress for select to authenticated using ((select auth.uid()) = user_id);
+create policy "lf_progress_insert_own" on public.linguaflash_card_progress for insert to authenticated with check ((select auth.uid()) = user_id);
+create policy "lf_progress_update_own" on public.linguaflash_card_progress for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "lf_progress_delete_own" on public.linguaflash_card_progress for delete to authenticated using ((select auth.uid()) = user_id);
 
-grant select, insert, update, delete on public.linguaflash_user_meta to authenticated;
-grant select, insert, update, delete on public.linguaflash_card_progress to authenticated;
+-- Remove Supabase's broad default privileges from browser roles, then grant only
+-- the CRUD operations required by authenticated LinguaFlash users. RLS still
+-- enforces ownership for every row.
+revoke all on table public.linguaflash_user_meta from anon, authenticated;
+revoke all on table public.linguaflash_card_progress from anon, authenticated;
+grant select, insert, update, delete on table public.linguaflash_user_meta to authenticated;
+grant select, insert, update, delete on table public.linguaflash_card_progress to authenticated;
 
 -- One-time server-side migration of existing legacy state, if the legacy table exists.
 do $$
