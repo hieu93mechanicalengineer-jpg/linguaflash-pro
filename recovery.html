@@ -5,7 +5,7 @@
 <title>LinguaFlash Recovery</title>
 <style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f8fafc;color:#0f172a;margin:0;display:grid;place-items:center;min-height:100vh;padding:24px}.box{max-width:540px;background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:24px;box-shadow:0 12px 35px rgba(15,23,42,.08)}h1{font-size:22px;margin:0 0 10px}p{line-height:1.5;color:#475569}.ok{color:#047857;font-weight:700}</style>
 </head>
-<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v20: FSRS-6 + phiên học thông minh. Dữ liệu học, tài khoản, Từ yếu, Continue Session, Admin Dashboard và Sync v2 được giữ nguyên.</p></div>
+<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v21: chấm đáp án chính xác hơn. Tiếng Trung chỉ nhận Hán tự; FSRS-6, phiên thông minh, Từ yếu, Continue Session, Admin Dashboard và Sync v2 được giữ nguyên.</p></div>
 <script>
 (async()=>{
   const status=document.getElementById('status');
@@ -21,8 +21,8 @@
     }
     ['linguaflash_study_active_recall_v1','linguaflash_study_preferences_v1'].forEach(k=>localStorage.removeItem(k));
     if(!('serviceWorker' in navigator)) throw new Error('Trình duyệt không hỗ trợ Service Worker');
-    status.textContent='Đang cài bản v20…';
-    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=20',{scope:'./',updateViaCache:'none'});
+    status.textContent='Đang cài bản v21…';
+    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=21',{scope:'./',updateViaCache:'none'});
     await reg.update().catch(()=>{});
     let worker=reg.installing||reg.waiting||reg.active;
     if(worker && worker.state!=='activated'){
@@ -35,9 +35,9 @@
       await Promise.race([new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true})),sleep(2500)]);
     }
     status.className='ok';
-    status.textContent='Đã cài v20. LinguaFlash dùng FSRS-6 để tính lịch ôn, hiển thị dự kiến ôn lại và sắp phiên học theo ưu tiên đến hạn/từ yếu, xen kẽ từ mới. Đang mở LinguaFlash…';
+    status.textContent='Đã cài v21. Tiếng Trung chỉ chấp nhận Hán tự; Pinyin không được tính đúng. Lỗi gõ nhẹ tiếng Anh sẽ được nhắc sửa mà không làm giảm đánh giá FSRS. Đang mở LinguaFlash…';
     await sleep(500);
-    location.replace('./?recovery=20&t='+Date.now());
+    location.replace('./?recovery=21&t='+Date.now());
   }catch(e){
     console.error(e);
     status.textContent='Recovery gặp lỗi: '+(e&&e.message?e.message:e)+'. Hãy tải lại trang recovery một lần.';
