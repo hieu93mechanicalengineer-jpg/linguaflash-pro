@@ -1,9 +1,15 @@
-/* LinguaFlash: typed-answer study mode + automatic difficulty grading.
-   Manual Again/Hard/Good/Easy buttons are hidden. Difficulty is inferred from wrong attempts. */
+/* LinguaFlash: typed-answer study mode + automatic FSRS-6 grading.
+   Manual Again/Hard/Good/Easy buttons are hidden. Difficulty is inferred from wrong attempts.
+   v20 keeps the existing progress fields so Sync v2 remains backwards-compatible. */
 (() => {
   'use strict';
 
   const DAY_MS = 86400000;
+  const FSRS6_W = [
+    0.212, 1.2931, 2.3065, 8.2956, 6.4133, 0.8334, 3.0194,
+    0.001, 1.8722, 0.1666, 0.796, 1.4835, 0.0614, 0.2629,
+    1.6483, 0.6014, 1.8729, 0.5425, 0.0912, 0.0658, 0.1542
+  ];
   const state = {
     cardId: null,
     wrongAttempts: 0,
@@ -17,22 +23,41 @@
     const lang = typeof currentUiLang === 'string' ? currentUiLang : 'vi';
     if (lang === 'en') return {
       title: 'Type your answer', placeholder: 'Type the answer…', check: 'Check',
-      hint: 'Press Enter to check. Correct answer advances automatically.', wrong: n => `Not correct yet — try again. Wrong attempts: ${n}`,
-      correct: n => n ? `Correct ✓ · ${n} wrong attempt${n > 1 ? 's' : ''}. Review priority adjusted automatically.` : 'Correct ✓ · moving to the next card…',
-      auto: 'Automatic FSRS grading', level: n => n === 0 ? 'Strong recall' : n === 1 ? 'Good recall' : n === 2 ? 'Hard recall' : 'Review soon'
+      hint: 'Press Enter to check. Correct answer advances automatically.',
+      wrong: n => `Not correct yet — try again. Wrong attempts: ${n}`,
+      correct: n => n ? `Correct ✓ · ${n} wrong attempt${n > 1 ? 's' : ''}.` : 'Correct ✓',
+      auto: 'FSRS-6 automatic grading',
+      level: n => n === 0 ? 'Strong recall' : n === 1 ? 'Good recall' : n === 2 ? 'Hard recall' : 'Review soon',
+      forecast: (r, when) => `Memory now ~${r}% · if correct next: review in ${when}`,
+      newForecast: when => `New card · if correct next: review in ${when}`,
+      next: when => `Next review in ${when}`
     };
     if (lang === 'zh') return {
       title: '输入答案', placeholder: '请输入答案…', check: '检查',
-      hint: '按 Enter 检查。答对后自动进入下一张卡。', wrong: n => `还不正确，请再试一次。错误次数：${n}`,
-      correct: n => n ? `正确 ✓ · 本卡答错 ${n} 次，系统已自动调整复习优先级。` : '正确 ✓ · 正在进入下一张卡…',
-      auto: 'FSRS 自动评估', level: n => n === 0 ? '记忆很强' : n === 1 ? '记忆良好' : n === 2 ? '较难' : '需要尽快复习'
+      hint: '按 Enter 检查。答对后自动进入下一张卡。',
+      wrong: n => `还不正确，请再试一次。错误次数：${n}`,
+      correct: n => n ? `正确 ✓ · 本卡答错 ${n} 次。` : '正确 ✓',
+      auto: 'FSRS-6 自动评估',
+      level: n => n === 0 ? '记忆很强' : n === 1 ? '记忆良好' : n === 2 ? '较难' : '需要尽快复习',
+      forecast: (r, when) => `当前记忆率约 ${r}% · 下一次答对后：${when} 后复习`,
+      newForecast: when => `新卡 · 下一次答对后：${when} 后复习`,
+      next: when => `预计 ${when} 后复习`
     };
     return {
       title: 'Nhập đáp án', placeholder: 'Nhập đáp án…', check: 'Kiểm tra',
-      hint: 'Nhấn Enter để kiểm tra. Trả lời đúng sẽ tự chuyển sang thẻ tiếp theo.', wrong: n => `Chưa đúng — hãy thử lại. Số lần sai: ${n}`,
-      correct: n => n ? `Đúng ✓ · Thẻ này đã sai ${n} lần, lịch ôn được tự động ưu tiên lại.` : 'Đúng ✓ · đang chuyển sang thẻ tiếp theo…',
-      auto: 'FSRS tự động đánh giá', level: n => n === 0 ? 'Nhớ tốt' : n === 1 ? 'Nhớ khá' : n === 2 ? 'Khó' : 'Cần ôn lại sớm'
+      hint: 'Nhấn Enter để kiểm tra. Trả lời đúng sẽ tự chuyển sang thẻ tiếp theo.',
+      wrong: n => `Chưa đúng — hãy thử lại. Số lần sai: ${n}`,
+      correct: n => n ? `Đúng ✓ · Thẻ này đã sai ${n} lần.` : 'Đúng ✓',
+      auto: 'FSRS-6 tự động đánh giá',
+      level: n => n === 0 ? 'Nhớ tốt' : n === 1 ? 'Nhớ khá' : n === 2 ? 'Khó' : 'Cần ôn lại sớm',
+      forecast: (r, when) => `Khả năng nhớ hiện tại ~${r}% · nếu đúng tiếp: ôn lại sau ${when}`,
+      newForecast: when => `Thẻ mới · nếu đúng tiếp: ôn lại sau ${when}`,
+      next: when => `Dự kiến ôn lại sau ${when}`
     };
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
   }
 
   function normalizeCommon(value) {
@@ -71,11 +96,7 @@
     const user = normalizeAnswer(userValue, language);
     if (!user) return false;
     const candidates = candidateAnswers(expectedRaw, language);
-    if (candidates.includes(user)) return true;
-
-    // English cards commonly store infinitive answers as "to + verb"; normalization already removes "to".
-    // For long sentence cards, punctuation and repeated spaces are ignored but the wording must still match.
-    return false;
+    return candidates.includes(user);
   }
 
   function currentCardInfo() {
@@ -92,52 +113,97 @@
   }
 
   function autoGradeFromMistakes(mistakes) {
-    // FSRS rating semantics: Again=1, Hard=2, Good=3, Easy=4.
+    // Preserve the tested LinguaFlash mapping: 0 wrong=Easy, 1=Good, 2=Hard, >=3=Again.
     if (mistakes <= 0) return 4;
     if (mistakes === 1) return 3;
     if (mistakes === 2) return 2;
     return 1;
   }
 
+  function initialDifficulty(grade) {
+    const w = FSRS6_W;
+    return clamp(w[4] - Math.exp(w[5] * (grade - 1)) + 1, 1, 10);
+  }
+
+  function nextDifficulty(previousDifficulty, grade) {
+    const w = FSRS6_W;
+    const delta = -w[6] * (grade - 3);
+    const damped = previousDifficulty + delta * (10 - previousDifficulty) / 9;
+    const meanReverted = w[7] * initialDifficulty(4) + (1 - w[7]) * damped;
+    return clamp(meanReverted, 1, 10);
+  }
+
+  function retrievabilityAt(elapsedDays, stability) {
+    if (!(stability > 0)) return 0.9;
+    const decay = FSRS6_W[20];
+    const factor = Math.pow(0.9, -1 / decay) - 1;
+    return clamp(Math.pow(1 + factor * Math.max(0, elapsedDays) / stability, -decay), 0.01, 1);
+  }
+
+  function intervalForRetention(stability, retention) {
+    const decay = FSRS6_W[20];
+    const factor = Math.pow(0.9, -1 / decay) - 1;
+    return Math.max(1 / (24 * 60), (stability / factor) * (Math.pow(retention, -1 / decay) - 1));
+  }
+
+  function sameDayStability(previousStability, grade) {
+    const w = FSRS6_W;
+    const raw = previousStability * Math.exp(w[17] * (grade - 3 + w[18])) * Math.pow(previousStability, -w[19]);
+    return grade >= 2 ? Math.max(previousStability, raw) : Math.max(0.01, raw);
+  }
+
+  function recallStability(previousStability, difficulty, retrievability, grade) {
+    const w = FSRS6_W;
+    const modifier = grade === 2 ? w[15] : grade === 4 ? w[16] : 1;
+    const growth = Math.exp(w[8]) * (11 - difficulty) * Math.pow(previousStability, -w[9]) *
+      (Math.exp(w[10] * (1 - retrievability)) - 1) * modifier;
+    return Math.max(previousStability, previousStability * (1 + Math.max(0, growth)));
+  }
+
+  function lapseStability(previousStability, difficulty, retrievability) {
+    const w = FSRS6_W;
+    const raw = w[11] * Math.pow(difficulty, -w[12]) *
+      (Math.pow(previousStability + 1, w[13]) - 1) * Math.exp(w[14] * (1 - retrievability));
+    return clamp(raw, 0.01, previousStability);
+  }
+
   function computeFsrsState(card, mistakes) {
     const now = Date.now();
     const grade = autoGradeFromMistakes(mistakes);
     const settings = typeof getDailyGoalSettings === 'function' ? getDailyGoalSettings() : { desiredRetention: 90 };
-    const retention = Math.max(0.80, Math.min(0.95, (Number(settings.desiredRetention) || 90) / 100));
-    const previousStability = Math.max(0.1, Number(card.stability) || Math.max(0.1, Number(card.interval) || 0.1));
-    const previousDifficulty = Math.max(1, Math.min(10, Number(card.difficulty) || 5));
+    const retention = clamp((Number(settings.desiredRetention) || 90) / 100, 0.80, 0.95);
     const lastReview = Number(card.lastReview || card.lastReviewedAt || 0);
-    const elapsedDays = lastReview ? Math.max(0.01, (now - lastReview) / DAY_MS) : 0;
-    const retrievability = lastReview ? Math.max(0.01, Math.min(1, Math.exp(Math.log(0.9) * elapsedDays / previousStability))) : 0.9;
+    const hasHistory = !!lastReview && (Number(card.reviewCount) > 0 || Number(card.repetitions) > 0);
+    const elapsedDays = lastReview ? Math.max(0, (now - lastReview) / DAY_MS) : 0;
+    const previousStability = Math.max(0.01, Number(card.stability) || Math.max(0.01, Number(card.interval) || FSRS6_W[2]));
+    const previousDifficulty = clamp(Number(card.difficulty) || initialDifficulty(3), 1, 10);
+    const retrievability = hasHistory ? retrievabilityAt(elapsedDays, previousStability) : 0.9;
 
     let difficulty;
     let stability;
-    if (!lastReview || !(Number(card.reviewCount) > 0)) {
-      const initialStability = { 1: 0.18, 2: 0.9, 3: 2.5, 4: 5.5 };
-      const initialDifficulty = { 1: 8.8, 2: 7.2, 3: 5.2, 4: 3.5 };
-      stability = initialStability[grade];
-      difficulty = initialDifficulty[grade];
+    if (!hasHistory) {
+      stability = FSRS6_W[grade - 1];
+      difficulty = initialDifficulty(grade);
     } else {
-      const difficultyDelta = { 1: 1.5, 2: 0.7, 3: -0.25, 4: -0.75 }[grade];
-      difficulty = Math.max(1, Math.min(10, previousDifficulty + difficultyDelta));
-      const memoryGap = Math.max(0.03, 1 - retrievability);
-      const ease = Math.max(0.2, (11 - difficulty) / 5);
-      if (grade === 1) {
-        stability = Math.max(0.18, previousStability * (0.32 + 0.18 * retrievability));
-      } else if (grade === 2) {
-        stability = Math.max(0.5, previousStability * (1 + 0.45 * memoryGap * ease));
-      } else if (grade === 3) {
-        stability = Math.max(1, previousStability * (1 + 1.65 * memoryGap * ease));
+      difficulty = nextDifficulty(previousDifficulty, grade);
+      if (elapsedDays < 1) {
+        stability = sameDayStability(previousStability, grade);
+      } else if (grade === 1) {
+        stability = lapseStability(previousStability, difficulty, retrievability);
       } else {
-        stability = Math.max(2, previousStability * (1 + 2.8 * memoryGap * ease));
+        stability = recallStability(previousStability, difficulty, retrievability, grade);
       }
     }
 
-    let scheduledDays = stability * (Math.log(retention) / Math.log(0.9));
-    if (grade === 1) scheduledDays = 10 / (24 * 60); // relearning step: 10 minutes
-    else if (grade === 2) scheduledDays = Math.max(1, scheduledDays);
-    else if (grade === 3) scheduledDays = Math.max(1, scheduledDays);
-    else scheduledDays = Math.max(2, scheduledDays);
+    let scheduledDays;
+    if (grade === 1) {
+      scheduledDays = 10 / (24 * 60); // 10-minute relearning step remains explicit in LinguaFlash.
+    } else {
+      scheduledDays = intervalForRetention(stability, retention);
+      if (grade === 2) scheduledDays = Math.max(1, scheduledDays);
+      if (grade === 3) scheduledDays = Math.max(1, scheduledDays);
+      if (grade === 4) scheduledDays = Math.max(2, scheduledDays);
+    }
 
     return {
       grade,
@@ -151,6 +217,26 @@
     };
   }
 
+  function formatInterval(days) {
+    const minutes = Math.max(1, Math.round(Number(days || 0) * 24 * 60));
+    const lang = typeof currentUiLang === 'string' ? currentUiLang : 'vi';
+    if (minutes < 60) return lang === 'zh' ? `${minutes} 分钟` : lang === 'en' ? `${minutes} min` : `${minutes} phút`;
+    const hours = Math.round(minutes / 60);
+    if (hours < 24) return lang === 'zh' ? `${hours} 小时` : lang === 'en' ? `${hours} hr` : `${hours} giờ`;
+    const daysRounded = Math.max(1, Math.round(minutes / 1440));
+    if (daysRounded < 30) return lang === 'zh' ? `${daysRounded} 天` : lang === 'en' ? `${daysRounded} day${daysRounded === 1 ? '' : 's'}` : `${daysRounded} ngày`;
+    const months = Math.max(1, Math.round(daysRounded / 30));
+    return lang === 'zh' ? `${months} 个月` : lang === 'en' ? `${months} month${months === 1 ? '' : 's'}` : `${months} tháng`;
+  }
+
+  function currentMemoryPercent(card) {
+    const lastReview = Number(card?.lastReview || card?.lastReviewedAt || 0);
+    const stability = Number(card?.stability || 0);
+    if (!lastReview || !(stability > 0)) return null;
+    const elapsedDays = Math.max(0, (Date.now() - lastReview) / DAY_MS);
+    return Math.round(retrievabilityAt(elapsedDays, stability) * 100);
+  }
+
   function applyFsrsState(card, plan, mistakes) {
     if (!card || !plan) return;
     const settings = typeof getDailyGoalSettings === 'function' ? getDailyGoalSettings() : { srsAlgorithm: 'FSRS' };
@@ -161,12 +247,13 @@
     card.elapsedDays = plan.elapsedDays;
     card.scheduledDays = plan.scheduledDays;
     card.lastReview = plan.now;
+    card.lastReviewedAt = plan.now;
     card.reviewCount = (Number(card.reviewCount) || 0) + 1;
     card.lapses = (Number(card.lapses) || 0) + (plan.grade === 1 ? 1 : 0);
     card.state = plan.grade === 1 ? 'relearning' : 'review';
     card.nextReview = plan.nextReview;
     card.interval = plan.grade === 1 ? 0 : Math.max(1, Math.round(plan.scheduledDays));
-    card.lastAnswerQuality = plan.grade - 1; // retain compatibility with existing filters: 0..3
+    card.lastAnswerQuality = plan.grade - 1;
     card.lastWrongAttempts = mistakes;
     try { if (typeof saveData === 'function') saveData(); } catch (_) {}
   }
@@ -208,6 +295,7 @@
         <span id="studyAnswerHint" class="text-slate-500"></span>
         <span id="studyWrongCount" class="font-bold text-slate-500 whitespace-nowrap"></span>
       </div>
+      <div id="studyFsrsForecast" class="mt-2 rounded-xl bg-indigo-50 border border-indigo-100 px-3 py-2 text-xs font-semibold text-indigo-800"></div>
       <div id="studyAnswerFeedback" class="hidden mt-3 rounded-xl border px-3 py-2.5 text-sm font-semibold" aria-live="polite"></div>
     `;
     host.insertBefore(panel, ratingTitle || host.firstChild);
@@ -222,6 +310,19 @@
       }
     });
     return panel;
+  }
+
+  function updateForecast(info, t) {
+    const el = document.getElementById('studyFsrsForecast');
+    if (!el || !info?.card) return;
+    try {
+      const plan = computeFsrsState(info.card, state.wrongAttempts);
+      const when = formatInterval(plan.scheduledDays);
+      const memory = currentMemoryPercent(info.card);
+      el.textContent = memory == null ? t.newForecast(when) : t.forecast(memory, when);
+    } catch (_) {
+      el.textContent = '';
+    }
   }
 
   function updatePanelForCurrentCard(resetIfChanged = true) {
@@ -257,8 +358,8 @@
     if (input) input.placeholder = t.placeholder;
     const wrong = document.getElementById('studyWrongCount');
     if (wrong) wrong.textContent = state.wrongAttempts ? `${state.wrongAttempts} × sai · ${t.level(state.wrongAttempts)}` : t.level(0);
+    updateForecast(info, t);
 
-    // Focus only while the Study tab is visible; do not steal focus elsewhere in the app.
     const studyTab = document.getElementById('tab-study');
     if (input && studyTab && !studyTab.classList.contains('hidden')) {
       setTimeout(() => { try { input.focus({ preventScroll: true }); } catch (_) { input.focus(); } }, 0);
@@ -286,6 +387,7 @@
       feedback.textContent = t.wrong(state.wrongAttempts);
       const wrong = document.getElementById('studyWrongCount');
       if (wrong) wrong.textContent = `${state.wrongAttempts} × sai · ${t.level(state.wrongAttempts)}`;
+      updateForecast(info, t);
       input.select();
       return;
     }
@@ -294,12 +396,12 @@
     input.disabled = true;
     input.classList.remove('border-rose-400', 'bg-rose-50');
     input.classList.add('border-emerald-400', 'bg-emerald-50');
-    feedback.className = 'mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-sm font-semibold text-emerald-700';
-    feedback.textContent = t.correct(state.wrongAttempts);
 
     const mistakes = state.wrongAttempts;
     const quality = mistakes <= 0 ? 3 : mistakes === 1 ? 2 : mistakes === 2 ? 1 : 0;
     const plan = computeFsrsState(info.card, mistakes);
+    feedback.className = 'mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-sm font-semibold text-emerald-700';
+    feedback.textContent = `${t.correct(mistakes)} · ${t.next(formatInterval(plan.scheduledDays))}`;
 
     setTimeout(() => {
       try {
@@ -310,7 +412,7 @@
         state.submitting = false;
       }
       updatePanelForCurrentCard(true);
-    }, 220);
+    }, 260);
   }
 
   if (originalRenderCurrentCard) {
@@ -321,10 +423,11 @@
     };
   }
 
-  // The old buttons remain in the DOM only for backwards compatibility with renderCurrentCard(),
-  // but are no longer visible or needed by the learner.
   ensureAnswerPanel();
   updatePanelForCurrentCard(true);
+
+  window.lfFsrs6Preview = (card, mistakes = 0) => computeFsrsState(card, mistakes);
+  window.lfFsrs6Retrievability = card => currentMemoryPercent(card);
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => updatePanelForCurrentCard(true), { once: true });
