@@ -1,17 +1,20 @@
-/* LinguaFlash Continue Session v1
-   Restores the same study batch/card within the same local day.
-   On a new day, keeps study filters but lets the app build a fresh FSRS/daily-goal batch.
-   The small session object is mirrored inside tracked stats so Sync v2 can carry it.
+/* LinguaFlash Continue Session v2
+   - Restores the exact same study batch/card on the same local day.
+   - Keeps filters but rebuilds a fresh FSRS/daily-goal batch on a new day.
+   - Uses a dedicated Supabase row per user so phone/desktop sessions do not
+     get mixed with stats metadata or overwrite each other during startup.
 */
 (() => {
   'use strict';
 
   const KEY = 'linguaflash_study_session_v1';
-  const STATS_KEY = 'linguaflash_stats_huyen_anh_v5_correct_excel';
+  const TABLE = 'linguaflash_study_session';
   let restoring = true;
-  let userTouched = false;
+  let bootstrapDone = false;
   let saveTimer = null;
-  let lateRestoreTimer = null;
+  let cloudTimer = null;
+  let cloudClient = null;
+  let authSession = null;
 
   function dayKey(ts = Date.now()) {
     const d = new Date(ts);
@@ -22,25 +25,19 @@
     try { return raw ? JSON.parse(raw) : fallback; } catch (_) { return fallback; }
   }
 
-  function readSession() {
-    const local = parse(localStorage.getItem(KEY), null);
-    const stats = parse(localStorage.getItem(STATS_KEY), {}) || {};
-    const cloudMirror = stats.studySession && typeof stats.studySession === 'object' ? stats.studySession : null;
-    if (!local) return cloudMirror;
-    if (!cloudMirror) return local;
-    return Number(cloudMirror.updatedAt || 0) > Number(local.updatedAt || 0) ? cloudMirror : local;
+  function readLocalSession() {
+    const value = parse(localStorage.getItem(KEY), null);
+    return value && typeof value === 'object' ? value : null;
   }
 
-  function mirrorSessionToTrackedStats(state) {
-    try {
-      const stats = parse(localStorage.getItem(STATS_KEY), {}) || {};
-      stats.studySession = state;
-      localStorage.setItem(STATS_KEY, JSON.stringify(stats));
-      try {
-        if (typeof userStats !== 'undefined' && userStats && typeof userStats === 'object') userStats.studySession = state;
-      } catch (_) {}
-      try { if (typeof window.lfQueueCloudSync === 'function') window.lfQueueCloudSync(); } catch (_) {}
-    } catch (_) {}
+  function writeLocalSession(state) {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {}
+  }
+
+  function newerSession(a, b) {
+    if (!a) return b || null;
+    if (!b) return a || null;
+    return Number(a.updatedAt || 0) >= Number(b.updatedAt || 0) ? a : b;
   }
 
   function currentFilters() {
@@ -67,7 +64,7 @@
       } catch (_) {}
 
       return {
-        version: 1,
+        version: 2,
         day: dayKey(),
         ...currentFilters(),
         deckIds,
@@ -79,20 +76,6 @@
     } catch (_) {
       return null;
     }
-  }
-
-  function saveSession() {
-    if (restoring) return;
-    const state = buildSession();
-    if (!state) return;
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {}
-    mirrorSessionToTrackedStats(state);
-  }
-
-  function queueSave(delay = 80) {
-    if (restoring) return;
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(saveSession, delay);
   }
 
   function optionExists(select, value) {
@@ -155,7 +138,7 @@
 
   async function applySession(session) {
     if (!session) return false;
-    try { localStorage.setItem(KEY, JSON.stringify(session)); } catch (_) {}
+    writeLocalSession(session);
     await ensureCategoryLoaded(session.category);
     applySavedFilters(session);
     try { if (typeof applyStudyFilters === 'function') applyStudyFilters(); } catch (_) {}
@@ -163,29 +146,75 @@
     return true;
   }
 
-  async function firstRestore() {
-    const session = readSession();
-    if (session) await applySession(session);
-    // Keep writes suppressed briefly while Cloud Sync v2 may still be pulling a newer session.
-    if (!userTouched) {
-      clearTimeout(lateRestoreTimer);
-      lateRestoreTimer = setTimeout(() => finalRestore().catch(() => { restoring = false; }), 1500);
+  function configured() {
+    const c = window.LINGUAFLASH_SUPABASE || {};
+    return /^https:\/\//.test(c.url || '') && String(c.anonKey || '').length > 20 && !/YOUR_|PASTE_|example/i.test((c.url || '') + (c.anonKey || ''));
+  }
+
+  async function initCloudClient() {
+    if (cloudClient || !configured() || !window.supabase?.createClient) return;
+    const c = window.LINGUAFLASH_SUPABASE;
+    cloudClient = window.supabase.createClient(c.url, c.anonKey, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+    });
+    const { data } = await cloudClient.auth.getSession();
+    authSession = data?.session || null;
+    cloudClient.auth.onAuthStateChange((event, newSession) => {
+      authSession = newSession || null;
+      if (event === 'SIGNED_IN' && authSession?.user) {
+        setTimeout(() => pullCloudAndRestore().catch(() => {}), 0);
+      }
+    });
+  }
+
+  async function readCloudSession() {
+    if (!cloudClient || !authSession?.user) return null;
+    const { data, error } = await cloudClient
+      .from(TABLE)
+      .select('session,updated_at')
+      .eq('user_id', authSession.user.id)
+      .maybeSingle();
+    if (error) throw error;
+    return data?.session && typeof data.session === 'object' ? data.session : null;
+  }
+
+  async function writeCloudSession(state) {
+    if (!cloudClient || !authSession?.user || !state) return;
+    const { error } = await cloudClient.from(TABLE).upsert({
+      user_id: authSession.user.id,
+      session: state,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id' });
+    if (error) throw error;
+  }
+
+  async function pullCloudAndRestore() {
+    if (!cloudClient || !authSession?.user) return false;
+    const local = readLocalSession();
+    const cloud = await readCloudSession();
+    const chosen = newerSession(local, cloud);
+    if (chosen) {
+      await applySession(chosen);
+      if (!cloud || Number(chosen.updatedAt || 0) > Number(cloud.updatedAt || 0)) {
+        await writeCloudSession(chosen).catch(() => {});
+      }
     }
+    return !!chosen;
   }
 
-  async function finalRestore() {
-    if (userTouched) return;
-    const newest = readSession();
-    if (newest) await applySession(newest);
-    restoring = false;
+  function saveSession() {
+    if (restoring || !bootstrapDone) return;
+    const state = buildSession();
+    if (!state) return;
+    writeLocalSession(state);
+    clearTimeout(cloudTimer);
+    cloudTimer = setTimeout(() => writeCloudSession(state).catch(err => console.warn('Study session cloud sync:', err)), 700);
   }
 
-  function markUserTouched() {
-    if (userTouched) return;
-    userTouched = true;
-    clearTimeout(lateRestoreTimer);
-    restoring = false;
-    queueSave(120);
+  function queueSave(delay = 80) {
+    if (restoring || !bootstrapDone) return;
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveSession, delay);
   }
 
   function patchFunction(name, after) {
@@ -203,47 +232,53 @@
   }
 
   function patchRuntime() {
-    // renderCurrentCard is called after Next/Previous and after automatic typed-answer grading.
     patchFunction('renderCurrentCard', () => queueSave());
     patchFunction('applyStudyFilters', () => queueSave(120));
     patchFunction('switchTab', (_name, args) => {
-      if (args?.[0] === 'study') {
-        markUserTouched();
-        queueSave(180);
-      }
+      if (args?.[0] === 'study') queueSave(180);
     });
   }
 
   function bindLifecycle() {
     ['studyLangFilter', 'studyCategoryFilter', 'studyTopicFilter', 'studyDueOnly', 'togglePhonetic'].forEach(id => {
-      document.getElementById(id)?.addEventListener('change', () => {
-        markUserTouched();
-        queueSave(150);
-      });
+      document.getElementById(id)?.addEventListener('change', () => queueSave(150));
     });
-
-    // Any deliberate interaction with the Study screen means the learner owns the current state;
-    // do not let a late cloud pull jump them backwards after this point.
-    document.getElementById('tab-study')?.addEventListener('pointerdown', markUserTouched, { passive: true });
-
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
-        if (restoring) restoring = false;
-        saveSession();
+      if (document.visibilityState === 'hidden') saveSession();
+    });
+    window.addEventListener('pagehide', saveSession);
+  }
+
+  async function bootstrap() {
+    restoring = true;
+    try {
+      await initCloudClient();
+      let chosen = readLocalSession();
+      if (authSession?.user) {
+        try {
+          const cloud = await readCloudSession();
+          chosen = newerSession(chosen, cloud);
+        } catch (err) {
+          console.warn('Study session cloud pull:', err);
+        }
       }
-    });
-    window.addEventListener('pagehide', () => {
-      if (restoring) restoring = false;
-      saveSession();
-    });
+      if (chosen) await applySession(chosen);
+    } finally {
+      restoring = false;
+      bootstrapDone = true;
+    }
   }
 
   patchRuntime();
 
   const start = () => {
     bindLifecycle();
-    // study-filter-prefs restores at ~60 ms; start after app/filter initialization settles.
-    setTimeout(() => firstRestore().catch(() => { restoring = false; }), 220);
+    // Let app.js and study-filter-prefs initialize first, then pull the newest session
+    // before this device is allowed to write anything back to cloud.
+    setTimeout(() => bootstrap().catch(() => {
+      restoring = false;
+      bootstrapDone = true;
+    }), 220);
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
@@ -252,7 +287,16 @@
   window.lfSaveStudySession = saveSession;
   window.lfRestoreStudySession = async () => {
     restoring = true;
-    userTouched = false;
-    await finalRestore();
+    try {
+      await initCloudClient();
+      if (authSession?.user) await pullCloudAndRestore();
+      else {
+        const local = readLocalSession();
+        if (local) await applySession(local);
+      }
+    } finally {
+      restoring = false;
+      bootstrapDone = true;
+    }
   };
 })();
