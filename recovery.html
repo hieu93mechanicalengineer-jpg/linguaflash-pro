@@ -5,7 +5,7 @@
 <title>LinguaFlash Recovery</title>
 <style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f8fafc;color:#0f172a;margin:0;display:grid;place-items:center;min-height:100vh;padding:24px}.box{max-width:540px;background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:24px;box-shadow:0 12px 35px rgba(15,23,42,.08)}h1{font-size:22px;margin:0 0 10px}p{line-height:1.5;color:#475569}.ok{color:#047857;font-weight:700}</style>
 </head>
-<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v35: trong trắc nghiệm 4 đáp án, chạm vào bất kỳ đáp án nào cũng sẽ phát âm ngay chính đáp án đó, dù đúng hay sai. Chế độ nhập tay vẫn chỉ tự phát âm khi nhập đúng. Podcast, FSRS-6 và dữ liệu học được giữ nguyên.</p></div>
+<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v36: rà soát lại phần Luyện dịch Gia Hân. Bài 16–30 được lọc/sửa thành câu tự nhiên hơn và giữ ID cũ khi có thể; Bài 31–45 được bổ sung mục Luyện dịch riêng. FSRS-6, tiến độ, Podcast và các chức năng v35 được giữ nguyên.</p></div>
 <script>
 (async()=>{
   const status=document.getElementById('status');
@@ -21,8 +21,8 @@
     }
     ['linguaflash_study_active_recall_v1','linguaflash_study_preferences_v1'].forEach(k=>localStorage.removeItem(k));
     if(!('serviceWorker' in navigator)) throw new Error('Trình duyệt không hỗ trợ Service Worker');
-    status.textContent='Đang cài bản v35…';
-    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=35',{scope:'./',updateViaCache:'none'});
+    status.textContent='Đang cài bản v36…';
+    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=36',{scope:'./',updateViaCache:'none'});
     await reg.update().catch(()=>{});
     let worker=reg.installing||reg.waiting||reg.active;
     if(worker && worker.state!=='activated'){
@@ -35,9 +35,9 @@
       await Promise.race([new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true})),sleep(2500)]);
     }
     status.className='ok';
-    status.textContent='Đã cài v35. Trong trắc nghiệm, chạm đáp án nào LinguaFlash sẽ đọc đáp án đó. Đang mở LinguaFlash…';
+    status.textContent='Đã cài v36. Luyện dịch hiện có từ Bài 16 đến Bài 45 với câu đã được lọc và chỉnh lại. Đang mở LinguaFlash…';
     await sleep(500);
-    location.replace('./?recovery=35&t='+Date.now());
+    location.replace('./?recovery=36&t='+Date.now());
   }catch(e){
     console.error(e);
     status.textContent='Recovery gặp lỗi: '+(e&&e.message?e.message:e)+'. Hãy tải lại trang recovery một lần.';
