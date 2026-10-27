@@ -173,9 +173,10 @@
         try { window.lfDialogueRecallSetVisible?.('cn', false); } catch (_) {}
       }, 80);
     } else if (step === 3) {
-      tasks.listen = { heardCn: false, typedCn: false };
-      delete tasks.completed['3'];
-      saveTasks(tasks);
+      if (!tasks.completed['3']) {
+        tasks.listen = { heardCn: false, typedCn: false };
+        saveTasks(tasks);
+      }
       setTimeout(() => {
         try { window.lfDialogueRecallSetVisible?.('cn', false); } catch (_) {}
         try { window.lfDialogueRecallSetVisible?.('pinyin', false); } catch (_) {}
