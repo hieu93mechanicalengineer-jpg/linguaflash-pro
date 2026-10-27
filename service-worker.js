@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-lazy-recovery-v35';
+const CACHE_NAME = 'linguaflash-lazy-recovery-v36';
 
 // Keep startup shell small. The two largest packs are cached only after the user needs them.
 const CORE_ASSETS = [
@@ -14,6 +14,7 @@ const CORE_ASSETS = [
   './data/giahan-b19-supplement-2.js',
   './data/uncertain-card-filter-v1.js',
   './data/giahan-tc2-cards.js',
+  './data/giahan-translation-practice-v2.js',
   './data/dialogues.js',
   './data/giahan-grammar-extra.js',
   './data/youtube-podcast.js',
@@ -69,18 +70,18 @@ async function transformIndexResponse(response) {
   );
   html = html.replace(
     '<script src="./data/core-cards.js"></script>',
-    '<script src="./data/core-cards.js"></script>\n<script src="./data/giahan-b17-supplement.js?v=35"></script>\n<script src="./data/giahan-b18-supplement.js?v=35"></script>\n<script src="./data/giahan-b19-supplement.js?v=35"></script>\n<script src="./data/giahan-b19-supplement-2.js?v=35"></script>\n<script src="./data/uncertain-card-filter-v1.js?v=35"></script>'
+    '<script src="./data/core-cards.js"></script>\n<script src="./data/giahan-b17-supplement.js?v=36"></script>\n<script src="./data/giahan-b18-supplement.js?v=36"></script>\n<script src="./data/giahan-b19-supplement.js?v=36"></script>\n<script src="./data/giahan-b19-supplement-2.js?v=36"></script>\n<script src="./data/uncertain-card-filter-v1.js?v=36"></script>'
   );
   html = html.replace(
     '<script src="./app.js"></script>',
-    '<script src="./app.js"></script>\n<script src="./lazy-large-packs.js?v=35"></script>\n<script src="./study-answer-mode.js?v=35"></script>\n<script src="./study-show-all-vocab-v1.js?v=35"></script>\n<script src="./study-flip-penalty-v1.js?v=35"></script>\n<script src="./study-card-touch-fix-v1.js?v=35"></script>\n<script src="./answer-quality-v1.js?v=35"></script>\n<script src="./study-character-feedback-v1.js?v=35"></script>\n<script src="./auto-pronunciation-v1.js?v=35"></script>\n<script src="./podcast-auto-pronunciation-v1.js?v=35"></script>\n<script src="./study-filter-prefs.js?v=35"></script>\n<script src="./weak-words-v1.js?v=35"></script>\n<script src="./smart-study-queue-v1.js?v=35"></script>\n<script src="./study-session-v1.js?v=35"></script>\n<script src="./dialogue-active-recall-v1.js?v=35"></script>\n<script src="./learning-loop-v1.js?v=35"></script>\n<script src="./learning-loop-tasks-v1.js?v=35"></script>\n<script src="./learning-loop-mobile-fix-v1.js?v=35"></script>\n<script src="./admin-dashboard-v1.js?v=35"></script>'
+    '<script src="./data/giahan-translation-practice-v2.js?v=36"></script>\n<script src="./app.js"></script>\n<script src="./lazy-large-packs.js?v=36"></script>\n<script src="./study-answer-mode.js?v=36"></script>\n<script src="./study-show-all-vocab-v1.js?v=36"></script>\n<script src="./study-flip-penalty-v1.js?v=36"></script>\n<script src="./study-card-touch-fix-v1.js?v=36"></script>\n<script src="./answer-quality-v1.js?v=36"></script>\n<script src="./study-character-feedback-v1.js?v=36"></script>\n<script src="./auto-pronunciation-v1.js?v=36"></script>\n<script src="./podcast-auto-pronunciation-v1.js?v=36"></script>\n<script src="./study-filter-prefs.js?v=36"></script>\n<script src="./weak-words-v1.js?v=36"></script>\n<script src="./smart-study-queue-v1.js?v=36"></script>\n<script src="./study-session-v1.js?v=36"></script>\n<script src="./dialogue-active-recall-v1.js?v=36"></script>\n<script src="./learning-loop-v1.js?v=36"></script>\n<script src="./learning-loop-tasks-v1.js?v=36"></script>\n<script src="./learning-loop-mobile-fix-v1.js?v=36"></script>\n<script src="./admin-dashboard-v1.js?v=36"></script>'
   );
 
   const legacyCloudSync = /<script id="lf-cloud-sync-script">[\s\S]*?<\/script>/i;
   if (legacyCloudSync.test(html)) {
-    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=35"></script>');
+    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=36"></script>');
   } else if (!html.includes('cloud-sync-v2.js')) {
-    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=35"></script>\n</body>');
+    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=36"></script>\n</body>');
   }
 
   const headers = new Headers(response.headers);
