@@ -5,7 +5,7 @@
 <title>LinguaFlash Recovery</title>
 <style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f8fafc;color:#0f172a;margin:0;display:grid;place-items:center;min-height:100vh;padding:24px}.box{max-width:540px;background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:24px;box-shadow:0 12px 35px rgba(15,23,42,.08)}h1{font-size:22px;margin:0 0 10px}p{line-height:1.5;color:#475569}.ok{color:#047857;font-weight:700}</style>
 </head>
-<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v32: sửa thao tác chạm/lật thẻ trên iPhone. Chạm vào vùng thẻ sẽ luôn đi qua cùng một hàm lật, mặt sau hiển thị ổn định và vẫn tính 1 lần chưa nhớ khi người học xem đáp án. FSRS-6, tự phát âm v31 và toàn bộ dữ liệu học được giữ nguyên.</p></div>
+<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v33: khi người học chọn một bài cụ thể và tắt “Chỉ ôn thẻ đến hạn”, LinguaFlash sẽ cho học lại toàn bộ từ vựng của bài đó ngay cả khi Daily Goal hôm nay đã hoàn thành. FSRS-6, tự phát âm và các chức năng v32 được giữ nguyên.</p></div>
 <script>
 (async()=>{
   const status=document.getElementById('status');
@@ -21,8 +21,8 @@
     }
     ['linguaflash_study_active_recall_v1','linguaflash_study_preferences_v1'].forEach(k=>localStorage.removeItem(k));
     if(!('serviceWorker' in navigator)) throw new Error('Trình duyệt không hỗ trợ Service Worker');
-    status.textContent='Đang cài bản v32…';
-    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=32',{scope:'./',updateViaCache:'none'});
+    status.textContent='Đang cài bản v33…';
+    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=33',{scope:'./',updateViaCache:'none'});
     await reg.update().catch(()=>{});
     let worker=reg.installing||reg.waiting||reg.active;
     if(worker && worker.state!=='activated'){
@@ -35,9 +35,9 @@
       await Promise.race([new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true})),sleep(2500)]);
     }
     status.className='ok';
-    status.textContent='Đã cài v32. Bây giờ chạm vào thẻ sẽ lật/hiện mặt sau ổn định trên iPhone và vẫn ghi nhận lần xem đáp án. Đang mở LinguaFlash…';
+    status.textContent='Đã cài v33. Khi tắt “Chỉ ôn thẻ đến hạn”, bài đã chọn sẽ luôn hiện lại từ vựng để học, không bị Daily Goal chặn. Đang mở LinguaFlash…';
     await sleep(500);
-    location.replace('./?recovery=32&t='+Date.now());
+    location.replace('./?recovery=33&t='+Date.now());
   }catch(e){
     console.error(e);
     status.textContent='Recovery gặp lỗi: '+(e&&e.message?e.message:e)+'. Hãy tải lại trang recovery một lần.';
