@@ -1,5 +1,7 @@
 /* LinguaFlash Auto Pronunciation v1
-   Automatically plays the learned word/sentence after an exact correct answer.
+   Automatically plays learned words/sentences after correct typed answers.
+   Multiple-choice answers are spoken immediately when the learner taps any option,
+   whether that option is correct or incorrect.
    Reuses app.js speakSentence() so manual and automatic audio share the same TTS engine.
    Does not change grading, FSRS, accepted answers, or Learning Loop completion.
 */
@@ -30,7 +32,6 @@
       }
     } catch (_) {}
 
-    // Fallback only if app.js TTS is unavailable.
     try {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
@@ -165,6 +166,44 @@
     }
   }
 
+  function quizOptionInfo(button) {
+    try {
+      const mode = document.getElementById('quizModeSelect')?.value || '';
+      if (mode !== 'mc_meaning' && mode !== 'mc_word') return null;
+
+      const clone = button.cloneNode(true);
+      clone.querySelectorAll('span').forEach(el => el.remove());
+      const text = String(clone.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!text) return null;
+
+      let language = 'Tiếng Trung';
+      if (mode === 'mc_meaning') {
+        language = typeof getQuizTargetLanguage === 'function' ? getQuizTargetLanguage() : language;
+      } else {
+        language = typeof getQuizSupportLanguage === 'function' ? getQuizSupportLanguage() : 'Tiếng Việt';
+      }
+      return { text, language };
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function bindQuizOptionAudio() {
+    if (document.__lfQuizOptionAudioBound) return;
+    document.__lfQuizOptionAudioBound = true;
+
+    document.addEventListener('click', event => {
+      const button = event.target?.closest?.('button[id^="qopt-"]');
+      if (!button) return;
+      const info = quizOptionInfo(button);
+      if (!info?.text) return;
+
+      // Run after the inline grading handler. This guarantees the selected option's
+      // audio is the final sound even when the option is correct.
+      setTimeout(() => speak(info.text, info.language), 0);
+    });
+  }
+
   function patchQuizFeedback() {
     let original;
     try { original = typeof showQuizFeedback === 'function' ? showQuizFeedback : window.showQuizFeedback; }
@@ -175,6 +214,10 @@
       const result = original.call(this, isCorrect, text, ...rest);
       if (isCorrect) {
         try {
+          const mode = document.getElementById('quizModeSelect')?.value || '';
+          // Multiple choice is handled by the clicked option itself, for both right and wrong answers.
+          if (mode === 'mc_meaning' || mode === 'mc_word') return result;
+
           const card = Array.isArray(quizDeck) ? quizDeck[quizIndex] : null;
           const audio = preferredQuizAudio(card);
           if (audio?.text) speak(audio.text, audio.language);
@@ -191,6 +234,7 @@
     observeStudyFeedback();
     patchDialogueRecall();
     patchDialoguePractice();
+    bindQuizOptionAudio();
     patchQuizFeedback();
   }
 
@@ -208,6 +252,6 @@
   window.lfAutoPronunciation = {
     speak,
     enabled: true,
-    behavior: 'play-after-exact-correct'
+    behavior: 'typed-correct-and-every-multiple-choice-option'
   };
 })();
