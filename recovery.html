@@ -5,7 +5,7 @@
 <title>LinguaFlash Recovery</title>
 <style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f8fafc;color:#0f172a;margin:0;display:grid;place-items:center;min-height:100vh;padding:24px}.box{max-width:540px;background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:24px;box-shadow:0 12px 35px rgba(15,23,42,.08)}h1{font-size:22px;margin:0 0 10px}p{line-height:1.5;color:#475569}.ok{color:#047857;font-weight:700}</style>
 </head>
-<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v27: nếu người học lật thẻ để xem đáp án, hệ thống sẽ tính đó là 1 lần chưa nhớ. Mỗi thẻ chỉ tính một lần cho lần lật đầu tiên; lật qua lại không cộng thêm. Các chức năng v26 và dữ liệu học được giữ nguyên.</p></div>
+<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v28: Learning Loop có nhiệm vụ tương tác cho Câu ví dụ, Hội thoại, Nghe, Dịch và Quiz. Bước tiếp theo chỉ mở khi hoàn thành nhiệm vụ nhỏ hoặc chủ động chọn Bỏ qua. FSRS-6, dữ liệu học, Sync v2 và các chức năng v27 được giữ nguyên.</p></div>
 <script>
 (async()=>{
   const status=document.getElementById('status');
@@ -21,8 +21,8 @@
     }
     ['linguaflash_study_active_recall_v1','linguaflash_study_preferences_v1'].forEach(k=>localStorage.removeItem(k));
     if(!('serviceWorker' in navigator)) throw new Error('Trình duyệt không hỗ trợ Service Worker');
-    status.textContent='Đang cài bản v27…';
-    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=27',{scope:'./',updateViaCache:'none'});
+    status.textContent='Đang cài bản v28…';
+    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=28',{scope:'./',updateViaCache:'none'});
     await reg.update().catch(()=>{});
     let worker=reg.installing||reg.waiting||reg.active;
     if(worker && worker.state!=='activated'){
@@ -35,9 +35,9 @@
       await Promise.race([new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true})),sleep(2500)]);
     }
     status.className='ok';
-    status.textContent='Đã cài v27. Lật thẻ để xem đáp án giờ được tính là 1 lần chưa nhớ và ảnh hưởng trực tiếp đến đánh giá FSRS-6. Đang mở LinguaFlash…';
+    status.textContent='Đã cài v28. Learning Loop giờ có nhiệm vụ tương tác và tự ghi nhận hoàn thành từng bước. Đang mở LinguaFlash…';
     await sleep(500);
-    location.replace('./?recovery=27&t='+Date.now());
+    location.replace('./?recovery=28&t='+Date.now());
   }catch(e){
     console.error(e);
     status.textContent='Recovery gặp lỗi: '+(e&&e.message?e.message:e)+'. Hãy tải lại trang recovery một lần.';
