@@ -60,6 +60,12 @@
     return document.getElementById('studyLangFilter')?.value || 'Tiếng Trung';
   }
 
+  function currentTrack() {
+    const category = document.getElementById('studyCategoryFilter')?.value || 'ALL';
+    const topic = document.getElementById('studyTopicFilter')?.value || 'ALL';
+    return { category, topic };
+  }
+
   function metrics(card, now = Date.now()) {
     const reviews = Math.max(Number(card?.reviewCount || 0), Number(card?.repetitions || 0));
     const last = Number(card?.lastReview || card?.lastReviewedAt || 0);
@@ -73,11 +79,27 @@
     return { isNew, due, weakScore, overdueDays, next };
   }
 
+  function isNormalVocabularyCard(card) {
+    if (!card) return false;
+    const topic = String(card.topic || '');
+    const section = String(card.sourceSection || '');
+    if (/Luyện dịch/i.test(topic) || /Luyện dịch/i.test(section)) return false;
+    if (card.cardType && card.cardType !== 'vocab') return false;
+    return true;
+  }
+
   function cardFitsLanguage(card, language) {
-    if (!card || card.lang !== language) return false;
+    if (!card || card.lang !== language || !isNormalVocabularyCard(card)) return false;
     const word = String(card.word || '').trim();
     if (!word) return false;
     if (/chữ ghi tay|không đủ ngữ cảnh|không xác định|unclear|unknown/i.test(word)) return false;
+    return true;
+  }
+
+  function newCardFitsTrack(card, track) {
+    if (!card) return false;
+    if (track.category && track.category !== 'ALL' && track.category !== '__LF_WEAK__' && card.category !== track.category) return false;
+    if (track.topic && track.topic !== 'ALL' && card.topic !== track.topic) return false;
     return true;
   }
 
@@ -90,10 +112,7 @@
       if (h < hard.length) out.push(hard[h++]);
       let count = 0;
       while (n < normal.length && count < 2) { out.push(normal[n++]); count++; }
-      if (n >= normal.length && h < hard.length) {
-        // No normal cards left: remaining hard cards are unavoidable.
-        while (h < hard.length) out.push(hard[h++]);
-      }
+      if (n >= normal.length && h < hard.length) while (h < hard.length) out.push(hard[h++]);
     }
     return out;
   }
@@ -102,6 +121,7 @@
     const now = Date.now();
     const cfg = settings();
     const progress = dailyProgress();
+    const track = currentTrack();
     const studied = new Set([...(progress.newIds || []), ...(progress.reviewIds || [])]);
     const reviewRemaining = Math.max(0, Number(cfg.reviewLimit || 30) - (progress.reviewIds || []).length);
     const newRemaining = Math.max(0, Number(cfg.newLimit || 20) - (progress.newIds || []).length);
@@ -111,15 +131,15 @@
       if (!cardFitsLanguage(card, language) || studied.has(card.id)) return;
       const m = metrics(card, now);
       const item = { card, m, index };
-      if (m.isNew) fresh.push(item);
-      else if (m.due) due.push(item);
+      if (m.isNew) {
+        if (newCardFitsTrack(card, track)) fresh.push(item);
+      } else if (m.due) due.push(item);
       else if (m.weakScore >= 3) weak.push(item);
     });
 
     due.sort((a,b) => b.m.weakScore - a.m.weakScore || b.m.overdueDays - a.m.overdueDays || a.index - b.index);
     weak.sort((a,b) => b.m.weakScore - a.m.weakScore || (a.m.next || Number.MAX_SAFE_INTEGER) - (b.m.next || Number.MAX_SAFE_INTEGER));
 
-    // Keep new-card order stable so lesson progression does not feel random.
     const maxReview = Math.min(reviewRemaining, MAX_SESSION);
     const chosenReview = [];
     const dueTake = Math.min(due.length, maxReview);
@@ -130,7 +150,6 @@
     const newSlots = Math.min(newRemaining, MAX_NEW_PER_SESSION, Math.max(0, MAX_SESSION - chosenReview.length));
     const chosenNew = fresh.slice(0, newSlots);
 
-    // If reviews are scarce, use more allowed new cards but never exceed the daily limit/session cap.
     if (chosenReview.length + chosenNew.length < MAX_SESSION && chosenNew.length < newRemaining) {
       const extra = Math.min(newRemaining - chosenNew.length, MAX_SESSION - chosenReview.length - chosenNew.length);
       chosenNew.push(...fresh.slice(chosenNew.length, chosenNew.length + extra));
@@ -154,7 +173,8 @@
       weak: chosenReview.filter(x => x.m.weakScore >= 3 && chosenIds.has(x.card.id)).length,
       fresh: chosenNew.filter(x => chosenIds.has(x.card.id)).length,
       reviewRemaining,
-      newRemaining
+      newRemaining,
+      track
     };
     summary.minutes = Math.max(3, Math.round(deck.length * 0.75));
     return summary;
