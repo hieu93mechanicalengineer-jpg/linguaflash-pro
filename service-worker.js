@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-goal-usage-v44';
+const CACHE_NAME = 'linguaflash-remove-bad-giahan-v45';
 
 // Keep startup shell small. The two largest packs are cached only after the user needs them.
 const CORE_ASSETS = [
@@ -74,7 +74,7 @@ async function transformIndexResponse(response) {
   );
   html = html.replace(
     '<script src="./data/core-cards.js"></script>',
-    '<script src="./data/core-cards.js"></script>\n<script src="./data/giahan-b17-supplement.js?v=39"></script>\n<script src="./data/giahan-b18-supplement.js?v=39"></script>\n<script src="./data/giahan-b19-supplement.js?v=39"></script>\n<script src="./data/giahan-b19-supplement-2.js?v=39"></script>\n<script src="./data/uncertain-card-filter-v1.js?v=39"></script>'
+    '<script src="./data/core-cards.js"></script>\n<script src="./data/giahan-b17-supplement.js?v=39"></script>\n<script src="./data/giahan-b18-supplement.js?v=39"></script>\n<script src="./data/giahan-b19-supplement.js?v=39"></script>\n<script src="./data/giahan-b19-supplement-2.js?v=39"></script>\n<script src="./data/uncertain-card-filter-v1.js?v=45"></script>'
   );
   html = html.replace(
     '<script src="./app.js"></script>',
