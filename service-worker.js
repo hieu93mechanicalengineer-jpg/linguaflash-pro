@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-mobile-nav-v57';
+const CACHE_NAME = 'linguaflash-51talk-english-v58';
 
 // Keep startup shell small. The two largest packs are cached only after the user needs them.
 const CORE_ASSETS = [
@@ -8,6 +8,7 @@ const CORE_ASSETS = [
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
   './data/core-cards.js',
+  './data/english-51talk-lessons-v1.js',
   './data/giahan-b17-supplement.js',
   './data/giahan-b18-supplement.js',
   './data/giahan-b19-supplement.js',
@@ -86,7 +87,7 @@ async function transformIndexResponse(response) {
   );
   html = html.replace(
     '<script src="./app.js"></script>',
-    '<script src="./data/giahan-translation-practice-v2.js?v=39"></script>\n<script src="./data/giahan-translation-practice-tc2-fix-v1.js?v=39"></script>\n<script src="./app.js"></script>\n<script src="./giahan-usage-examples-v2.js?v=49"></script>\n<script src="./giahan-usage-hotfix-v1.js?v=49"></script>\n<script src="./lazy-large-packs.js?v=39"></script>\n<script src="./study-answer-mode.js?v=39"></script>\n<script src="./study-input-mobile-hotfix-v1.js?v=53"></script>\n<script src="./study-navigation-mobile-hotfix-v1.js?v=57"></script>\n<script src="./study-answer-alternatives-v1.js?v=39"></script>\n<script src="./study-show-all-vocab-v1.js?v=39"></script>\n<script src="./study-flip-penalty-v1.js?v=39"></script>\n<script src="./study-card-touch-fix-v1.js?v=39"></script>\n<script src="./answer-quality-v1.js?v=39"></script>\n<script src="./study-character-feedback-v1.js?v=39"></script>\n<script src="./study-hint-ladder-v2.js?v=54"></script>\n<script src="./study-chunk-mode-v1.js?v=50"></script>\n<script src="./study-chunk-external-panel-v1.js?v=55"></script>\n<script src="./quiz-multi-lesson-v1.js?v=51"></script>\n<script src="./auto-pronunciation-v1.js?v=39"></script>\n<script src="./podcast-auto-pronunciation-v1.js?v=39"></script>\n<script src="./study-filter-prefs.js?v=39"></script>\n<script src="./weak-words-v1.js?v=39"></script>\n<script src="./smart-study-queue-v1.js?v=39"></script>\n<script src="./study-session-v1.js?v=39"></script>\n<script src="./smart-daily-session-v2.js?v=44"></script>\n<script src="./dialogue-active-recall-v1.js?v=39"></script>\n<script src="./learning-loop-v1.js?v=39"></script>\n<script src="./learning-loop-tasks-v1.js?v=39"></script>\n<script src="./learning-loop-mobile-fix-v1.js?v=39"></script>\n<script src="./admin-dashboard-v1.js?v=39"></script>'
+    '<script src="./data/giahan-translation-practice-v2.js?v=39"></script>\n<script src="./data/giahan-translation-practice-tc2-fix-v1.js?v=39"></script>\n<script src="./data/english-51talk-lessons-v1.js?v=58"></script>\n<script src="./app.js"></script>\n<script src="./giahan-usage-examples-v2.js?v=49"></script>\n<script src="./giahan-usage-hotfix-v1.js?v=49"></script>\n<script src="./lazy-large-packs.js?v=39"></script>\n<script src="./study-answer-mode.js?v=39"></script>\n<script src="./study-input-mobile-hotfix-v1.js?v=53"></script>\n<script src="./study-navigation-mobile-hotfix-v1.js?v=57"></script>\n<script src="./study-answer-alternatives-v1.js?v=39"></script>\n<script src="./study-show-all-vocab-v1.js?v=39"></script>\n<script src="./study-flip-penalty-v1.js?v=39"></script>\n<script src="./study-card-touch-fix-v1.js?v=39"></script>\n<script src="./answer-quality-v1.js?v=39"></script>\n<script src="./study-character-feedback-v1.js?v=39"></script>\n<script src="./study-hint-ladder-v2.js?v=54"></script>\n<script src="./study-chunk-mode-v1.js?v=50"></script>\n<script src="./study-chunk-external-panel-v1.js?v=55"></script>\n<script src="./quiz-multi-lesson-v1.js?v=51"></script>\n<script src="./auto-pronunciation-v1.js?v=39"></script>\n<script src="./podcast-auto-pronunciation-v1.js?v=39"></script>\n<script src="./study-filter-prefs.js?v=39"></script>\n<script src="./weak-words-v1.js?v=39"></script>\n<script src="./smart-study-queue-v1.js?v=39"></script>\n<script src="./study-session-v1.js?v=39"></script>\n<script src="./smart-daily-session-v2.js?v=44"></script>\n<script src="./dialogue-active-recall-v1.js?v=39"></script>\n<script src="./learning-loop-v1.js?v=39"></script>\n<script src="./learning-loop-tasks-v1.js?v=39"></script>\n<script src="./learning-loop-mobile-fix-v1.js?v=39"></script>\n<script src="./admin-dashboard-v1.js?v=39"></script>'
   );
 
   const legacyCloudSync = /<script id="lf-cloud-sync-script">[\s\S]*?<\/script>/i;
