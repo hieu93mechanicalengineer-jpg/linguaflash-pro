@@ -5,7 +5,7 @@
 <title>LinguaFlash Recovery</title>
 <style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f8fafc;color:#0f172a;margin:0;display:grid;place-items:center;min-height:100vh;padding:24px}.box{max-width:540px;background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:24px;box-shadow:0 12px 35px rgba(15,23,42,.08)}h1{font-size:22px;margin:0 0 10px}p{line-height:1.5;color:#475569}.ok{color:#047857;font-weight:700}</style>
 </head>
-<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v38: sửa nguồn dữ liệu Luyện dịch Trung cấp 2. Bài 31–45 giờ được tạo từ đúng các topic Gia Hân TC2 thực tế và sẽ xuất hiện trong danh sách Luyện dịch. FSRS-6, tiến độ và các chức năng v37 được giữ nguyên.</p></div>
+<body><div class="box"><h1>Đang cập nhật LinguaFlash…</h1><p id="status">Đang cài bản v39: Smart Daily Session v2 + Focus Mode. Trang chủ có nút Học hôm nay, tự trộn thẻ đến hạn, từ yếu và từ mới theo Daily Goal; khi bắt đầu học giao diện sẽ thu gọn để tập trung. FSRS-6, Sync v2, Learning Loop, tiến độ và dữ liệu học được giữ nguyên.</p></div>
 <script>
 (async()=>{
   const status=document.getElementById('status');
@@ -21,8 +21,8 @@
     }
     ['linguaflash_study_active_recall_v1','linguaflash_study_preferences_v1'].forEach(k=>localStorage.removeItem(k));
     if(!('serviceWorker' in navigator)) throw new Error('Trình duyệt không hỗ trợ Service Worker');
-    status.textContent='Đang cài bản v38…';
-    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=38',{scope:'./',updateViaCache:'none'});
+    status.textContent='Đang cài bản v39…';
+    const reg=await navigator.serviceWorker.register('./service-worker.js?recovery=39',{scope:'./',updateViaCache:'none'});
     await reg.update().catch(()=>{});
     let worker=reg.installing||reg.waiting||reg.active;
     if(worker && worker.state!=='activated'){
@@ -35,9 +35,9 @@
       await Promise.race([new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true})),sleep(2500)]);
     }
     status.className='ok';
-    status.textContent='Đã cài v38. Luyện dịch Bài 31–45 đã được gắn vào đúng nguồn TC2. Đang mở LinguaFlash…';
+    status.textContent='Đã cài v39. Smart Daily Session và Focus Mode đã sẵn sàng. Đang mở LinguaFlash…';
     await sleep(500);
-    location.replace('./?recovery=38&t='+Date.now());
+    location.replace('./?recovery=39&t='+Date.now());
   }catch(e){
     console.error(e);
     status.textContent='Recovery gặp lỗi: '+(e&&e.message?e.message:e)+'. Hãy tải lại trang recovery một lần.';
