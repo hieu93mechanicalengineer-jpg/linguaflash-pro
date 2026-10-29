@@ -1,6 +1,6 @@
-const CACHE_NAME = 'linguaflash-mobile-ui-v76';
+const CACHE_NAME = 'linguaflash-english-mobile-v77';
 
-// Common startup shell. Mobile keeps the proven v66 safe runtime; desktop gets
+// Common startup shell. Mobile uses the clean English lesson UI; desktop keeps
 // the compact 51Talk workspace, Class 158 work lesson and two-way review trainer.
 const CORE_ASSETS = [
   './manifest.webmanifest',
@@ -30,7 +30,7 @@ const CORE_ASSETS = [
   './giahan-usage-hotfix-v1.js',
   './data/youtube-podcast.js',
   './app.js',
-  './english-51talk-mobile-ux-v1.js',
+  './english-mobile-lessons-v1.js',
   './english-51talk-desktop-workspace-v1.js',
   './english-51talk-class158-work-v1.js',
   './english-51talk-review-trainer-v1.js',
@@ -88,9 +88,16 @@ async function transformIndexResponse(response) {
 <script src="./app.js"></script>
 <script>
 (function(){
-  var mobile = !!(window.matchMedia && window.matchMedia('(max-width:760px)').matches);
+  var ua = String(navigator.userAgent || '');
+  var mobileUA = /Android|iPhone|iPad|iPod|Mobile|IEMobile|Opera Mini/i.test(ua);
+  var touch = Number(navigator.maxTouchPoints || 0) > 0;
+  var coarse = false;
+  try { coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches); } catch (_) {}
+  var shortSide = Math.min(Number(screen.width || 9999), Number(screen.height || 9999));
+  var mobile = mobileUA || (touch && coarse && shortSide <= 1024);
+
   var mobileScripts = [
-    './english-51talk-mobile-ux-v1.js?v=66',
+    './english-mobile-lessons-v1.js?v=77',
     './lazy-large-packs.js?v=66',
     './study-answer-mode.js?v=66',
     './study-answer-alternatives-v1.js?v=66',
