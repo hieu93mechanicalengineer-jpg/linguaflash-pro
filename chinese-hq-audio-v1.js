@@ -1,8 +1,14 @@
-/* LinguaFlash · HQ Chinese Audio v1 */
+/* LinguaFlash · HQ Chinese Audio v2
+   - Plays stored Chinese HQ audio for every user.
+   - If the current account is admin and an item is missing, generates only that
+     item on demand, stores it in Supabase, then plays it.
+   - Normal users never call HeyGen; they fall back to device/browser TTS when
+     an HQ file does not exist yet.
+*/
 (() => {
   'use strict';
-  if (window.__LF_CHINESE_HQ_AUDIO_V1__) return;
-  window.__LF_CHINESE_HQ_AUDIO_V1__ = true;
+  if (window.__LF_CHINESE_HQ_AUDIO_V2__) return;
+  window.__LF_CHINESE_HQ_AUDIO_V2__ = true;
 
   const cfg = window.LINGUAFLASH_SUPABASE || {};
   const SUPABASE_URL = String(cfg.url || '').replace(/\/$/, '');
@@ -86,6 +92,40 @@
     return true;
   }
 
+  async function tryAdminGenerate(text) {
+    try {
+      const admin = window.LFChineseAudioAdmin;
+      if (!admin?.canGenerate?.() || typeof admin.ensureAudio !== 'function') return false;
+      return !!(await admin.ensureAudio(text, 'ondemand'));
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function playForUtterance(utterance, rate, fallbackSpeak) {
+    const text = String(utterance?.text || '').trim();
+    const hooks = {
+      onstart: () => { try { utterance.onstart?.(new Event('start')); } catch (_) {} },
+      onend: () => { try { utterance.onend?.(new Event('end')); } catch (_) {} },
+      onerror: () => { try { utterance.onerror?.(new Event('error')); } catch (_) {} }
+    };
+
+    if (has(text)) {
+      play(text, rate, hooks);
+      return;
+    }
+
+    // Admin only: generate exactly this missing item, then play it. For normal
+    // users tryAdminGenerate returns false and the original TTS is used.
+    tryAdminGenerate(text).then(ok => {
+      if (ok && has(text)) {
+        play(text, rate, hooks);
+      } else {
+        fallbackSpeak(utterance);
+      }
+    }).catch(() => fallbackSpeak(utterance));
+  }
+
   function patchSpeechSynthesis() {
     if (speechPatched || !('speechSynthesis' in window)) return;
     const synth = window.speechSynthesis;
@@ -96,16 +136,21 @@
         try {
           const text = String(utterance?.text || '').trim();
           const lang = String(utterance?.lang || '');
-          if (manifestLoaded && isZhLocale(lang) && has(text)) {
+          if (manifestLoaded && isZhLocale(lang) && text) {
             previousCancel();
             const requested = Number(utterance?.rate);
             const rate = Number.isFinite(requested) && requested !== 1 ? requested : DEFAULT_RATE;
-            play(text, rate, {
-              onstart: () => { try { utterance.onstart?.(new Event('start')); } catch (_) {} },
-              onend: () => { try { utterance.onend?.(new Event('end')); } catch (_) {} },
-              onerror: () => { try { utterance.onerror?.(new Event('error')); } catch (_) {} }
-            });
-            return;
+
+            if (has(text)) {
+              playForUtterance(utterance, rate, previousSpeak);
+              return;
+            }
+
+            const admin = window.LFChineseAudioAdmin;
+            if (admin?.canGenerate?.()) {
+              playForUtterance(utterance, rate, previousSpeak);
+              return;
+            }
           }
         } catch (_) {}
         previousSpeak(utterance);
@@ -149,5 +194,9 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
   else init();
 
-  window.LFChineseHQAudio = { ready, refresh, has, play, playSequence, stop, getEntry, defaultRate: DEFAULT_RATE, bucket: BUCKET };
+  window.LFChineseHQAudio = {
+    ready, refresh, has, play, playSequence, stop, getEntry,
+    defaultRate: DEFAULT_RATE,
+    bucket: BUCKET
+  };
 })();
