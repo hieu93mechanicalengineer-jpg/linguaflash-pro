@@ -245,7 +245,7 @@
 
     const status = document.createElement('div');
     status.id = STATUS_ID;
-    status.textContent = 'Turbo Free · Annie · phát mặc định 0.75×';
+    status.textContent = 'Turbo Free · Nadine · phát mặc định 0.75×';
     status.style.fontSize = '.66rem';
     status.style.fontWeight = '700';
     status.style.maxWidth = '320px';
