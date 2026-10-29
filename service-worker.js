@@ -1,10 +1,15 @@
-const CACHE_NAME = 'linguaflash-class158-work-v69';
+const CACHE_NAME = 'linguaflash-mobile-ui-v76';
 
 // Common startup shell. Mobile keeps the proven v66 safe runtime; desktop gets
 // the compact 51Talk workspace, Class 158 work lesson and two-way review trainer.
 const CORE_ASSETS = [
   './manifest.webmanifest',
   './supabase-config.js',
+  './mobile-ui-v1.js',
+  './english-hq-audio-v1.js',
+  './chinese-hq-audio-v1.js',
+  './english-audio-admin-v1.js',
+  './chinese-audio-admin-v1.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
