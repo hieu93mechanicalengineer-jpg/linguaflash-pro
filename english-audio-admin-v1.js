@@ -1,15 +1,15 @@
-/* LinguaFlash · English HQ Audio Admin v1
-   Admin-only helper for generating stored HeyGen Turbo audio for the current
-   51Talk desktop lessons. It discovers the exact visible lesson content from
-   the existing workspace instead of duplicating lesson data.
+/* LinguaFlash · English HQ Audio Admin v2
+   Admin-only generation. Generates only the current 51Talk lesson, or one
+   missing English item on demand when the admin actually listens to it.
 */
 (() => {
   'use strict';
-  if (window.__LF_ENGLISH_AUDIO_ADMIN_V1__) return;
-  window.__LF_ENGLISH_AUDIO_ADMIN_V1__ = true;
+  if (window.__LF_ENGLISH_AUDIO_ADMIN_V2__) return;
+  window.__LF_ENGLISH_AUDIO_ADMIN_V2__ = true;
 
   const cfg = window.LINGUAFLASH_SUPABASE || {};
   const MODEL = 'heygen-voice-1-turbo-free';
+  const VOICE_NAME = 'Nadine · Calm & Gentle';
   const BATCH_SIZE = 8;
   const STATUS_ID = 'lf51AudioAdminStatus';
   const BUTTON_ID = 'lf51AudioAdminButton';
@@ -18,6 +18,7 @@
   let session = null;
   let isAdmin = false;
   let generating = false;
+  const pendingOnDemand = new Map();
 
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const norm = value => String(value || '')
@@ -56,16 +57,7 @@
   }
 
   function clickTab(tab) {
-    const button = document.querySelector(`#lf51DesktopWorkspace .lf51d-tab[data-tab="${tab}"]`);
-    button?.click();
-  }
-
-  function setLesson(lessonId) {
-    const select = currentLessonSelect();
-    if (!select) return false;
-    select.value = lessonId;
-    select.dispatchEvent(new Event('change', { bubbles: true }));
-    return true;
+    document.querySelector(`#lf51DesktopWorkspace .lf51d-tab[data-tab="${tab}"]`)?.click();
   }
 
   function countCurrentPager() {
@@ -80,9 +72,9 @@
     const key = norm(clean);
     if (map.has(key)) return;
     map.set(key, {
-      audio_key: `${lessonId}_${contentType}_${hashText(clean)}`,
-      lesson_id: lessonId,
-      content_type: contentType,
+      audio_key: `en_${hashText(clean)}`,
+      lesson_id: String(lessonId || 'english'),
+      content_type: contentType || 'lesson',
       text: clean
     });
   }
@@ -101,8 +93,7 @@
         pushItem(map, lessonId, type, button.dataset.audio);
       });
       if (i < total - 1) {
-        const next = document.querySelector(`#lf51DesktopWorkspace .lf51d-main [data-step="${stepType}:1"]`);
-        next?.click();
+        document.querySelector(`#lf51DesktopWorkspace .lf51d-main [data-step="${stepType}:1"]`)?.click();
         await sleep(0);
       }
     }
@@ -115,30 +106,20 @@
       .forEach(button => pushItem(map, lessonId, 'dialogue', button.dataset.audio));
   }
 
-  async function collectAllLessonAudio() {
+  async function collectCurrentLessonAudio() {
     if (!workspaceReady()) throw new Error('Mở phần 51Talk English trên máy tính trước khi tạo audio.');
-
-    const originalLesson = currentLessonSelect()?.value || '';
+    const select = currentLessonSelect();
+    const lessonId = select?.value || 'english-current';
     const originalTab = currentTab();
-    const lessonIds = [...currentLessonSelect().options].map(option => option.value).filter(Boolean);
     const map = new Map();
 
-    for (const lessonId of lessonIds) {
-      if (!setLesson(lessonId)) continue;
-      await sleep(0);
-      await collectPagedTab(map, lessonId, 'vocab', 'vocab');
-      await collectPagedTab(map, lessonId, 'examples', 'example');
-      await collectDialogue(map, lessonId);
-      await collectPagedTab(map, lessonId, 'speaking', 'speaking');
-    }
+    await collectPagedTab(map, lessonId, 'vocab', 'vocab');
+    await collectPagedTab(map, lessonId, 'examples', 'example');
+    await collectDialogue(map, lessonId);
+    await collectPagedTab(map, lessonId, 'speaking', 'speaking');
+    clickTab(originalTab);
 
-    if (originalLesson) {
-      setLesson(originalLesson);
-      await sleep(0);
-      clickTab(originalTab);
-    }
-
-    return [...map.values()];
+    return { lessonId, items: [...map.values()] };
   }
 
   async function getMissingItems(items) {
@@ -152,6 +133,7 @@
   }
 
   async function callGenerator(items) {
+    if (!isAdmin || !session?.access_token) throw new Error('Chỉ tài khoản admin mới được tạo audio.');
     const response = await fetch(`${String(cfg.url || '').replace(/\/$/, '')}/functions/v1/generate-english-audio`, {
       method: 'POST',
       headers: {
@@ -165,26 +147,21 @@
     const raw = await response.text();
     let payload = null;
     try { payload = raw ? JSON.parse(raw) : null; } catch (_) {}
-    if (!response.ok) {
-      const message = payload?.error || payload?.message || raw || `HTTP ${response.status}`;
-      throw new Error(message);
-    }
+    if (!response.ok) throw new Error(payload?.error || payload?.message || raw || `HTTP ${response.status}`);
     return payload || {};
   }
 
-  async function generateAll() {
-    if (generating) return;
+  async function generateCurrentLesson() {
+    if (generating || !isAdmin) return;
     generating = true;
     const button = document.getElementById(BUTTON_ID);
     if (button) button.disabled = true;
 
     try {
-      setStatus('Đang đọc nội dung 3 bài hiện tại…');
-      const all = await collectAllLessonAudio();
-      const missing = await getMissingItems(all);
-
+      const scope = await collectCurrentLessonAudio();
+      const missing = await getMissingItems(scope.items);
       if (!missing.length) {
-        setStatus(`✅ Đã có đủ ${all.length} audio HQ.`, 'ok');
+        setStatus(`✅ Bài đang học đã có đủ ${scope.items.length} audio HQ.`, 'ok');
         await window.LFEnglishHQAudio?.refresh?.();
         return;
       }
@@ -194,7 +171,7 @@
       const failures = [];
       for (let offset = 0; offset < missing.length; offset += BATCH_SIZE) {
         const batch = missing.slice(offset, offset + BATCH_SIZE);
-        setStatus(`Đang tạo audio ${offset + 1}–${Math.min(offset + batch.length, missing.length)} / ${missing.length}…`);
+        setStatus(`Đang tạo ${offset + 1}–${Math.min(offset + batch.length, missing.length)} / ${missing.length} của bài đang học…`);
         const result = await callGenerator(batch);
         generated += Number(result.generated || 0);
         failed += Number(result.failed || 0);
@@ -204,13 +181,12 @@
       }
 
       if (failed) {
-        const first = failures[0]?.error || 'Có một số audio chưa tạo được.';
-        setStatus(`⚠️ Đã tạo ${generated}, lỗi ${failed}. ${first}`, 'error');
+        setStatus(`⚠️ Đã tạo ${generated}, lỗi ${failed}. ${failures[0]?.error || ''}`, 'error');
       } else {
-        setStatus(`✅ Hoàn tất ${generated} audio mới. Tổng nội dung: ${all.length}.`, 'ok');
+        setStatus(`✅ Hoàn tất ${generated} audio mới cho bài đang học.`, 'ok');
       }
     } catch (error) {
-      console.error('[LinguaFlash Audio Admin]', error);
+      console.error('[LinguaFlash English Audio Admin]', error);
       setStatus(`❌ ${String(error?.message || error)}`, 'error');
     } finally {
       generating = false;
@@ -218,10 +194,54 @@
     }
   }
 
+  function currentLessonId() {
+    const workspaceLesson = currentLessonSelect()?.value;
+    if (workspaceLesson) return workspaceLesson;
+    const topic = document.getElementById('studyTopicFilter')?.value || 'ALL';
+    const category = document.getElementById('studyCategoryFilter')?.value || 'ALL';
+    if (topic !== 'ALL') return topic;
+    if (category !== 'ALL') return category;
+    return 'admin-on-demand';
+  }
+
+  async function ensureAudio(text, contentType = 'lesson') {
+    const clean = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!isAdmin || !session?.access_token || !clean) return false;
+    if (window.LFEnglishHQAudio?.has?.(clean)) return true;
+
+    const key = `en_${hashText(clean)}`;
+    if (pendingOnDemand.has(key)) return pendingOnDemand.get(key);
+
+    const job = (async () => {
+      try {
+        const result = await callGenerator([{
+          audio_key: key,
+          lesson_id: currentLessonId(),
+          content_type: contentType,
+          text: clean
+        }]);
+        const ok = Number(result.generated || 0) > 0 || (result.results || []).some(row => row?.ok);
+        if (ok) await window.LFEnglishHQAudio?.refresh?.();
+        return ok && !!window.LFEnglishHQAudio?.has?.(clean);
+      } catch (error) {
+        console.warn('[English Audio Admin on-demand]', error);
+        return false;
+      } finally {
+        pendingOnDemand.delete(key);
+      }
+    })();
+
+    pendingOnDemand.set(key, job);
+    return job;
+  }
+
   function ensureAdminControl() {
     if (!isAdmin || !workspaceReady()) return;
     const top = document.querySelector('#lf51DesktopWorkspace .lf51d-top');
-    if (!top || document.getElementById(BUTTON_ID)) return;
+    if (!top) return;
+
+    const existing = document.getElementById(BUTTON_ID);
+    if (existing) return;
 
     const wrap = document.createElement('div');
     wrap.style.display = 'flex';
@@ -233,7 +253,7 @@
     const button = document.createElement('button');
     button.id = BUTTON_ID;
     button.type = 'button';
-    button.textContent = '🎙️ Tạo audio HQ · 3 bài';
+    button.textContent = '🎙️ Tạo audio bài đang học';
     button.style.border = '1px solid #b7d3f6';
     button.style.background = '#edf6ff';
     button.style.color = '#0f5fae';
@@ -241,14 +261,14 @@
     button.style.padding = '7px 10px';
     button.style.fontWeight = '850';
     button.style.cursor = 'pointer';
-    button.addEventListener('click', generateAll);
+    button.addEventListener('click', generateCurrentLesson);
 
     const status = document.createElement('div');
     status.id = STATUS_ID;
-    status.textContent = 'Turbo Free · Nadine · phát mặc định 0.75×';
+    status.textContent = `Admin only · Turbo Free · ${VOICE_NAME} · tự tạo khi bạn bấm nghe`;
     status.style.fontSize = '.66rem';
     status.style.fontWeight = '700';
-    status.style.maxWidth = '320px';
+    status.style.maxWidth = '360px';
     status.style.textAlign = 'right';
     status.style.color = '#64748b';
 
@@ -272,22 +292,28 @@
         .eq('user_id', session.user.id)
         .maybeSingle();
       if (error || !admin) return;
+
       isAdmin = true;
       ensureAdminControl();
 
-      client.auth.onAuthStateChange((_event, newSession) => {
+      client.auth.onAuthStateChange(async (_event, newSession) => {
         session = newSession || null;
-        if (!session?.user) return;
-        setTimeout(ensureAdminControl, 50);
+        if (!session?.user) {
+          isAdmin = false;
+          document.getElementById(BUTTON_ID)?.parentElement?.remove();
+          return;
+        }
+        const { data: nextAdmin } = await client.from('linguaflash_admins').select('role').eq('user_id', session.user.id).maybeSingle();
+        isAdmin = !!nextAdmin;
+        if (isAdmin) setTimeout(ensureAdminControl, 50);
+        else document.getElementById(BUTTON_ID)?.parentElement?.remove();
       });
     } catch (error) {
-      console.warn('[LinguaFlash Audio Admin] init skipped', error);
+      console.warn('[LinguaFlash English Audio Admin] init skipped', error);
     }
   }
 
-  const observer = new MutationObserver(() => {
-    if (isAdmin) ensureAdminControl();
-  });
+  const observer = new MutationObserver(() => { if (isAdmin) ensureAdminControl(); });
 
   function init() {
     observer.observe(document.documentElement, { childList: true, subtree: true });
@@ -299,8 +325,11 @@
   else init();
 
   window.LFEnglishAudioAdmin = {
-    collectAllLessonAudio,
-    generateAll,
-    model: MODEL
+    collectCurrentLessonAudio,
+    generateCurrentLesson,
+    ensureAudio,
+    canGenerate: () => isAdmin && !!session?.access_token,
+    model: MODEL,
+    voice: VOICE_NAME
   };
 })();
