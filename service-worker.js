@@ -1,7 +1,7 @@
-const CACHE_NAME = 'linguaflash-mobile-safe-v66';
+const CACHE_NAME = 'linguaflash-desktop-english-v67';
 
-// Mobile-safe startup shell: cache only common/core assets and the small set
-// of modules that are intentionally allowed to run on phones.
+// Common startup shell. Mobile keeps the proven v66 safe runtime; desktop gets
+// the new compact 51Talk workspace without the old stacked English modules.
 const CORE_ASSETS = [
   './manifest.webmanifest',
   './supabase-config.js',
@@ -26,6 +26,7 @@ const CORE_ASSETS = [
   './data/youtube-podcast.js',
   './app.js',
   './english-51talk-mobile-ux-v1.js',
+  './english-51talk-desktop-workspace-v1.js',
   './lazy-large-packs.js',
   './study-answer-mode.js',
   './study-answer-alternatives-v1.js',
@@ -72,10 +73,6 @@ async function transformIndexResponse(response) {
     '<script src="./data/core-cards.js"></script>\n<script src="./data/giahan-b17-supplement.js?v=39"></script>\n<script src="./data/giahan-b18-supplement.js?v=39"></script>\n<script src="./data/giahan-b19-supplement.js?v=39"></script>\n<script src="./data/giahan-b19-supplement-2.js?v=39"></script>\n<script src="./data/giahan-source-fixes-v1.js?v=49"></script>\n<script src="./data/uncertain-card-filter-v1.js?v=45"></script>'
   );
 
-  // IMPORTANT: phones intentionally receive a small, conservative runtime.
-  // Old touch/navigation/chunk/hint hotfixes are desktop-only until mobile is
-  // proven stable again. This avoids multiple document-level event handlers
-  // competing for the same tap/pointer events on iOS/Android PWAs.
   html = html.replace(
     '<script src="./app.js"></script>',
     `<script src="./data/giahan-translation-practice-v2.js?v=39"></script>
@@ -99,9 +96,7 @@ async function transformIndexResponse(response) {
     './study-session-v1.js?v=66'
   ];
   var desktopScripts = [
-    './english-51talk-learning-v2.js?v=59',
-    './english-51talk-pattern-practice-v1.js?v=60',
-    './english-51talk-listening-dictation-v1.js?v=61',
+    './english-51talk-desktop-workspace-v1.js?v=67',
     './lazy-large-packs.js?v=39',
     './study-answer-mode.js?v=39',
     './study-input-mobile-hotfix-v1.js?v=53',
@@ -141,9 +136,9 @@ async function transformIndexResponse(response) {
 
   const legacyCloudSync = /<script id="lf-cloud-sync-script">[\s\S]*?<\/script>/i;
   if (legacyCloudSync.test(html)) {
-    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=66"></script>');
+    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=67"></script>');
   } else if (!html.includes('cloud-sync-v2.js')) {
-    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=66"></script>\n</body>');
+    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=67"></script>\n</body>');
   }
 
   const headers = new Headers(response.headers);
