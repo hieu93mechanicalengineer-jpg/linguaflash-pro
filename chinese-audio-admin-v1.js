@@ -1,8 +1,11 @@
-/* LinguaFlash · Chinese HQ Audio Admin v1 */
+/* LinguaFlash · Chinese HQ Audio Admin v2
+   Admin-only generation. Generates only the current study scope, or one missing
+   Chinese item on demand when the admin actually listens to it.
+*/
 (() => {
   'use strict';
-  if (window.__LF_CHINESE_AUDIO_ADMIN_V1__) return;
-  window.__LF_CHINESE_AUDIO_ADMIN_V1__ = true;
+  if (window.__LF_CHINESE_AUDIO_ADMIN_V2__) return;
+  window.__LF_CHINESE_AUDIO_ADMIN_V2__ = true;
 
   const cfg = window.LINGUAFLASH_SUPABASE || {};
   const MODEL = 'heygen-voice-1-turbo-free';
@@ -17,6 +20,7 @@
   let session = null;
   let isAdmin = false;
   let generating = false;
+  const pendingOnDemand = new Map();
 
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const norm = value => String(value || '').replace(/\s+/g, ' ').trim();
@@ -37,7 +41,7 @@
     if (!hasHanzi(s)) return false;
     const han = (s.match(/[\u3400-\u9fff\uf900-\ufaff]/g) || []).length;
     const latin = (s.match(/[A-Za-zÀ-ỹ]/g) || []).length;
-    return han >= 2 && latin <= Math.max(4, han * 0.7);
+    return han >= 1 && latin <= Math.max(4, han * 0.7);
   }
 
   function splitCandidateText(text) {
@@ -60,67 +64,76 @@
     });
   }
 
-  function collectCards(map) {
-    let cards = [];
-    try { if (typeof allCards !== 'undefined' && Array.isArray(allCards)) cards = allCards; } catch (_) {}
-    cards.forEach(card => {
+  function getAllCards() {
+    try {
+      if (typeof allCards !== 'undefined' && Array.isArray(allCards)) return allCards;
+    } catch (_) {}
+    return [];
+  }
+
+  function cardCategory(card) {
+    try {
+      if (typeof parseCategoryAndTopic === 'function') {
+        const parsed = parseCategoryAndTopic(card?.topic || 'Chung');
+        if (parsed?.cat) return parsed.cat;
+      }
+    } catch (_) {}
+    return card?.category || 'Chung';
+  }
+
+  function currentScope() {
+    const category = document.getElementById('studyCategoryFilter')?.value || 'ALL';
+    const topic = document.getElementById('studyTopicFilter')?.value || 'ALL';
+    let cards = getAllCards().filter(card => card?.lang === 'Tiếng Trung');
+
+    if (topic !== 'ALL') {
+      cards = cards.filter(card => String(card?.topic || 'Chung') === topic);
+    } else if (category !== 'ALL') {
+      cards = cards.filter(card => cardCategory(card) === category || card?.category === category);
+    } else {
+      // Avoid accidental full-library generation. When no scope is selected,
+      // use only the currently visible study deck instead of every Chinese card.
+      try {
+        if (typeof filteredDeck !== 'undefined' && Array.isArray(filteredDeck) && filteredDeck.length) {
+          cards = filteredDeck.filter(card => card?.lang === 'Tiếng Trung');
+        } else {
+          cards = cards.slice(0, 20);
+        }
+      } catch (_) {
+        cards = cards.slice(0, 20);
+      }
+    }
+
+    const label = topic !== 'ALL'
+      ? topic
+      : category !== 'ALL'
+        ? category
+        : 'phần đang học';
+
+    return { category, topic, cards, label };
+  }
+
+  function collectCardsFromList(cards, map) {
+    (cards || []).forEach(card => {
       if (!card || card.lang !== 'Tiếng Trung') return;
       const lessonId = card.topic || card.category || 'chinese-card';
       if (card.cardType === 'sentence') {
         if (hasHanzi(card.meaning)) pushItem(map, lessonId, 'sentence', card.meaning);
-      } else {
-        if (hasHanzi(card.word)) pushItem(map, lessonId, 'vocab', card.word);
+      } else if (hasHanzi(card.word)) {
+        pushItem(map, lessonId, 'vocab', card.word);
       }
       splitCandidateText(card.example).forEach(part => {
         if (looksMostlyChinese(part)) pushItem(map, lessonId, 'example', part);
       });
+      if (hasHanzi(card.exampleChinese)) pushItem(map, lessonId, 'example', card.exampleChinese);
     });
   }
 
-  function collectDialogues(map) {
-    let db = null;
-    try { if (typeof DIALOGUES_DB !== 'undefined') db = DIALOGUES_DB; } catch (_) {}
-    if (!db || typeof db !== 'object') return;
-    Object.entries(db).forEach(([key, dlg]) => {
-      const lines = Array.isArray(dlg?.lines) ? dlg.lines : [];
-      lines.forEach(line => {
-        const text = line?.cn || '';
-        const locale = String(line?.lang || dlg?.language || '');
-        if (hasHanzi(text) && (/^zh/i.test(locale) || looksMostlyChinese(text))) {
-          pushItem(map, `dialogue_${key}`, 'dialogue', text);
-        }
-      });
-    });
-  }
-
-  function collectGrammarObject(map, value, context = 'grammar') {
-    if (!value) return;
-    if (Array.isArray(value)) {
-      value.forEach(item => collectGrammarObject(map, item, context));
-      return;
-    }
-    if (typeof value !== 'object') return;
-    const nextContext = value.section || value.lesson || value.title || context;
-    if (typeof value.cn === 'string' && hasHanzi(value.cn)) {
-      pushItem(map, nextContext, 'grammar', value.cn);
-    }
-    Object.entries(value).forEach(([key, child]) => {
-      if (key === 'cn') return;
-      if (child && typeof child === 'object') collectGrammarObject(map, child, `${nextContext}_${key}`);
-    });
-  }
-
-  function collectGrammar(map) {
-    try { if (typeof GIA_HAN_GRAMMAR_DB !== 'undefined') collectGrammarObject(map, GIA_HAN_GRAMMAR_DB, 'giahan_grammar'); } catch (_) {}
-    try { if (typeof GIA_HAN_GRAMMAR_PACK_TC2 !== 'undefined') collectGrammarObject(map, GIA_HAN_GRAMMAR_PACK_TC2, 'giahan_tc2_grammar'); } catch (_) {}
-  }
-
-  function collectAllChineseAudio() {
+  function collectCurrentStudyAudio() {
+    const scope = currentScope();
     const map = new Map();
-    collectCards(map);
-    collectDialogues(map);
-    collectGrammar(map);
-    return [...map.values()];
+    collectCardsFromList(scope.cards, map);
+    return { ...scope, items: [...map.values()] };
   }
 
   async function getExistingKeys() {
@@ -146,6 +159,7 @@
   }
 
   async function callGenerator(items) {
+    if (!isAdmin || !session?.access_token) throw new Error('Chỉ tài khoản admin mới được tạo audio.');
     const response = await fetch(`${String(cfg.url || '').replace(/\/$/, '')}/functions/v1/generate-chinese-audio`, {
       method: 'POST',
       headers: {
@@ -184,6 +198,7 @@
       await window.LFChineseHQAudio?.refresh?.();
       return { generated: 0, failed: 0, missing: 0 };
     }
+
     let generated = 0;
     let failed = 0;
     const failures = [];
@@ -197,6 +212,7 @@
       await window.LFChineseHQAudio?.refresh?.();
       if (offset + BATCH_SIZE < missing.length) await sleep(350);
     }
+
     if (failed) {
       setStatus(`⚠️ ${label}: tạo ${generated}, lỗi ${failed}. ${failures[0]?.error || ''}`, 'error');
     } else {
@@ -206,16 +222,15 @@
   }
 
   async function generateSample() {
-    if (generating) return;
+    if (generating || !isAdmin) return;
     setBusy(true);
     try {
-      const all = collectAllChineseAudio();
-      const sample = all.slice(0, 5);
-      if (!sample.length) throw new Error('Chưa đọc được dữ liệu tiếng Trung trong app.');
+      const scope = collectCurrentStudyAudio();
+      const sample = scope.items.slice(0, 5);
+      if (!sample.length) throw new Error('Bài/phần đang chọn chưa có nội dung tiếng Trung để thử.');
       await generateItems(sample, 'Thử giọng Shuxian');
       await window.LFChineseHQAudio?.refresh?.();
-      const texts = sample.map(item => item.text);
-      setTimeout(() => window.LFChineseHQAudio?.playSequence?.(texts, 0.75), 150);
+      setTimeout(() => window.LFChineseHQAudio?.playSequence?.(sample.map(item => item.text), 0.75), 150);
     } catch (error) {
       console.error('[Chinese Audio Admin sample]', error);
       setStatus(`❌ ${String(error?.message || error)}`, 'error');
@@ -224,34 +239,71 @@
     }
   }
 
-  async function generateAll() {
-    if (generating) return;
+  async function generateCurrentScope() {
+    if (generating || !isAdmin) return;
     setBusy(true);
     try {
-      setStatus('Đang quét toàn bộ nội dung tiếng Trung…');
-      const all = collectAllChineseAudio();
-      if (!all.length) throw new Error('Chưa đọc được dữ liệu tiếng Trung trong app.');
-      const existing = await getExistingKeys();
-      const missingCount = all.filter(item => !existing.has(item.audio_key)).length;
-      setStatus(`Đã quét ${all.length} nội dung tiếng Trung · còn thiếu ${missingCount}. Bắt đầu tạo…`);
-      await generateItems(all, 'Tiếng Trung HQ');
+      const scope = collectCurrentStudyAudio();
+      if (!scope.items.length) throw new Error('Bài/phần đang chọn chưa có nội dung tiếng Trung.');
+      setStatus(`Đang kiểm tra ${scope.items.length} nội dung của ${scope.label}…`);
+      await generateItems(scope.items, scope.label);
     } catch (error) {
-      console.error('[Chinese Audio Admin]', error);
+      console.error('[Chinese Audio Admin scope]', error);
       setStatus(`❌ ${String(error?.message || error)}`, 'error');
     } finally {
       setBusy(false);
     }
   }
 
+  function currentLessonId() {
+    const topic = document.getElementById('studyTopicFilter')?.value || 'ALL';
+    const category = document.getElementById('studyCategoryFilter')?.value || 'ALL';
+    if (topic !== 'ALL') return topic;
+    if (category !== 'ALL') return category;
+    return 'admin-on-demand';
+  }
+
+  async function ensureAudio(text, contentType = 'ondemand') {
+    const clean = norm(text);
+    if (!isAdmin || !session?.access_token || !hasHanzi(clean)) return false;
+    if (window.LFChineseHQAudio?.has?.(clean)) return true;
+
+    const key = `zh_${hashText(clean)}`;
+    if (pendingOnDemand.has(key)) return pendingOnDemand.get(key);
+
+    const job = (async () => {
+      try {
+        const result = await callGenerator([{
+          audio_key: key,
+          lesson_id: currentLessonId(),
+          content_type: contentType,
+          text: clean
+        }]);
+        const ok = Number(result.generated || 0) > 0 || (result.results || []).some(row => row?.ok);
+        if (ok) await window.LFChineseHQAudio?.refresh?.();
+        return ok && !!window.LFChineseHQAudio?.has?.(clean);
+      } catch (error) {
+        console.warn('[Chinese Audio Admin on-demand]', error);
+        return false;
+      } finally {
+        pendingOnDemand.delete(key);
+      }
+    })();
+
+    pendingOnDemand.set(key, job);
+    return job;
+  }
+
   function updatePanelVisibility() {
     const panel = document.getElementById(PANEL_ID);
     const select = document.getElementById('studyLangFilter');
     if (!panel || !select) return;
-    panel.style.display = select.value === 'Tiếng Trung' ? 'flex' : 'none';
+    panel.style.display = isAdmin && select.value === 'Tiếng Trung' ? 'flex' : 'none';
   }
 
   function ensureAdminControl() {
-    if (!isAdmin || document.getElementById(PANEL_ID)) { updatePanelVisibility(); return; }
+    if (!isAdmin) return;
+    if (document.getElementById(PANEL_ID)) { updatePanelVisibility(); return; }
     const select = document.getElementById('studyLangFilter');
     if (!select) return;
     const host = select.closest('.bg-white') || select.parentElement?.parentElement || select.parentElement;
@@ -276,14 +328,14 @@
     const createBtn = document.createElement('button');
     createBtn.id = CREATE_ID;
     createBtn.type = 'button';
-    createBtn.textContent = '🎙️ Tạo audio HQ tiếng Trung';
+    createBtn.textContent = '🎙️ Tạo audio bài đang học';
     createBtn.style.cssText = 'border:1px solid #f0abfc;background:#fdf4ff;color:#a21caf;border-radius:10px;padding:7px 10px;font-weight:850;cursor:pointer';
-    createBtn.addEventListener('click', generateAll);
+    createBtn.addEventListener('click', generateCurrentScope);
 
     const status = document.createElement('span');
     status.id = STATUS_ID;
-    status.textContent = `Turbo Free · ${VOICE_NAME} · phát mặc định 0.75×`;
-    status.style.cssText = 'font-size:.72rem;font-weight:700;color:#64748b;max-width:520px';
+    status.textContent = `Admin only · Turbo Free · ${VOICE_NAME} · tự tạo khi bạn bấm nghe`;
+    status.style.cssText = 'font-size:.72rem;font-weight:700;color:#64748b;max-width:560px';
 
     panel.append(sampleBtn, createBtn, status);
     host.appendChild(panel);
@@ -294,15 +346,34 @@
   async function initAuth() {
     if (!cfg.url || !cfg.anonKey || !window.supabase?.createClient) return;
     try {
-      client = window.supabase.createClient(cfg.url, cfg.anonKey, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+      client = window.supabase.createClient(cfg.url, cfg.anonKey, {
+        auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+      });
       const { data } = await client.auth.getSession();
       session = data?.session || null;
       if (!session?.user) return;
-      const { data: admin, error } = await client.from('linguaflash_admins').select('role').eq('user_id', session.user.id).maybeSingle();
+
+      const { data: admin, error } = await client
+        .from('linguaflash_admins')
+        .select('role')
+        .eq('user_id', session.user.id)
+        .maybeSingle();
       if (error || !admin) return;
+
       isAdmin = true;
       ensureAdminControl();
-      client.auth.onAuthStateChange((_event, nextSession) => { session = nextSession || null; setTimeout(ensureAdminControl, 50); });
+      client.auth.onAuthStateChange(async (_event, nextSession) => {
+        session = nextSession || null;
+        if (!session?.user) {
+          isAdmin = false;
+          document.getElementById(PANEL_ID)?.remove();
+          return;
+        }
+        const { data: nextAdmin } = await client.from('linguaflash_admins').select('role').eq('user_id', session.user.id).maybeSingle();
+        isAdmin = !!nextAdmin;
+        if (isAdmin) setTimeout(ensureAdminControl, 50);
+        else document.getElementById(PANEL_ID)?.remove();
+      });
     } catch (error) {
       console.warn('[Chinese Audio Admin] init skipped', error);
     }
@@ -318,5 +389,13 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
   else init();
 
-  window.LFChineseAudioAdmin = { collectAllChineseAudio, generateSample, generateAll, model: MODEL, voice: VOICE_NAME };
+  window.LFChineseAudioAdmin = {
+    collectCurrentStudyAudio,
+    generateSample,
+    generateCurrentScope,
+    ensureAudio,
+    canGenerate: () => isAdmin && !!session?.access_token,
+    model: MODEL,
+    voice: VOICE_NAME
+  };
 })();
