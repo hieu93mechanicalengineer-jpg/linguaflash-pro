@@ -1,233 +1,109 @@
-/* LinguaFlash · 51Talk Mobile UX v1
-   Consolidates the English learning tools into one compact English Coach.
-   Goals:
-   - One activity visible at a time: Grammar / Pattern / Listening
-   - Keep Coach OUTSIDE the flashcard surface so card-touch handlers cannot hijack it
-   - Prevent hidden practice inputs from stealing focus / opening the mobile keyboard
-   - Keep Prev / Flip / Next reachable above the bottom app navigation
-   - Return to the new card after explicit Prev / Next navigation
-   - Improve touch targets and iOS input ergonomics without changing SRS/FSRS
+/* LinguaFlash · 51Talk Mobile Lesson Mode v63
+   Source: user's 6-page English summary PDF.
+   Mobile-only. Isolated from legacy flashcard/touch handlers.
 */
 (() => {
   'use strict';
-  if (window.__LF_51TALK_MOBILE_UX_V1__) return;
-  window.__LF_51TALK_MOBILE_UX_V1__ = true;
+  if (window.__LF51_MOBILE_LESSON_V63__) return;
+  window.__LF51_MOBILE_LESSON_V63__ = true;
 
-  const TAB_KEY = 'lf51_coach_tab_v1';
-  const VALID_TABS = new Set(['grammar','pattern','listen']);
-  let activeTab = (() => {
-    try { const saved = localStorage.getItem(TAB_KEY); return VALID_TABS.has(saved) ? saved : 'grammar'; }
-    catch (_) { return 'grammar'; }
-  })();
-  let lastCardId = '';
-  let navScrollRequested = false;
-  let scheduled = false;
+  const V = [
+    ['look well','[lʊk wel]','Trông khỏe mạnh, thần sắc tốt',"S + look(s) / don't look + well. Khi nói về sức khỏe, well là tính từ.",'look healthy, look fine, be in good shape','PDF'],
+    ['headache',"['hedeɪk]",'Cơn đau đầu, chứng nhức đầu','Dùng với mạo từ a: have a headache / have a terrible headache.','head pain, migraine','PDF'],
+    ['umbrella',"[ʌm'brelə]",'Cái ô, cái dù che mưa','Dùng an umbrella; bring/take an umbrella with you.','rain shade, parasol','PDF'],
+    ['catch a cold','[kætʃ ə kəʊld]','Bị cảm lạnh','Quá khứ: catch → caught a cold.','get a cold, come down with a cold','PDF'],
+    ['take care of','[teɪk keə(r) əv]','Chăm sóc, trông nom','take care of + tân ngữ / đại từ phản thân.','look after, care for','PDF'],
+    ['not feeling well / ill',"[nɒt 'fiːlɪŋ wel] / [ɪl]",'Cảm thấy không khỏe / bị ốm',"not feeling well = don't feel very good = be ill/sick.",'sick, unwell, under the weather','PDF'],
+    ['have a (good) rest','[hæv ə ɡʊd rest]','Nghỉ ngơi','need to have a good rest / need some rest.','get some rest, take a break, relax','PDF'],
+    ['take some medicine',"[teɪk sʌm 'medɪsn]",'Uống thuốc','Dùng take với medicine; không dùng drink/eat.','take pills, take medication','PDF'],
+    ['go to the hospital',"[ɡəʊ tuː ðə 'hɒspɪtl]",'Đi bệnh viện, đi khám','Đối lập trong Warm-up với stay at home.','see a doctor, visit a clinic','PDF'],
+    ['heavy rain / get wet',"['hevi reɪn] / [ɡet wet]",'Mưa to / bị ướt','The rain was really heavy; I got all wet.','downpour / get soaked','PDF'],
+    ['technical support',"['teknɪk(ə)l sə'pɔː(r)t]",'Hỗ trợ kỹ thuật','provide / offer technical support for/to clients.','tech support, IT support','Trên lớp'],
+    ['training',"['treɪnɪŋ]",'Sự đào tạo, huấn luyện','receive training in + lĩnh vực.','coaching, instruction','Trên lớp'],
+    ['employee',"[ɪm'plɔɪiː]",'Nhân viên','an employee of + tên công ty. Phân biệt employer.','worker, staff member','Trên lớp'],
+    ['adapt to',"[ə'dæpt tu]",'Thích nghi, làm quen với','adapt to + danh từ / V-ing.','adjust to, get used to','Trên lớp'],
+    ['a couple of',"[ə 'kʌp(ə)l əv]",'Hai / một vài','a couple of + danh từ số nhiều.','a few, two or three','Trên lớp'],
+    ['feel nervous / worried',"[fiːl 'nɜː(r)vəs] / ['wɜːrid]",'Cảm thấy lo lắng, hồi hộp','I feel nervous. You can also say I feel worried.','anxious, uneasy','Trên lớp']
+  ];
 
-  function currentCard() {
-    try { return Array.isArray(filteredDeck) && filteredDeck.length ? filteredDeck[currentIndex] : null; }
-    catch (_) { return null; }
+  const E = [
+    ['look well',"You don't look well. What happened?",'Trông bạn không được khỏe. Đã có chuyện gì xảy ra vậy?','/ju doʊnt lʊk wel | wʌt ˈhæpənd/','PDF'],
+    ['headache','Jenny is not feeling well because she has a headache.','Jenny cảm thấy không khỏe vì cô ấy bị đau đầu.','/ˈdʒeni ɪz nɑːt ˈfiːlɪŋ wel bɪˈkɔːz ʃi hæz ə ˈhedeɪk/','PDF'],
+    ['umbrella','It is raining outside. Remember to bring an umbrella.','Bên ngoài trời đang mưa. Hãy nhớ mang theo một chiếc ô.','/ɪt ɪz ˈreɪnɪŋ ˌaʊtˈsaɪd | rɪˈmembər tə brɪŋ ən ʌmˈbrelə/','PDF'],
+    ['catch a cold','Daisy caught a cold yesterday. She needs some rest.','Hôm qua Daisy bị cảm lạnh. Cô ấy cần nghỉ ngơi một chút.','/ˈdeɪzi kɔːt ə koʊld ˈjestərdeɪ | ʃi niːdz sʌm rest/','PDF'],
+    ['take care of',"Lucy's husband is ill and she is taking care of him.",'Chồng của Lucy bị ốm và cô ấy đang chăm sóc anh ấy.','/ˈluːsiz ˈhʌzbənd ɪz ɪl ænd ʃi ɪz ˈteɪkɪŋ ker əv hɪm/','PDF'],
+    ['technical support',"Mr. Smith's role is to provide technical support for the clients all over Europe.",'Vai trò của ông Smith là cung cấp hỗ trợ kỹ thuật cho khách hàng trên khắp châu Âu.','/ˌmɪstər ˈsmɪθs roʊl ɪz tə prəˈvaɪd ˈteknɪkəl səˈpɔːrt fər ðə ˈklaɪənts ɔːl ˈoʊvər ˈjʊrəp/','Trên lớp'],
+    ['training','On the course we received training in every aspect of the job.','Trong khóa học, chúng tôi được đào tạo về mọi khía cạnh của công việc.','/ɑːn ðə kɔːrs wi rɪˈsiːvd ˈtreɪnɪŋ ɪn ˈevri ˈæspekt əv ðə dʒɑːb/','Trên lớp'],
+    ['employee','Linda is an employee of Citibank in the States.','Linda là nhân viên của Citibank tại Hoa Kỳ.','/ˈlɪndə ɪz ən ɪmˈplɔɪiː əv ˈsɪtibæŋk ɪn ðə steɪts/','Trên lớp'],
+    ['adapt to','It takes time for me to adapt to a new working environment.','Tôi cần thời gian để thích nghi với một môi trường làm việc mới.','/ɪt teɪks taɪm fər mi tə əˈdæpt tə ə nuː ˈwɜːrkɪŋ ɪnˈvaɪrənmənt/','Trên lớp'],
+    ['a couple of','A couple of months after I moved to London, I felt completely at home there.','Một vài tháng sau khi chuyển đến London, tôi cảm thấy hoàn toàn quen thuộc như ở nhà.','/ə ˈkʌpəl əv mʌnθs ˈæftər aɪ muːvd tə ˈlʌndən | aɪ felt kəmˈpliːtli æt hoʊm ðer/','Trên lớp']
+  ];
+
+  const D = [
+    ['Lily',"Hi, Joe! Are you okay? You don't look well.",'Chào Joe! Bạn ổn chứ? Trông bạn không khỏe.'],
+    ['Joe',"I don't feel very good. I have a terrible headache.",'Tôi cảm thấy không khỏe lắm. Tôi bị đau đầu dữ dội.'],
+    ['Lily',"I'm sorry to hear that. What happened?",'Rất tiếc khi nghe điều đó. Có chuyện gì xảy ra vậy?'],
+    ['Joe','I went out with my friends last night and it started to rain on my way home.','Tối qua tôi đi chơi với bạn và trời bắt đầu mưa trên đường về nhà.'],
+    ['Lily',"That's unlucky. Did you take an umbrella with you?",'Thật không may. Bạn có mang theo ô không?'],
+    ['Joe','No. I got all wet. The rain was really heavy.','Không. Tôi bị ướt sũng. Mưa thực sự rất to.'],
+    ['Lily',"That is not good. It's easy to catch a cold when you are wet.",'Thế thì không ổn. Rất dễ bị cảm lạnh khi người bị ướt.'],
+    ['Joe','Well, maybe I need to have a good rest tonight.','Có lẽ tối nay tôi cần nghỉ ngơi thật tốt.'],
+    ['Lily','Also, drinking more water may make you feel better.','Uống thêm nước có thể giúp bạn cảm thấy khỏe hơn.'],
+    ['Joe','Thank you. I will take care of myself.','Cảm ơn. Tôi sẽ tự chăm sóc bản thân.']
+  ];
+
+  const G = [
+    ['1. Well và good sau động từ nối','Khi nói về sức khỏe, well có thể là tính từ sau look, feel, be. “You don’t look well.” / “Jenny is not feeling well.” / “I don’t feel very good.”'],
+    ['2. Chủ ngữ giả It','It is + adjective + (for sb) + to V. It takes + time + for sb + to V. Ví dụ: It’s easy to catch a cold... / It takes time for me to adapt...'],
+    ['3. V-ing làm chủ ngữ & make + O + V','Động từ làm chủ ngữ dùng V-ing. Sau make + tân ngữ dùng V nguyên mẫu không “to”: Drinking more water may make you feel better.'],
+    ['4. Đại từ phản thân & cụm cố định','I → myself, you → yourself, he → himself, she → herself. Ghi nhớ on my way home (không dùng to home) và get all wet.'],
+    ['5. Quá khứ đơn','Kể việc đã qua dùng V2/ed: went, started, got, was, caught, felt. Câu hỏi: Did + S + V nguyên mẫu: Did you take...?'],
+    ['6. Mẫu câu luyện nói','Hai mẫu trọng tâm: “I have a...” và “Maybe I need to...”. Dùng cùng từ của bài để kể một tình huống sức khỏe.']
+  ];
+
+  const S = [
+    ['Teacher','Hi! When was the last time you caught a cold?'],
+    ['You','It was a couple of months ago. I went out in the heavy rain without an umbrella and got all wet.'],
+    ['Teacher','Oh no! How did you feel and what did you do?'],
+    ['You',"I didn't feel well and I had a terrible headache. I went to the hospital, took some medicine, and stayed at home to have a good rest."]
+  ];
+
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
+  let tab='vocab', ri=0, reveal=false, direction='en-vi';
+  const review=E.map(x=>({type:'Câu mẫu',en:x[1],vi:x[2],ipa:x[3]})).concat(V.map(x=>({type:'Từ vựng',en:x[0],vi:x[2],ipa:x[1]})));
+
+  function mobile(){return matchMedia('(max-width:760px)').matches;}
+  function active(){
+    if(!mobile()) return false;
+    const lang=document.getElementById('studyLangFilter')?.value||'';
+    if(lang!=='Tiếng Anh') return false;
+    const cat=document.getElementById('studyCategoryFilter')?.value||'';
+    const topic=document.getElementById('studyTopicFilter')?.value||'';
+    let card=null; try{card=Array.isArray(filteredDeck)&&filteredDeck.length?filteredDeck[currentIndex]:null;}catch(_){}
+    return /51Talk/i.test(cat)||/51Talk/i.test(topic)||String(card?.id||'').startsWith('en51_')||card?.category==='51Talk English';
   }
-
-  function is51Talk(card) {
-    return !!card && (String(card.id || '').startsWith('en51_') || card.category === '51Talk English');
+  function speak(text){
+    if(!text)return;
+    try{if(typeof window.lfSpeak51TalkEnglish==='function'){window.lfSpeak51TalkEnglish(text);return;}}catch(_){}
+    if(!('speechSynthesis'in window))return; try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u);}catch(_){}
   }
-
-  function isMobile() {
-    return window.matchMedia?.('(max-width: 700px)').matches ?? (window.innerWidth <= 700);
-  }
-
-  function ensureStyle() {
-    if (document.getElementById('lf51CoachStyle')) return;
-    const style = document.createElement('style');
-    style.id = 'lf51CoachStyle';
-    style.textContent = `
-      #lf51CoachShell{width:min(100%,780px);margin:14px auto 0;border:1px solid #dbeafe;background:#fff;border-radius:22px;box-shadow:0 10px 28px rgba(15,23,42,.07);overflow:hidden}
-      #lf51CoachShell.hidden{display:none!important}.lf51c-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:13px 14px 10px;background:linear-gradient(135deg,#eff6ff,#f8fafc)}
-      .lf51c-kicker{font-size:.7rem;font-weight:950;letter-spacing:.08em;text-transform:uppercase;color:#2563eb}.lf51c-title{font-size:1rem;font-weight:950;color:#0f172a;margin-top:2px}.lf51c-sub{font-size:.76rem;color:#64748b;margin-top:2px;line-height:1.4}
-      .lf51c-collapse{border:1px solid #cbd5e1;background:#fff;color:#475569;border-radius:10px;padding:7px 9px;font-size:.75rem;font-weight:850;white-space:nowrap;touch-action:manipulation}
-      .lf51c-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:8px;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;background:#f8fafc}
-      .lf51c-tab{min-height:44px;border:1px solid transparent;background:transparent;color:#64748b;border-radius:12px;padding:8px 7px;font-size:.8rem;font-weight:900;touch-action:manipulation;user-select:none;-webkit-user-select:none}
-      .lf51c-tab[aria-selected="true"]{background:#fff;color:#3730a3;border-color:#c7d2fe;box-shadow:0 2px 8px rgba(79,70,229,.08)}
-      .lf51c-body{padding:10px}.lf51c-pane{display:none}.lf51c-pane.active{display:block}.lf51c-placeholder{padding:18px 12px;text-align:center;color:#64748b;font-size:.82rem;border:1px dashed #cbd5e1;border-radius:14px;background:#f8fafc}
-      #lf51CoachShell #lf51GrammarPanel,#lf51CoachShell #lf51PatternPractice,#lf51CoachShell #lf51Listening{width:100%!important;margin:0!important;border:0!important;box-shadow:none!important;border-radius:14px!important;padding:10px!important;background:transparent!important}
-      #lf51CoachShell input,#lf51CoachShell textarea,#lf51CoachShell select{font-size:16px!important;max-width:100%;touch-action:manipulation}
-      #lf51CoachShell button{touch-action:manipulation;min-height:40px}
-      body.lf51-active .lf51-study-nav{position:sticky;bottom:calc(82px + env(safe-area-inset-bottom));z-index:70;background:rgba(248,250,252,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid #e2e8f0;border-radius:16px;padding:7px;box-shadow:0 8px 24px rgba(15,23,42,.13)}
-      body.lf51-active .lf51-study-nav button{min-height:44px;touch-action:manipulation}
-      body.lf51-active #studyAnswerPanel input,body.lf51-active #studyAnswerPanel textarea{font-size:16px!important}
-      @media(max-width:700px){
-        #lf51CoachShell{margin-top:10px;border-radius:17px}.lf51c-head{padding:11px 11px 9px}.lf51c-body{padding:7px}.lf51c-tabs{position:sticky;top:0;z-index:3;padding:6px;background:rgba(248,250,252,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-        .lf51c-tab{font-size:.76rem;padding:7px 4px}.lf51c-sub{font-size:.72rem}
-        body.lf51-active{padding-bottom:150px!important}
-        body.lf51-active #flashcardContainer{scroll-margin-top:10px}
-        body.lf51-active #flashcardContainer button,body.lf51-active #studyAnswerPanel button{touch-action:manipulation}
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  function ensureShell() {
-    let shell = document.getElementById('lf51CoachShell');
-    if (shell) return shell;
-    const flash = document.getElementById('flashcardContainer');
-    if (!flash) return null;
-    shell = document.createElement('section');
-    shell.id = 'lf51CoachShell';
-    shell.className = 'hidden';
-    shell.innerHTML = `
-      <div class="lf51c-head">
-        <div><div class="lf51c-kicker">🇬🇧 ENGLISH COACH</div><div class="lf51c-title">Học một việc tại một thời điểm</div><div class="lf51c-sub">Ngữ pháp · luyện mẫu câu · nghe chép chính tả — không còn xếp chồng thành trang dài.</div></div>
-        <button type="button" class="lf51c-collapse" data-lf51c-collapse>Thu gọn</button>
-      </div>
-      <div class="lf51c-tabs" role="tablist" aria-label="English Coach">
-        <button type="button" class="lf51c-tab" role="tab" data-lf51c-tab="grammar">📘 Ngữ pháp</button>
-        <button type="button" class="lf51c-tab" role="tab" data-lf51c-tab="pattern">✍️ Luyện câu</button>
-        <button type="button" class="lf51c-tab" role="tab" data-lf51c-tab="listen">🎧 Nghe</button>
-      </div>
-      <div class="lf51c-body">
-        <div class="lf51c-pane" data-lf51c-pane="grammar"><div class="lf51c-slot" data-lf51c-slot="grammar"></div><div class="lf51c-placeholder" data-lf51c-empty="grammar">Lật thẻ để xem ngữ pháp của câu đang học.</div></div>
-        <div class="lf51c-pane" data-lf51c-pane="pattern"><div class="lf51c-slot" data-lf51c-slot="pattern"></div><div class="lf51c-placeholder" data-lf51c-empty="pattern">Thẻ này chưa có bài luyện mẫu câu.</div></div>
-        <div class="lf51c-pane" data-lf51c-pane="listen"><div class="lf51c-slot" data-lf51c-slot="listen"></div><div class="lf51c-placeholder" data-lf51c-empty="listen">Chưa có câu nghe phù hợp cho thẻ này.</div></div>
-      </div>`;
-    flash.insertAdjacentElement('afterend', shell);
-    return shell;
-  }
-
-  function tagStudyNav() {
-    const prev = document.querySelector('#flashcardContainer button[data-i18n="btn_prev"]');
-    const flip = document.querySelector('#flashcardContainer button[data-i18n="btn_flip"]');
-    const next = document.querySelector('#flashcardContainer button[data-i18n="btn_next"]');
-    const parent = prev?.parentElement;
-    if (parent && flip?.parentElement === parent && next?.parentElement === parent) parent.classList.add('lf51-study-nav');
-    [prev,next].forEach(btn => {
-      if (!btn || btn.dataset.lf51ScrollBound === '1') return;
-      btn.dataset.lf51ScrollBound = '1';
-      const request = () => { navScrollRequested = true; };
-      btn.addEventListener('pointerdown', request, {passive:true});
-      btn.addEventListener('mousedown', request, {passive:true});
-    });
-  }
-
-  function moveTool(panelId, slotName) {
-    const panel = document.getElementById(panelId);
-    const slot = document.querySelector(`#lf51CoachShell [data-lf51c-slot="${slotName}"]`);
-    if (!panel || !slot) return null;
-    if (panel.parentElement !== slot) slot.appendChild(panel);
-    return panel;
-  }
-
-  function blurInactivePaneInputs() {
-    const shell = document.getElementById('lf51CoachShell');
-    if (!shell) return;
-    shell.querySelectorAll('.lf51c-pane:not(.active) input,.lf51c-pane:not(.active) textarea,.lf51c-pane:not(.active) select').forEach(el => {
-      if (document.activeElement === el) { try { el.blur(); } catch (_) {} }
-    });
-  }
-
-  function saveTab() { try { localStorage.setItem(TAB_KEY, activeTab); } catch (_) {} }
-
-  function applyTab(scroll = false) {
-    const shell = document.getElementById('lf51CoachShell');
-    if (!shell) return;
-    shell.querySelectorAll('[data-lf51c-tab]').forEach(btn => btn.setAttribute('aria-selected', btn.dataset.lf51cTab === activeTab ? 'true' : 'false'));
-    shell.querySelectorAll('[data-lf51c-pane]').forEach(pane => pane.classList.toggle('active', pane.dataset.lf51cPane === activeTab));
-    blurInactivePaneInputs();
-    saveTab();
-    if (scroll && isMobile()) setTimeout(() => shell.scrollIntoView({behavior:'smooth',block:'start'}), 30);
-  }
-
-  function updatePlaceholders() {
-    const map = {grammar:'lf51GrammarPanel',pattern:'lf51PatternPractice',listen:'lf51Listening'};
-    Object.entries(map).forEach(([name,id]) => {
-      const panel = document.getElementById(id);
-      const empty = document.querySelector(`#lf51CoachShell [data-lf51c-empty="${name}"]`);
-      if (!empty) return;
-      const visible = !!panel && !panel.classList.contains('hidden') && String(panel.textContent || '').trim().length > 0;
-      empty.style.display = visible ? 'none' : '';
-    });
-  }
-
-  function setCollapsed(collapsed) {
-    const shell = document.getElementById('lf51CoachShell');
-    if (!shell) return;
-    const tabs = shell.querySelector('.lf51c-tabs');
-    const body = shell.querySelector('.lf51c-body');
-    const btn = shell.querySelector('[data-lf51c-collapse]');
-    if (tabs) tabs.style.display = collapsed ? 'none' : '';
-    if (body) body.style.display = collapsed ? 'none' : '';
-    if (btn) btn.textContent = collapsed ? 'Mở công cụ' : 'Thu gọn';
-    shell.dataset.collapsed = collapsed ? '1' : '0';
-  }
-
-  function scheduleUpdate() {
-    if (scheduled) return;
-    scheduled = true;
-    requestAnimationFrame(() => { scheduled = false; update(); });
-  }
-
-  function update() {
-    ensureStyle();
-    const shell = ensureShell();
-    if (!shell) return;
-    tagStudyNav();
-
-    const card = currentCard();
-    const active = is51Talk(card);
-    document.body.classList.toggle('lf51-active', active);
-    shell.classList.toggle('hidden', !active);
-    if (!active) return;
-
-    moveTool('lf51GrammarPanel','grammar');
-    moveTool('lf51PatternPractice','pattern');
-    moveTool('lf51Listening','listen');
-    applyTab(false);
-    updatePlaceholders();
-
-    const cardId = String(card?.id || '');
-    const changed = cardId && cardId !== lastCardId;
-    lastCardId = cardId;
-    if (changed) {
-      // Hidden tool inputs must never steal the keyboard on mobile when a new card renders.
-      setTimeout(() => { blurInactivePaneInputs(); updatePlaceholders(); }, 30);
-      if (navScrollRequested && isMobile()) {
-        navScrollRequested = false;
-        setTimeout(() => document.getElementById('flashcardContainer')?.scrollIntoView({behavior:'smooth',block:'start'}), 40);
-      } else navScrollRequested = false;
-    }
-  }
-
-  function bindShell() {
-    const shell = ensureShell();
-    if (!shell || shell.dataset.bound === '1') return;
-    shell.dataset.bound = '1';
-    shell.addEventListener('click', e => {
-      const tab = e.target?.closest?.('[data-lf51c-tab]');
-      if (tab) { activeTab = tab.dataset.lf51cTab; applyTab(true); return; }
-      const collapse = e.target?.closest?.('[data-lf51c-collapse]');
-      if (collapse) setCollapsed(shell.dataset.collapsed !== '1');
-    });
-  }
-
-  function patchRender() {
-    const original = window.renderCurrentCard;
-    if (typeof original !== 'function' || original.__lf51CoachPatched) return;
-    const wrapped = function(...args) {
-      const out = original.apply(this,args);
-      setTimeout(scheduleUpdate,0);
-      return out;
-    };
-    wrapped.__lf51CoachPatched = true;
-    window.renderCurrentCard = wrapped;
-  }
-
-  function init() {
-    ensureStyle(); ensureShell(); bindShell(); patchRender();
-    const root = document.getElementById('tab-study') || document.body;
-    new MutationObserver(scheduleUpdate).observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
-    window.addEventListener('resize',scheduleUpdate,{passive:true});
-    setTimeout(update,120);
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
-  else init();
+  function style(){if(document.getElementById('lf51mStyleV63'))return;const s=document.createElement('style');s.id='lf51mStyleV63';s.textContent=`
+    #lf51MobileLesson{display:none;width:min(100%,800px);margin:0 auto 18px;background:#f8fafc;color:#0f172a}#lf51MobileLesson.on{display:block}.lf51m-hero{background:#173b74;color:#fff;border-radius:20px;padding:16px}.lf51m-k{font-size:.68rem;font-weight:900;color:#fde68a}.lf51m-title{font-size:1.2rem;font-weight:950;margin-top:4px}.lf51m-sub{font-size:.78rem;color:#dbeafe;margin-top:4px;line-height:1.4}.lf51m-stats{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.lf51m-stats span{background:#0f2e5c;border-radius:8px;padding:5px 7px;font-size:.68rem;font-weight:800}.lf51m-tabs{display:flex;gap:7px;overflow:auto;padding:10px 2px 8px;scrollbar-width:none}.lf51m-tab{flex:0 0 auto;min-height:43px;border:1px solid #cbd5e1;background:#fff;border-radius:12px;padding:8px 10px;font-size:.78rem;font-weight:900;color:#475569}.lf51m-tab.on{background:#173b74;color:#fff;border-color:#173b74}.lf51m-list{display:grid;gap:8px}.lf51m-card{background:#fff;border:1px solid #dbe3ef;border-radius:15px;padding:11px;box-shadow:0 3px 12px rgba(15,23,42,.035)}details.lf51m-card summary{list-style:none;cursor:pointer}.lf51m-row{display:flex;gap:8px;justify-content:space-between;align-items:flex-start}.lf51m-term,.lf51m-en{font-weight:900;line-height:1.45}.lf51m-ipa{font-size:.77rem;color:#6366f1;margin-top:3px}.lf51m-vi,.lf51m-extra{font-size:.8rem;line-height:1.5;color:#475569;margin-top:4px}.lf51m-badge{font-size:.62rem;font-weight:900;border-radius:999px;padding:3px 6px;background:#e0f2fe;color:#075985}.lf51m-badge.class{background:#ffedd5;color:#9a3412}.lf51m-audio{flex:0 0 42px;width:42px;height:42px;border:0;border-radius:999px;background:#eef2ff;font-size:1rem}.lf51m-bubble{max-width:92%;background:#eff6ff;border:1px solid #bfdbfe;border-radius:15px;padding:10px}.lf51m-bubble.joe{margin-left:auto;background:#fff7ed;border-color:#fed7aa}.lf51m-speaker{font-size:.68rem;font-weight:950;color:#0369a1}.lf51m-bubble.joe .lf51m-speaker{color:#c2410c}.lf51m-note{background:#fffbea;border:1px solid #fde68a;border-radius:14px;padding:10px;font-size:.8rem;line-height:1.5;color:#78350f}.lf51m-actions{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px}.lf51m-btn{min-height:43px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;padding:8px 11px;font-weight:900}.lf51m-btn.primary{background:#173b74;color:#fff;border-color:#173b74}.lf51m-review{text-align:center;min-height:240px;display:flex;flex-direction:column;justify-content:center}.lf51m-rmain{font-size:1.25rem;font-weight:950;line-height:1.5}.lf51m-rans{margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0}.lf51m-rnav{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:7px;margin-top:8px}.lf51m-rnav button{min-height:46px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;font-weight:900}.lf51m-rnav button:nth-child(2){background:#173b74;color:#fff;border-color:#173b74}
+    body.lf51-mobile-active #flashcardContainer,body.lf51-mobile-active #studyAnswerPanel,body.lf51-mobile-active #lf51CoachShell,body.lf51-mobile-active #lf51GrammarPanel,body.lf51-mobile-active #lf51PatternPractice,body.lf51-mobile-active #lf51Listening{display:none!important}body.lf51-mobile-active{padding-bottom:100px!important}@media(min-width:761px){#lf51MobileLesson{display:none!important}}
+  `;document.head.appendChild(s);}
+  function root(){let r=document.getElementById('lf51MobileLesson');if(r)return r;const f=document.getElementById('flashcardContainer');if(!f)return null;r=document.createElement('section');r.id='lf51MobileLesson';r.innerHTML=`<div class="lf51m-hero"><div class="lf51m-k">51TALK CLASSIC ENGLISH · LEVEL 4</div><div class="lf51m-title">Tiếng Anh · Tổng hợp bài học</div><div class="lf51m-sub">Sức khỏe “I have a headache” + Công việc trên lớp · bám theo bản tổng hợp 6 trang của bạn.</div><div class="lf51m-stats"><span>16 từ / cụm</span><span>10 câu ví dụ</span><span>1 hội thoại & bài tập</span><span>6 chủ điểm ngữ pháp</span></div></div><div class="lf51m-tabs"></div><div class="lf51m-content"></div>`;f.insertAdjacentElement('beforebegin',r);return r;}
+  const badge=src=>`<span class="lf51m-badge ${src==='Trên lớp'?'class':''}">${esc(src)}</span>`;
+  function tabs(r){const T=[['vocab','📚 Từ vựng'],['examples','📝 Câu mẫu'],['dialogue','💬 Hội thoại'],['grammar','📘 Ngữ pháp'],['speaking','🗣️ Luyện nói'],['review','🧠 Ôn nhanh']];r.querySelector('.lf51m-tabs').innerHTML=T.map(x=>`<button class="lf51m-tab ${tab===x[0]?'on':''}" data-tab="${x[0]}">${x[1]}</button>`).join('');}
+  function rv(){return `<div class="lf51m-list">${V.map((x,i)=>`<details class="lf51m-card" ${i<2?'open':''}><summary><div class="lf51m-row"><div>${badge(x[5])}<div class="lf51m-term">${esc(x[0])}</div><div class="lf51m-ipa">${esc(x[1])}</div><div class="lf51m-vi">${esc(x[2])}</div></div><button class="lf51m-audio" data-audio="${esc(x[0])}" type="button">🔊</button></div></summary><div class="lf51m-extra"><b>Cách dùng:</b> ${esc(x[3])}<br><b>Đồng nghĩa:</b> ${esc(x[4])}</div></details>`).join('')}</div>`;}
+  function re(){return `<div class="lf51m-list">${E.map(x=>`<div class="lf51m-card"><div class="lf51m-row"><div>${badge(x[4])}<div class="lf51m-term" style="color:#c2410c">${esc(x[0])}</div><div class="lf51m-en">${esc(x[1])}</div><div class="lf51m-ipa">${esc(x[3])}</div><div class="lf51m-vi">${esc(x[2])}</div></div><button class="lf51m-audio" data-audio="${esc(x[1])}" type="button">🔊</button></div></div>`).join('')}<div class="lf51m-note"><b>Cụm cần thuộc:</b> provide support for sb · receive training in sth · an employee of + công ty · remember to V · feel completely at home.</div></div>`;}
+  function rd(){return `<div class="lf51m-actions"><button class="lf51m-btn primary" data-dialogue type="button">▶ Nghe toàn hội thoại</button></div><div class="lf51m-list">${D.map(x=>`<div class="lf51m-bubble ${x[0]==='Joe'?'joe':''}"><div class="lf51m-row"><div><div class="lf51m-speaker">${x[0]}</div><div class="lf51m-en">${esc(x[1])}</div><div class="lf51m-vi">${esc(x[2])}</div></div><button class="lf51m-audio" data-audio="${esc(x[1])}" type="button">🔊</button></div></div>`).join('')}</div><details class="lf51m-card" style="margin-top:9px"><summary class="lf51m-term">✅ Đáp án bài tập</summary><div class="lf51m-extra">• Joe will take care of himself.<br>• Joe will have a good rest tonight.<br>• Joe will drink more water.<br>• He doesn’t look well because he has a terrible headache.<br>• Getting wet in the heavy rain can make Joe catch a cold.<br>• headache → umbrella → catch a cold → take care of.</div></details>`;}
+  function rg(){return `<div class="lf51m-list">${G.map((x,i)=>`<details class="lf51m-card" ${i===0?'open':''}><summary class="lf51m-term">${esc(x[0])}</summary><div class="lf51m-extra">${esc(x[1])}</div></details>`).join('')}</div>`;}
+  function rs(){return `<div class="lf51m-note"><b>Mục tiêu:</b> dùng “I have a...” và “Maybe I need to...” để kể tình huống sức khỏe.</div><div class="lf51m-list" style="margin-top:9px">${S.map(x=>`<div class="lf51m-bubble ${x[0]==='You'?'joe':''}"><div class="lf51m-row"><div><div class="lf51m-speaker">${x[0]}</div><div class="lf51m-en">${esc(x[1])}</div></div><button class="lf51m-audio" data-audio="${esc(x[1])}" type="button">🔊</button></div></div>`).join('')}</div>`;}
+  function rr(){const x=review[ri%review.length],front=direction==='en-vi'?x.en:x.vi,ans=direction==='en-vi'?x.vi:x.en;return `<div class="lf51m-actions"><button class="lf51m-btn" data-dir type="button">${direction==='en-vi'?'Anh → Việt':'Việt → Anh'}</button><button class="lf51m-btn" data-audio="${esc(x.en)}" type="button">🔊 Nghe</button></div><div class="lf51m-card lf51m-review"><div style="font-size:.7rem;font-weight:900;color:#64748b">${x.type} · ${ri+1}/${review.length}</div><div class="lf51m-rmain">${esc(front)}</div><div class="lf51m-rans">${reveal?`${esc(ans)}<div class="lf51m-ipa">${esc(x.ipa||'')}</div>`:'<span style="color:#94a3b8">Bấm Lật để xem đáp án</span>'}</div></div><div class="lf51m-rnav"><button data-prev>← Trước</button><button data-reveal>${reveal?'Ẩn':'Lật'}</button><button data-next>Tiếp →</button></div>`;}
+  function render(){const r=root();if(!r)return;tabs(r);r.querySelector('.lf51m-content').innerHTML=tab==='vocab'?rv():tab==='examples'?re():tab==='dialogue'?rd():tab==='grammar'?rg():tab==='speaking'?rs():rr();}
+  function sync(){const r=root();if(!r)return;const on=active();r.classList.toggle('on',on);document.body.classList.toggle('lf51-mobile-active',on);if(on)render();}
+  function allDialogue(){if(!('speechSynthesis'in window)){speak(D.map(x=>x[1]).join(' '));return;}try{speechSynthesis.cancel();let i=0;const next=()=>{if(i>=D.length)return;const u=new SpeechSynthesisUtterance(D[i++][1]);u.lang='en-US';u.rate=.9;u.onend=()=>setTimeout(next,250);speechSynthesis.speak(u);};next();}catch(_){}}
+  function bind(){const r=root();if(!r||r.dataset.bound)return;r.dataset.bound='1';r.addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(t){tab=t.dataset.tab;render();return;}const a=e.target.closest('[data-audio]');if(a){speak(a.dataset.audio);return;}if(e.target.closest('[data-dialogue]')){allDialogue();return;}if(e.target.closest('[data-prev]')){ri=(ri-1+review.length)%review.length;reveal=false;render();return;}if(e.target.closest('[data-next]')){ri=(ri+1)%review.length;reveal=false;render();return;}if(e.target.closest('[data-reveal]')){reveal=!reveal;render();return;}if(e.target.closest('[data-dir]')){direction=direction==='en-vi'?'vi-en':'en-vi';reveal=false;render();}});}
+  function init(){style();root();bind();['studyLangFilter','studyCategoryFilter','studyTopicFilter'].forEach(id=>document.getElementById(id)?.addEventListener('change',()=>setTimeout(sync,0)));addEventListener('resize',()=>setTimeout(sync,0),{passive:true});setTimeout(sync,150);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
