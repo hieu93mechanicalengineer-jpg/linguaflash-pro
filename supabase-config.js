@@ -16,7 +16,7 @@ window.LINGUAFLASH_SUPABASE = {
     (document.head || document.documentElement).appendChild(script);
   }
 
-  addScript('data-lf-hq-english-audio', './english-hq-audio-v1.js?v=71');
+  addScript('data-lf-hq-english-audio', './english-hq-audio-v1.js?v=72');
 
   // The admin generator needs the Supabase browser library and the persisted login
   // session. supabase-config.js loads earlier than both, so wait until they are ready.
@@ -25,7 +25,7 @@ window.LINGUAFLASH_SUPABASE = {
     tries += 1;
     if (window.supabase && typeof window.supabase.createClient === 'function') {
       clearInterval(timer);
-      addScript('data-lf-hq-audio-admin', './english-audio-admin-v1.js?v=71');
+      addScript('data-lf-hq-audio-admin', './english-audio-admin-v1.js?v=72');
       return;
     }
     if (tries >= 40) clearInterval(timer);
