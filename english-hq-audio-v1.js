@@ -1,12 +1,14 @@
-/* LinguaFlash · HQ English Audio v1
-   - Reads pre-generated English audio metadata from Supabase.
-   - Plays stored audio first; falls back to existing browser TTS when no HQ file exists.
-   - Keeps current learning logic unchanged.
+/* LinguaFlash · HQ English Audio v2
+   - Plays stored English HQ audio for every user.
+   - If the current account is admin and an item is missing, generates only that
+     item on demand, stores it in Supabase, then plays it.
+   - Normal users never call HeyGen; they fall back to device/browser TTS when
+     an HQ file does not exist yet.
 */
 (() => {
   'use strict';
-  if (window.__LF_ENGLISH_HQ_AUDIO_V1__) return;
-  window.__LF_ENGLISH_HQ_AUDIO_V1__ = true;
+  if (window.__LF_ENGLISH_HQ_AUDIO_V2__) return;
+  window.__LF_ENGLISH_HQ_AUDIO_V2__ = true;
 
   const cfg = window.LINGUAFLASH_SUPABASE || {};
   const SUPABASE_URL = String(cfg.url || '').replace(/\/$/, '');
@@ -27,34 +29,20 @@
     .toLowerCase();
 
   function storageUrl(path) {
-    const safePath = String(path || '')
-      .split('/')
-      .filter(Boolean)
-      .map(encodeURIComponent)
-      .join('/');
+    const safePath = String(path || '').split('/').filter(Boolean).map(encodeURIComponent).join('/');
     return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${safePath}`;
   }
 
   async function refresh() {
-    if (!SUPABASE_URL || !API_KEY) {
-      manifestLoaded = true;
-      return 0;
-    }
+    if (!SUPABASE_URL || !API_KEY) { manifestLoaded = true; return 0; }
     try {
       const endpoint = `${SUPABASE_URL}/rest/v1/english_audio_manifest?select=audio_key,lesson_id,content_type,source_text,locale,generated_speed,storage_path,duration_seconds&locale=eq.en-US`;
-      const response = await fetch(endpoint, {
-        headers: {
-          apikey: API_KEY,
-          Accept: 'application/json'
-        },
-        cache: 'no-store'
-      });
+      const response = await fetch(endpoint, { headers: { apikey: API_KEY, Accept: 'application/json' }, cache: 'no-store' });
       if (!response.ok) throw new Error(`HQ audio manifest HTTP ${response.status}`);
       const rows = await response.json();
       entries.clear();
       (Array.isArray(rows) ? rows : []).forEach(row => {
-        if (!row?.source_text || !row?.storage_path) return;
-        entries.set(norm(row.source_text), row);
+        if (row?.source_text && row?.storage_path) entries.set(norm(row.source_text), row);
       });
       manifestLoaded = true;
       return entries.size;
@@ -66,63 +54,31 @@
   }
 
   const ready = refresh();
-
-  function getEntry(text) {
-    return entries.get(norm(text)) || null;
-  }
-
-  function has(text) {
-    return !!getEntry(text);
-  }
+  const getEntry = text => entries.get(norm(text)) || null;
+  const has = text => !!getEntry(text);
 
   function stop() {
     if (!currentAudio) return;
-    try {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-    } catch (_) {}
+    try { currentAudio.pause(); currentAudio.currentTime = 0; } catch (_) {}
     currentAudio = null;
-  }
-
-  function clamp(value, min, max) {
-    return Math.max(min, Math.min(max, value));
   }
 
   function play(text, desiredRate = DEFAULT_RATE, hooks = {}) {
     const entry = getEntry(text);
     if (!entry) return false;
-
     stop();
     const audio = new Audio(storageUrl(entry.storage_path));
-    const generatedRate = Number(entry.generated_speed) || DEFAULT_RATE;
+    const generatedRate = Number(entry.generated_speed) || 1;
     const requestedRate = Number(desiredRate) || DEFAULT_RATE;
     audio.preload = 'auto';
-    audio.playbackRate = clamp(requestedRate / generatedRate, 0.5, 2);
-    try { audio.preservesPitch = true; } catch (_) {}
-    try { audio.webkitPreservesPitch = true; } catch (_) {}
-
-    audio.onplay = () => {
-      currentAudio = audio;
-      try { hooks.onstart?.(); } catch (_) {}
-    };
-    audio.onended = () => {
-      if (currentAudio === audio) currentAudio = null;
-      try { hooks.onend?.(); } catch (_) {}
-    };
-    audio.onerror = () => {
-      if (currentAudio === audio) currentAudio = null;
-      try { hooks.onerror?.(); } catch (_) {}
-    };
-
+    audio.playbackRate = Math.max(0.5, Math.min(2, requestedRate / generatedRate));
+    try { audio.preservesPitch = true; audio.webkitPreservesPitch = true; } catch (_) {}
+    audio.onplay = () => { currentAudio = audio; try { hooks.onstart?.(); } catch (_) {} };
+    audio.onended = () => { if (currentAudio === audio) currentAudio = null; try { hooks.onend?.(); } catch (_) {} };
+    audio.onerror = () => { if (currentAudio === audio) currentAudio = null; try { hooks.onerror?.(); } catch (_) {} };
     currentAudio = audio;
     const result = audio.play();
-    if (result?.catch) {
-      result.catch(error => {
-        if (currentAudio === audio) currentAudio = null;
-        console.warn('[LinguaFlash HQ Audio] playback failed.', error);
-        try { hooks.onerror?.(error); } catch (_) {}
-      });
-    }
+    result?.catch?.(error => { if (currentAudio === audio) currentAudio = null; try { hooks.onerror?.(error); } catch (_) {} });
     return true;
   }
 
@@ -132,11 +88,36 @@
     let index = 0;
     const next = () => {
       if (index >= queue.length) return;
-      const text = queue[index++];
-      play(text, desiredRate, { onend: next });
+      play(queue[index++], desiredRate, { onend: next });
     };
     next();
     return true;
+  }
+
+  async function tryAdminGenerate(text, contentType = 'lesson') {
+    try {
+      const admin = window.LFEnglishAudioAdmin;
+      if (!admin?.canGenerate?.() || typeof admin.ensureAudio !== 'function') return false;
+      return !!(await admin.ensureAudio(text, contentType));
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function playForUtterance(utterance, rate, fallbackSpeak) {
+    const text = String(utterance?.text || '').trim();
+    const hooks = {
+      onstart: () => { try { utterance.onstart?.(new Event('start')); } catch (_) {} },
+      onend: () => { try { utterance.onend?.(new Event('end')); } catch (_) {} },
+      onerror: () => { try { utterance.onerror?.(new Event('error')); } catch (_) {} }
+    };
+
+    if (has(text)) { play(text, rate, hooks); return; }
+
+    tryAdminGenerate(text, 'lesson').then(ok => {
+      if (ok && has(text)) play(text, rate, hooks);
+      else fallbackSpeak(utterance);
+    }).catch(() => fallbackSpeak(utterance));
   }
 
   function patchSpeechSynthesis() {
@@ -149,30 +130,19 @@
         try {
           const text = String(utterance?.text || '').trim();
           const lang = String(utterance?.lang || '');
-          if (manifestLoaded && /^en(?:-|$)/i.test(lang) && has(text)) {
+          if (manifestLoaded && /^en(?:-|$)/i.test(lang) && text) {
             nativeCancel();
             const requested = Number(utterance?.rate);
             const rate = Number.isFinite(requested) && requested !== 1 ? requested : DEFAULT_RATE;
-            play(text, rate, {
-              onstart: () => {
-                try { utterance.onstart?.(new Event('start')); } catch (_) {}
-              },
-              onend: () => {
-                try { utterance.onend?.(new Event('end')); } catch (_) {}
-              },
-              onerror: () => {
-                try { utterance.onerror?.(new Event('error')); } catch (_) {}
-              }
-            });
-            return;
+            if (has(text) || window.LFEnglishAudioAdmin?.canGenerate?.()) {
+              playForUtterance(utterance, rate, nativeSpeak);
+              return;
+            }
           }
         } catch (_) {}
         nativeSpeak(utterance);
       };
-      synth.cancel = () => {
-        stop();
-        nativeCancel();
-      };
+      synth.cancel = () => { stop(); nativeCancel(); };
       speechPatched = true;
     } catch (error) {
       console.warn('[LinguaFlash HQ Audio] speechSynthesis patch skipped.', error);
@@ -203,8 +173,8 @@
   }
 
   function bindDesktopControls() {
-    if (document.__lfHQAudioControlsBound) return;
-    document.__lfHQAudioControlsBound = true;
+    if (document.__lfHQAudioControlsBoundV2) return;
+    document.__lfHQAudioControlsBoundV2 = true;
 
     document.addEventListener('click', event => {
       const button = event.target?.closest?.('button');
@@ -212,22 +182,39 @@
 
       if (button.dataset?.audio) {
         const text = button.dataset.audio;
-        if (!has(text)) return;
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        try { window.speechSynthesis?.cancel?.(); } catch (_) {}
-        play(text, DEFAULT_RATE);
+        if (has(text)) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          try { window.speechSynthesis?.cancel?.(); } catch (_) {}
+          play(text, DEFAULT_RATE);
+          return;
+        }
+        if (window.LFEnglishAudioAdmin?.canGenerate?.()) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          tryAdminGenerate(text, 'lesson').then(ok => {
+            if (ok) play(text, DEFAULT_RATE);
+          });
+        }
         return;
       }
 
       if (button.dataset?.speed) {
         const text = coachFocusText(button);
-        if (!text || !has(text)) return;
+        if (!text) return;
         const rate = Number(button.dataset.speed) || DEFAULT_RATE;
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        try { window.speechSynthesis?.cancel?.(); } catch (_) {}
-        play(text, rate);
+        if (has(text)) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          try { window.speechSynthesis?.cancel?.(); } catch (_) {}
+          play(text, rate);
+          return;
+        }
+        if (window.LFEnglishAudioAdmin?.canGenerate?.()) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          tryAdminGenerate(text, 'lesson').then(ok => { if (ok) play(text, rate); });
+        }
         return;
       }
 
@@ -248,25 +235,14 @@
     patchSpeechSynthesis();
     patchSpeakSentence();
     bindDesktopControls();
-    setTimeout(patchSpeakSentence, 300);
-    setTimeout(patchSpeakSentence, 1200);
-    setTimeout(patchSpeakSentence, 3000);
+    [300, 1200, 3000, 5000].forEach(ms => setTimeout(patchSpeakSentence, ms));
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
-  } else {
-    init();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
 
   window.LFEnglishHQAudio = {
-    ready,
-    refresh,
-    has,
-    play,
-    playSequence,
-    stop,
-    getEntry,
+    ready, refresh, has, play, playSequence, stop, getEntry,
     defaultRate: DEFAULT_RATE,
     bucket: BUCKET
   };
