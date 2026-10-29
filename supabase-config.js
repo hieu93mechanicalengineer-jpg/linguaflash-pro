@@ -3,7 +3,7 @@ window.LINGUAFLASH_SUPABASE = {
   anonKey: "sb_publishable_syqfvbzlsdSz8tiJyn09CA_RiJDFnVZ"
 };
 
-// HQ English + Chinese audio layers: stored audio first, browser/native TTS fallback.
+// HQ English + Chinese audio layers + unified mobile UI.
 (function(){
   if (typeof document === 'undefined') return;
 
@@ -16,8 +16,11 @@ window.LINGUAFLASH_SUPABASE = {
     (document.head || document.documentElement).appendChild(script);
   }
 
-  addScript('data-lf-hq-english-audio', './english-hq-audio-v1.js?v=75');
-  addScript('data-lf-hq-chinese-audio', './chinese-hq-audio-v1.js?v=75');
+  // Mobile visual layer is isolated from core logic and desktop layout.
+  addScript('data-lf-mobile-ui', './mobile-ui-v1.js?v=76');
+
+  addScript('data-lf-hq-english-audio', './english-hq-audio-v1.js?v=76');
+  addScript('data-lf-hq-chinese-audio', './chinese-hq-audio-v1.js?v=76');
 
   // Admin generators need the Supabase browser library and persisted login session.
   var tries = 0;
@@ -25,8 +28,8 @@ window.LINGUAFLASH_SUPABASE = {
     tries += 1;
     if (window.supabase && typeof window.supabase.createClient === 'function') {
       clearInterval(timer);
-      addScript('data-lf-hq-audio-admin', './english-audio-admin-v1.js?v=75');
-      addScript('data-lf-hq-chinese-audio-admin', './chinese-audio-admin-v1.js?v=75');
+      addScript('data-lf-hq-audio-admin', './english-audio-admin-v1.js?v=76');
+      addScript('data-lf-hq-chinese-audio-admin', './chinese-audio-admin-v1.js?v=76');
       return;
     }
     if (tries >= 40) clearInterval(timer);
