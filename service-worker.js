@@ -1,7 +1,7 @@
-const CACHE_NAME = 'linguaflash-desktop-review-v68';
+const CACHE_NAME = 'linguaflash-class158-work-v69';
 
 // Common startup shell. Mobile keeps the proven v66 safe runtime; desktop gets
-// the compact 51Talk workspace plus the two-way review trainer.
+// the compact 51Talk workspace, Class 158 work lesson and two-way review trainer.
 const CORE_ASSETS = [
   './manifest.webmanifest',
   './supabase-config.js',
@@ -27,6 +27,7 @@ const CORE_ASSETS = [
   './app.js',
   './english-51talk-mobile-ux-v1.js',
   './english-51talk-desktop-workspace-v1.js',
+  './english-51talk-class158-work-v1.js',
   './english-51talk-review-trainer-v1.js',
   './lazy-large-packs.js',
   './study-answer-mode.js',
@@ -98,6 +99,7 @@ async function transformIndexResponse(response) {
   ];
   var desktopScripts = [
     './english-51talk-desktop-workspace-v1.js?v=67',
+    './english-51talk-class158-work-v1.js?v=69',
     './english-51talk-review-trainer-v1.js?v=68',
     './lazy-large-packs.js?v=39',
     './study-answer-mode.js?v=39',
@@ -138,9 +140,9 @@ async function transformIndexResponse(response) {
 
   const legacyCloudSync = /<script id="lf-cloud-sync-script">[\s\S]*?<\/script>/i;
   if (legacyCloudSync.test(html)) {
-    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=68"></script>');
+    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=69"></script>');
   } else if (!html.includes('cloud-sync-v2.js')) {
-    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=68"></script>\n</body>');
+    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=69"></script>\n</body>');
   }
 
   const headers = new Headers(response.headers);
