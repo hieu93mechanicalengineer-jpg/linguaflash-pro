@@ -1,6 +1,7 @@
-const CACHE_NAME = 'linguaflash-mobile-lite-v65';
+const CACHE_NAME = 'linguaflash-mobile-safe-v66';
 
-// Keep startup shell small. The two largest packs are cached only after the user needs them.
+// Mobile-safe startup shell: cache only common/core assets and the small set
+// of modules that are intentionally allowed to run on phones.
 const CORE_ASSETS = [
   './manifest.webmanifest',
   './supabase-config.js',
@@ -27,30 +28,14 @@ const CORE_ASSETS = [
   './english-51talk-mobile-ux-v1.js',
   './lazy-large-packs.js',
   './study-answer-mode.js',
-  './study-input-mobile-hotfix-v1.js',
-  './study-navigation-safe-v3.js',
   './study-answer-alternatives-v1.js',
   './study-show-all-vocab-v1.js',
-  './study-flip-penalty-v1.js',
-  './study-card-touch-fix-v1.js',
   './answer-quality-v1.js',
-  './study-character-feedback-v1.js',
-  './study-hint-ladder-v2.js',
-  './study-chunk-mode-v1.js',
-  './study-chunk-external-panel-v1.js',
   './quiz-multi-lesson-v1.js',
   './auto-pronunciation-v1.js',
   './podcast-auto-pronunciation-v1.js',
   './study-filter-prefs.js',
-  './weak-words-v1.js',
-  './smart-study-queue-v1.js',
   './study-session-v1.js',
-  './smart-daily-session-v2.js',
-  './dialogue-active-recall-v1.js',
-  './learning-loop-v1.js',
-  './learning-loop-tasks-v1.js',
-  './learning-loop-mobile-fix-v1.js',
-  './admin-dashboard-v1.js',
   './cloud-sync-v2.js'
 ];
 
@@ -87,6 +72,10 @@ async function transformIndexResponse(response) {
     '<script src="./data/core-cards.js"></script>\n<script src="./data/giahan-b17-supplement.js?v=39"></script>\n<script src="./data/giahan-b18-supplement.js?v=39"></script>\n<script src="./data/giahan-b19-supplement.js?v=39"></script>\n<script src="./data/giahan-b19-supplement-2.js?v=39"></script>\n<script src="./data/giahan-source-fixes-v1.js?v=49"></script>\n<script src="./data/uncertain-card-filter-v1.js?v=45"></script>'
   );
 
+  // IMPORTANT: phones intentionally receive a small, conservative runtime.
+  // Old touch/navigation/chunk/hint hotfixes are desktop-only until mobile is
+  // proven stable again. This avoids multiple document-level event handlers
+  // competing for the same tap/pointer events on iOS/Android PWAs.
   html = html.replace(
     '<script src="./app.js"></script>',
     `<script src="./data/giahan-translation-practice-v2.js?v=39"></script>
@@ -95,48 +84,66 @@ async function transformIndexResponse(response) {
 <script src="./app.js"></script>
 <script>
 (function(){
-  var mobile = window.matchMedia && window.matchMedia('(max-width:760px)').matches;
-  var scripts = mobile
-    ? ['./english-51talk-mobile-ux-v1.js?v=65']
-    : ['./english-51talk-learning-v2.js?v=59','./english-51talk-pattern-practice-v1.js?v=60','./english-51talk-listening-dictation-v1.js?v=61'];
-  for (var i=0;i<scripts.length;i++) document.write('<script src="'+scripts[i]+'"><\\/script>');
+  var mobile = !!(window.matchMedia && window.matchMedia('(max-width:760px)').matches);
+  var mobileScripts = [
+    './english-51talk-mobile-ux-v1.js?v=66',
+    './lazy-large-packs.js?v=66',
+    './study-answer-mode.js?v=66',
+    './study-answer-alternatives-v1.js?v=66',
+    './study-show-all-vocab-v1.js?v=66',
+    './answer-quality-v1.js?v=66',
+    './quiz-multi-lesson-v1.js?v=66',
+    './auto-pronunciation-v1.js?v=66',
+    './podcast-auto-pronunciation-v1.js?v=66',
+    './study-filter-prefs.js?v=66',
+    './study-session-v1.js?v=66'
+  ];
+  var desktopScripts = [
+    './english-51talk-learning-v2.js?v=59',
+    './english-51talk-pattern-practice-v1.js?v=60',
+    './english-51talk-listening-dictation-v1.js?v=61',
+    './lazy-large-packs.js?v=39',
+    './study-answer-mode.js?v=39',
+    './study-input-mobile-hotfix-v1.js?v=53',
+    './study-navigation-safe-v3.js?v=59',
+    './study-answer-alternatives-v1.js?v=39',
+    './study-show-all-vocab-v1.js?v=39',
+    './study-flip-penalty-v1.js?v=39',
+    './study-card-touch-fix-v1.js?v=39',
+    './answer-quality-v1.js?v=39',
+    './study-character-feedback-v1.js?v=39',
+    './study-hint-ladder-v2.js?v=54',
+    './study-chunk-mode-v1.js?v=50',
+    './study-chunk-external-panel-v1.js?v=55',
+    './quiz-multi-lesson-v1.js?v=51',
+    './auto-pronunciation-v1.js?v=39',
+    './podcast-auto-pronunciation-v1.js?v=39',
+    './study-filter-prefs.js?v=39',
+    './weak-words-v1.js?v=39',
+    './smart-study-queue-v1.js?v=39',
+    './study-session-v1.js?v=39',
+    './smart-daily-session-v2.js?v=44',
+    './dialogue-active-recall-v1.js?v=39',
+    './learning-loop-v1.js?v=39',
+    './learning-loop-tasks-v1.js?v=39',
+    './learning-loop-mobile-fix-v1.js?v=39',
+    './admin-dashboard-v1.js?v=39'
+  ];
+  var scripts = mobile ? mobileScripts : desktopScripts;
+  for (var i=0;i<scripts.length;i++) {
+    document.write('<script src="'+scripts[i]+'"><\\/script>');
+  }
 })();
 </script>
 <script src="./giahan-usage-examples-v2.js?v=49"></script>
-<script src="./giahan-usage-hotfix-v1.js?v=49"></script>
-<script src="./lazy-large-packs.js?v=39"></script>
-<script src="./study-answer-mode.js?v=39"></script>
-<script src="./study-input-mobile-hotfix-v1.js?v=53"></script>
-<script src="./study-navigation-safe-v3.js?v=59"></script>
-<script src="./study-answer-alternatives-v1.js?v=39"></script>
-<script src="./study-show-all-vocab-v1.js?v=39"></script>
-<script src="./study-flip-penalty-v1.js?v=39"></script>
-<script src="./study-card-touch-fix-v1.js?v=39"></script>
-<script src="./answer-quality-v1.js?v=39"></script>
-<script src="./study-character-feedback-v1.js?v=39"></script>
-<script src="./study-hint-ladder-v2.js?v=54"></script>
-<script src="./study-chunk-mode-v1.js?v=50"></script>
-<script src="./study-chunk-external-panel-v1.js?v=55"></script>
-<script src="./quiz-multi-lesson-v1.js?v=51"></script>
-<script src="./auto-pronunciation-v1.js?v=39"></script>
-<script src="./podcast-auto-pronunciation-v1.js?v=39"></script>
-<script src="./study-filter-prefs.js?v=39"></script>
-<script src="./weak-words-v1.js?v=39"></script>
-<script src="./smart-study-queue-v1.js?v=39"></script>
-<script src="./study-session-v1.js?v=39"></script>
-<script src="./smart-daily-session-v2.js?v=44"></script>
-<script src="./dialogue-active-recall-v1.js?v=39"></script>
-<script src="./learning-loop-v1.js?v=39"></script>
-<script src="./learning-loop-tasks-v1.js?v=39"></script>
-<script src="./learning-loop-mobile-fix-v1.js?v=39"></script>
-<script src="./admin-dashboard-v1.js?v=39"></script>`
+<script src="./giahan-usage-hotfix-v1.js?v=49"></script>`
   );
 
   const legacyCloudSync = /<script id="lf-cloud-sync-script">[\s\S]*?<\/script>/i;
   if (legacyCloudSync.test(html)) {
-    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=39"></script>');
+    html = html.replace(legacyCloudSync, '<script src="./cloud-sync-v2.js?v=66"></script>');
   } else if (!html.includes('cloud-sync-v2.js')) {
-    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=39"></script>\n</body>');
+    html = html.replace('</body>', '<script src="./cloud-sync-v2.js?v=66"></script>\n</body>');
   }
 
   const headers = new Headers(response.headers);
