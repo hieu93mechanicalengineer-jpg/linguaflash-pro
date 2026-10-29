@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-english-mobile-v77';
+const CACHE_NAME = 'linguaflash-english-mobile-v78';
 
 // Common startup shell. Mobile uses the clean English lesson UI; desktop keeps
 // the compact 51Talk workspace, Class 158 work lesson and two-way review trainer.
@@ -97,7 +97,7 @@ async function transformIndexResponse(response) {
   var mobile = mobileUA || (touch && coarse && shortSide <= 1024);
 
   var mobileScripts = [
-    './english-mobile-lessons-v1.js?v=77',
+    './english-mobile-lessons-v1.js?v=78',
     './lazy-large-packs.js?v=66',
     './study-answer-mode.js?v=66',
     './study-answer-alternatives-v1.js?v=66',
