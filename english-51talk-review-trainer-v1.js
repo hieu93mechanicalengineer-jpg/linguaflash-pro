@@ -40,13 +40,6 @@
     document.head.appendChild(s);
   }
 
-  function setMode(next){
-    if (!['en-vi','vi-en','listen'].includes(next)) return;
-    mode = next;
-    try { localStorage.setItem(KEY, mode); } catch (_) {}
-    enhance();
-  }
-
   function pairKey(en){ return `${lessonKey()}::${en}`; }
 
   function modeBar(){
@@ -58,7 +51,11 @@
   }
 
   function renderTrainer(card,en,vi,ipa){
-    card.dataset.rtApplied = `${pairKey(en)}::${mode}`;
+    if (!card || !en || !vi) return;
+    card.dataset.rtTrainer = '1';
+    card.dataset.rtEn = en;
+    card.dataset.rtVi = vi;
+    card.dataset.rtIpa = ipa || '';
     let body = '';
     if (mode === 'en-vi') {
       body = `<div class="lf51d-key">Mặt kiểm tra: Tiếng Anh</div>
@@ -85,6 +82,19 @@
     card.innerHTML = `${modeBar()}${body}`;
   }
 
+  function setMode(next){
+    if (!['en-vi','vi-en','listen'].includes(next)) return;
+    mode = next;
+    try { localStorage.setItem(KEY, mode); } catch (_) {}
+    const card = root()?.querySelector('.lf51d-reviewcard');
+    if (card?.dataset.rtTrainer === '1' && card.dataset.rtEn && card.dataset.rtVi) {
+      renderTrainer(card,card.dataset.rtEn,card.dataset.rtVi,card.dataset.rtIpa || '');
+      lockCoach();
+      return;
+    }
+    enhance();
+  }
+
   function lockCoach(){
     const r = root(); if (!r || !isReview()) return;
     const coach = r.querySelector('.lf51d-coach'); if (!coach) return;
@@ -106,10 +116,12 @@
     const r = root(); if (!r || !isReview()) return;
     lockCoach();
     const card = r.querySelector('.lf51d-reviewcard');
-    const q = card?.querySelector('.lf51d-reviewq');
-    if (!card || !q) return;
+    if (!card) return;
+    if (card.dataset.rtTrainer === '1') { r.classList.remove('lf51rt-capturing'); return; }
+    const q = card.querySelector('.lf51d-reviewq');
+    if (!q) return;
     const en = q.textContent.trim();
-    if (!en || q.closest('[data-rt-ready]')) return;
+    if (!en) return;
     const ipa = card.querySelector('.lf51d-ipa')?.textContent?.trim() || '';
     const visibleAnswer = card.querySelector('.lf51d-reviewa')?.textContent?.trim() || '';
     const key = pairKey(en);
@@ -145,11 +157,12 @@
   function check(){
     const r=root(); const input=r?.querySelector('#lf51rtInput'); const out=r?.querySelector('#lf51rtResult');
     const card=r?.querySelector('.lf51d-reviewcard'); if(!input||!out||!card)return;
-    const en = card.dataset.rtApplied?.split('::').slice(1,-1).join('::') || '';
+    const en = card.dataset.rtEn || '';
     const typed=norm(input.value), expected=norm(en);
     const ok=typed===expected;
+    const ipa=card.dataset.rtIpa || '';
     out.style.color=ok?'#15803d':'#b42318';
-    out.innerHTML=ok?`✅ Chính xác.${answers.get(pairKey(en))?.ipa?`<div class="lf51d-ipa" style="margin-top:6px">${esc(answers.get(pairKey(en)).ipa)}</div>`:''}`:`❌ Chưa đúng.<div style="margin-top:5px">Đáp án: <b>${esc(en)}</b></div>${answers.get(pairKey(en))?.ipa?`<div class="lf51d-ipa" style="margin-top:5px">${esc(answers.get(pairKey(en)).ipa)}</div>`:''}`;
+    out.innerHTML=ok?`✅ Chính xác.${ipa?`<div class="lf51d-ipa" style="margin-top:6px">${esc(ipa)}</div>`:''}`:`❌ Chưa đúng.<div style="margin-top:5px">Đáp án: <b>${esc(en)}</b></div>${ipa?`<div class="lf51d-ipa" style="margin-top:5px">${esc(ipa)}</div>`:''}`;
   }
 
   function bind(){
