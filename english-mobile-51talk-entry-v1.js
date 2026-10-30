@@ -1,29 +1,24 @@
-/* LinguaFlash · Mobile 51Talk entry recovery v1
-   Keeps the stable mobile Lesson UI selected across reloads/cache refreshes.
-   It only auto-recovers from an All/empty English filter after the user has
-   already used 51Talk Lesson Mode. Choosing another explicit category disables
-   auto-recovery until 51Talk is selected again.
+/* LinguaFlash · Mobile 51Talk entry recovery v2
+   Browser-independent mobile entry controller.
+   - Does not depend on prior localStorage/history, so Safari, PWA and Zalo WebView behave the same.
+   - On mobile English, a generic All/empty category defaults to 51Talk English.
+   - An explicit non-51Talk category chosen by the user is never overridden.
+   - If 51Talk is already selected, one safe change event refreshes the deck/UI.
 */
 (() => {
   'use strict';
-  if (window.__LF_MOBILE_51TALK_ENTRY_V1__) return;
-  window.__LF_MOBILE_51TALK_ENTRY_V1__ = true;
+  if (window.__LF_MOBILE_51TALK_ENTRY_V2__) return;
+  window.__LF_MOBILE_51TALK_ENTRY_V2__ = true;
 
-  const MODE_KEY = 'lf_mobile_51talk_lesson_mode_v1';
-  const LESSON_KEYS = ['lf_mobile_english_lesson_v1','lf_mobile_english_lesson_v2'];
   let internalChange = false;
-  let staleRefreshDone = false;
+  let refreshed51Talk = false;
 
-  const txt = el => String(el?.options?.[el.selectedIndex]?.textContent || el?.value || '').trim();
-  const is51 = value => /51\s*talk/i.test(String(value || ''));
-  const isAll = value => !String(value || '').trim() || /tất cả|all lessons?|all topics?|all/i.test(String(value || ''));
-  const hasLessonHistory = () => {
-    try {
-      if (localStorage.getItem(MODE_KEY) === '1') return true;
-      return LESSON_KEYS.some(k => !!localStorage.getItem(k));
-    } catch (_) { return false; }
+  const textOf = el => String(el?.options?.[el.selectedIndex]?.textContent || el?.value || '').trim();
+  const is51Talk = value => /51\s*talk/i.test(String(value || ''));
+  const isAll = value => {
+    const s = String(value || '').trim();
+    return !s || /^(all|all lessons?|all topics?|tất cả|tất cả bài học|tất cả chủ đề)$/i.test(s);
   };
-  const setMode = on => { try { localStorage.setItem(MODE_KEY, on ? '1' : '0'); } catch (_) {} };
 
   function isMobileDevice() {
     const ua = String(navigator.userAgent || '');
@@ -35,20 +30,16 @@
     return mobileUA || (touch && coarse && shortSide <= 1024);
   }
 
-  function currentCardIs51Talk() {
-    try {
-      const deck = window.filteredDeck;
-      const index = Number(window.currentIndex || 0);
-      const card = Array.isArray(deck) ? deck[index] : null;
-      return is51(card?.category) || String(card?.id || '').startsWith('en51_') || is51(card?.topic);
-    } catch (_) { return false; }
+  function isEnglishSelected(lang) {
+    const s = `${lang?.value || ''} ${textOf(lang)}`;
+    return /Tiếng Anh|English/i.test(s);
   }
 
   function find51TalkOption(select) {
-    return Array.from(select?.options || []).find(o => is51(`${o.value} ${o.textContent}`)) || null;
+    return Array.from(select?.options || []).find(option => is51Talk(`${option.value} ${option.textContent}`)) || null;
   }
 
-  function dispatchChange(select) {
+  function fireChange(select) {
     if (!select) return;
     internalChange = true;
     try { select.dispatchEvent(new Event('change', { bubbles: true })); }
@@ -57,68 +48,74 @@
 
   function recover() {
     if (!isMobileDevice()) return;
+
     const lang = document.getElementById('studyLangFilter');
     const category = document.getElementById('studyCategoryFilter');
     const topic = document.getElementById('studyTopicFilter');
-    if (!lang || !category) return;
+    if (!lang || !category || !isEnglishSelected(lang)) return;
 
-    const langText = `${lang.value} ${txt(lang)}`;
-    if (!/Tiếng Anh|English/i.test(langText)) return;
+    const categoryText = `${category.value || ''} ${textOf(category)}`.trim();
+    const topicText = `${topic?.value || ''} ${textOf(topic)}`.trim();
 
-    const categoryText = `${category.value} ${txt(category)}`;
-    const topicText = `${topic?.value || ''} ${txt(topic)}`;
-    const currently51 = is51(categoryText) || is51(topicText);
-
-    if (currently51) {
-      setMode(true);
-      // If the filter says 51Talk but the deck is still stale/general English,
-      // force exactly one rebuild so the Lesson UI can activate.
-      if (!currentCardIs51Talk() && !staleRefreshDone) {
-        staleRefreshDone = true;
-        dispatchChange(category);
+    if (is51Talk(categoryText) || is51Talk(topicText)) {
+      if (!refreshed51Talk) {
+        refreshed51Talk = true;
+        fireChange(category);
       }
       return;
     }
 
-    if (!hasLessonHistory()) return;
+    // Only auto-enter 51Talk from a generic All/empty English category.
+    // Explicit categories such as General English remain untouched.
+    if (!isAll(category.value) && !isAll(textOf(category))) return;
 
-    // Only recover from a generic All/empty category. Never override another
-    // explicit English category chosen by the user.
-    if (isAll(categoryText)) {
-      const option = find51TalkOption(category);
-      if (option) {
-        category.value = option.value;
-        setMode(true);
-        staleRefreshDone = false;
-        dispatchChange(category);
-      }
-    }
+    const option = find51TalkOption(category);
+    if (!option) return;
+
+    category.value = option.value;
+    refreshed51Talk = true;
+    fireChange(category);
   }
 
   function bind() {
+    const lang = document.getElementById('studyLangFilter');
     const category = document.getElementById('studyCategoryFilter');
-    if (category && category.dataset.lf51EntryBound !== '1') {
-      category.dataset.lf51EntryBound = '1';
-      category.addEventListener('change', () => {
-        if (internalChange) return;
-        const value = `${category.value} ${txt(category)}`;
-        if (is51(value)) { setMode(true); staleRefreshDone = false; }
-        else if (!isAll(value)) setMode(false);
+
+    if (lang && lang.dataset.lf51EntryV2Bound !== '1') {
+      lang.dataset.lf51EntryV2Bound = '1';
+      lang.addEventListener('change', () => {
+        refreshed51Talk = false;
+        setTimeout(recover, 60);
       });
     }
-    const lang = document.getElementById('studyLangFilter');
-    if (lang && lang.dataset.lf51EntryBound !== '1') {
-      lang.dataset.lf51EntryBound = '1';
-      lang.addEventListener('change', () => setTimeout(recover, 80));
+
+    if (category && category.dataset.lf51EntryV2Bound !== '1') {
+      category.dataset.lf51EntryV2Bound = '1';
+      category.addEventListener('change', () => {
+        if (internalChange) return;
+        const s = `${category.value || ''} ${textOf(category)}`;
+        refreshed51Talk = is51Talk(s);
+      });
     }
   }
 
   function init() {
     if (!isMobileDevice()) return;
     bind();
-    [80, 300, 900].forEach(ms => setTimeout(() => { bind(); recover(); }, ms));
-    window.addEventListener('pageshow', () => setTimeout(recover, 80), { passive: true });
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(recover, 80); }, { passive: true });
+    [60, 220, 600, 1200, 2400, 4000].forEach(ms => setTimeout(() => {
+      bind();
+      recover();
+    }, ms));
+    window.addEventListener('pageshow', () => {
+      refreshed51Talk = false;
+      setTimeout(recover, 80);
+    }, { passive: true });
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        refreshed51Talk = false;
+        setTimeout(recover, 80);
+      }
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
