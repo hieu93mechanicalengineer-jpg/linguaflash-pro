@@ -1,12 +1,11 @@
-/* LinguaFlash bootstrap v82
-   Loads the unchanged application core plus 51Talk mobile lesson UI directly.
-   This makes first-load behavior identical in Safari, PWA and in-app browsers
-   such as Zalo, without waiting for the service worker to control the page.
+/* LinguaFlash bootstrap v83
+   Loads the unchanged application core plus stable 51Talk mobile fallback UI directly.
+   v83 adds a safe mobile workspace adapter that reuses the tested desktop workspace logic.
 */
 (() => {
   'use strict';
-  if (window.__LF_APP_BOOTSTRAP_V82__) return;
-  window.__LF_APP_BOOTSTRAP_V82__ = true;
+  if (window.__LF_APP_BOOTSTRAP_V83__) return;
+  window.__LF_APP_BOOTSTRAP_V83__ = true;
 
   const ua = String(navigator.userAgent || '');
   const mobileUA = /Android|iPhone|iPad|iPod|Mobile|IEMobile|Opera Mini/i.test(ua);
@@ -17,18 +16,19 @@
   const mobile = mobileUA || (touch && coarse && shortSide <= 1024);
 
   // 51Talk built-in cards must exist before app-core builds its built-in baseline.
-  document.write('<script src="./data/english-51talk-lessons-v1.js?v=82"><\/script>');
-  // Exact previous app.js content, moved without modification.
-  document.write('<script src="./app-core.js?v=82"><\/script>');
+  document.write('<script src="./data/english-51talk-lessons-v1.js?v=83"><\/script>');
+  // Exact original application core, kept unchanged.
+  document.write('<script src="./app-core.js?v=83"><\/script>');
 
   if (mobile) {
-    // Stable mobile UI restored from the user-tested v77 blob.
-    document.write('<script src="./english-mobile-lessons-v1.js?v=82"><\/script>');
-    // Browser-independent entry controller for Safari/PWA/Zalo WebView.
-    document.write('<script src="./english-mobile-51talk-entry-v1.js?v=82"><\/script>');
-    // Isolated add-on: speaking + listening only. Does not patch the stable lesson UI.
-    document.write('<script src="./english-mobile-practice-v1.js?v=82"><\/script>');
-    // CSS-only safe-area fix so practice content is never hidden by the fixed bottom nav.
-    document.write('<script src="./english-mobile-practice-layout-fix-v1.js?v=82"><\/script>');
+    // Stable fallback UI: user-tested v77/v80 foundation.
+    document.write('<script src="./english-mobile-lessons-v1.js?v=83"><\/script>');
+    document.write('<script src="./english-mobile-51talk-entry-v1.js?v=83"><\/script>');
+    // Existing isolated practice fallback.
+    document.write('<script src="./english-mobile-practice-v1.js?v=83"><\/script>');
+    document.write('<script src="./english-mobile-practice-layout-fix-v1.js?v=83"><\/script>');
+    // v83: reuse the desktop workspace feature logic with phone-specific responsive CSS.
+    // If this adapter fails, all fallback modules above remain visible and usable.
+    document.write('<script src="./english-mobile-workspace-parity-v1.js?v=83"><\/script>');
   }
 })();
