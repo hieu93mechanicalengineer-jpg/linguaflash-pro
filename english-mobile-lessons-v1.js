@@ -1,20 +1,27 @@
-/* LinguaFlash · English Mobile Lessons v2
-   Clean mobile 51Talk workspace with desktop learning-feature parity.
-   Stable in portrait/landscape. Renders only the active tab.
-   No MutationObserver or document-level touch interception.
+/* LinguaFlash · English Mobile Lessons v1
+   Clean mobile-only lesson UI for 51Talk English.
+   Goals:
+   - Same UI in portrait and landscape (device detection, not viewport breakpoint).
+   - Render only the active section to keep DOM small and responsive.
+   - No document-level touch interception, no MutationObserver, no flashcard patching.
+   - Phase 1 sections: Vocabulary, Example sentences, Dialogue, Grammar.
 */
 (() => {
   'use strict';
-  if (window.__LF_ENGLISH_MOBILE_LESSONS_V2__) return;
-  window.__LF_ENGLISH_MOBILE_LESSONS_V2__ = true;
+  if (window.__LF_ENGLISH_MOBILE_LESSONS_V1__) return;
+  window.__LF_ENGLISH_MOBILE_LESSONS_V1__ = true;
 
-  const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-  const norm = value => String(value || '').toLowerCase().normalize('NFKC').replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[ch]));
 
   const LESSONS = {
     health: {
-      id:'health', unit:'Bài hiện tại', title:'Sức khỏe & Công việc', subtitle:'Sức khỏe · cảm lạnh · công việc & thích nghi',
-      vocab:[
+      id: 'health',
+      unit: 'Bài hiện tại',
+      title: 'Sức khỏe & Công việc',
+      subtitle: 'Sức khỏe · cảm lạnh · công việc & thích nghi',
+      vocab: [
         ['look well','/lʊk wel/','Trông khỏe mạnh, thần sắc tốt','S + look(s) / do not look + well. Khi nói về sức khỏe, well có thể là tính từ.'],
         ['headache','/ˈhedeɪk/','Cơn đau đầu, chứng nhức đầu','Dùng với a: have a headache / have a terrible headache.'],
         ['umbrella','/ʌmˈbrelə/','Cái ô, cái dù che mưa','Dùng an umbrella; bring/take an umbrella with you.'],
@@ -32,7 +39,7 @@
         ['a couple of','/ə ˈkʌpəl əv/','Hai / một vài','a couple of + danh từ số nhiều.'],
         ['feel nervous / worried','/fiːl ˈnɜːrvəs/ · /fiːl ˈwɜːrid/','Cảm thấy lo lắng, hồi hộp','feel + tính từ.']
       ],
-      examples:[
+      examples: [
         ["You don't look well. What happened?",'/ju doʊnt lʊk wel | wʌt ˈhæpənd/','Trông bạn không được khỏe. Đã có chuyện gì xảy ra vậy?'],
         ['Jenny is not feeling well because she has a headache.','/ˈdʒeni ɪz nɑːt ˈfiːlɪŋ wel bɪˈkɔːz ʃi hæz ə ˈhedeɪk/','Jenny cảm thấy không khỏe vì cô ấy bị đau đầu.'],
         ['It is raining outside. Remember to bring an umbrella.','/ɪt ɪz ˈreɪnɪŋ ˌaʊtˈsaɪd | rɪˈmembər tə brɪŋ ən ʌmˈbrelə/','Bên ngoài trời đang mưa. Hãy nhớ mang theo một chiếc ô.'],
@@ -44,7 +51,7 @@
         ['It takes time for me to adapt to a new working environment.','/ɪt teɪks taɪm fər mi tə əˈdæpt tə ə nuː ˈwɜːrkɪŋ ɪnˈvaɪrənmənt/','Tôi cần thời gian để thích nghi với một môi trường làm việc mới.'],
         ['A couple of months after I moved to London, I felt completely at home there.','/ə ˈkʌpəl əv mʌnθs ˈæftər aɪ muːvd tə ˈlʌndən | aɪ felt kəmˈpliːtli æt hoʊm ðer/','Một vài tháng sau khi chuyển đến London, tôi cảm thấy hoàn toàn quen thuộc như ở nhà.']
       ],
-      dialogue:[
+      dialogue: [
         ['Lily',"Hi, Joe! Are you okay? You don't look well.",'/haɪ dʒoʊ | ɑːr ju oʊˈkeɪ | ju doʊnt lʊk wel/','Chào Joe! Bạn ổn chứ? Trông bạn không khỏe.'],
         ['Joe',"I don't feel very good. I have a terrible headache.",'/aɪ doʊnt fiːl ˈveri ɡʊd | aɪ hæv ə ˈterəbəl ˈhedeɪk/','Tôi cảm thấy không khỏe lắm. Tôi bị đau đầu dữ dội.'],
         ['Lily',"I'm sorry to hear that. What happened?",'/aɪm ˈsɑːri tə hɪr ðæt | wʌt ˈhæpənd/','Rất tiếc khi nghe điều đó. Có chuyện gì xảy ra vậy?'],
@@ -56,24 +63,23 @@
         ['Lily','Also, drinking more water may make you feel better.','/ˈɔːlsoʊ | ˈdrɪŋkɪŋ mɔːr ˈwɔːtər meɪ meɪk ju fiːl ˈbetər/','Uống thêm nước có thể giúp bạn cảm thấy khỏe hơn.'],
         ['Joe','Thank you. I will take care of myself.','/θæŋk ju | aɪ wɪl teɪk ker əv maɪˈself/','Cảm ơn. Tôi sẽ tự chăm sóc bản thân.']
       ],
-      grammar:[
+      grammar: [
         ['Well / good sau động từ nối','Khi nói về sức khỏe, well có thể là tính từ sau look, feel, be. Ví dụ: You do not look well. / I do not feel very good.'],
         ['Chủ ngữ giả It','It is + adjective + (for someone) + to V. It takes + time + for someone + to V.'],
         ['V-ing làm chủ ngữ & make + O + V','Động từ làm chủ ngữ dùng V-ing. Sau make + tân ngữ dùng V nguyên mẫu không “to”.'],
         ['Đại từ phản thân & cụm cố định','I → myself, you → yourself, he → himself, she → herself. Ghi nhớ on my way home và get all wet.'],
         ['Quá khứ đơn','Kể việc đã qua dùng V2/ed: went, started, got, was, caught, felt. Câu hỏi dùng Did + S + V nguyên mẫu.'],
         ['Mẫu câu luyện nói','Hai mẫu trọng tâm: I have a... và Maybe I need to...']
-      ], notes:[],
-      speaking:[
-        ['Teacher','Hi! When was the last time you caught a cold?'],
-        ['You','It was a couple of months ago. I went out in the heavy rain without an umbrella and got all wet.'],
-        ['Teacher','Oh no! How did you feel and what did you do?'],
-        ['You',"I didn't feel well and I had a terrible headache. I went to the hospital, took some medicine, and stayed at home to have a good rest."]
-      ]
+      ],
+      notes: []
     },
+
     birthday: {
-      id:'birthday', unit:'Unit 1', title:'My Birthday Is Coming!', subtitle:'Ngày tháng · sinh nhật · công việc',
-      vocab:[
+      id: 'birthday',
+      unit: 'Unit 1',
+      title: 'My Birthday Is Coming!',
+      subtitle: 'Ngày tháng · sinh nhật · công việc',
+      vocab: [
         ['today','/təˈdeɪ/','Hôm nay, ngày hôm nay','Có thể đứng đầu câu làm chủ ngữ hoặc cuối câu làm trạng ngữ thời gian.'],
         ['date','/deɪt/','Ngày trong tháng / ngày trên lịch',"What's the date today? Phân biệt date (ngày mấy) và day (thứ mấy)."],
         ['May','/meɪ/','Tháng Năm','Luôn viết hoa. Dùng in May nhưng on May 30th.'],
@@ -86,7 +92,7 @@
         ['Oh dear!','/oʊ dɪr/','Ôi trời ơi! / Chết thật!','Cảm thán lịch sự khi ngạc nhiên hoặc chợt nhớ ra điều gì.'],
         ['forgot all about it','/fərˈɡɑːt ɔːl əˈbaʊt ɪt/','Quên khuấy đi mất','forget → forgot.']
       ],
-      examples:[
+      examples: [
         ['Today is a big day for me.','/təˈdeɪ ɪz ə bɪɡ deɪ fər miː/','Hôm nay là một ngày trọng đại đối với tôi.'],
         ['The date of my birthday is the 24th of this month.','/ðə deɪt əv maɪ ˈbɜːrθdeɪ ɪz ðə ˌtwenti ˈfɔːrθ əv ðɪs mʌnθ/','Ngày sinh nhật của tôi là ngày 24 của tháng này.'],
         ["My friend Tim's birthday is on May 30th.",'/maɪ frend tɪmz ˈbɜːrθdeɪ ɪz ɑːn meɪ ˈθɜːrtiəθ/','Sinh nhật của bạn tôi Tim vào ngày 30 tháng 5.'],
@@ -96,7 +102,7 @@
         ['Erica is the first one to say happy birthday to me.','/ˈerɪkə ɪz ðə fɜːrst wʌn tə seɪ ˈhæpi ˈbɜːrθdeɪ tə miː/','Erica là người đầu tiên nói lời chúc mừng sinh nhật với tôi.'],
         ["What's the date today?",'/wʌts ðə deɪt təˈdeɪ/','Hôm nay là ngày mấy?']
       ],
-      dialogue:[
+      dialogue: [
         ['Tracy',"Betty, what's the date today?",'/ˈbeti | wʌts ðə deɪt təˈdeɪ/','Betty ơi, hôm nay là ngày mấy nhỉ?'],
         ['Betty',"It's May 28th. Oh, it's only one week from your birthday.",'/ɪts meɪ ˌtwenti ˈeɪtθ | oʊ | ɪts ˈoʊnli wʌn wiːk frəm jʊr ˈbɜːrθdeɪ/','Hôm nay là ngày 28 tháng 5. Chỉ còn một tuần nữa là đến sinh nhật bạn.'],
         ['Tracy','Oh dear! I was so busy with my work that I forgot all about it!','/oʊ dɪr | aɪ wəz soʊ ˈbɪzi wɪð maɪ wɜːrk ðæt aɪ fərˈɡɑːt ɔːl əˈbaʊt ɪt/','Ôi trời! Mình bận công việc quá đến nỗi quên khuấy đi mất!'],
@@ -104,7 +110,7 @@
         ['Tracy','Yes, you are. Thank you, Betty.','/jes ju ɑːr | θæŋk ju ˈbeti/','Đúng vậy. Cảm ơn bạn nhé, Betty.'],
         ['Betty',"You're welcome.",'/jʊr ˈwelkəm/','Không có chi đâu.']
       ],
-      grammar:[
+      grammar: [
         ["What's the date? và What day is it?","What's the date today? hỏi ngày mấy trong tháng. What day is it today? hỏi thứ mấy trong tuần."],
         ['IN và ON với thời gian','IN + tháng/năm. ON + ngày cụ thể: in May nhưng on May 30th.'],
         ['be busy with + N / be busy + V-ing','S + be + busy with + danh từ; hoặc S + be + busy + V-ing.'],
@@ -112,22 +118,18 @@
         ['so... that...','S + be/V + so + tính từ/trạng từ + that + S + V: quá... đến nỗi...'],
         ['must be & câu xác nhận','must + V có thể diễn tả suy đoán chắc chắn. Trong hội thoại có “..., right?” để xin xác nhận.']
       ],
-      notes:[
+      notes: [
         ['12 tháng trong năm','January / February / March / April / May / June / July / August / September / October / November / December.'],
         ['Số thứ tự khi nói ngày','1st first · 2nd second · 3rd third · 21st twenty-first · 22nd twenty-second · 23rd twenty-third · 24th twenty-fourth · 28th twenty-eighth · 30th thirtieth · 31st thirty-first. 11th, 12th, 13th luôn dùng -th.']
-      ],
-      speaking:[
-        ['Teacher',"Hi! What's the date today?"],
-        ['You',"It's October 29th. My birthday is coming soon!"],
-        ['Teacher','Really? When is your birthday?'],
-        ['You','The date of my birthday is on November 5th. I am busy with my work all week, so I will have a small party at home.'],
-        ['Teacher','Happy early birthday to you!'],
-        ['You','Thank you! You are the first one to say “Happy birthday” to me!']
       ]
     },
+
     family: {
-      id:'family', unit:'Unit 6', title:'You Look Just Like Your Dad', subtitle:'Ngoại hình · so sánh · nét giống trong gia đình',
-      vocab:[
+      id: 'family',
+      unit: 'Unit 6',
+      title: 'You Look Just Like Your Dad',
+      subtitle: 'Ngoại hình · so sánh · nét giống trong gia đình',
+      vocab: [
         ['fat','/fæt/','Béo, mập, mũm mĩm','be fat / a fat baby. So sánh hơn: fatter.'],
         ['baby','/ˈbeɪbi/','Em bé, trẻ sơ sinh','Số nhiều: babies. Cụm baby pictures.'],
         ['thin','/θɪn/','Gầy, mảnh mai, thon thả','be/become thin. So sánh hơn: thinner.'],
@@ -143,7 +145,7 @@
         ['by + V-ing','/baɪ/ + V-ing','Bằng cách làm gì đó','by running = bằng việc chạy bộ.'],
         ['nose / eyes','/noʊz/ · /aɪz/','Cái mũi / đôi mắt','You have your mom’s nose. I have his eyes and nose.']
       ],
-      examples:[
+      examples: [
         ["I don't want to be fat any more.",'/aɪ doʊnt wɑːnt tə bi fæt ˌeni ˈmɔːr/','Tôi không muốn bị béo thêm nữa.'],
         ['The baby is 10 months old now.','/ðə ˈbeɪbi ɪz ten mʌnθs oʊld naʊ/','Em bé hiện giờ đã được 10 tháng tuổi.'],
         ['Emily becomes thin by running.','/ˈeməli bɪˈkʌmz θɪn baɪ ˈrʌnɪŋ/','Emily trở nên thon gầy nhờ việc chạy bộ.'],
@@ -153,7 +155,7 @@
         ['We are taller than our dad now.','/wi ɑːr ˈtɔːlər ðæn aʊər dæd naʊ/','Bây giờ chúng tôi đã cao hơn bố của mình.'],
         ['You look just like your mom in the picture.','/ju lʊk dʒʌst laɪk jʊr mɑːm ɪn ðə ˈpɪktʃər/','Bạn trông giống hệt mẹ của bạn trong bức ảnh.']
       ],
-      dialogue:[
+      dialogue: [
         ['Jen','Wow, you were a fat baby at that time.','/waʊ | ju wɜːr ə fæt ˈbeɪbi æt ðæt taɪm/','Chà, hồi đó bạn là một em bé mũm mĩm thật đấy.'],
         ['Adam','I know I was. But I am thinner now, and I am taller than my dad.','/aɪ noʊ aɪ wəz | bʌt aɪ æm ˈθɪnər naʊ ænd aɪ æm ˈtɔːlər ðæn maɪ dæd/','Mình biết mà. Nhưng bây giờ mình gầy hơn và cao hơn bố mình.'],
         ['Jen','These are super cute baby pictures.','/ðiːz ɑːr ˈsuːpər kjuːt ˈbeɪbi ˈpɪktʃərz/','Đây đúng là những bức ảnh em bé siêu dễ thương.'],
@@ -161,7 +163,7 @@
         ['Jen','Yes, I do. You look just like your dad.','/jes aɪ duː | ju lʊk dʒʌst laɪk jʊr dæd/','Đúng vậy. Còn bạn thì trông giống hệt bố của bạn.'],
         ['Adam','Yes, I have his eyes and nose.','/jes | aɪ hæv hɪz aɪz ænd noʊz/','Ừ, mình có đôi mắt và chiếc mũi giống của bố.']
       ],
-      grammar:[
+      grammar: [
         ['look (just) like','look like + danh từ/đại từ để nói ai trông giống ai. Câu hỏi: Who do you look like in your family?'],
         ['So sánh hơn với tính từ ngắn','S1 + be + adj-er + than + S2. Ví dụ taller than, thinner than, fatter than.'],
         ['become + adjective & by + V-ing','become + tính từ diễn tả thay đổi trạng thái. by + V-ing diễn tả cách thức.'],
@@ -169,74 +171,230 @@
         ['Nét giống bố mẹ','S + have/has + sở hữu cách hoặc tính từ sở hữu + bộ phận cơ thể: your mom’s nose / his eyes.'],
         ['was/were và am/is/are','Dùng was/were cho quá khứ và am/is/are cho hiện tại khi mô tả sự thay đổi ngoại hình.']
       ],
-      notes:[
+      notes: [
         ['Quy tắc CVC khi thêm -er','thin → thinner · fat → fatter · big → bigger · slim → slimmer.'],
         ['Có thể lược bỏ than khi ngữ cảnh đã rõ','But I am thinner now. → ngầm so với lúc nhỏ.']
-      ],
-      speaking:[
-        ['Teacher','Hi! Were you fat when you were a child?'],
-        ['You · Cách 1','Yes, I was a fat baby at that time. But I am thinner now by playing sports!'],
-        ['You · Cách 2',"No, I wasn't. I was thin when I was a child, and I am taller than my dad now."],
-        ['Teacher','Who do you look like in your family?'],
-        ['You','I look just like my dad. I have his eyes and nose!']
       ]
     }
   };
 
-  const STORE_LESSON='lf_mobile_english_lesson_v2', STORE_TAB='lf_mobile_english_tab_v2', STORE_REVIEW_MODE='lf_mobile_english_review_mode_v2', LEARNED_KEY='lf51_desktop_learned_v1';
-  const VALID_TABS=new Set(['vocab','examples','dialogue','grammar','speaking','review']);
-  let lessonId=(()=>{try{return localStorage.getItem(STORE_LESSON)||'birthday';}catch(_){return'birthday';}})();
-  let tab=(()=>{try{const x=localStorage.getItem(STORE_TAB);return VALID_TABS.has(x)?x:'vocab';}catch(_){return'vocab';}})();
-  let reviewMode=(()=>{try{return localStorage.getItem(STORE_REVIEW_MODE)||'en-vi';}catch(_){return'en-vi';}})();
-  if(!['en-vi','vi-en','listen'].includes(reviewMode))reviewMode='en-vi';
-  let reviewIndex=0, reveal=false, playingToken=0, recognition=null;
+  const STORE_LESSON = 'lf_mobile_english_lesson_v1';
+  const STORE_TAB = 'lf_mobile_english_tab_v1';
+  const VALID_TABS = new Set(['vocab','examples','dialogue','grammar']);
+  let lessonId = (() => { try { return localStorage.getItem(STORE_LESSON) || 'birthday'; } catch (_) { return 'birthday'; } })();
+  let tab = (() => { try { const x = localStorage.getItem(STORE_TAB); return VALID_TABS.has(x) ? x : 'vocab'; } catch (_) { return 'vocab'; } })();
+  let playingToken = 0;
 
-  function isMobileDevice(){const ua=String(navigator.userAgent||'');const mobileUA=/Android|iPhone|iPad|iPod|Mobile|IEMobile|Opera Mini/i.test(ua);const touch=Number(navigator.maxTouchPoints||0)>0;let coarse=false;try{coarse=!!window.matchMedia?.('(pointer: coarse)').matches;}catch(_){}const sw=Math.min(Number(screen.width||9999),Number(screen.height||9999));return mobileUA||(touch&&coarse&&sw<=1024);}
-  function selected51Talk(){const lang=String(document.getElementById('studyLangFilter')?.value||'');const category=String(document.getElementById('studyCategoryFilter')?.value||'');const topic=String(document.getElementById('studyTopicFilter')?.value||'');let card=null;try{card=Array.isArray(window.filteredDeck)&&window.filteredDeck.length?window.filteredDeck[window.currentIndex||0]:null;}catch(_){}return lang==='Tiếng Anh'&&(/51Talk/i.test(category)||/51Talk/i.test(topic)||String(card?.id||'').startsWith('en51_')||card?.category==='51Talk English');}
-  function inferLesson(){const topic=String(document.getElementById('studyTopicFilter')?.value||'').toLowerCase();if(/birthday|happy birthday|unit 1|u1/.test(topic))return'birthday';if(/dad|appearance|unit 6|u6/.test(topic))return'family';if(/headache|health|workplace|2026-10-28|2026-10-29|unit 3/.test(topic))return'health';return null;}
-  function currentLesson(){return LESSONS[lessonId]||LESSONS.birthday;}
-  function speak(text,rate=.82,onEnd){if(!text){onEnd?.();return;}try{if('speechSynthesis'in window){const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=rate;if(onEnd)u.onend=onEnd;speechSynthesis.cancel();speechSynthesis.speak(u);return;}}catch(_){}try{window.lfSpeak51TalkEnglish?.(text);}catch(_){}onEnd?.();}
-  function repeat3(text){const token=++playingToken;let n=0;const go=()=>{if(token!==playingToken||n++>=3)return;speak(text,.75,()=>setTimeout(go,220));};go();}
-  function speakSequence(lines){const token=++playingToken;const queue=(lines||[]).filter(Boolean).slice();const next=()=>{if(token!==playingToken||!queue.length)return;const text=queue.shift();speak(text,.82,next);};next();}
-  function learnedSet(){try{return new Set(JSON.parse(localStorage.getItem(LEARNED_KEY)||'[]'));}catch(_){return new Set();}}
-  function learnedKey(){return `${lessonId}:review:${reviewIndex}`;}
-  function isLearned(){return learnedSet().has(learnedKey());}
-  function toggleLearned(){const s=learnedSet(),k=learnedKey();s.has(k)?s.delete(k):s.add(k);try{localStorage.setItem(LEARNED_KEY,JSON.stringify([...s]));}catch(_){}render();}
-  function noteKey(){return `lf51_note_v1_${lessonId}_${tab}`;} function noteValue(){try{return localStorage.getItem(noteKey())||'';}catch(_){return'';}} function saveNote(v){try{localStorage.setItem(noteKey(),v);}catch(_){} }
-  function reviewItems(){const L=currentLesson();return L.examples.map(x=>({type:'Câu mẫu',en:x[0],ipa:x[1],vi:x[2]})).concat(L.vocab.map(x=>({type:'Từ vựng',en:x[0],ipa:x[1],vi:x[2]})));}
+  function isMobileDevice() {
+    const ua = String(navigator.userAgent || '');
+    const mobileUA = /Android|iPhone|iPad|iPod|Mobile|IEMobile|Opera Mini/i.test(ua);
+    const touch = Number(navigator.maxTouchPoints || 0) > 0;
+    let coarse = false;
+    try { coarse = !!window.matchMedia?.('(pointer: coarse)').matches; } catch (_) {}
+    const sw = Math.min(Number(screen.width || 9999), Number(screen.height || 9999));
+    return mobileUA || (touch && coarse && sw <= 1024);
+  }
 
-  function ensureStyle(){if(document.getElementById('lfEnglishMobileV2Style'))return;const s=document.createElement('style');s.id='lfEnglishMobileV2Style';s.textContent=`
-    #lfEnglishMobileV1{display:none;width:100%;max-width:860px;margin:0 auto 22px;padding:0 10px;color:#0f172a;box-sizing:border-box}#lfEnglishMobileV1 *{box-sizing:border-box}#lfEnglishMobileV1.on{display:block}
-    .lfem-hero{background:#173b74;color:#fff;border-radius:18px;padding:16px;box-shadow:0 8px 22px rgba(15,23,42,.12)}.lfem-kicker{font-size:12px;font-weight:900;letter-spacing:.05em;color:#fde68a}.lfem-title{font-size:21px;line-height:1.2;font-weight:950;margin-top:5px}.lfem-sub{font-size:13px;line-height:1.45;color:#dbeafe;margin-top:6px}
-    .lfem-picker{margin-top:10px}.lfem-picker label{display:block;font-size:11px;font-weight:900;color:#64748b;margin:0 0 5px 3px}.lfem-picker select{width:100%;min-height:48px;border:1px solid #cbd5e1;border-radius:13px;background:#fff;color:#0f172a;padding:0 12px;font-size:16px;font-weight:800}
-    .lfem-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0}.lfem-tab{min-height:47px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#475569;font-size:13px;font-weight:900;padding:7px 5px;touch-action:manipulation}.lfem-tab.active{background:#1d4ed8;border-color:#1d4ed8;color:#fff}
-    .lfem-note{background:#fff7ed;border:1px solid #fed7aa;border-radius:13px;padding:10px 11px;margin-bottom:9px}.lfem-note b{display:block;color:#9a3412;font-size:13px}.lfem-note p{margin:5px 0 0;color:#7c2d12;font-size:12px;line-height:1.5}.lfem-card{background:#fff;border:1px solid #e2e8f0;border-radius:15px;padding:13px;margin-bottom:9px;box-shadow:0 2px 8px rgba(15,23,42,.035)}
-    .lfem-row{display:flex;align-items:flex-start;gap:9px}.lfem-main{min-width:0;flex:1}.lfem-word{font-size:17px;font-weight:950;color:#0f3c78;line-height:1.25}.lfem-en{font-size:15px;font-weight:850;line-height:1.5;color:#172033}.lfem-ipa{font-size:12px;color:#64748b;line-height:1.4;margin-top:4px}.lfem-vi{font-size:13px;line-height:1.5;color:#475569;margin-top:8px}.lfem-use{font-size:12px;line-height:1.5;color:#475569;margin-top:7px}.lfem-use b{color:#1d4ed8}
-    .lfem-audio{flex:0 0 44px;width:44px;height:44px;border:0;border-radius:12px;background:#eff6ff;color:#1d4ed8;font-size:18px;touch-action:manipulation}.lfem-speed{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.lfem-speed button,.lfem-soft{border:1px solid #cbd5e1;background:#fff;color:#334155;border-radius:10px;min-height:38px;padding:7px 10px;font-size:12px;font-weight:850;touch-action:manipulation}
-    .lfem-speaker{display:inline-block;font-size:11px;font-weight:950;color:#1d4ed8;background:#eff6ff;border-radius:999px;padding:4px 7px;margin-bottom:5px}.lfem-dialogue{border-left:4px solid #2563eb}.lfem-playall,.lfem-primary{width:100%;min-height:46px;border:0;border-radius:12px;background:#173b74;color:#fff;font-weight:900;font-size:14px;touch-action:manipulation}.lfem-playall{margin-bottom:10px}
-    .lfem-grammar details{background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin-bottom:8px;padding:0 12px}.lfem-grammar summary{padding:13px 0;font-size:14px;font-weight:900;line-height:1.35}.lfem-grammar p{font-size:13px;line-height:1.55;color:#475569;margin:0 0 13px}
-    .lfem-toolbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.lfem-toolbar button{flex:1;min-width:92px}.lfem-training{background:linear-gradient(135deg,#f8fbff,#fff);border:1px solid #cfe0f5;border-radius:15px;padding:13px;margin-bottom:10px}.lfem-training h3{margin:0 0 7px;color:#173b74;font-size:15px}.lfem-training p{font-size:12px;line-height:1.5;color:#64748b;margin:5px 0}.lfem-input,.lfem-notearea{width:100%;border:2px solid #d7e0ea;border-radius:12px;padding:11px 12px;font-size:16px;outline:none;background:#fff}.lfem-input:focus,.lfem-notearea:focus{border-color:#2563eb}.lfem-notearea{min-height:78px;resize:vertical}.lfem-result{font-size:13px;font-weight:800;line-height:1.5;margin-top:9px}.lfem-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.lfem-actions button{flex:1;min-width:100px}
-    .lfem-speaking-line{border-left:4px solid #22c55e}.lfem-speaking-line.teacher{border-left-color:#2563eb}.lfem-record{border:1px solid #fecaca;background:#fff1f2;color:#be123c;border-radius:10px;min-height:38px;padding:7px 10px;font-size:12px;font-weight:900}.lfem-review-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:10px}.lfem-review-modes button{border:1px solid #cbd5e1;background:#fff;color:#475569;border-radius:11px;min-height:42px;font-size:11px;font-weight:900}.lfem-review-modes button.active{background:#1d4ed8;border-color:#1d4ed8;color:#fff}
-    .lfem-review{background:#fff;border:1px solid #dbe4ef;border-radius:16px;padding:16px;text-align:center}.lfem-review-type{font-size:11px;font-weight:900;color:#d97706}.lfem-review-q{font-size:19px;font-weight:950;line-height:1.42;margin:12px 0;color:#172033}.lfem-review-a{background:#eff6ff;border-radius:12px;padding:11px;font-size:14px;line-height:1.5;color:#334155;margin-top:10px}.lfem-progress{font-size:12px;font-weight:800;color:#64748b;margin-top:7px}.lfem-learned{background:#ecfdf5!important;border-color:#86efac!important;color:#166534!important}
-    body.lf-english-mobile-v2-active #flashcardContainer,body.lf-english-mobile-v2-active #studyAnswerPanel,body.lf-english-mobile-v2-active #lf51CoachShell,body.lf-english-mobile-v2-active #lf51GrammarPanel,body.lf-english-mobile-v2-active #lf51PatternPractice,body.lf-english-mobile-v2-active #lf51Listening,body.lf-english-mobile-v2-active #lf51MobileLessonV64{display:none!important}
-    @media(orientation:landscape){#lfEnglishMobileV1{max-width:940px}.lfem-hero{padding:14px 16px}.lfem-tabs{grid-template-columns:repeat(6,minmax(0,1fr))}.lfem-tab{font-size:12px}.lfem-review{max-width:720px;margin:0 auto}}
-  `;document.head.appendChild(s);}
-  function ensureRoot(){let root=document.getElementById('lfEnglishMobileV1');if(root)return root;const flash=document.getElementById('flashcardContainer');if(!flash?.parentElement)return null;root=document.createElement('section');root.id='lfEnglishMobileV1';flash.parentElement.insertBefore(root,flash);return root;}
-  function speedButtons(text){return `<div class="lfem-speed"><button type="button" data-speed=".75" data-text="${esc(text)}">0.75×</button><button type="button" data-speed="1" data-text="${esc(text)}">1.0×</button><button type="button" data-speed="1.25" data-text="${esc(text)}">1.25×</button></div>`;}
-  function notesBlock(){return `<section class="lfem-training"><h3>📝 Ghi chú học tập</h3><textarea id="lfemNote" class="lfem-notearea" placeholder="Viết ghi chú của bạn...">${esc(noteValue())}</textarea></section>`;}
-  function renderVocab(L){const notes=(L.notes||[]).map(n=>`<div class="lfem-note"><b>${esc(n[0])}</b><p>${esc(n[1])}</p></div>`).join('');return notes+L.vocab.map(v=>`<article class="lfem-card"><div class="lfem-row"><div class="lfem-main"><div class="lfem-word">${esc(v[0])}</div><div class="lfem-ipa">${esc(v[1])}</div></div><button type="button" class="lfem-audio" data-audio="${esc(v[0])}">🔊</button></div><div class="lfem-vi"><b>${esc(v[2])}</b></div>${v[3]?`<div class="lfem-use"><b>Cách dùng:</b> ${esc(v[3])}</div>`:''}${speedButtons(v[0])}</article>`).join('')+notesBlock();}
-  function renderExamples(L){return L.examples.map((e,i)=>`<article class="lfem-card"><div class="lfem-row"><div class="lfem-main"><div class="lfem-use"><b>Câu ${i+1}</b></div><div class="lfem-en">${esc(e[0])}</div><div class="lfem-ipa">${esc(e[1])}</div></div><button type="button" class="lfem-audio" data-audio="${esc(e[0])}">🔊</button></div><div class="lfem-vi">${esc(e[2])}</div>${speedButtons(e[0])}</article>`).join('')+notesBlock();}
-  function renderDialogue(L){return `<div class="lfem-toolbar"><button type="button" class="lfem-primary" data-play-dialogue>▶ Nghe toàn bộ</button><button type="button" class="lfem-soft" data-toggle-dialogue-vi>Ẩn/hiện dịch</button></div>`+L.dialogue.map(d=>`<article class="lfem-card lfem-dialogue"><div class="lfem-row"><div class="lfem-main"><span class="lfem-speaker">${esc(d[0])}</span><div class="lfem-en">${esc(d[1])}</div><div class="lfem-ipa">${esc(d[2])}</div></div><button type="button" class="lfem-audio" data-audio="${esc(d[1])}">🔊</button></div><div class="lfem-vi lfem-dialogue-vi">${esc(d[3])}</div>${speedButtons(d[1])}</article>`).join('')+notesBlock();}
-  function renderGrammar(L){return `<div class="lfem-grammar">${L.grammar.map((g,i)=>`<details ${i===0?'open':''}><summary>${i+1}. ${esc(g[0])}</summary><p>${esc(g[1])}</p></details>`).join('')}</div>`+notesBlock();}
-  function renderSpeaking(L){return `<section class="lfem-training"><h3>🗣️ Luyện nói</h3><p>Nghe mẫu, sau đó bấm 🎙️ ở câu của bạn để luyện phát âm. Nếu trình duyệt không hỗ trợ microphone, phần nghe mẫu vẫn hoạt động.</p><button type="button" class="lfem-primary" data-play-speaking>▶ Nghe toàn bộ kịch bản</button><div id="lfemSpeechGlobalResult" class="lfem-result"></div></section>`+L.speaking.map((s,i)=>{const isYou=/^You/.test(s[0]);return `<article class="lfem-card lfem-speaking-line ${isYou?'':'teacher'}"><div class="lfem-row"><div class="lfem-main"><span class="lfem-speaker">${esc(s[0])}</span><div class="lfem-en">${esc(s[1])}</div></div><button type="button" class="lfem-audio" data-audio="${esc(s[1])}">🔊</button></div>${speedButtons(s[1])}${isYou?`<div class="lfem-actions"><button type="button" class="lfem-record" data-record="${i}">🎙️ Nói câu này</button></div><div class="lfem-result" id="lfemSpeechResult${i}"></div>`:''}</article>`;}).join('')+notesBlock();}
-  function renderReview(){const items=reviewItems();if(!items.length)return'';reviewIndex=(reviewIndex+items.length)%items.length;const x=items[reviewIndex];const modes=`<div class="lfem-review-modes"><button type="button" data-review-mode="en-vi" class="${reviewMode==='en-vi'?'active':''}">🇬🇧 EN → VI</button><button type="button" data-review-mode="vi-en" class="${reviewMode==='vi-en'?'active':''}">🇻🇳 VI → EN</button><button type="button" data-review-mode="listen" class="${reviewMode==='listen'?'active':''}">🎧 Listening</button></div>`;let body='';if(reviewMode==='en-vi'){body=`<div class="lfem-review-type">${esc(x.type)} · ${reviewIndex+1}/${items.length}</div><div class="lfem-review-q">${esc(x.en)}</div><div class="lfem-ipa">${esc(x.ipa||'')}</div><div class="lfem-actions"><button type="button" class="lfem-soft" data-audio="${esc(x.en)}">🔊 Nghe</button><button type="button" class="lfem-primary" data-reveal>${reveal?'Ẩn đáp án':'Hiện đáp án'}</button></div>${reveal?`<div class="lfem-review-a">${esc(x.vi)}</div>`:''}`;}else if(reviewMode==='vi-en'){body=`<div class="lfem-review-type">${esc(x.type)} · ${reviewIndex+1}/${items.length}</div><div class="lfem-review-q">${esc(x.vi)}</div><input id="lfemReviewInput" class="lfem-input" autocomplete="off" spellcheck="false" placeholder="Nhập tiếng Anh..."><div class="lfem-actions"><button type="button" class="lfem-primary" data-review-check>Kiểm tra</button></div><div id="lfemReviewResult" class="lfem-result"></div>`;}else{body=`<div class="lfem-review-type">Listening Dictation · ${reviewIndex+1}/${items.length}</div><div class="lfem-review-q">🎧 Nghe và viết lại</div><p class="lfem-progress">Không hiển thị tiếng Anh/Việt trước khi kiểm tra.</p><div class="lfem-actions"><button type="button" class="lfem-soft" data-audio="${esc(x.en)}">▶ Nghe câu</button><button type="button" class="lfem-soft" data-repeat="${esc(x.en)}">🔁 Nghe 3 lần</button></div><input id="lfemReviewInput" class="lfem-input" autocomplete="off" spellcheck="false" placeholder="Gõ câu bạn nghe được..."><div class="lfem-actions"><button type="button" class="lfem-primary" data-review-check>Kiểm tra</button></div><div id="lfemReviewResult" class="lfem-result"></div>`;}return modes+`<section class="lfem-review">${body}<div class="lfem-actions"><button type="button" class="lfem-soft" data-review-prev>← Trước</button><button type="button" class="lfem-soft" data-review-next>Tiếp →</button></div><div class="lfem-actions"><button type="button" class="lfem-soft ${isLearned()?'lfem-learned':''}" data-learned>${isLearned()?'✅ Đã học':'○ Đánh dấu đã học'}</button></div></section>`+notesBlock();}
-  function renderActiveContent(L){if(tab==='examples')return renderExamples(L);if(tab==='dialogue')return renderDialogue(L);if(tab==='grammar')return renderGrammar(L);if(tab==='speaking')return renderSpeaking(L);if(tab==='review')return renderReview();return renderVocab(L);}
-  function render(){const root=ensureRoot();if(!root)return;const L=currentLesson();const tabs=[['vocab','📚 Từ vựng'],['examples','📝 Câu mẫu'],['dialogue','💬 Hội thoại'],['grammar','📘 Ngữ pháp'],['speaking','🗣️ Luyện nói'],['review','🧠 Ôn tập']];root.innerHTML=`<header class="lfem-hero"><div class="lfem-kicker">51TALK CLASSIC ENGLISH · MOBILE LESSON</div><div class="lfem-title">${esc(L.unit)} · ${esc(L.title)}</div><div class="lfem-sub">${esc(L.subtitle)}</div></header><div class="lfem-picker"><label for="lfEnglishLessonSelect">CHỌN BÀI HỌC</label><select id="lfEnglishLessonSelect">${Object.values(LESSONS).map(x=>`<option value="${x.id}" ${x.id===lessonId?'selected':''}>${esc(x.unit)} · ${esc(x.title)}</option>`).join('')}</select></div><nav class="lfem-tabs">${tabs.map(x=>`<button type="button" class="lfem-tab ${tab===x[0]?'active':''}" data-tab="${x[0]}">${x[1]}</button>`).join('')}</nav><main id="lfEnglishMobileContent">${renderActiveContent(L)}</main>`;}
-  function checkReview(){const items=reviewItems(),x=items[reviewIndex],input=document.getElementById('lfemReviewInput'),out=document.getElementById('lfemReviewResult');if(!x||!input||!out)return;const ok=norm(input.value)===norm(x.en);out.style.color=ok?'#15803d':'#b42318';out.innerHTML=ok?`✅ Chính xác.${x.ipa?`<div class="lfem-ipa">${esc(x.ipa)}</div>`:''}`:`❌ Chưa đúng.<div>Đáp án: <b>${esc(x.en)}</b></div>${x.ipa?`<div class="lfem-ipa">${esc(x.ipa)}</div>`:''}`;}
-  function startRecognition(index){const C=window.SpeechRecognition||window.webkitSpeechRecognition;const out=document.getElementById(`lfemSpeechResult${index}`)||document.getElementById('lfemSpeechGlobalResult');if(!C){if(out)out.textContent='Thiết bị/trình duyệt này chưa hỗ trợ nhận diện giọng nói.';return;}try{recognition?.abort?.();recognition=new C();recognition.lang='en-US';recognition.interimResults=false;recognition.maxAlternatives=1;if(out)out.textContent='🎙️ Đang nghe...';recognition.onresult=e=>{const t=e.results?.[0]?.[0]?.transcript||'';if(out)out.textContent=`Bạn nói: ${t}`;};recognition.onerror=()=>{if(out)out.textContent='Không nhận được giọng nói. Hãy thử lại.';};recognition.start();}catch(_){if(out)out.textContent='Không thể mở microphone.';}}
-  function setActive(on){const root=ensureRoot();if(!root)return;document.body.classList.toggle('lf-english-mobile-v2-active',!!on);root.classList.toggle('on',!!on);if(on)render();else{++playingToken;try{speechSynthesis?.cancel?.();}catch(_){}}}
-  function sync(){if(!isMobileDevice()){setActive(false);return;}const on=selected51Talk();if(on){const inferred=inferLesson();if(inferred&&LESSONS[inferred])lessonId=inferred;}setActive(on);}
-  function bind(){const root=ensureRoot();if(root&&root.dataset.boundV2!=='1'){root.dataset.boundV2='1';root.addEventListener('click',event=>{const tabBtn=event.target.closest?.('[data-tab]');if(tabBtn){tab=tabBtn.dataset.tab;try{localStorage.setItem(STORE_TAB,tab);}catch(_){}document.activeElement?.blur?.();render();return;}const audio=event.target.closest?.('[data-audio]');if(audio){++playingToken;speak(audio.dataset.audio);return;}const speed=event.target.closest?.('[data-speed]');if(speed){++playingToken;speak(speed.dataset.text,Number(speed.dataset.speed)||.82);return;}if(event.target.closest?.('[data-play-dialogue]')){speakSequence(currentLesson().dialogue.map(d=>d[1]));return;}if(event.target.closest?.('[data-play-speaking]')){speakSequence(currentLesson().speaking.map(s=>s[1]));return;}if(event.target.closest?.('[data-toggle-dialogue-vi]')){root.querySelectorAll('.lfem-dialogue-vi').forEach(el=>el.hidden=!el.hidden);return;}const rec=event.target.closest?.('[data-record]');if(rec){startRecognition(Number(rec.dataset.record)||0);return;}const rm=event.target.closest?.('[data-review-mode]');if(rm){reviewMode=rm.dataset.reviewMode;reveal=false;try{localStorage.setItem(STORE_REVIEW_MODE,reviewMode);}catch(_){}render();return;}if(event.target.closest?.('[data-review-prev]')){const n=reviewItems().length;reviewIndex=(reviewIndex-1+n)%n;reveal=false;render();return;}if(event.target.closest?.('[data-review-next]')){const n=reviewItems().length;reviewIndex=(reviewIndex+1)%n;reveal=false;render();return;}if(event.target.closest?.('[data-reveal]')){reveal=!reveal;render();return;}if(event.target.closest?.('[data-review-check]')){checkReview();return;}const rep=event.target.closest?.('[data-repeat]');if(rep){repeat3(rep.dataset.repeat);return;}if(event.target.closest?.('[data-learned]')){toggleLearned();return;}});root.addEventListener('change',event=>{if(event.target?.id==='lfEnglishLessonSelect'){const next=event.target.value;if(LESSONS[next]){lessonId=next;reviewIndex=0;reveal=false;try{localStorage.setItem(STORE_LESSON,lessonId);}catch(_){}render();}});root.addEventListener('input',event=>{if(event.target?.id==='lfemNote')saveNote(event.target.value);});root.addEventListener('keydown',event=>{if(event.target?.id==='lfemReviewInput'&&event.key==='Enter'){event.preventDefault();checkReview();}});}['studyLangFilter','studyCategoryFilter','studyTopicFilter'].forEach(id=>{const el=document.getElementById(id);if(el&&el.dataset.lfEnglishMobileV2Bound!=='1'){el.dataset.lfEnglishMobileV2Bound='1';el.addEventListener('change',()=>setTimeout(sync,0));}});}
-  function init(){if(!isMobileDevice())return;ensureStyle();ensureRoot();bind();setTimeout(sync,100);window.addEventListener('pageshow',()=>setTimeout(sync,0),{passive:true});document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(sync,0);},{passive:true});}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+  function selected51Talk() {
+    const lang = String(document.getElementById('studyLangFilter')?.value || '');
+    const category = String(document.getElementById('studyCategoryFilter')?.value || '');
+    const topic = String(document.getElementById('studyTopicFilter')?.value || '');
+    let card = null;
+    try { card = Array.isArray(window.filteredDeck) && window.filteredDeck.length ? window.filteredDeck[window.currentIndex || 0] : null; } catch (_) {}
+    return lang === 'Tiếng Anh' && (/51Talk/i.test(category) || /51Talk/i.test(topic) || String(card?.id || '').startsWith('en51_') || card?.category === '51Talk English');
+  }
+
+  function inferLesson() {
+    const topic = String(document.getElementById('studyTopicFilter')?.value || '').toLowerCase();
+    if (/birthday|happy birthday|unit 1|u1/.test(topic)) return 'birthday';
+    if (/dad|appearance|unit 6|u6/.test(topic)) return 'family';
+    if (/headache|health|workplace|2026-10-28|2026-10-29|unit 3/.test(topic)) return 'health';
+    return null;
+  }
+
+  function speak(text, rate = 0.82, onEnd) {
+    if (!text || !('speechSynthesis' in window)) { onEnd?.(); return; }
+    try {
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = rate;
+      if (onEnd) u.onend = onEnd;
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+    } catch (_) { onEnd?.(); }
+  }
+
+  function speakSequence(lines) {
+    const token = ++playingToken;
+    const queue = (lines || []).filter(Boolean).slice();
+    const next = () => {
+      if (token !== playingToken || !queue.length) return;
+      const text = queue.shift();
+      if (!text) return next();
+      if (!('speechSynthesis' in window)) return;
+      try {
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'en-US';
+        u.rate = 0.82;
+        u.onend = next;
+        speechSynthesis.speak(u);
+      } catch (_) {}
+    };
+    try { speechSynthesis.cancel(); } catch (_) {}
+    next();
+  }
+
+  function ensureStyle() {
+    if (document.getElementById('lfEnglishMobileV1Style')) return;
+    const s = document.createElement('style');
+    s.id = 'lfEnglishMobileV1Style';
+    s.textContent = `
+      #lfEnglishMobileV1{display:none;width:100%;max-width:860px;margin:0 auto 22px;padding:0 10px;color:#0f172a;box-sizing:border-box}
+      #lfEnglishMobileV1 *{box-sizing:border-box}
+      #lfEnglishMobileV1.on{display:block}
+      .lfem-hero{background:#173b74;color:#fff;border-radius:18px;padding:16px;box-shadow:0 8px 22px rgba(15,23,42,.12)}
+      .lfem-kicker{font-size:12px;font-weight:900;letter-spacing:.05em;color:#fde68a}.lfem-title{font-size:21px;line-height:1.2;font-weight:950;margin-top:5px}.lfem-sub{font-size:13px;line-height:1.45;color:#dbeafe;margin-top:6px}
+      .lfem-picker{margin-top:10px}.lfem-picker label{display:block;font-size:11px;font-weight:900;color:#64748b;margin:0 0 5px 3px}.lfem-picker select{width:100%;min-height:48px;border:1px solid #cbd5e1;border-radius:13px;background:#fff;color:#0f172a;padding:0 12px;font-size:16px;font-weight:800}
+      .lfem-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:10px 0}.lfem-tab{min-height:46px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#475569;font-size:12px;font-weight:900;padding:6px 4px;touch-action:manipulation}.lfem-tab.active{background:#1d4ed8;border-color:#1d4ed8;color:#fff}
+      .lfem-note{background:#fff7ed;border:1px solid #fed7aa;border-radius:13px;padding:10px 11px;margin-bottom:9px}.lfem-note b{display:block;color:#9a3412;font-size:13px}.lfem-note p{margin:5px 0 0;color:#7c2d12;font-size:12px;line-height:1.5}
+      .lfem-card{background:#fff;border:1px solid #e2e8f0;border-radius:15px;padding:13px;margin-bottom:9px;box-shadow:0 2px 8px rgba(15,23,42,.035)}
+      .lfem-row{display:flex;align-items:flex-start;gap:9px}.lfem-main{min-width:0;flex:1}.lfem-word{font-size:17px;font-weight:950;color:#0f3c78;line-height:1.25}.lfem-en{font-size:15px;font-weight:850;line-height:1.5;color:#172033}.lfem-ipa{font-size:12px;color:#64748b;line-height:1.4;margin-top:4px}.lfem-vi{font-size:13px;line-height:1.5;color:#475569;margin-top:8px}.lfem-use{font-size:12px;line-height:1.5;color:#475569;margin-top:7px}.lfem-use b{color:#1d4ed8}
+      .lfem-audio{flex:0 0 44px;width:44px;height:44px;border:0;border-radius:12px;background:#eff6ff;color:#1d4ed8;font-size:18px;touch-action:manipulation}
+      .lfem-speaker{display:inline-block;font-size:11px;font-weight:950;color:#1d4ed8;background:#eff6ff;border-radius:999px;padding:4px 7px;margin-bottom:5px}.lfem-dialogue{border-left:4px solid #2563eb}
+      .lfem-playall{width:100%;min-height:46px;border:0;border-radius:12px;background:#173b74;color:#fff;font-weight:900;font-size:14px;margin-bottom:10px;touch-action:manipulation}
+      .lfem-grammar details{background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin-bottom:8px;padding:0 12px}.lfem-grammar summary{padding:13px 0;font-size:14px;font-weight:900;line-height:1.35}.lfem-grammar p{font-size:13px;line-height:1.55;color:#475569;margin:0 0 13px}
+      body.lf-english-mobile-v1-active #flashcardContainer,
+      body.lf-english-mobile-v1-active #studyAnswerPanel,
+      body.lf-english-mobile-v1-active #lf51CoachShell,
+      body.lf-english-mobile-v1-active #lf51GrammarPanel,
+      body.lf-english-mobile-v1-active #lf51PatternPractice,
+      body.lf-english-mobile-v1-active #lf51Listening,
+      body.lf-english-mobile-v1-active #lf51MobileLessonV64{display:none!important}
+      @media (max-width:390px){.lfem-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.lfem-title{font-size:19px}}
+      @media (orientation:landscape){#lfEnglishMobileV1{max-width:920px}.lfem-hero{padding:14px 16px}.lfem-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}}
+    `;
+    document.head.appendChild(s);
+  }
+
+  function ensureRoot() {
+    let root = document.getElementById('lfEnglishMobileV1');
+    if (root) return root;
+    const flash = document.getElementById('flashcardContainer');
+    if (!flash?.parentElement) return null;
+    root = document.createElement('section');
+    root.id = 'lfEnglishMobileV1';
+    flash.parentElement.insertBefore(root, flash);
+    return root;
+  }
+
+  function renderVocab(L) {
+    const notes = (L.notes || []).map(n => `<div class="lfem-note"><b>${esc(n[0])}</b><p>${esc(n[1])}</p></div>`).join('');
+    return notes + L.vocab.map(v => `<article class="lfem-card"><div class="lfem-row"><div class="lfem-main"><div class="lfem-word">${esc(v[0])}</div><div class="lfem-ipa">${esc(v[1])}</div></div><button type="button" class="lfem-audio" data-audio="${esc(v[0])}" aria-label="Nghe phát âm">🔊</button></div><div class="lfem-vi"><b>${esc(v[2])}</b></div>${v[3] ? `<div class="lfem-use"><b>Cách dùng:</b> ${esc(v[3])}</div>` : ''}</article>`).join('');
+  }
+
+  function renderExamples(L) {
+    return L.examples.map((e, i) => `<article class="lfem-card"><div class="lfem-row"><div class="lfem-main"><div class="lfem-use"><b>Câu ${i+1}</b></div><div class="lfem-en">${esc(e[0])}</div><div class="lfem-ipa">${esc(e[1])}</div></div><button type="button" class="lfem-audio" data-audio="${esc(e[0])}" aria-label="Nghe câu">🔊</button></div><div class="lfem-vi">${esc(e[2])}</div></article>`).join('');
+  }
+
+  function renderDialogue(L) {
+    return `<button type="button" class="lfem-playall" data-play-dialogue>▶ Nghe toàn bộ hội thoại</button>` + L.dialogue.map(d => `<article class="lfem-card lfem-dialogue"><div class="lfem-row"><div class="lfem-main"><span class="lfem-speaker">${esc(d[0])}</span><div class="lfem-en">${esc(d[1])}</div><div class="lfem-ipa">${esc(d[2])}</div></div><button type="button" class="lfem-audio" data-audio="${esc(d[1])}" aria-label="Nghe câu thoại">🔊</button></div><div class="lfem-vi">${esc(d[3])}</div></article>`).join('');
+  }
+
+  function renderGrammar(L) {
+    return `<div class="lfem-grammar">${L.grammar.map((g, i) => `<details ${i===0?'open':''}><summary>${i+1}. ${esc(g[0])}</summary><p>${esc(g[1])}</p></details>`).join('')}</div>`;
+  }
+
+  function renderActiveContent(L) {
+    if (tab === 'examples') return renderExamples(L);
+    if (tab === 'dialogue') return renderDialogue(L);
+    if (tab === 'grammar') return renderGrammar(L);
+    return renderVocab(L);
+  }
+
+  function render() {
+    const root = ensureRoot();
+    if (!root) return;
+    const L = LESSONS[lessonId] || LESSONS.birthday;
+    const tabs = [
+      ['vocab','📚 Từ vựng'],['examples','📝 Câu mẫu'],['dialogue','💬 Hội thoại'],['grammar','📘 Ngữ pháp']
+    ];
+    root.innerHTML = `
+      <header class="lfem-hero"><div class="lfem-kicker">51TALK CLASSIC ENGLISH · MOBILE LESSON</div><div class="lfem-title">${esc(L.unit)} · ${esc(L.title)}</div><div class="lfem-sub">${esc(L.subtitle)}</div></header>
+      <div class="lfem-picker"><label for="lfEnglishLessonSelect">CHỌN BÀI HỌC</label><select id="lfEnglishLessonSelect">${Object.values(LESSONS).map(x => `<option value="${x.id}" ${x.id===lessonId?'selected':''}>${esc(x.unit)} · ${esc(x.title)}</option>`).join('')}</select></div>
+      <nav class="lfem-tabs" aria-label="Nội dung bài học">${tabs.map(x => `<button type="button" class="lfem-tab ${tab===x[0]?'active':''}" data-tab="${x[0]}">${x[1]}</button>`).join('')}</nav>
+      <main id="lfEnglishMobileContent">${renderActiveContent(L)}</main>`;
+  }
+
+  function setActive(on) {
+    const root = ensureRoot();
+    if (!root) return;
+    document.body.classList.toggle('lf-english-mobile-v1-active', !!on);
+    root.classList.toggle('on', !!on);
+    if (on) render();
+    else { ++playingToken; try { speechSynthesis?.cancel?.(); } catch (_) {} }
+  }
+
+  function sync() {
+    if (!isMobileDevice()) { setActive(false); return; }
+    const on = selected51Talk();
+    if (on) {
+      const inferred = inferLesson();
+      if (inferred && LESSONS[inferred]) lessonId = inferred;
+    }
+    setActive(on);
+  }
+
+  function bind() {
+    const root = ensureRoot();
+    if (root && root.dataset.bound !== '1') {
+      root.dataset.bound = '1';
+      root.addEventListener('click', event => {
+        const tabBtn = event.target.closest?.('[data-tab]');
+        if (tabBtn) {
+          tab = tabBtn.dataset.tab;
+          try { localStorage.setItem(STORE_TAB, tab); } catch (_) {}
+          render();
+          return;
+        }
+        const audio = event.target.closest?.('[data-audio]');
+        if (audio) { ++playingToken; speak(audio.dataset.audio); return; }
+        if (event.target.closest?.('[data-play-dialogue]')) {
+          const L = LESSONS[lessonId] || LESSONS.birthday;
+          speakSequence(L.dialogue.map(d => d[1]));
+        }
+      });
+      root.addEventListener('change', event => {
+        if (event.target?.id === 'lfEnglishLessonSelect') {
+          const next = event.target.value;
+          if (LESSONS[next]) {
+            lessonId = next;
+            try { localStorage.setItem(STORE_LESSON, lessonId); } catch (_) {}
+            render();
+          }
+        }
+      });
+    }
+
+    ['studyLangFilter','studyCategoryFilter','studyTopicFilter'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.dataset.lfEnglishMobileBound !== '1') {
+        el.dataset.lfEnglishMobileBound = '1';
+        el.addEventListener('change', () => setTimeout(sync, 0));
+      }
+    });
+  }
+
+  function init() {
+    if (!isMobileDevice()) return;
+    ensureStyle();
+    ensureRoot();
+    bind();
+    setTimeout(sync, 100);
+    window.addEventListener('pageshow', () => setTimeout(sync, 0), { passive: true });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(sync, 0); }, { passive: true });
+    // No resize/orientation mode switch: portrait and landscape keep this same UI.
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
 })();
