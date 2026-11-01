@@ -1,19 +1,18 @@
-/* LinguaFlash · Full Dialogue HQ Audio v1
-   Unifies full-dialogue playback with the same stored HQ audio used by each
-   individual dialogue line. Chinese and English prefer HQ assets; missing lines
-   fall back to browser TTS. Vietnamese keeps the existing browser TTS path.
+/* LinguaFlash · Full Dialogue HQ Audio v2
+   Unified dialogue playback on iOS/mobile.
+   - Chinese/English prefer stored HQ audio.
+   - Vietnamese and missing HQ use the untouched native speech bridge.
+   - Avoids routing fallback speech through stacked HQ speechSynthesis patches.
 */
 (() => {
   'use strict';
-  if (window.__LF_DIALOGUE_FULL_HQ_V1__) return;
-  window.__LF_DIALOGUE_FULL_HQ_V1__ = true;
+  if (window.__LF_DIALOGUE_FULL_HQ_V2__) return;
+  window.__LF_DIALOGUE_FULL_HQ_V2__ = true;
 
   let playbackToken = 0;
 
   function toast(message, icon) {
-    try {
-      if (typeof window.showToast === 'function') window.showToast(message, icon || '🎧');
-    } catch (_) {}
+    try { if (typeof window.showToast === 'function') window.showToast(message, icon || '🎧'); } catch (_) {}
   }
 
   function getDialogue() {
@@ -23,7 +22,6 @@
         if (current?.dialogue) return current.dialogue;
       }
     } catch (_) {}
-
     try {
       const select = document.getElementById('dialogueLessonSelector');
       const key = select?.value || '';
@@ -49,8 +47,9 @@
     return null;
   }
 
-  function fallbackSpeak(piece, onEnd) {
-    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+  function nativeSpeak(piece, onEnd) {
+    const native = window.LFNativeSpeech;
+    if (!native?.speak || typeof SpeechSynthesisUtterance === 'undefined') {
       onEnd();
       return;
     }
@@ -60,54 +59,50 @@
       utterance.rate = 0.88;
       utterance.onend = onEnd;
       utterance.onerror = onEnd;
-      window.speechSynthesis.speak(utterance);
-    } catch (_) {
-      onEnd();
-    }
+      native.speak(utterance);
+    } catch (_) { onEnd(); }
   }
 
   function stopAll(showMessage = false) {
     playbackToken += 1;
     try { window.LFChineseHQAudio?.stop?.(); } catch (_) {}
     try { window.LFEnglishHQAudio?.stop?.(); } catch (_) {}
-    try { window.speechSynthesis?.cancel?.(); } catch (_) {}
+    try { window.LFNativeSpeech?.cancel?.(); } catch (_) {
+      try { window.speechSynthesis?.cancel?.(); } catch (__){ }
+    }
     if (showMessage) toast('Đã dừng phát âm thanh', '⏹️');
   }
 
-  function playFullHQ(languageKey) {
+  function playFull(languageKey = 'cn') {
     const dialogue = getDialogue();
     const pieces = getPieces(dialogue, languageKey);
     if (!pieces.length) return false;
 
-    const hq = hqFor(languageKey);
-    if (!hq || typeof hq.has !== 'function' || typeof hq.play !== 'function') return false;
-
     stopAll(false);
     const token = ++playbackToken;
+    const hq = hqFor(languageKey);
     let index = 0;
-    const rate = Number(hq.defaultRate) || 0.75;
 
     const next = () => {
-      if (token !== playbackToken) return;
-      if (index >= pieces.length) return;
+      if (token !== playbackToken || index >= pieces.length) return;
       const piece = pieces[index++];
-
-      if (hq.has(piece.text)) {
-        const started = hq.play(piece.text, rate, {
+      if (hq?.has?.(piece.text) && typeof hq.play === 'function') {
+        const started = hq.play(piece.text, Number(hq.defaultRate) || 0.75, {
           onend: next,
-          onerror: () => fallbackSpeak(piece, next)
+          onerror: () => nativeSpeak(piece, next)
         });
         if (started) return;
       }
-
-      fallbackSpeak(piece, next);
+      nativeSpeak(piece, next);
     };
 
     next();
     toast(
-      languageKey === 'en'
-        ? 'Playing the full dialogue with HQ audio where available...'
-        : 'Đang phát toàn bộ hội thoại bằng audio HQ...',
+      languageKey === 'vn'
+        ? 'Đang phát bản tiếng Việt bằng giọng hệ thống…'
+        : languageKey === 'en'
+          ? 'Playing the full dialogue with HQ audio where available…'
+          : 'Đang phát toàn bộ hội thoại bằng audio HQ…',
       '🎧'
     );
     return true;
@@ -118,10 +113,10 @@
 
   if (originalFull) {
     const wrappedFull = function(languageKey = 'cn', ...rest) {
-      if ((languageKey === 'cn' || languageKey === 'en') && playFullHQ(languageKey)) return;
+      if (playFull(languageKey)) return;
       return originalFull.apply(this, [languageKey, ...rest]);
     };
-    wrappedFull.__lfDialogueFullHQPatched = true;
+    wrappedFull.__lfDialogueFullHQPatchedV2 = true;
     window.speakFullDialogue = wrappedFull;
   }
 
@@ -130,13 +125,9 @@
       stopAll(false);
       try { return originalStop.apply(this, rest); } catch (_) { toast('Đã dừng phát âm thanh', '⏹️'); }
     };
-    wrappedStop.__lfDialogueFullHQPatched = true;
+    wrappedStop.__lfDialogueFullHQPatchedV2 = true;
     window.stopDialogue = wrappedStop;
   }
 
-  window.LFDialogueFullHQ = {
-    play: playFullHQ,
-    stop: () => stopAll(true),
-    getPieces
-  };
+  window.LFDialogueFullHQ = { play: playFull, stop: () => stopAll(true), getPieces };
 })();
