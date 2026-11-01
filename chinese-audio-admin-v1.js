@@ -1,11 +1,12 @@
-/* LinguaFlash · Chinese HQ Audio Admin v2
-   Admin-only generation. Generates only the current study scope, or one missing
-   Chinese item on demand when the admin actually listens to it.
+/* LinguaFlash · Chinese HQ Audio Admin v3
+   Storage policy: generate HQ Chinese audio ONLY for dialogue lines.
+   Existing non-dialogue HQ files may still be played, but no new vocab/example/card
+   audio is generated. This keeps Supabase storage growth under control.
 */
 (() => {
   'use strict';
-  if (window.__LF_CHINESE_AUDIO_ADMIN_V2__) return;
-  window.__LF_CHINESE_AUDIO_ADMIN_V2__ = true;
+  if (window.__LF_CHINESE_AUDIO_ADMIN_V3__) return;
+  window.__LF_CHINESE_AUDIO_ADMIN_V3__ = true;
 
   const cfg = window.LINGUAFLASH_SUPABASE || {};
   const MODEL = 'heygen-voice-1-turbo-free';
@@ -21,6 +22,7 @@
   let isAdmin = false;
   let generating = false;
   const pendingOnDemand = new Map();
+  let dialogueTextCache = null;
 
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const norm = value => String(value || '').replace(/\s+/g, ' ').trim();
@@ -36,119 +38,98 @@
     return (hash >>> 0).toString(36);
   }
 
-  function looksMostlyChinese(text) {
-    const s = norm(text);
-    if (!hasHanzi(s)) return false;
-    const han = (s.match(/[\u3400-\u9fff\uf900-\ufaff]/g) || []).length;
-    const latin = (s.match(/[A-Za-zÀ-ỹ]/g) || []).length;
-    return han >= 1 && latin <= Math.max(4, han * 0.7);
+  function dialogueEntries() {
+    try {
+      return Object.entries(typeof DIALOGUES_DB !== 'undefined' ? DIALOGUES_DB : {})
+        .filter(([, dlg]) => dlg && Array.isArray(dlg.lines) && (dlg.language === 'zh-CN' || dlg.lines.some(x => hasHanzi(x?.cn))));
+    } catch (_) {
+      return [];
+    }
   }
 
-  function splitCandidateText(text) {
-    return String(text || '')
-      .split(/\n+/)
-      .map(part => part.replace(/^[•·\-–—]\s*/, '').trim())
-      .filter(Boolean);
+  function dialogueTextSet() {
+    if (dialogueTextCache) return dialogueTextCache;
+    const set = new Set();
+    dialogueEntries().forEach(([, dlg]) => {
+      (dlg.lines || []).forEach(line => {
+        const text = norm(line?.cn);
+        if (text && hasHanzi(text)) set.add(text);
+      });
+    });
+    dialogueTextCache = set;
+    return set;
   }
 
-  function pushItem(map, lessonId, contentType, text) {
+  function isDialogueText(text) {
+    return dialogueTextSet().has(norm(text));
+  }
+
+  function pushDialogueItem(map, lessonId, text) {
     const clean = norm(text);
     if (!clean || !hasHanzi(clean)) return;
     const audioKey = `zh_${hashText(clean)}`;
     if (map.has(audioKey)) return;
     map.set(audioKey, {
       audio_key: audioKey,
-      lesson_id: String(lessonId || 'chinese'),
-      content_type: contentType || 'other',
+      lesson_id: String(lessonId || 'chinese-dialogue'),
+      content_type: 'dialogue',
       text: clean
     });
   }
 
-  function getAllCards() {
-    try {
-      if (typeof allCards !== 'undefined' && Array.isArray(allCards)) return allCards;
-    } catch (_) {}
-    return [];
-  }
+  function selectedDialogueScope() {
+    const lessonSelect = document.getElementById('dialogueLessonSelector');
+    const courseSelect = document.getElementById('dialogueCourseSelector');
+    const studyCategory = document.getElementById('studyCategoryFilter')?.value || 'ALL';
+    const studyTopic = document.getElementById('studyTopicFilter')?.value || 'ALL';
+    const entries = dialogueEntries();
 
-  function cardCategory(card) {
-    try {
-      if (typeof parseCategoryAndTopic === 'function') {
-        const parsed = parseCategoryAndTopic(card?.topic || 'Chung');
-        if (parsed?.cat) return parsed.cat;
-      }
-    } catch (_) {}
-    return card?.category || 'Chung';
-  }
-
-  function currentScope() {
-    const category = document.getElementById('studyCategoryFilter')?.value || 'ALL';
-    const topic = document.getElementById('studyTopicFilter')?.value || 'ALL';
-    let cards = getAllCards().filter(card => card?.lang === 'Tiếng Trung');
-
-    if (topic !== 'ALL') {
-      cards = cards.filter(card => String(card?.topic || 'Chung') === topic);
-    } else if (category !== 'ALL') {
-      cards = cards.filter(card => cardCategory(card) === category || card?.category === category);
-    } else {
-      // Avoid accidental full-library generation. When no scope is selected,
-      // use only the currently visible study deck instead of every Chinese card.
-      try {
-        if (typeof filteredDeck !== 'undefined' && Array.isArray(filteredDeck) && filteredDeck.length) {
-          cards = filteredDeck.filter(card => card?.lang === 'Tiếng Trung');
-        } else {
-          cards = cards.slice(0, 20);
-        }
-      } catch (_) {
-        cards = cards.slice(0, 20);
-      }
+    // If the dialogue reader has a concrete selected lesson, prefer it when it
+    // agrees with the study scope or when the study scope is not specific.
+    const dialogueKey = String(lessonSelect?.value || '');
+    const selected = dialogueKey && dialogueKey !== 'ALL' ? entries.find(([key]) => key === dialogueKey) : null;
+    if (selected) {
+      const [, dlg] = selected;
+      const compatible = (studyTopic === 'ALL' || String(dlg.topic || '') === studyTopic) &&
+        (studyCategory === 'ALL' || String(dlg.course || '') === studyCategory);
+      if (compatible || (studyTopic === 'ALL' && studyCategory === 'ALL')) return [selected];
     }
 
-    const label = topic !== 'ALL'
-      ? topic
-      : category !== 'ALL'
-        ? category
-        : 'phần đang học';
-
-    return { category, topic, cards, label };
-  }
-
-  function collectCardsFromList(cards, map) {
-    (cards || []).forEach(card => {
-      if (!card || card.lang !== 'Tiếng Trung') return;
-      const lessonId = card.topic || card.category || 'chinese-card';
-      if (card.cardType === 'sentence') {
-        if (hasHanzi(card.meaning)) pushItem(map, lessonId, 'sentence', card.meaning);
-      } else if (hasHanzi(card.word)) {
-        pushItem(map, lessonId, 'vocab', card.word);
-      }
-      splitCandidateText(card.example).forEach(part => {
-        if (looksMostlyChinese(part)) pushItem(map, lessonId, 'example', part);
-      });
-      if (hasHanzi(card.exampleChinese)) pushItem(map, lessonId, 'example', card.exampleChinese);
-    });
+    let filtered = entries;
+    if (studyTopic !== 'ALL') filtered = filtered.filter(([, dlg]) => String(dlg.topic || '') === studyTopic);
+    else if (studyCategory !== 'ALL') filtered = filtered.filter(([, dlg]) => String(dlg.course || '') === studyCategory);
+    else {
+      const course = String(courseSelect?.value || 'ALL');
+      if (course !== 'ALL') filtered = filtered.filter(([, dlg]) => String(dlg.course || '') === course);
+      if (dialogueKey && dialogueKey !== 'ALL') filtered = filtered.filter(([key]) => key === dialogueKey);
+    }
+    return filtered;
   }
 
   function collectCurrentStudyAudio() {
-    const scope = currentScope();
+    const entries = selectedDialogueScope();
     const map = new Map();
-    collectCardsFromList(scope.cards, map);
-    return { ...scope, items: [...map.values()] };
+    entries.forEach(([key, dlg]) => {
+      (dlg.lines || []).forEach(line => pushDialogueItem(map, key, line?.cn));
+    });
+    const label = entries.length === 1
+      ? String(entries[0][1]?.topic || entries[0][1]?.title || 'hội thoại đang chọn')
+      : entries.length > 1
+        ? `${entries.length} bài hội thoại`
+        : 'hội thoại đang chọn';
+    return { entries, items: [...map.values()], label };
   }
 
   async function getExistingKeys() {
     const keys = new Set();
-    let from = 0;
-    const page = 1000;
-    while (true) {
+    for (let from = 0; ; from += 1000) {
       const { data, error } = await client
         .from('chinese_audio_manifest')
         .select('audio_key')
-        .range(from, from + page - 1);
+        .range(from, from + 999);
       if (error) throw error;
       (data || []).forEach(row => row?.audio_key && keys.add(row.audio_key));
-      if (!data || data.length < page) break;
-      from += page;
+      if (!data || data.length < 1000) break;
     }
     return keys;
   }
@@ -160,6 +141,8 @@
 
   async function callGenerator(items) {
     if (!isAdmin || !session?.access_token) throw new Error('Chỉ tài khoản admin mới được tạo audio.');
+    const safeItems = (items || []).filter(item => item?.content_type === 'dialogue' && isDialogueText(item?.text));
+    if (!safeItems.length) throw new Error('Chính sách lưu trữ: tiếng Trung chỉ tạo HQ cho câu hội thoại.');
     const response = await fetch(`${String(cfg.url || '').replace(/\/$/, '')}/functions/v1/generate-chinese-audio`, {
       method: 'POST',
       headers: {
@@ -167,7 +150,7 @@
         Authorization: `Bearer ${session.access_token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ model: MODEL, items })
+      body: JSON.stringify({ model: MODEL, items: safeItems })
     });
     const raw = await response.text();
     let payload = null;
@@ -192,9 +175,10 @@
   }
 
   async function generateItems(items, label) {
-    const missing = await getMissingItems(items);
+    const dialogueOnly = (items || []).filter(item => item?.content_type === 'dialogue' && isDialogueText(item?.text));
+    const missing = await getMissingItems(dialogueOnly);
     if (!missing.length) {
-      setStatus(`✅ ${label}: đã có đủ ${items.length} audio.`, 'ok');
+      setStatus(`✅ ${label}: đã có đủ ${dialogueOnly.length} audio hội thoại HQ.`, 'ok');
       await window.LFChineseHQAudio?.refresh?.();
       return { generated: 0, failed: 0, missing: 0 };
     }
@@ -204,7 +188,7 @@
     const failures = [];
     for (let offset = 0; offset < missing.length; offset += BATCH_SIZE) {
       const batch = missing.slice(offset, offset + BATCH_SIZE);
-      setStatus(`${label}: đang tạo ${offset + 1}–${Math.min(offset + batch.length, missing.length)} / ${missing.length}…`);
+      setStatus(`${label}: đang tạo hội thoại ${offset + 1}–${Math.min(offset + batch.length, missing.length)} / ${missing.length}…`);
       const result = await callGenerator(batch);
       generated += Number(result.generated || 0);
       failed += Number(result.failed || 0);
@@ -213,11 +197,8 @@
       if (offset + BATCH_SIZE < missing.length) await sleep(350);
     }
 
-    if (failed) {
-      setStatus(`⚠️ ${label}: tạo ${generated}, lỗi ${failed}. ${failures[0]?.error || ''}`, 'error');
-    } else {
-      setStatus(`✅ ${label}: hoàn tất ${generated} audio mới. Tổng nội dung ${items.length}.`, 'ok');
-    }
+    if (failed) setStatus(`⚠️ ${label}: tạo ${generated}, lỗi ${failed}. ${failures[0]?.error || ''}`, 'error');
+    else setStatus(`✅ ${label}: hoàn tất ${generated} audio hội thoại mới. Tổng ${dialogueOnly.length} câu.`, 'ok');
     return { generated, failed, missing: missing.length };
   }
 
@@ -227,8 +208,8 @@
     try {
       const scope = collectCurrentStudyAudio();
       const sample = scope.items.slice(0, 5);
-      if (!sample.length) throw new Error('Bài/phần đang chọn chưa có nội dung tiếng Trung để thử.');
-      await generateItems(sample, 'Thử giọng Shuxian');
+      if (!sample.length) throw new Error('Bài đang chọn chưa có hội thoại tiếng Trung.');
+      await generateItems(sample, 'Thử giọng hội thoại Shuxian');
       await window.LFChineseHQAudio?.refresh?.();
       setTimeout(() => window.LFChineseHQAudio?.playSequence?.(sample.map(item => item.text), 0.75), 150);
     } catch (error) {
@@ -244,8 +225,8 @@
     setBusy(true);
     try {
       const scope = collectCurrentStudyAudio();
-      if (!scope.items.length) throw new Error('Bài/phần đang chọn chưa có nội dung tiếng Trung.');
-      setStatus(`Đang kiểm tra ${scope.items.length} nội dung của ${scope.label}…`);
+      if (!scope.items.length) throw new Error('Bài/phần đang chọn chưa có hội thoại tiếng Trung.');
+      setStatus(`Đang kiểm tra ${scope.items.length} câu hội thoại của ${scope.label}…`);
       await generateItems(scope.items, scope.label);
     } catch (error) {
       console.error('[Chinese Audio Admin scope]', error);
@@ -255,18 +236,21 @@
     }
   }
 
-  function currentLessonId() {
-    const topic = document.getElementById('studyTopicFilter')?.value || 'ALL';
-    const category = document.getElementById('studyCategoryFilter')?.value || 'ALL';
-    if (topic !== 'ALL') return topic;
-    if (category !== 'ALL') return category;
-    return 'admin-on-demand';
+  function dialogueLessonIdForText(text) {
+    const target = norm(text);
+    for (const [key, dlg] of dialogueEntries()) {
+      if ((dlg.lines || []).some(line => norm(line?.cn) === target)) return key;
+    }
+    return 'chinese-dialogue';
   }
 
   async function ensureAudio(text, contentType = 'ondemand') {
     const clean = norm(text);
     if (!isAdmin || !session?.access_token || !hasHanzi(clean)) return false;
     if (window.LFChineseHQAudio?.has?.(clean)) return true;
+
+    // Critical storage rule: only dialogue lines are eligible for new HQ files.
+    if (!isDialogueText(clean)) return false;
 
     const key = `zh_${hashText(clean)}`;
     if (pendingOnDemand.has(key)) return pendingOnDemand.get(key);
@@ -275,15 +259,15 @@
       try {
         const result = await callGenerator([{
           audio_key: key,
-          lesson_id: currentLessonId(),
-          content_type: contentType,
+          lesson_id: dialogueLessonIdForText(clean),
+          content_type: 'dialogue',
           text: clean
         }]);
         const ok = Number(result.generated || 0) > 0 || (result.results || []).some(row => row?.ok);
         if (ok) await window.LFChineseHQAudio?.refresh?.();
         return ok && !!window.LFChineseHQAudio?.has?.(clean);
       } catch (error) {
-        console.warn('[Chinese Audio Admin on-demand]', error);
+        console.warn('[Chinese Audio Admin dialogue on-demand]', error);
         return false;
       } finally {
         pendingOnDemand.delete(key);
@@ -321,20 +305,20 @@
     const sampleBtn = document.createElement('button');
     sampleBtn.id = SAMPLE_ID;
     sampleBtn.type = 'button';
-    sampleBtn.textContent = '🔊 Thử giọng Trung · 5 câu';
+    sampleBtn.textContent = '🔊 Thử hội thoại Trung · 5 câu';
     sampleBtn.style.cssText = 'border:1px solid #a7f3d0;background:#ecfdf5;color:#047857;border-radius:10px;padding:7px 10px;font-weight:800;cursor:pointer';
     sampleBtn.addEventListener('click', generateSample);
 
     const createBtn = document.createElement('button');
     createBtn.id = CREATE_ID;
     createBtn.type = 'button';
-    createBtn.textContent = '🎙️ Tạo audio bài đang học';
+    createBtn.textContent = '🎙️ Tạo HQ hội thoại bài này';
     createBtn.style.cssText = 'border:1px solid #f0abfc;background:#fdf4ff;color:#a21caf;border-radius:10px;padding:7px 10px;font-weight:850;cursor:pointer';
     createBtn.addEventListener('click', generateCurrentScope);
 
     const status = document.createElement('span');
     status.id = STATUS_ID;
-    status.textContent = `Admin only · Turbo Free · ${VOICE_NAME} · tự tạo khi bạn bấm nghe`;
+    status.textContent = `Admin only · ${VOICE_NAME} · chỉ lưu HQ cho HỘI THOẠI`; 
     status.style.cssText = 'font-size:.72rem;font-weight:700;color:#64748b;max-width:560px';
 
     panel.append(sampleBtn, createBtn, status);
@@ -394,8 +378,10 @@
     generateSample,
     generateCurrentScope,
     ensureAudio,
+    isDialogueText,
     canGenerate: () => isAdmin && !!session?.access_token,
     model: MODEL,
-    voice: VOICE_NAME
+    voice: VOICE_NAME,
+    storagePolicy: 'dialogue-only'
   };
 })();
