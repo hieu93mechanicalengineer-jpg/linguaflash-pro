@@ -1,0 +1,142 @@
+/* LinguaFlash · Full Dialogue HQ Audio v1
+   Unifies full-dialogue playback with the same stored HQ audio used by each
+   individual dialogue line. Chinese and English prefer HQ assets; missing lines
+   fall back to browser TTS. Vietnamese keeps the existing browser TTS path.
+*/
+(() => {
+  'use strict';
+  if (window.__LF_DIALOGUE_FULL_HQ_V1__) return;
+  window.__LF_DIALOGUE_FULL_HQ_V1__ = true;
+
+  let playbackToken = 0;
+
+  function toast(message, icon) {
+    try {
+      if (typeof window.showToast === 'function') window.showToast(message, icon || '🎧');
+    } catch (_) {}
+  }
+
+  function getDialogue() {
+    try {
+      if (typeof window.getCurrentDialogue === 'function') {
+        const current = window.getCurrentDialogue();
+        if (current?.dialogue) return current.dialogue;
+      }
+    } catch (_) {}
+
+    try {
+      const select = document.getElementById('dialogueLessonSelector');
+      const key = select?.value || '';
+      if (typeof DIALOGUES_DB !== 'undefined' && DIALOGUES_DB) {
+        return DIALOGUES_DB[key] || DIALOGUES_DB[Object.keys(DIALOGUES_DB)[0]] || null;
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  function getPieces(dialogue, languageKey) {
+    const lines = Array.isArray(dialogue?.lines) ? dialogue.lines : [];
+    return lines.map(line => {
+      if (languageKey === 'vn') return { text: String(line?.vn || '').trim(), lang: 'vi-VN' };
+      if (languageKey === 'en') return { text: String(line?.en || '').trim(), lang: 'en-US' };
+      return { text: String(line?.cn || '').trim(), lang: String(line?.lang || 'zh-CN') };
+    }).filter(item => item.text);
+  }
+
+  function hqFor(languageKey) {
+    if (languageKey === 'cn') return window.LFChineseHQAudio || null;
+    if (languageKey === 'en') return window.LFEnglishHQAudio || null;
+    return null;
+  }
+
+  function fallbackSpeak(piece, onEnd) {
+    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+      onEnd();
+      return;
+    }
+    try {
+      const utterance = new SpeechSynthesisUtterance(piece.text);
+      utterance.lang = piece.lang;
+      utterance.rate = 0.88;
+      utterance.onend = onEnd;
+      utterance.onerror = onEnd;
+      window.speechSynthesis.speak(utterance);
+    } catch (_) {
+      onEnd();
+    }
+  }
+
+  function stopAll(showMessage = false) {
+    playbackToken += 1;
+    try { window.LFChineseHQAudio?.stop?.(); } catch (_) {}
+    try { window.LFEnglishHQAudio?.stop?.(); } catch (_) {}
+    try { window.speechSynthesis?.cancel?.(); } catch (_) {}
+    if (showMessage) toast('Đã dừng phát âm thanh', '⏹️');
+  }
+
+  function playFullHQ(languageKey) {
+    const dialogue = getDialogue();
+    const pieces = getPieces(dialogue, languageKey);
+    if (!pieces.length) return false;
+
+    const hq = hqFor(languageKey);
+    if (!hq || typeof hq.has !== 'function' || typeof hq.play !== 'function') return false;
+
+    stopAll(false);
+    const token = ++playbackToken;
+    let index = 0;
+    const rate = Number(hq.defaultRate) || 0.75;
+
+    const next = () => {
+      if (token !== playbackToken) return;
+      if (index >= pieces.length) return;
+      const piece = pieces[index++];
+
+      if (hq.has(piece.text)) {
+        const started = hq.play(piece.text, rate, {
+          onend: next,
+          onerror: () => fallbackSpeak(piece, next)
+        });
+        if (started) return;
+      }
+
+      fallbackSpeak(piece, next);
+    };
+
+    next();
+    toast(
+      languageKey === 'en'
+        ? 'Playing the full dialogue with HQ audio where available...'
+        : 'Đang phát toàn bộ hội thoại bằng audio HQ...',
+      '🎧'
+    );
+    return true;
+  }
+
+  const originalFull = typeof window.speakFullDialogue === 'function' ? window.speakFullDialogue : null;
+  const originalStop = typeof window.stopDialogue === 'function' ? window.stopDialogue : null;
+
+  if (originalFull) {
+    const wrappedFull = function(languageKey = 'cn', ...rest) {
+      if ((languageKey === 'cn' || languageKey === 'en') && playFullHQ(languageKey)) return;
+      return originalFull.apply(this, [languageKey, ...rest]);
+    };
+    wrappedFull.__lfDialogueFullHQPatched = true;
+    window.speakFullDialogue = wrappedFull;
+  }
+
+  if (originalStop) {
+    const wrappedStop = function(...rest) {
+      stopAll(false);
+      try { return originalStop.apply(this, rest); } catch (_) { toast('Đã dừng phát âm thanh', '⏹️'); }
+    };
+    wrappedStop.__lfDialogueFullHQPatched = true;
+    window.stopDialogue = wrappedStop;
+  }
+
+  window.LFDialogueFullHQ = {
+    play: playFullHQ,
+    stop: () => stopAll(true),
+    getPieces
+  };
+})();
