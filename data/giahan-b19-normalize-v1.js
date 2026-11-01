@@ -39,6 +39,11 @@
       return;
     }
 
+    // Keep the verified notebook wording clean in the normalized app card.
+    const exampleTrans = id === 'gh_b19_sup_034'
+      ? 'Trước khi làm thủ tục cần chuẩn bị giấy hẹn.'
+      : String(src.exampleTrans || '').trim();
+
     target.push({
       id,
       lang: 'Tiếng Trung',
@@ -47,7 +52,7 @@
       meaning: String(src.back || src.meaning || '').trim(),
       chinese: String(src.meaningEn || '').trim(),
       example: String(src.example || '').trim(),
-      exampleTrans: String(src.exampleTrans || '').trim(),
+      exampleTrans,
       exampleEn: String(src.exampleEn || '').trim(),
       topic: 'Gia Hân - Trung cấp 1 - Bài 19',
       category: 'Gia Hân',
