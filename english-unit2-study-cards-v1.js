@@ -104,16 +104,17 @@
     const listButton = event.target?.closest?.('[data-lfsl-view="list"]');
     if (!listButton) return;
 
-    const lessonSelect = document.querySelector(
-      '#lf51DesktopWorkspace [data-lesson-select], #lfEnglishMobileV1 [data-lesson-select], [data-lesson-select]'
-    );
-    if (!lessonSelect || String(lessonSelect.value || '') !== 'poodle') return;
-
     const langSelect = document.getElementById('studyLangFilter');
+    if (langSelect?.value !== 'Tiếng Anh') return;
+    const pickers = document.querySelectorAll(
+      '#lf51DesktopWorkspace [data-lesson-select], #lfEnglishMobileV1 [data-lesson-select], #lfEnglishLessonSelect'
+    );
+    const lessonSelect = Array.from(pickers).find(select => select.getClientRects().length);
+    if (lessonSelect?.value !== 'poodle') return;
+
     const categorySelect = document.getElementById('studyCategoryFilter');
     const topicSelect = document.getElementById('studyTopicFilter');
 
-    if (langSelect) langSelect.value = 'Tiếng Anh';
     if (categorySelect) categorySelect.value = CATEGORY;
     try {
       if (typeof updateSubtopicDropdown === 'function') updateSubtopicDropdown();

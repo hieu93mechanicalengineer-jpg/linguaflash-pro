@@ -21,6 +21,9 @@
 
   let mode = localStorage.getItem(MODE_KEY) === 'list' ? 'list' : 'card';
   let columns = loadColumns();
+  const PAGE_SIZE = 100;
+  let page = 0;
+  let lastFilter = '';
 
   function loadColumns() {
     const base = {
@@ -66,7 +69,7 @@
   // Full lesson source. Do NOT use filteredDeck here: filteredDeck is the Smart/SRS session queue.
   function getDeck(){
     let cards=[];
-    try{ if(typeof allCards!=='undefined'&&Array.isArray(allCards)) cards=allCards.slice(); }catch(_){}
+    try{ if(typeof allCards!=='undefined'&&Array.isArray(allCards)) cards=allCards; }catch(_){}
     if(!cards.length){
       try{
         const pools=[window.DEFAULT_CARDS,window.GIA_HAN_CORE_CARDS,window.GIA_HAN_TC2_CARDS_31_45,window.HUYEN_ANH_L3_L4_CARDS];
@@ -139,9 +142,18 @@
     root.querySelectorAll('[data-lfsl-view]').forEach(b=>b.classList.toggle('active',b.dataset.lfslView===mode));
     document.body?.classList.toggle(BODY_CLASS,mode==='list');panel.classList.toggle('active',mode==='list');
     const tools=root.querySelector('.lfsl-tools');if(tools)tools.innerHTML=mode==='list'?controlsHtml(lang):'';if(mode!=='list')return;
-    const rows=getDeck().map(c=>normalizeCard(c,lang)).filter(r=>r.source);const labels=labelSet(lang);
+    const filter = JSON.stringify([lang, document.getElementById('studyCategoryFilter')?.value, document.getElementById('studyTopicFilter')?.value]);
+    if (filter !== lastFilter) page = 0;
+    lastFilter = filter;
+    const rows = getDeck().map(card => normalizeCard(card, lang)).filter(row => row.source);
+    const pages = Math.ceil(rows.length / PAGE_SIZE);
+    page = Math.min(page, Math.max(0, pages - 1));
+    const start = page * PAGE_SIZE;
+    const visible = rows.slice(start, start + PAGE_SIZE);
+    const pager = pages > 1 ? `<nav aria-label="Phân trang danh sách"><button type="button" class="lfsl-quick" data-lfsl-page="-1" ${page === 0 ? 'disabled' : ''}>← Trước</button> Trang ${page + 1} / ${pages} <button type="button" class="lfsl-quick" data-lfsl-page="1" ${page + 1 === pages ? 'disabled' : ''}>Sau →</button></nav>` : '';
     const selectedTopic=document.getElementById('studyTopicFilter')?.selectedOptions?.[0]?.textContent||'Tất cả bài học';
-    panel.innerHTML=`<div class="lfsl-panel-top"><div><b>📋 ${esc(labels.title)}</b><span>${rows.length} mục · ${esc(selectedTopic)} · toàn bộ bài, không giới hạn bởi SRS/đến hạn</span></div></div>${rows.length?`<div class="lfsl-list">${renderRows(rows,lang)}</div>`:'<div class="lfsl-empty">Không có nội dung phù hợp với bộ lọc hiện tại.</div>'}`;
+    panel.innerHTML=`<div class="lfsl-panel-top"><div><b>📋 ${esc(labelSet(lang).title)}</b><span>${rows.length} mục · ${esc(selectedTopic)} · toàn bộ bài, không giới hạn bởi SRS/đến hạn</span></div>${pager}</div>${visible.length?`<div class="lfsl-list">${renderRows(visible,lang)}</div>`:'<div class="lfsl-empty">Không có nội dung phù hợp với bộ lọc hiện tại.</div>'}`;
+
   }
 
   function setMode(next){mode=next==='list'?'list':'card';try{localStorage.setItem(MODE_KEY,mode)}catch(_){}render();if(mode==='card'){try{if(typeof renderCurrentCard==='function')renderCurrentCard()}catch(_){}}}
@@ -162,6 +174,12 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
   }
 
   function bind(){
+    document.addEventListener('click', event => {
+      const button = event.target.closest?.('[data-lfsl-page]');
+      if (!button || button.disabled) return;
+      page += Number(button.dataset.lfslPage);
+      render();
+    });
     document.addEventListener('click',e=>{const view=e.target.closest?.('[data-lfsl-view]');if(view){setMode(view.dataset.lfslView);return}const col=e.target.closest?.('[data-lfsl-col]');if(col){const lang=currentLang(),key=col.dataset.lfslCol;columns[lang][key]=!columns[lang][key];saveColumns();render();return}const q=e.target.closest?.('[data-lfsl-quick]');if(q){setQuick(q.dataset.lfslQuick);return}const a=e.target.closest?.('[data-lfsl-audio]');if(a){speak(a.dataset.lfslAudio,a.dataset.lfslLang);return}});
     document.addEventListener('change',e=>{if(!['studyLangFilter','studyCategoryFilter','studyTopicFilter'].includes(e.target?.id))return;[0,80,220].forEach(ms=>setTimeout(()=>{ensureUI();render()},ms));},true);
   }
