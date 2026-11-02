@@ -54,7 +54,7 @@
     const next = Number(card?.nextReview || 0);
     let weakScore=0; try { weakScore=Number(window.lfWeakMetrics?.(card,now)?.score||0); } catch(_){}
     const missed = learned && (card?.needsReview === true || quality === 0 || quality === 1);
-    const due = learned && (missed || (next > 0 && next <= now));
+    const due = learned && (next > 0 ? next <= now : missed);
     const overdueDays = due && next > 0 ? Math.max(0,(now-next)/86400000) : 0;
     return {isNew,learned,due,missed,weakScore,overdueDays,next};
   }
@@ -92,11 +92,13 @@
     const doneNew=new Set(progress.newIds||[]), doneReview=new Set(progress.reviewIds||[]);
     const newRemaining=Math.max(0,newLimit-doneNew.size), reviewRemaining=Math.max(0,reviewLimit-doneReview.size);
     const studied=new Set([...doneNew,...doneReview]);
-    const fresh=[], learned=[];
+    const fresh=[], learned=[], steps=[];
 
     safeCards().forEach((card,index)=>{
-      if(!cardFitsLanguage(card,language)||studied.has(card.id)) return;
+      if(!cardFitsLanguage(card,language)) return;
       const m=metrics(card,now), item={card,m,index};
+      if (isStudyStep(card)) { if(card.nextReview <= now) steps.push(item); return; }
+      if(studied.has(card.id)) return;
       if(m.isNew){ if(newCardFitsTrack(card,track)) fresh.push(item); }
       else learned.push(item);
     });
@@ -112,7 +114,7 @@
 
     const chosenReview=eligibleReview.slice(0,reviewRemaining);
     const chosenNew=fresh.slice(0,newRemaining);
-    const deck=[], reviewOrdered=chosenReview.slice();
+    const deck=steps.map(x=>x.card), reviewOrdered=chosenReview.slice();
     let r=0,n=0;
     while(r<reviewOrdered.length||n<chosenNew.length){
       let took=0;
@@ -122,7 +124,7 @@
     }
 
     const bucketById=new Map(); chosenReview.forEach(x=>bucketById.set(x.card.id,'review')); chosenNew.forEach(x=>bucketById.set(x.card.id,'new'));
-    const summary={language,deck,review:chosenReview.length,due:chosenReview.filter(x=>x.m.due).length,weak:chosenReview.filter(x=>x.m.weakScore>=3||x.m.missed).length,fresh:chosenNew.length,reviewRemaining,newRemaining,newLimit,reviewLimit,mode,track,bucketById};
+    const summary={language,deck,review:steps.length+chosenReview.length,due:steps.length+chosenReview.filter(x=>x.m.due).length,weak:chosenReview.filter(x=>x.m.weakScore>=3||x.m.missed).length,fresh:chosenNew.length,reviewRemaining,newRemaining,newLimit,reviewLimit,mode,track,bucketById};
     summary.minutes=deck.length?Math.max(2,Math.round(deck.length*0.75)):0;
     summary.goalsComplete=reviewRemaining===0&&newRemaining===0;
     return summary;
@@ -220,7 +222,6 @@
         let card=null,bucket=null;try{card=Array.isArray(filteredDeck)?filteredDeck[currentIndex]:null;bucket=activeSummary?.bucketById?.get(card?.id)||null;}catch(_){}
         const result=oldRate.call(this,quality,...args);
         if(card&&bucket&&Number(quality)!==0)repairDailyBucket(card.id,bucket);
-        if(card&&bucket&&Number(quality)===0){try{if(typeof showToast==='function')showToast('Thẻ này sẽ xuất hiện lại trong phiên Học hôm nay.','🔄');}catch(_){}}
         setTimeout(renderHomeCard,0);return result;
       };
       wrapped.__lfSmartDailyV22=true;window.rateCard=wrapped;

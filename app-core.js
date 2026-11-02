@@ -1071,7 +1071,7 @@
         return true;
       });
       const newCards = pool.filter(c => (c.repetitions || 0) === 0 && !(c.nextReview > now));
-      let reviewCards = pool.filter(c => ((c.repetitions || 0) > 0 && (c.nextReview || 0) <= now) || c.needsReview || c.lastAnswerQuality === 0 || c.lastAnswerQuality === 1);
+      let reviewCards = pool.filter(c => ((c.repetitions || 0) > 0 && (c.nextReview || 0) <= now) || (!c.nextReview && c.needsReview));
       if (settings.reviewMode === 'missed') {
         reviewCards = pool.filter(c => c.lastAnswerQuality === 0 || c.lastAnswerQuality === 1);
         reviewCards.sort((a,b) => (a.nextReview || 0) - (b.nextReview || 0));
@@ -1084,8 +1084,9 @@
       const progress = getDailyProgress();
       const remainingNew = Math.max(0, settings.newLimit - new Set(progress.newIds || []).size);
       const remainingReview = Math.max(0, settings.reviewLimit - new Set(progress.reviewIds || []).size);
-      const selectedNew = newCards.slice(0, remainingNew);
-      const selectedReview = reviewCards.slice(0, remainingReview);
+      const selectedNew = newCards.filter(c => !isStudyStep(c)).slice(0, remainingNew);
+      const dueSteps = pool.filter(c => isStudyStep(c) && c.nextReview <= now);
+      const selectedReview = [...dueSteps, ...reviewCards.filter(c => !isStudyStep(c)).slice(0, remainingReview)];
       filteredDeck = (dueOnly ? selectedReview : [...selectedReview, ...selectedNew]).slice(0,20);
       activeStudyBatchIds = new Set(filteredDeck.map(c=>c.id));
       activeStudyCompletedIds = new Set();
@@ -1226,51 +1227,55 @@
       if (filteredDeck.length) rateLegacyStudyCard(filteredDeck[currentIndex], quality, false);
     }
 
-    function rateLegacyStudyCard(card, quality, fromList) {
-      let rep = card.repetitions || 0;
-      let ivl = card.interval || 0;
-      let ef = card.easeFactor || 2.5;
-      const DAY_MS = 24 * 60 * 60 * 1000;
+    function isStudyStep(card) { return card.state === "learning" || card.state === "relearning"; }
 
-      const isNewForToday = (card.repetitions || 0) === 0;
-      if (quality === 0) {
-        rep = 0; ivl = 0;
-        card.nextReview = Date.now() + 10 * 60 * 1000;
-        showToast(`Sẽ nhắc ôn lại sau 10 phút`, '🔄');
-      } else if (quality === 1) {
-        ivl = Math.max(1, Math.round((ivl || 1) * 1.2));
-        rep += 1; ef = Math.max(1.3, ef - 0.15);
-        card.nextReview = Date.now() + ivl * DAY_MS;
-        showToast(`Đã lên lịch ôn sau ${ivl} ngày`, '📅');
-      } else if (quality === 2) {
-        ivl = ivl === 0 ? 1 : (ivl === 1 ? 3 : Math.round(ivl * ef));
-        rep += 1;
-        card.nextReview = Date.now() + ivl * DAY_MS;
-        showToast(`Ôn lại sau ${ivl} ngày`, '✅');
-      } else if (quality === 3) {
-        ivl = ivl === 0 ? 4 : Math.round((ivl || 2) * ef * 1.4);
-        rep += 1; ef += 0.15;
-        card.nextReview = Date.now() + ivl * DAY_MS;
-        showToast(`Nhắc lại sau ${ivl} ngày`, '🌟');
+    function studyDelay(card, quality, reviewDays) {
+      const minute = 60000, day = 86400000;
+      const learning = card.state === 'learning' || (!card.repetitions && !card.stability && card.state !== 'relearning');
+      if (learning) {
+        const secondStep = card.state === 'learning' && card.nextReview - card.lastReviewedAt >= 10 * minute;
+        if (quality === 0) return minute;
+        if (quality === 1) return (secondStep ? 10 : 6) * minute;
+        if (quality === 2) return secondStep ? day : 10 * minute;
+        return 3 * day;
       }
+      if (quality === 0 || (card.state === 'relearning' && quality === 1)) return 10 * minute;
+      return reviewDays * day;
+    }
 
-      card.repetitions = rep;
-      card.lastReviewedAt = Date.now();
+    function legacyReviewDays(card, q) {
+      const ivl = card.interval || 0, ef = card.easeFactor || 2.5;
+      if (q === 1) return Math.max(1, Math.round((ivl || 1) * 1.2));
+      if (q === 2) return ivl === 0 ? 1 : (ivl === 1 ? 3 : Math.round(ivl * ef));
+      return Math.max(1, Math.round((ivl || 2) * ef * 1.4));
+    }
+
+    function studyDelayText(ms) {
+      return ms < 86400000 ? Math.round(ms / 60000) + ' phút' : Math.round(ms / 86400000) + ' ngày';
+    }
+
+    function rateLegacyStudyCard(card, quality, fromList) {
+      const isNewForToday = !card.repetitions;
+      const delay = studyDelay(card, quality, legacyReviewDays(card, quality));
+      const now = Date.now();
+      const short = delay < 86400000;
+      const learning = card.state === 'learning' || (!card.repetitions && !card.stability && card.state !== 'relearning');
+      card.state = short ? (learning ? 'learning' : 'relearning') : 'review';
+      const ivl = short ? 0 : delay / 86400000;
+      let ef = card.easeFactor || 2.5;
+      if (!learning && quality === 1) ef = Math.max(1.3, ef - .15);
+      if (!learning && quality === 3) ef += .15;
+      card.repetitions = Math.max(1,(card.repetitions || 0) + 1);
+      card.nextReview = now + delay;
+      card.lastReviewedAt = now;
+      showToast('Ôn lại sau ' + studyDelayText(delay),'📅');
       card.lastAnswerQuality = quality;
       card.interval = ivl;
       card.easeFactor = ef;
       userStats.totalReviews = (userStats.totalReviews || 0) + 1;
       saveData();
 
-      if (quality === 0) {
-        if (fromList) return;
-        // A missed card stays inside this 20-card batch and returns to the queue.
-        const insertAt = Math.min(currentIndex + 2, filteredDeck.length);
-        filteredDeck.splice(insertAt, 0, card);
-        showToast('Thẻ này sẽ được ôn lại trong nhóm 20 thẻ hiện tại.','🔄');
-        currentIndex++; renderCurrentCard(); return;
-      }
-      if (!activeStudyCompletedIds.has(card.id)) {
+      if (quality !== 0 && !getDailyProgress().newIds?.includes(card.id) && !getDailyProgress().reviewIds?.includes(card.id) && !activeStudyCompletedIds.has(card.id)) {
         activeStudyCompletedIds.add(card.id);
         const progress = getDailyProgress();
         const bucket = isNewForToday ? 'newIds' : 'reviewIds';

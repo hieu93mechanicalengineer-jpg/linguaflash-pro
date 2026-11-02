@@ -144,7 +144,7 @@
       else S = nextRecallStability(D, next.stability, R, grade);
     }
 
-    const lapses = Math.max(0, cleanNum(next.lapses, 0)) + (grade === 1 && !wasNew ? 1 : 0);
+    const lapses = Math.max(0, cleanNum(next.lapses, 0)) + (grade === 1 && !wasNew && card.state !== 'learning' ? 1 : 0);
     const reviewCount = Math.max(0, cleanNum(next.reviewCount, 0)) + 1;
     const existingRep = Math.max(0, cleanNum(next.repetitions, 0));
     let interval = 0;
@@ -152,17 +152,12 @@
     let state;
     let repetitions = existingRep;
 
-    if (grade === 1) {
-      nextReview = now + TEN_MIN_MS;
-      interval = 0;
-      state = wasNew ? 'learning' : 'relearning';
-      repetitions = wasNew ? 0 : Math.max(1, existingRep);
-    } else {
-      interval = intervalForStability(S, desiredRetention());
-      nextReview = now + interval * DAY_MS;
-      state = 'review';
-      repetitions = Math.max(1, existingRep + 1);
-    }
+    const delay = studyDelay(card, q, intervalForStability(S, desiredRetention()));
+    const short = delay < DAY_MS;
+    interval = short ? 0 : delay / DAY_MS;
+    nextReview = now + delay;
+    state = short ? (wasNew || card.state === 'learning' ? 'learning' : 'relearning') : 'review';
+    repetitions = Math.max(1, existingRep + 1);
 
     next = {
       ...next,
@@ -216,7 +211,10 @@
     } catch (_) {}
   }
 
-  function intervalText(result) { return result.quality === 0 ? '10m' : `${result.interval}d`; }
+  function intervalText(result) { return studyDelayText(result.nextReview - result.card.lastReviewedAt); }
+  function previewLabels(card) {
+    return [0,1,2,3].map(q => isFsrsEnabled() ? intervalText(simulate(card,q)) : studyDelayText(studyDelay(card,q,legacyReviewDays(card,q))));
+  }
 
   function ensureRibbon() {
     const hard = document.getElementById('lblIntervalHard');
@@ -230,18 +228,23 @@
   }
 
   function refreshCardPreview() {
+    const card = filteredDeck[currentIndex];
+    if (!card) return;
+    const now = nowMs();
+    const labels = previewLabels(card);
+    const buttons = document.querySelectorAll('#tab-study button[onclick^="rateCard("]');
+    buttons.forEach((button,q) => {
+      const name = button.firstElementChild, time = button.lastElementChild;
+      if (!name || !time || name === time || q > 3) return;
+      button.dataset.lfGrade = q;
+      name.textContent = ['Lại','Khó','Được','Dễ'][q];
+      time.textContent = labels[q];
+    });
     if (!isFsrsEnabled()) {
       const ribbon = document.getElementById('lfFsrsRibbon');
       if (ribbon) ribbon.style.display = 'none';
       return;
     }
-    let card;
-    try { card = filteredDeck[currentIndex]; } catch (_) { return; }
-    if (!card) return;
-    const now = nowMs();
-    const previews = [0,1,2,3].map(q => simulate({ ...card }, q, now));
-    const ids = ['','lblIntervalHard','lblIntervalGood','lblIntervalEasy'];
-    [1,2,3].forEach(q => { const el=document.getElementById(ids[q]); if(el) el.textContent=intervalText(previews[q]); });
     const ribbon = ensureRibbon();
     if (!ribbon) return;
     ribbon.style.display = '';
@@ -308,8 +311,9 @@
       const p = getDailyProgress();
       const remainingNew = Math.max(0, cleanNum(s.newLimit,20) - new Set(p.newIds || []).size);
       const remainingReview = Math.max(0, cleanNum(s.reviewLimit,30) - new Set(p.reviewIds || []).size);
-      const selectedNew = newCards.slice(0, remainingNew);
-      const selectedReview = reviewCards.slice(0, remainingReview);
+      const selectedNew = newCards.filter(c => !isStudyStep(c)).slice(0, remainingNew);
+      const dueSteps = pool.filter(c => isStudyStep(c) && c.nextReview <= now);
+      const selectedReview = [...dueSteps, ...reviewCards.filter(c => !isStudyStep(c)).slice(0, remainingReview)];
       filteredDeck = (dueOnly ? selectedReview : [...selectedReview, ...selectedNew]).slice(0,20);
       activeStudyBatchIds = new Set(filteredDeck.map(c => c.id));
       activeStudyCompletedIds = new Set();
@@ -470,18 +474,7 @@
     userStats.totalReviews = Math.max(0,cleanNum(userStats.totalReviews,0)) + 1;
     saveData();
 
-    if (result.quality === 0) {
-      if (fromList) return;
-      const insertAt = Math.min(currentIndex + 2, filteredDeck.length);
-      filteredDeck.splice(insertAt, 0, card);
-      const leechMsg = card.leech ? ' · ⚠️ Leech: nên thêm ví dụ/tách nghĩa.' : '';
-      showToast(`FSRS: ôn lại sau 10 phút${leechMsg}`, '🔄');
-      currentIndex++;
-      renderCurrentCard();
-      return;
-    }
-
-    if (!activeStudyCompletedIds.has(card.id)) {
+    if (quality !== 0 && !getDailyProgress().newIds?.includes(card.id) && !getDailyProgress().reviewIds?.includes(card.id) && !activeStudyCompletedIds.has(card.id)) {
       activeStudyCompletedIds.add(card.id);
       const p = getDailyProgress();
       const bucket = isNewForToday ? 'newIds' : 'reviewIds';
@@ -492,13 +485,14 @@
       saveDailyProgress(p);
       updateDailyGoalSummary();
     }
-    showToast(`FSRS: ôn lại sau ${result.interval} ngày · R mục tiêu ${Math.round(desiredRetention()*100)}%`, result.quality===3?'🌟':'✅');
+    showToast(`FSRS: ôn lại sau ${intervalText(result)} · R mục tiêu ${Math.round(desiredRetention()*100)}%`, result.quality===3?'🌟':'✅');
     if (fromList) return;
     if (document.getElementById('studyDueOnly')?.checked) applyStudyFilters();
     else nextCard();
   }
 
   window.LFFSRS = {
+    previewLabels,
     rateListCard(card, quality) {
       if (isFsrsEnabled()) recordFsrsStudyCard(card, quality, true);
       else rateLegacyStudyCard(card, quality, true);

@@ -28,7 +28,7 @@
 
   const attempts = new Map();
   let practice = false;
-  const grades = ['Quên', 'Khó', 'Nhớ', 'Rất dễ'];
+  const grades = ['Lại', 'Khó', 'Được', 'Dễ'];
   function answerKey(value) {
     return clean(value).normalize('NFKC').toLowerCase().replace(/[’‘]/g, "'").replace(/[.!?。！？]+$/u, '').trim();
   }
@@ -39,7 +39,7 @@
       <input required autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${prompt}" placeholder="${prompt}" value="${esc(attempt.value)}" ${attempt.grade != null ? 'readonly' : ''}>
       <button class="lfsl-quick" ${attempt.grade != null ? 'disabled' : ''}>Kiểm tra</button>
       <div role="status">${esc(attempt.feedback)}</div>
-      ${attempt.checked ? '<div class="lfsl-grades">' + grades.map((g,i) => `<button type="button" class="lfsl-quick" data-grade="${i}" ${attempt.grade != null ? 'disabled' : ''}>${g}</button>`).join('') + '</div>' : ''}
+      ${attempt.checked ? '<div class="lfsl-grades">' + grades.map((g,i) => `<button type="button" class="lfsl-quick" data-grade="${i}" ${attempt.grade != null ? 'disabled' : ''}><small>${esc(attempt.labels[i])}</small>${g}</button>`).join('') + '</div>' : ''}
     </form>`;
   }
 
@@ -197,6 +197,9 @@
 #${ROOT_ID}{width:min(100%,1280px);margin:0 auto 12px;display:flex;flex-direction:column;gap:8px}.lfsl-switch{display:flex;justify-content:center;gap:7px}.lfsl-view{border:1px solid #cbd5e1;background:#fff;color:#334155;border-radius:10px;padding:8px 14px;font-weight:850;cursor:pointer;touch-action:manipulation}.lfsl-view.active{background:#4f46e5;color:#fff;border-color:#4f46e5;box-shadow:0 5px 14px rgba(79,70,229,.18)}.lfsl-columns{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:9px 10px;border:1px solid #dbe3ef;border-radius:13px;background:#fff}.lfsl-caption{font-size:.76rem;font-weight:850;color:#64748b}.lfsl-chip,.lfsl-quick{border:1px solid #d4deea;background:#fff;color:#334155;border-radius:9px;padding:6px 9px;font-size:.75rem;font-weight:800;cursor:pointer}.lfsl-chip.on{background:#4f46e5;color:#fff;border-color:#4f46e5}.lfsl-quick{background:#f8fafc}
 #${PANEL_ID}{display:none;width:min(100%,1280px);margin:0 auto 140px;border:1px solid #dbe3ef;border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 8px 26px rgba(15,23,42,.07)}#${PANEL_ID}.active{display:block}.lfsl-panel-top{padding:12px 14px;border-bottom:1px solid #e5eaf1;background:#f8fafc}.lfsl-panel-top b{font-size:.95rem;color:#172554}.lfsl-panel-top span{display:block;margin-top:2px;font-size:.72rem;color:#64748b}.lfsl-list{overflow:auto}.lfsl-head,.lfsl-row{display:grid;align-items:stretch}.lfsl-head{position:sticky;top:0;z-index:2;background:#f1f5f9;border-bottom:1px solid #dbe3ef;font-size:.7rem;font-weight:900;color:#475569;text-transform:uppercase}.lfsl-head>div{padding:9px 10px}.lfsl-row{border-bottom:1px solid #e7edf4}.lfsl-row:nth-child(even){background:#fbfdff}.lfsl-cell{min-width:0;padding:11px 10px;font-size:.83rem;line-height:1.45;overflow-wrap:anywhere}.lfsl-source{font-size:1rem;font-weight:900;color:#0f172a}.lfsl-topic{margin-top:4px;color:#94a3b8;font-size:.66rem;font-weight:700}.lfsl-phonetic{color:#4f46e5;font-weight:800}.lfsl-example-main{font-weight:750}.lfsl-example-sub{margin-top:3px;color:#64748b;font-size:.76rem}.lfsl-example-en{margin-top:3px;color:#2563eb;font-size:.76rem}.lfsl-audio{display:flex;align-items:flex-start;justify-content:center}.lfsl-listen{width:36px;height:36px;border:1px solid #d9e5f3;border-radius:10px;background:#f8fbff;cursor:pointer}.lfsl-empty{padding:28px;text-align:center;color:#64748b}
 #lfAudioBulkAdminPanel,#lfChineseAudioAdminPanel,#lf51AudioAdminButton,#lf51AudioAdminStatus,#lfZhDialogueHQCoverage{display:none!important}
+.lfsl-grades{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}.lfsl-test .lfsl-grades button{padding:6px 1px;margin:0;min-width:0;line-height:1.3}.lfsl-grades small{display:block;font-size:.68rem}
+[data-grade="0"],[data-lf-grade="0"]{--grade-color:#a52c32}[data-grade="1"],[data-lf-grade="1"]{--grade-color:#965200}[data-grade="2"],[data-lf-grade="2"]{--grade-color:#147239}[data-grade="3"],[data-lf-grade="3"]{--grade-color:#145fc2}
+.lfsl-test [data-grade],#tab-study [data-lf-grade]{background:var(--grade-color);color:white}#tab-study [data-lf-grade] span{color:white}#tab-study [data-lf-grade] span:last-child{order:-1}
 .lfsl-test input{width:100%;min-width:0;border:1px solid #94a3b8;border-radius:8px;padding:8px;font-size:16px}.lfsl-test button{margin:4px 4px 0 0}.lfsl-test [role=status]{font-weight:700}.lfsl-test button:disabled{opacity:.55}
 body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.${BODY_CLASS} #lf51DesktopWorkspace,body.${BODY_CLASS} #lfEnglishMobileV1,body.${BODY_CLASS} #lfEnglishPracticeV1{display:none!important}
 @media(max-width:720px){.lfsl-columns{justify-content:flex-start}.lfsl-caption{width:100%}.lfsl-head{display:none}.lfsl-list{overflow:visible;padding:8px}.lfsl-row{display:block!important;margin-bottom:9px;border:1px solid #dce5f0!important;border-radius:13px;background:#fff!important}.lfsl-cell{display:grid;grid-template-columns:92px minmax(0,1fr);gap:8px;padding:8px 10px;border-bottom:1px dashed #edf1f5}.lfsl-cell::before{content:attr(data-label);font-size:.68rem;font-weight:900;color:#64748b;text-transform:uppercase}.lfsl-audio{display:grid;grid-template-columns:92px 1fr}.lfsl-listen{justify-self:start}#${PANEL_ID}{margin-bottom:125px}}
@@ -233,7 +236,7 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
       const value = form.querySelector('input').value;
       if (!answerKey(value)) return;
       const feedback = answerKey(value) === answerKey(row.source) ? '✓ Đúng' : '✗ Chưa đúng · ' + row.source;
-      attempts.set(row.id, {value, checked:true, feedback});
+      attempts.set(row.id, {value, checked:true, feedback, labels:window.LFFSRS.previewLabels(card)});
       form.outerHTML = exercise(row,lang);
     });
     document.addEventListener('click', e => {
@@ -247,7 +250,13 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
       const grade = Number(btn.dataset.grade);
       window.LFFSRS.rateListCard(card,grade);
       attempt.grade = grade;
-      attempt.feedback += ' · Đã lưu: ' + grades[grade];
+      attempt.feedback += ' · ' + grades[grade] + ' · Ôn sau ' + attempt.labels[grade];
+      if (card.interval === 0) setTimeout(() => {
+        if (attempts.get(id) !== attempt) return;
+        attempts.delete(id);
+        const current = Array.from(document.querySelectorAll('.lfsl-test')).find(el => el.dataset.card === id);
+        if (current) current.outerHTML = exercise(normalizeCard(card,currentLang()),currentLang());
+      }, Math.max(0,card.nextReview-Date.now()));
       form.outerHTML = exercise(normalizeCard(card,currentLang()),currentLang());
     });
     document.addEventListener('click', event => {
