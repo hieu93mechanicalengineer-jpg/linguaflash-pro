@@ -27,19 +27,30 @@
   let unitSection = 'all';
 
   const attempts = new Map();
+  const outcomes = new Map();
+  let retry = null;
+  let roundIds = [];
+  function retryFooter(){
+    const results = retry || outcomes;
+    const missed = roundIds.filter(id => results.get(id)?.correct === false);
+    const finished = roundIds.length && roundIds.every(id => results.get(id)?.checked);
+    const start = missed.length && (!retry || finished) ? `<button type="button" class="lfsl-quick" data-retry-start>Luyện lại ${missed.length} câu vừa sai</button>` : '';
+    const done = finished && !missed.length ? '<strong>✓ Hoàn thành lượt luyện</strong>' : '';
+    return [done,start,retry ? '<button type="button" class="lfsl-quick" data-retry-end>Về danh sách</button>' : ''].filter(Boolean).join(' ');
+  }
   let practice = false;
   const grades = ['Lại', 'Khó', 'Được', 'Dễ'];
   function answerKey(value) {
     return clean(value).normalize('NFKC').toLowerCase().replace(/[’‘]/g, "'").replace(/[.!?。！？]+$/u, '').trim();
   }
   function exercise(row, lang) {
-    const attempt = attempts.get(row.id) || {};
+    const attempt = (retry || attempts).get(row.id) || {};
     const prompt = lang === 'en' ? 'Nhập tiếng Anh' : 'Nhập tiếng Trung';
     return `<form class="lfsl-test" data-card="${esc(row.id)}">
       <input required autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${prompt}" placeholder="${prompt}" value="${esc(attempt.value)}" ${attempt.grade != null ? 'readonly' : ''}>
       <button class="lfsl-quick" ${attempt.grade != null ? 'disabled' : ''}>Kiểm tra</button>
       <div role="status">${esc(attempt.feedback)}</div>
-      ${attempt.checked ? '<div class="lfsl-grades">' + grades.map((g,i) => `<button type="button" class="lfsl-quick" data-grade="${i}" ${attempt.grade != null ? 'disabled' : ''}><small>${esc(attempt.labels[i])}</small>${g}</button>`).join('') + '</div>' : ''}
+      ${attempt.checked && !retry ? '<div class="lfsl-grades">' + grades.map((g,i) => `<button type="button" class="lfsl-quick" data-grade="${i}" ${attempt.grade != null ? 'disabled' : ''}><small>${esc(attempt.labels[i])}</small>${g}</button>`).join('') + '</div>' : ''}
     </form>`;
   }
 
@@ -163,7 +174,7 @@
     document.body?.classList.toggle(BODY_CLASS,mode==='list');panel.classList.toggle('active',mode==='list');
     const tools=root.querySelector('.lfsl-tools');if(tools)tools.innerHTML=mode==='list'?controlsHtml(lang):'';if(mode!=='list')return;
     const filter = JSON.stringify([lang, document.getElementById('studyCategoryFilter')?.value, document.getElementById('studyTopicFilter')?.value]);
-    if (filter !== lastFilter) { attempts.clear(); page = 0; unitSection = 'all'; }
+    if (filter !== lastFilter) { attempts.clear(); outcomes.clear(); retry=null; page = 0; unitSection = 'all'; }
     lastFilter = filter;
     const deck = getDeck();
     const unit2 = lang === 'en' && document.getElementById('studyTopicFilter')?.value === window.LF51_UNIT2_STUDY_TOPIC_V1;
@@ -177,7 +188,9 @@
         `<button type="button" class="lfsl-quick" data-lfsl-section="${key}" aria-pressed="${unitSection === key}">${name} ${counts[key]}</button>`).join('') + '</div>';
     }
     const selected = unit2 && unitSection !== 'all' ? deck.filter(card => sectionOf(card) === unitSection) : deck;
-    const rows = selected.map(card => normalizeCard(card, lang)).filter(row => row.source);
+    const active = retry ? selected.filter(card => retry.has(String(card.id))) : selected;
+    const rows = active.map(card => normalizeCard(card, lang)).filter(row => row.source);
+    roundIds = rows.map(row => row.id);
     const pages = Math.ceil(rows.length / PAGE_SIZE);
     page = Math.min(page, Math.max(0, pages - 1));
     const start = page * PAGE_SIZE;
@@ -185,11 +198,13 @@
     const pager = pages > 1 ? `<nav aria-label="Phân trang danh sách"><button type="button" class="lfsl-quick" data-lfsl-page="-1" ${page === 0 ? 'disabled' : ''}>← Trước</button> Trang ${page + 1} / ${pages} <button type="button" class="lfsl-quick" data-lfsl-page="1" ${page + 1 === pages ? 'disabled' : ''}>Sau →</button></nav>` : '';
     const selectedTopic=document.getElementById('studyTopicFilter')?.selectedOptions?.[0]?.textContent||'Tất cả bài học';
     panel.innerHTML=`<div class="lfsl-panel-top"><div><b>📋 ${esc(labelSet(lang).title)}</b><span>${rows.length} mục · ${esc(selectedTopic)} · toàn bộ bài, không giới hạn bởi SRS/đến hạn</span></div>${pager}</div>${sectionBar}${visible.length?`<div class="lfsl-list">${renderRows(visible,lang,unit2)}</div>`:'<div class="lfsl-empty">Không có nội dung phù hợp với bộ lọc hiện tại.</div>'}`;
+    if(unit2 && practice) panel.insertAdjacentHTML('beforeend',`<div class="lfsl-sections" data-retry-footer aria-live="polite">${retryFooter()}</div>`);
+
 
   }
 
   function setMode(next){mode=next==='list'?'list':'card';try{localStorage.setItem(MODE_KEY,mode)}catch(_){}render();if(mode==='card'){try{if(typeof renderCurrentCard==='function')renderCurrentCard()}catch(_){}}}
-  function setQuick(kind){practice=false;const lang=currentLang();if(kind==='all')columns[lang]={source:true,phonetic:true,meaning:true,other:true,example:true};if(kind==='answers')columns[lang]={source:true,phonetic:true,meaning:false,other:false,example:false};if(kind==='word')columns[lang]={source:true,phonetic:false,meaning:false,other:false,example:false};saveColumns();render();}
+  function setQuick(kind){retry=null;practice=false;const lang=currentLang();if(kind==='all')columns[lang]={source:true,phonetic:true,meaning:true,other:true,example:true};if(kind==='answers')columns[lang]={source:true,phonetic:true,meaning:false,other:false,example:false};if(kind==='word')columns[lang]={source:true,phonetic:false,meaning:false,other:false,example:false};saveColumns();render();}
   function speak(text,lang){const t=clean(text);if(!t)return;try{if(lang==='en'&&window.LFEnglishHQAudio?.has?.(t)){window.LFEnglishHQAudio.play(t,.9);return}if(lang==='zh'&&window.LFChineseHQAudio?.has?.(t)){window.LFChineseHQAudio.play(t,.8);return}}catch(_){}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=lang==='zh'?'zh-CN':'en-US';u.rate=lang==='zh'?.8:.9;speechSynthesis.speak(u)}catch(_){}}
 
   function installStyle(){
@@ -222,7 +237,7 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
     document.addEventListener('input', e => {
       const form = e.target.closest('.lfsl-test');
       if (!form) return;
-      attempts.set(form.dataset.card, {value:e.target.value});
+      (retry || attempts).set(form.dataset.card, {value:e.target.value});
       form.querySelector('[role=status]').textContent = '';
       form.querySelector('.lfsl-grades')?.remove();
     });
@@ -231,18 +246,31 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
       if (!form) return;
       e.preventDefault();
       const card = allCards.find(c => String(c.id) === form.dataset.card);
-      if (!card || attempts.get(form.dataset.card)?.grade != null) return;
+      if (!card || (retry || attempts).get(form.dataset.card)?.grade != null) return;
       const lang = currentLang(), row = normalizeCard(card, lang);
       const value = form.querySelector('input').value;
       if (!answerKey(value)) return;
       const feedback = answerKey(value) === answerKey(row.source) ? '✓ Đúng' : '✗ Chưa đúng · ' + row.source;
-      attempts.set(row.id, {value, checked:true, feedback, labels:window.LFFSRS.previewLabels(card)});
+      const correct = answerKey(value) === answerKey(row.source);
+      if (retry) retry.set(row.id,{value,checked:true,feedback,correct});
+      else {
+        attempts.set(row.id,{value,checked:true,feedback,labels:window.LFFSRS.previewLabels(card)});
+        outcomes.set(row.id,{checked:true,correct});
+      }
+      const footer = document.querySelector('[data-retry-footer]');
+      if (footer) footer.innerHTML=retryFooter();
       form.outerHTML = exercise(row,lang);
     });
     document.addEventListener('click', e => {
-      if (e.target.closest('[data-practice]')) { practice = !practice; render(); return; }
+      if (e.target.closest('[data-retry-start]')) {
+        const results = retry || outcomes;
+        retry = new Map(roundIds.filter(id => results.get(id)?.correct === false).map(id => [id,{}]));
+        page=0; render(); document.querySelector('.lfsl-test input')?.focus(); return;
+      }
+      if (e.target.closest('[data-retry-end]')) { retry=null; render(); return; }
+      if (e.target.closest('[data-practice]')) { retry=null; practice = !practice; render(); return; }
       const btn = e.target.closest('.lfsl-test [data-grade]');
-      if (!btn) return;
+      if (!btn || retry) return;
       const form = btn.closest('form'), id = form.dataset.card, attempt = attempts.get(id);
       if (!attempt?.checked || attempt.grade != null) return;
       const card = allCards.find(c => String(c.id) === id);
@@ -261,7 +289,7 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
     });
     document.addEventListener('click', event => {
       const section = event.target.closest?.('[data-lfsl-section]');
-      if (section) { unitSection = section.dataset.lfslSection; page = 0; render(); return; }
+      if (section) { retry=null; unitSection = section.dataset.lfslSection; page = 0; render(); return; }
       const button = event.target.closest?.('[data-lfsl-page]');
       if (!button || button.disabled) return;
       page += Number(button.dataset.lfslPage);
