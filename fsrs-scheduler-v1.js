@@ -333,38 +333,7 @@
         if (!filteredDeck?.length) return;
         const card = filteredDeck[currentIndex];
         if (!card) return;
-        const before = { ...card };
-        const isNewForToday = Math.max(0, cleanNum(card.repetitions,0)) === 0;
-        const result = simulate(card, quality, nowMs());
-        copyProgress(card, result.card);
-        appendRevlog(card, result, before);
-        userStats.totalReviews = Math.max(0,cleanNum(userStats.totalReviews,0)) + 1;
-        saveData();
-
-        if (result.quality === 0) {
-          const insertAt = Math.min(currentIndex + 2, filteredDeck.length);
-          filteredDeck.splice(insertAt, 0, card);
-          const leechMsg = card.leech ? ' · ⚠️ Leech: nên thêm ví dụ/tách nghĩa.' : '';
-          showToast(`FSRS: ôn lại sau 10 phút${leechMsg}`, '🔄');
-          currentIndex++;
-          renderCurrentCard();
-          return;
-        }
-
-        if (!activeStudyCompletedIds.has(card.id)) {
-          activeStudyCompletedIds.add(card.id);
-          const p = getDailyProgress();
-          const bucket = isNewForToday ? 'newIds' : 'reviewIds';
-          const limit = isNewForToday ? settings().newLimit : settings().reviewLimit;
-          const ids = new Set(p[bucket] || []);
-          if (ids.size < limit) ids.add(card.id);
-          p[bucket] = [...ids];
-          saveDailyProgress(p);
-          updateDailyGoalSummary();
-        }
-        showToast(`FSRS: ôn lại sau ${result.interval} ngày · R mục tiêu ${Math.round(desiredRetention()*100)}%`, result.quality===3?'🌟':'✅');
-        if (document.getElementById('studyDueOnly')?.checked) applyStudyFilters();
-        else nextCard();
+        recordFsrsStudyCard(card, quality, false);
       };
       wrappedRate.__lfFsrsWrapped = true;
       rateCard = wrappedRate;
@@ -492,7 +461,48 @@
     try { installOverrides(); } catch (e) { console.error('FSRS install:', e); }
   }, 0);
 
+  function recordFsrsStudyCard(card, quality, fromList) {
+    const before = { ...card };
+    const isNewForToday = Math.max(0, cleanNum(card.repetitions,0)) === 0;
+    const result = simulate(card, quality, nowMs());
+    copyProgress(card, result.card);
+    appendRevlog(card, result, before);
+    userStats.totalReviews = Math.max(0,cleanNum(userStats.totalReviews,0)) + 1;
+    saveData();
+
+    if (result.quality === 0) {
+      if (fromList) return;
+      const insertAt = Math.min(currentIndex + 2, filteredDeck.length);
+      filteredDeck.splice(insertAt, 0, card);
+      const leechMsg = card.leech ? ' · ⚠️ Leech: nên thêm ví dụ/tách nghĩa.' : '';
+      showToast(`FSRS: ôn lại sau 10 phút${leechMsg}`, '🔄');
+      currentIndex++;
+      renderCurrentCard();
+      return;
+    }
+
+    if (!activeStudyCompletedIds.has(card.id)) {
+      activeStudyCompletedIds.add(card.id);
+      const p = getDailyProgress();
+      const bucket = isNewForToday ? 'newIds' : 'reviewIds';
+      const limit = isNewForToday ? settings().newLimit : settings().reviewLimit;
+      const ids = new Set(p[bucket] || []);
+      if (ids.size < limit) ids.add(card.id);
+      p[bucket] = [...ids];
+      saveDailyProgress(p);
+      updateDailyGoalSummary();
+    }
+    showToast(`FSRS: ôn lại sau ${result.interval} ngày · R mục tiêu ${Math.round(desiredRetention()*100)}%`, result.quality===3?'🌟':'✅');
+    if (fromList) return;
+    if (document.getElementById('studyDueOnly')?.checked) applyStudyFilters();
+    else nextCard();
+  }
+
   window.LFFSRS = {
+    rateListCard(card, quality) {
+      if (isFsrsEnabled()) recordFsrsStudyCard(card, quality, true);
+      else rateLegacyStudyCard(card, quality, true);
+    },
     version: FSRS_VERSION,
     weights: W.slice(),
     retrievability: cardRetrievability,

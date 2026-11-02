@@ -1223,8 +1223,10 @@
     }
 
     function rateCard(quality) {
-      if (filteredDeck.length === 0) return;
-      const card = filteredDeck[currentIndex];
+      if (filteredDeck.length) rateLegacyStudyCard(filteredDeck[currentIndex], quality, false);
+    }
+
+    function rateLegacyStudyCard(card, quality, fromList) {
       let rep = card.repetitions || 0;
       let ivl = card.interval || 0;
       let ef = card.easeFactor || 2.5;
@@ -1261,6 +1263,7 @@
       saveData();
 
       if (quality === 0) {
+        if (fromList) return;
         // A missed card stays inside this 20-card batch and returns to the queue.
         const insertAt = Math.min(currentIndex + 2, filteredDeck.length);
         filteredDeck.splice(insertAt, 0, card);
@@ -1277,6 +1280,7 @@
         progress[bucket] = [...ids]; saveDailyProgress(progress); updateDailyGoalSummary();
         if ((isNewForToday && ids.size >= limit) || (!isNewForToday && ids.size >= limit)) showToast('🎉 Đã hoàn thành mục tiêu hôm nay cho nhóm này!','🏆');
       }
+      if (fromList) return;
       if (document.getElementById('studyDueOnly').checked) { applyStudyFilters(); } else { nextCard(); }
     }
 

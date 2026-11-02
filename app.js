@@ -41,7 +41,7 @@
   document.write('<script src="./english-unit2-data-v1.js?v=105"><\/script>');
   document.write('<script src="./data/english-51talk-lessons-v1.js?v=105"><\/script>');
   document.write('<script src="./english-unit2-study-cards-v1.js?v=105"><\/script>');
-  document.write('<script src="./app-core.js?v=105"><\/script>');
+  document.write('<script src="./app-core.js?v=107"><\/script>');
 
   document.write('<script src="./audio-native-bridge-v1.js?v=105"><\/script>');
   document.write('<script src="./english-hq-audio-v1.js?v=105"><\/script>');
@@ -73,8 +73,8 @@
   document.write('<script src="./english-dialogue-transcript-v1.js?v=105"><\/script>');
   document.write('<script src="./study-session-v1.js?v=106"><\/script>');
   document.write('<script src="./smart-daily-session-v2.js?v=106"><\/script>');
-  document.write('<script src="./study-list-mode-v1.js?v=105"><\/script>');
+  document.write('<script src="./study-list-mode-v1.js?v=107"><\/script>');
   document.write('<script src="./study-list-auto-font-v1.js?v=105"><\/script>');
   document.write('<script src="./study-list-hanzi-zoom-v1.js?v=105"><\/script>');
-  document.write('<script src="./fsrs-scheduler-v1.js?v=105"><\/script>');
+  document.write('<script src="./fsrs-scheduler-v1.js?v=107"><\/script>');
 })();
