@@ -25,6 +25,7 @@
   let page = 0;
   let lastFilter = '';
   let unitSection = 'all';
+  let dialogueRate = 1;
 
   const attempts = new Map();
   const outcomes = new Map();
@@ -148,15 +149,17 @@
 
   function renderRows(rows,lang,unit2){
     const labels=labelSet(lang),c=practice?{meaning:true}:columns[lang],grid=gridTemplate(lang);
+    const dialogue = unit2 && unitSection === 'dialogue';
+    const foldMeaning = dialogue && !practice;
     const head=[c.source?`<div>${esc(labels.source)}</div>`:'',c.phonetic?`<div>${esc(labels.phonetic)}</div>`:'',c.meaning?`<div>${esc(labels.meaning)}</div>`:'',c.other?`<div>${esc(labels.other)}</div>`:'',c.example?`<div>${esc(labels.example)}</div>`:'',practice?'<div>Nhập đáp án</div>':'','<div>🔊</div>'].join('');
     return `<div class="lfsl-head" style="grid-template-columns:${grid}">${head}</div>`+rows.map((row,i)=>`<div class="lfsl-row" style="grid-template-columns:${grid}" data-row="${i}" ${unit2 ? 'data-unit2-row' : ''}>
       ${c.source?cell('source',labels.source,`<div class="lfsl-source">${esc(row.source||'—')}</div>${row.topic?`<div class="lfsl-topic">${esc(row.topic)}</div>`:''}`):''}
       ${c.phonetic?cell('phonetic',labels.phonetic,`<span class="lfsl-phonetic">${esc(row.phonetic||'—')}</span>`):''}
-      ${c.meaning?cell('meaning',labels.meaning,`<span>${esc(row.meaning||'—')}</span>`):''}
+      ${c.meaning?cell('meaning',labels.meaning,foldMeaning ? `<details><summary>Xem nghĩa</summary>${esc(row.meaning)}</details>` : `<span>${esc(row.meaning||'—')}</span>`):''}
       ${c.other?cell('other',labels.other,`<span>${esc(row.other||'—')}</span>`):''}
       ${c.example?cell('example',labels.example,exampleHtml(row,lang)):''}
       ${practice?cell('answer','Nhập đáp án',exercise(row,lang)):''}
-      <div class="lfsl-cell lfsl-audio" data-label="Nghe"><button type="button" class="lfsl-listen" data-lfsl-audio="${esc(row.source)}" data-lfsl-lang="${lang}">🔊</button></div>
+      <div class="lfsl-cell lfsl-audio" data-label="Nghe"><button type="button" class="lfsl-listen" data-lfsl-audio="${esc(row.source)}" data-lfsl-lang="${lang}" ${dialogue ? 'data-dialogue-audio aria-label="Nghe lại câu này"' : ''}>🔊</button></div>
       ${unit2 && ((c.other && row.other) || (c.example && (row.example || row.exVi || row.exEn))) ? `<details class="lfsl-mobile-detail"><summary>Chi tiết</summary>${c.other ? esc(row.other) : ''}${c.example ? exampleHtml(row,lang) : ''}</details>` : ''}
     </div>`).join('');
   }
@@ -190,6 +193,10 @@
     const selected = unit2 && unitSection !== 'all' ? deck.filter(card => sectionOf(card) === unitSection) : deck;
     const active = retry ? selected.filter(card => retry.has(String(card.id))) : selected;
     const rows = active.map(card => normalizeCard(card, lang)).filter(row => row.source);
+    if (unit2 && unitSection === 'dialogue') {
+      for (const row of rows) if (row.exVi === row.meaning) row.exVi = '';
+      sectionBar += `<label class="lfsl-rate">Tốc độ nghe <select data-dialogue-rate><option value="0.75" ${dialogueRate === 0.75 ? 'selected' : ''}>0,75×</option><option value="1" ${dialogueRate === 1 ? 'selected' : ''}>1×</option></select></label>`;
+    }
     roundIds = rows.map(row => row.id);
     const pages = Math.ceil(rows.length / PAGE_SIZE);
     page = Math.min(page, Math.max(0, pages - 1));
@@ -205,7 +212,7 @@
 
   function setMode(next){mode=next==='list'?'list':'card';try{localStorage.setItem(MODE_KEY,mode)}catch(_){}render();if(mode==='card'){try{if(typeof renderCurrentCard==='function')renderCurrentCard()}catch(_){}}}
   function setQuick(kind){retry=null;practice=false;const lang=currentLang();if(kind==='all')columns[lang]={source:true,phonetic:true,meaning:true,other:true,example:true};if(kind==='answers')columns[lang]={source:true,phonetic:true,meaning:false,other:false,example:false};if(kind==='word')columns[lang]={source:true,phonetic:false,meaning:false,other:false,example:false};saveColumns();render();}
-  function speak(text,lang){const t=clean(text);if(!t)return;try{if(lang==='en'&&window.LFEnglishHQAudio?.has?.(t)){window.LFEnglishHQAudio.play(t,.9);return}if(lang==='zh'&&window.LFChineseHQAudio?.has?.(t)){window.LFChineseHQAudio.play(t,.8);return}}catch(_){}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=lang==='zh'?'zh-CN':'en-US';u.rate=lang==='zh'?.8:.9;speechSynthesis.speak(u)}catch(_){}}
+  function speak(text,lang,rate=lang==='zh'?.8:.9){const t=clean(text);if(!t)return;try{if(lang==='en'&&window.LFEnglishHQAudio?.has?.(t)){window.LFEnglishHQAudio.play(t,rate);return}if(lang==='zh'&&window.LFChineseHQAudio?.has?.(t)){window.LFChineseHQAudio.play(t,rate);return}}catch(_){}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=lang==='zh'?'zh-CN':'en-US';u.rate=rate;speechSynthesis.speak(u)}catch(_){}}
 
   function installStyle(){
     if(document.getElementById('lfStudyListModeStyle'))return;const s=document.createElement('style');s.id='lfStudyListModeStyle';s.textContent=`
@@ -218,7 +225,7 @@
 .lfsl-test input{width:100%;min-width:0;border:1px solid #94a3b8;border-radius:8px;padding:8px;font-size:16px}.lfsl-test button{margin:4px 4px 0 0}.lfsl-test [role=status]{font-weight:700}.lfsl-test button:disabled{opacity:.55}
 body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.${BODY_CLASS} #lf51DesktopWorkspace,body.${BODY_CLASS} #lfEnglishMobileV1,body.${BODY_CLASS} #lfEnglishPracticeV1{display:none!important}
 @media(max-width:720px){.lfsl-columns{justify-content:flex-start}.lfsl-caption{width:100%}.lfsl-head{display:none}.lfsl-list{overflow:visible;padding:8px}.lfsl-row{display:block!important;margin-bottom:9px;border:1px solid #dce5f0!important;border-radius:13px;background:#fff!important}.lfsl-cell{display:grid;grid-template-columns:92px minmax(0,1fr);gap:8px;padding:8px 10px;border-bottom:1px dashed #edf1f5}.lfsl-cell::before{content:attr(data-label);font-size:.68rem;font-weight:900;color:#64748b;text-transform:uppercase}.lfsl-audio{display:grid;grid-template-columns:92px 1fr}.lfsl-listen{justify-self:start}#${PANEL_ID}{margin-bottom:125px}}
-.lfsl-sections{display:flex;flex-wrap:wrap;gap:6px;padding:10px}.lfsl-sections button[aria-pressed=true]{background:#3730a3;color:white}.lfsl-mobile-detail{display:none}
+.lfsl-rate{display:flex;align-items:center;gap:8px;padding:0 10px 10px;font-weight:650}.lfsl-rate select{min-height:44px;padding:4px 10px;border:1px solid #cbd5e1;border-radius:8px}.lfsl-meaning summary{cursor:pointer;color:#4338ca}.lfsl-sections{display:flex;flex-wrap:wrap;gap:6px;padding:10px}.lfsl-sections button[aria-pressed=true]{background:#3730a3;color:white}.lfsl-mobile-detail{display:none}
 @media(max-width:720px){
 .lfsl-row[data-unit2-row]{position:relative;padding:10px 58px 10px 12px}
 [data-unit2-row] .lfsl-cell{display:block;border:0;padding:2px 0}
@@ -234,6 +241,9 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
   }
 
   function bind(){
+    document.addEventListener('change', event => {
+      if (event.target.matches?.('[data-dialogue-rate]')) dialogueRate = event.target.value === '0.75' ? 0.75 : 1;
+    });
     document.addEventListener('input', e => {
       const form = e.target.closest('.lfsl-test');
       if (!form) return;
@@ -295,7 +305,7 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
       page += Number(button.dataset.lfslPage);
       render();
     });
-    document.addEventListener('click',e=>{const view=e.target.closest?.('[data-lfsl-view]');if(view){setMode(view.dataset.lfslView);return}const col=e.target.closest?.('[data-lfsl-col]');if(col){const lang=currentLang(),key=col.dataset.lfslCol;columns[lang][key]=!columns[lang][key];saveColumns();render();return}const q=e.target.closest?.('[data-lfsl-quick]');if(q){setQuick(q.dataset.lfslQuick);return}const a=e.target.closest?.('[data-lfsl-audio]');if(a){speak(a.dataset.lfslAudio,a.dataset.lfslLang);return}});
+    document.addEventListener('click',e=>{const view=e.target.closest?.('[data-lfsl-view]');if(view){setMode(view.dataset.lfslView);return}const col=e.target.closest?.('[data-lfsl-col]');if(col){const lang=currentLang(),key=col.dataset.lfslCol;columns[lang][key]=!columns[lang][key];saveColumns();render();return}const q=e.target.closest?.('[data-lfsl-quick]');if(q){setQuick(q.dataset.lfslQuick);return}const a=e.target.closest?.('[data-lfsl-audio]');if(a){speak(a.dataset.lfslAudio,a.dataset.lfslLang,a.hasAttribute('data-dialogue-audio')?dialogueRate:undefined);return}});
     document.addEventListener('change',e=>{if(!['studyLangFilter','studyCategoryFilter','studyTopicFilter'].includes(e.target?.id))return;[0,80,220].forEach(ms=>setTimeout(()=>{ensureUI();render()},ms));},true);
   }
   function init(){bind();[0,100,350,900,1800,3500].forEach(ms=>setTimeout(()=>{ensureUI();if(mode==='list')render()},ms));window.addEventListener('pageshow',()=>setTimeout(()=>{ensureUI();render()},0));}
