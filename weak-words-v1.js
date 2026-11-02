@@ -199,7 +199,8 @@
     card = document.createElement('div');
     card.id = 'lfWeakWordsHomeCard';
     card.className = 'app-card p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4';
-    hero.insertAdjacentElement('afterend', card);
+    const cloud = document.getElementById('lfCloudHomeCard');
+    (cloud || hero).insertAdjacentElement('afterend', card);
     return card;
   }
 

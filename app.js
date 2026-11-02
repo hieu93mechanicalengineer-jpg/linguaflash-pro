@@ -71,6 +71,8 @@
   document.write('<script src="./audio-hq-bulk-admin-v1.js?v=105"><\/script>');
   document.write('<script src="./chinese-dialogue-hq-status-v1.js?v=105"><\/script>');
   document.write('<script src="./english-dialogue-transcript-v1.js?v=105"><\/script>');
+  document.write('<script src="./study-session-v1.js?v=106"><\/script>');
+  document.write('<script src="./smart-daily-session-v2.js?v=106"><\/script>');
   document.write('<script src="./study-list-mode-v1.js?v=105"><\/script>');
   document.write('<script src="./study-list-auto-font-v1.js?v=105"><\/script>');
   document.write('<script src="./study-list-hanzi-zoom-v1.js?v=105"><\/script>');

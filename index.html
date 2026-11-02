@@ -380,7 +380,13 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
 
     <!-- ==================== APP HOME ==================== -->
     <section id="tab-home" class="space-y-4 sm:space-y-5">
-      <div class="app-hero"><div class="relative z-10 max-w-2xl"><div class="text-xs font-extrabold tracking-[.16em] uppercase text-indigo-100 mb-2" data-app-i18n="home_kicker">LINGUAFLASH PRO</div><h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight" data-app-i18n="home_title">Hôm nay bạn muốn học gì?</h2><p class="text-indigo-100/90 mt-2 text-sm sm:text-base leading-relaxed" data-app-i18n="home_desc">Học từ mới, ôn đúng lúc và luyện nghe nói trong cùng một ứng dụng.</p><div class="flex flex-wrap gap-2 mt-5"><button class="app-primary-btn" onclick="switchTab('study')">▶ <span data-app-i18n="continue_learning">Tiếp tục học</span></button><button class="app-secondary-btn" onclick="switchTab('study'); setFilterDueOnly(true)">⏰ <span data-app-i18n="review_due">Ôn thẻ đến hạn</span></button></div></div></div>
+      <div class="app-hero">
+        <div class="relative z-10">
+          <p class="text-xs font-bold tracking-widest">LINGUAFLASH PRO</p>
+          <div id="lfSmartDailyHomeCard"><button class="app-primary-btn" onclick="switchTab('study')" data-app-i18n="continue_learning">Tiếp tục học</button></div>
+        </div>
+      </div>
+      <details class="app-card p-4"><summary class="cursor-pointer font-bold" data-app-i18n="nav_progress">Tiến độ</summary>
       <div id="lfCloudHomeCard" class="lf-cloud-card">
         <div class="min-w-0">
           <div class="flex flex-wrap items-center gap-2"><div class="font-extrabold text-slate-900">☁️ Tài khoản & đồng bộ học tập</div><span id="lfCloudStatusPill" class="lf-cloud-pill">Chưa đăng nhập</span></div>
@@ -390,6 +396,8 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
       </div>
       <div class="app-stat-grid"><div class="app-card app-stat"><div><div class="app-stat-label" data-app-i18n="today_new">Từ mới hôm nay</div><div id="homeNewProgress" class="app-stat-value">0 / 20</div></div></div><div class="app-card app-stat"><div><div class="app-stat-label" data-app-i18n="today_review">Ôn tập hôm nay</div><div id="homeReviewProgress" class="app-stat-value">0 / 30</div></div></div><div class="app-card app-stat"><div><div class="app-stat-label" data-app-i18n="due_cards">Thẻ cần ôn</div><div id="homeDueCount" class="app-stat-value">0</div></div></div></div>
       <div class="app-card p-4 sm:p-5"><div class="flex items-center justify-between gap-3 mb-3"><div><div class="app-section-kicker" data-app-i18n="daily_goal">MỤC TIÊU HÔM NAY</div><div id="homeGoalText" class="app-section-heading mt-1">0 / 50</div></div><button class="app-inline-link" onclick="switchTab('study');setTimeout(()=>toggleDailyGoalsPanel(true),80)" data-app-i18n="edit_goal">Điều chỉnh</button></div><div class="app-progress-track"><div id="homeGoalBar" class="app-progress-fill" style="width:0%"></div></div><div class="flex items-center justify-between gap-3 mt-3 text-xs text-slate-500"><span>🔥 <span id="homeStreak">1</span> <span data-app-i18n="day_streak">ngày liên tiếp</span></span><span><span id="homeTotalCards">0</span> <span data-app-i18n="cards_total">thẻ trong thư viện</span></span></div></div>
+      </details>
+      <details class="app-card p-4"><summary class="cursor-pointer font-bold" data-app-i18n="nav_library">Thư viện</summary>
       <div class="app-card p-4 sm:p-5"><div class="app-section-kicker">NỘI DUNG ĐÃ ĐÓNG GÓI</div><div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3"><div class="rounded-2xl bg-rose-50 border border-rose-100 p-3"><div class="text-sm font-extrabold text-rose-800">Tiếng Trung Huyền Anh</div><div id="bundleHaCount" class="text-2xl font-extrabold text-slate-900 mt-1">0</div><div class="text-xs text-slate-500">Level 1: Bài 1–15 · Level 2: Bài 1–20 · Level 3: Bài 1–25 · Level 4: Bài 1–25</div></div><div class="rounded-2xl bg-indigo-50 border border-indigo-100 p-3"><div class="text-sm font-extrabold text-indigo-800">Gia Hân</div><div id="bundleGhCount" class="text-2xl font-extrabold text-slate-900 mt-1">0</div><div class="text-xs text-slate-500">Trung cấp 1: Bài 16–30 · Trung cấp 2: Bài 31–45</div></div><div class="rounded-2xl bg-emerald-50 border border-emerald-100 p-3"><div class="text-sm font-extrabold text-emerald-800">TRILINGUAL DICTIONARY</div><div id="bundleDictCount" class="text-2xl font-extrabold text-slate-900 mt-1">0</div><div class="text-xs text-slate-500">Trung – Anh – Việt · có ví dụ</div></div></div></div>
       <div><div class="app-section-kicker" data-app-i18n="quick_actions">TRUY CẬP NHANH</div><h3 class="app-section-heading mt-1 mb-3" data-app-i18n="choose_activity">Chọn hoạt động</h3><div class="app-action-grid">
         <button class="app-action" onclick="openGlobalSearch()"><div class="app-action-icon">🔎</div><div class="app-action-title" data-app-i18n="search_all">Tra từ / Tìm kiếm</div><div class="app-action-desc" data-app-i18n="search_all_desc">Tìm trên toàn bộ Gia Hân, Huyền Anh và TRILINGUAL DICTIONARY.</div></button>
@@ -398,6 +406,7 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
         <button class="app-action" onclick="openManageAt('manageAddCardPanel')"><div class="app-action-icon">＋</div><div class="app-action-title" data-app-i18n="add_card">Thêm thẻ mới</div><div class="app-action-desc" data-app-i18n="add_card_desc_short">Tự nhập một từ hoặc câu mới vào bộ thẻ của bạn.</div></button>
         <button class="app-action" onclick="switchTab('stats')"><div class="app-action-icon">📈</div><div class="app-action-title" data-app-i18n="progress_title">Tiến độ học</div><div class="app-action-desc" data-app-i18n="progress_desc">Xem số thẻ cần ôn, mức ghi nhớ và lịch SRS.</div></button>
       </div></div>
+      </details>
     </section>
 
     <!-- ==================== PRACTICE HUB ==================== -->

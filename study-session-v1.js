@@ -2,6 +2,7 @@
 (() => {
   'use strict';
 
+  if (window.lfSaveStudySession) return;
   const KEY = 'linguaflash_study_session_v1';
   const INIT_KEY = 'linguaflash_study_session_cloud_v17_ready';
   const TABLE = 'linguaflash_study_session';
@@ -252,6 +253,18 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
   else start();
 
+  window.lfPendingSession = () => {
+    const s = readLocal();
+    if (!s || s.day !== dayKey() || !s.deckIds?.length) return null;
+    const done = new Set(s.completedIds || []);
+    return (done.size || s.currentIndex > 0) && s.deckIds.some(id => !done.has(id)) ? s : null;
+  };
+  window.lfContinuePendingSession = async () => {
+    const s = window.lfPendingSession();
+    if (!s) return false;
+    switchTab('study');
+    return applySession(s);
+  };
   window.lfSaveStudySession = saveSession;
   window.lfRestoreStudySession = () => syncFromCloud(false);
 })();

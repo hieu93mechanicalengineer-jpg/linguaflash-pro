@@ -24,6 +24,7 @@
   const PAGE_SIZE = 100;
   let page = 0;
   let lastFilter = '';
+  let unitSection = 'all';
 
   function loadColumns() {
     const base = {
@@ -117,16 +118,17 @@
   function exampleHtml(row,lang){if(!row.example&&!row.exVi&&!row.exEn)return'—';const b=[];if(row.example)b.push(`<div class="lfsl-example-main">${esc(row.example)}</div>`);if(row.exVi&&row.exVi!==row.example)b.push(`<div class="lfsl-example-sub">${esc(row.exVi)}</div>`);if(lang==='zh'&&row.exEn&&row.exEn!==row.example)b.push(`<div class="lfsl-example-en">${esc(row.exEn)}</div>`);return b.join('');}
   function cell(key,label,content){return `<div class="lfsl-cell lfsl-${key}" data-label="${esc(label)}">${content||'—'}</div>`;}
 
-  function renderRows(rows,lang){
+  function renderRows(rows,lang,unit2){
     const labels=labelSet(lang),c=columns[lang],grid=gridTemplate(lang);
     const head=[c.source?`<div>${esc(labels.source)}</div>`:'',c.phonetic?`<div>${esc(labels.phonetic)}</div>`:'',c.meaning?`<div>${esc(labels.meaning)}</div>`:'',c.other?`<div>${esc(labels.other)}</div>`:'',c.example?`<div>${esc(labels.example)}</div>`:'','<div>🔊</div>'].join('');
-    return `<div class="lfsl-head" style="grid-template-columns:${grid}">${head}</div>`+rows.map((row,i)=>`<div class="lfsl-row" style="grid-template-columns:${grid}" data-row="${i}">
+    return `<div class="lfsl-head" style="grid-template-columns:${grid}">${head}</div>`+rows.map((row,i)=>`<div class="lfsl-row" style="grid-template-columns:${grid}" data-row="${i}" ${unit2 ? 'data-unit2-row' : ''}>
       ${c.source?cell('source',labels.source,`<div class="lfsl-source">${esc(row.source||'—')}</div>${row.topic?`<div class="lfsl-topic">${esc(row.topic)}</div>`:''}`):''}
       ${c.phonetic?cell('phonetic',labels.phonetic,`<span class="lfsl-phonetic">${esc(row.phonetic||'—')}</span>`):''}
       ${c.meaning?cell('meaning',labels.meaning,`<span>${esc(row.meaning||'—')}</span>`):''}
       ${c.other?cell('other',labels.other,`<span>${esc(row.other||'—')}</span>`):''}
       ${c.example?cell('example',labels.example,exampleHtml(row,lang)):''}
       <div class="lfsl-cell lfsl-audio" data-label="Nghe"><button type="button" class="lfsl-listen" data-lfsl-audio="${esc(row.source)}" data-lfsl-lang="${lang}">🔊</button></div>
+      ${unit2 && ((c.other && row.other) || (c.example && (row.example || row.exVi || row.exEn))) ? `<details class="lfsl-mobile-detail"><summary>Chi tiết</summary>${c.other ? esc(row.other) : ''}${c.example ? exampleHtml(row,lang) : ''}</details>` : ''}
     </div>`).join('');
   }
 
@@ -143,16 +145,28 @@
     document.body?.classList.toggle(BODY_CLASS,mode==='list');panel.classList.toggle('active',mode==='list');
     const tools=root.querySelector('.lfsl-tools');if(tools)tools.innerHTML=mode==='list'?controlsHtml(lang):'';if(mode!=='list')return;
     const filter = JSON.stringify([lang, document.getElementById('studyCategoryFilter')?.value, document.getElementById('studyTopicFilter')?.value]);
-    if (filter !== lastFilter) page = 0;
+    if (filter !== lastFilter) { page = 0; unitSection = 'all'; }
     lastFilter = filter;
-    const rows = getDeck().map(card => normalizeCard(card, lang)).filter(row => row.source);
+    const deck = getDeck();
+    const unit2 = lang === 'en' && document.getElementById('studyTopicFilter')?.value === window.LF51_UNIT2_STUDY_TOPIC_V1;
+    const sectionNames = {all:'Tất cả', vocab:'Từ vựng', examples:'Câu mẫu', dialogue:'Hội thoại'};
+    const sectionOf = card => card.sourceSection?.split(' · ').pop()?.toLowerCase().replace(/^vocabulary$/, 'vocab');
+    let sectionBar = '';
+    if (unit2) {
+      const counts = {all:deck.length, vocab:0, examples:0, dialogue:0};
+      for (const card of deck) if (sectionOf(card) in counts) counts[sectionOf(card)]++;
+      sectionBar = '<div class="lfsl-sections" aria-label="Nội dung Unit 2">' + Object.entries(sectionNames).map(([key, name]) =>
+        `<button type="button" class="lfsl-quick" data-lfsl-section="${key}" aria-pressed="${unitSection === key}">${name} ${counts[key]}</button>`).join('') + '</div>';
+    }
+    const selected = unit2 && unitSection !== 'all' ? deck.filter(card => sectionOf(card) === unitSection) : deck;
+    const rows = selected.map(card => normalizeCard(card, lang)).filter(row => row.source);
     const pages = Math.ceil(rows.length / PAGE_SIZE);
     page = Math.min(page, Math.max(0, pages - 1));
     const start = page * PAGE_SIZE;
     const visible = rows.slice(start, start + PAGE_SIZE);
     const pager = pages > 1 ? `<nav aria-label="Phân trang danh sách"><button type="button" class="lfsl-quick" data-lfsl-page="-1" ${page === 0 ? 'disabled' : ''}>← Trước</button> Trang ${page + 1} / ${pages} <button type="button" class="lfsl-quick" data-lfsl-page="1" ${page + 1 === pages ? 'disabled' : ''}>Sau →</button></nav>` : '';
     const selectedTopic=document.getElementById('studyTopicFilter')?.selectedOptions?.[0]?.textContent||'Tất cả bài học';
-    panel.innerHTML=`<div class="lfsl-panel-top"><div><b>📋 ${esc(labelSet(lang).title)}</b><span>${rows.length} mục · ${esc(selectedTopic)} · toàn bộ bài, không giới hạn bởi SRS/đến hạn</span></div>${pager}</div>${visible.length?`<div class="lfsl-list">${renderRows(visible,lang)}</div>`:'<div class="lfsl-empty">Không có nội dung phù hợp với bộ lọc hiện tại.</div>'}`;
+    panel.innerHTML=`<div class="lfsl-panel-top"><div><b>📋 ${esc(labelSet(lang).title)}</b><span>${rows.length} mục · ${esc(selectedTopic)} · toàn bộ bài, không giới hạn bởi SRS/đến hạn</span></div>${pager}</div>${sectionBar}${visible.length?`<div class="lfsl-list">${renderRows(visible,lang,unit2)}</div>`:'<div class="lfsl-empty">Không có nội dung phù hợp với bộ lọc hiện tại.</div>'}`;
 
   }
 
@@ -166,6 +180,14 @@
 #${PANEL_ID}{display:none;width:min(100%,1280px);margin:0 auto 140px;border:1px solid #dbe3ef;border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 8px 26px rgba(15,23,42,.07)}#${PANEL_ID}.active{display:block}.lfsl-panel-top{padding:12px 14px;border-bottom:1px solid #e5eaf1;background:#f8fafc}.lfsl-panel-top b{font-size:.95rem;color:#172554}.lfsl-panel-top span{display:block;margin-top:2px;font-size:.72rem;color:#64748b}.lfsl-list{overflow:auto}.lfsl-head,.lfsl-row{display:grid;align-items:stretch}.lfsl-head{position:sticky;top:0;z-index:2;background:#f1f5f9;border-bottom:1px solid #dbe3ef;font-size:.7rem;font-weight:900;color:#475569;text-transform:uppercase}.lfsl-head>div{padding:9px 10px}.lfsl-row{border-bottom:1px solid #e7edf4}.lfsl-row:nth-child(even){background:#fbfdff}.lfsl-cell{min-width:0;padding:11px 10px;font-size:.83rem;line-height:1.45;overflow-wrap:anywhere}.lfsl-source{font-size:1rem;font-weight:900;color:#0f172a}.lfsl-topic{margin-top:4px;color:#94a3b8;font-size:.66rem;font-weight:700}.lfsl-phonetic{color:#4f46e5;font-weight:800}.lfsl-example-main{font-weight:750}.lfsl-example-sub{margin-top:3px;color:#64748b;font-size:.76rem}.lfsl-example-en{margin-top:3px;color:#2563eb;font-size:.76rem}.lfsl-audio{display:flex;align-items:flex-start;justify-content:center}.lfsl-listen{width:36px;height:36px;border:1px solid #d9e5f3;border-radius:10px;background:#f8fbff;cursor:pointer}.lfsl-empty{padding:28px;text-align:center;color:#64748b}
 body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.${BODY_CLASS} #lf51DesktopWorkspace,body.${BODY_CLASS} #lfEnglishMobileV1,body.${BODY_CLASS} #lfEnglishPracticeV1{display:none!important}
 @media(max-width:720px){.lfsl-columns{justify-content:flex-start}.lfsl-caption{width:100%}.lfsl-head{display:none}.lfsl-list{overflow:visible;padding:8px}.lfsl-row{display:block!important;margin-bottom:9px;border:1px solid #dce5f0!important;border-radius:13px;background:#fff!important}.lfsl-cell{display:grid;grid-template-columns:92px minmax(0,1fr);gap:8px;padding:8px 10px;border-bottom:1px dashed #edf1f5}.lfsl-cell::before{content:attr(data-label);font-size:.68rem;font-weight:900;color:#64748b;text-transform:uppercase}.lfsl-audio{display:grid;grid-template-columns:92px 1fr}.lfsl-listen{justify-self:start}#${PANEL_ID}{margin-bottom:125px}}
+.lfsl-sections{display:flex;flex-wrap:wrap;gap:6px;padding:10px}.lfsl-sections button[aria-pressed=true]{background:#3730a3;color:white}.lfsl-mobile-detail{display:none}
+@media(max-width:720px){
+.lfsl-row[data-unit2-row]{position:relative;padding:10px 58px 10px 12px}
+[data-unit2-row] .lfsl-cell{display:block;border:0;padding:2px 0}
+[data-unit2-row] .lfsl-cell::before,[data-unit2-row] .lfsl-topic,[data-unit2-row] .lfsl-other,[data-unit2-row] .lfsl-example{display:none}
+[data-unit2-row] .lfsl-audio{position:absolute;right:8px;top:8px}
+[data-unit2-row] .lfsl-listen{width:44px;height:44px}.lfsl-mobile-detail{display:block;font-size:.83rem}.lfsl-mobile-detail summary{cursor:pointer;color:#4338ca;padding:6px 0}
+}
 `;document.head.appendChild(s);
   }
 
@@ -175,6 +197,8 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
 
   function bind(){
     document.addEventListener('click', event => {
+      const section = event.target.closest?.('[data-lfsl-section]');
+      if (section) { unitSection = section.dataset.lfslSection; page = 0; render(); return; }
       const button = event.target.closest?.('[data-lfsl-page]');
       if (!button || button.disabled) return;
       page += Number(button.dataset.lfslPage);

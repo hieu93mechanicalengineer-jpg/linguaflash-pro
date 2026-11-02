@@ -5,6 +5,7 @@
 (() => {
   'use strict';
 
+  if (window.lfOpenSmartDailyV2) return;
   const FOCUS_CLASS = 'lf-focus-mode';
   let activeSummary = null;
 
@@ -135,15 +136,23 @@
   function renderHomeCard(){
     const el=ensureHomeCard(); if(!el) return;
     const t=ui(), plan=buildPlan();
-    if(!plan.deck.length){
-      const title=plan.goalsComplete?`✅ ${t.done}`:`🎯 ${t.title}`;
-      const detail=plan.goalsComplete?t.done:`${t.goal(plan.reviewRemaining,plan.newRemaining)} · ${t.empty}`;
-      el.innerHTML=`<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"><div><div class="text-lg font-extrabold text-slate-900">${title}</div><div class="text-sm text-slate-600 mt-1">${detail}</div></div><button type="button" class="app-primary-btn shrink-0" id="lfSmartDailyExtraBtn">🔥 ${t.extra}</button></div>`;
-      el.querySelector('#lfSmartDailyExtraBtn')?.addEventListener('click',()=>{ if(typeof window.lfOpenWeakDeck==='function') window.lfOpenWeakDeck(); });
-      return;
-    }
-    el.innerHTML=`<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"><div class="min-w-0"><div class="text-xl font-extrabold text-slate-900">🧠 ${t.title}</div><div class="text-sm text-slate-600 mt-1">${t.desc}</div><div class="text-xs text-slate-500 mt-1 font-semibold">${t.goal(plan.reviewRemaining,plan.newRemaining)}</div><div class="mt-2 flex flex-wrap gap-2 text-xs font-bold"><span class="rounded-full bg-indigo-50 text-indigo-700 px-2.5 py-1">${plan.review} ${t.review}</span><span class="rounded-full bg-amber-50 text-amber-700 px-2.5 py-1">${plan.weak} ${t.weak}</span><span class="rounded-full bg-emerald-50 text-emerald-700 px-2.5 py-1">${plan.fresh} ${t.fresh}</span></div></div><button type="button" class="app-primary-btn shrink-0 text-base" id="lfSmartDailyStartBtn">${t.start(plan.minutes)}</button></div>`;
-    el.querySelector('#lfSmartDailyStartBtn')?.addEventListener('click',openSmartDaily);
+    const unit = window.lfPendingUnit2?.();
+    const session = unit ? {topic:'Unit 2 · She Is a Poodle'} : window.lfPendingSession?.();
+    const lang = typeof currentUiLang === 'string' ? currentUiLang : 'vi';
+    const labels = ({vi:['Học tiếp','Chọn bài khác'], en:['Continue learning','Choose a lesson'], zh:['继续学习','选择课程']})[lang] || ['Học tiếp','Chọn bài khác'];
+    const title = session ? labels[0] : plan.goalsComplete ? t.done : t.title;
+    const detail = session && session.topic !== 'ALL' ? session.topic : t.goal(plan.reviewRemaining,plan.newRemaining);
+    el.innerHTML = `<h2 class="text-2xl sm:text-3xl font-bold mt-2"></h2><p class="mt-2"></p><div class="flex flex-wrap gap-2 mt-4"><button type="button" class="app-primary-btn"></button><button type="button" class="app-secondary-btn"></button></div>`;
+    el.querySelector('h2').textContent = title;
+    el.querySelector('p').textContent = detail;
+    const [primary, choose] = el.querySelectorAll('button');
+    const chooseLesson = () => { switchTab('study'); document.getElementById('studyTopicFilter')?.focus(); };
+    primary.textContent = session ? labels[0] : plan.deck.length ? t.start(plan.minutes) : labels[1];
+    primary.onclick = unit ? window.lfResumeUnit2 : session ? () => window.lfContinuePendingSession() : plan.deck.length ? openSmartDaily : chooseLesson;
+    choose.textContent = labels[1];
+    choose.hidden = !session && !plan.deck.length;
+    choose.onclick = chooseLesson;
+
   }
 
   function injectFocusStyle(){
@@ -173,6 +182,7 @@
     try{if(typeof switchTab==='function')switchTab('study');}catch(_){}
     const lang=document.getElementById('studyLangFilter');if(lang)lang.value=plan.language;
     const dueOnly=document.getElementById('studyDueOnly');if(dueOnly)dueOnly.checked=false;
+    window.LFStudyListMode?.setMode('card');
     if(!applyDeck(plan))return;enterFocus();
     try{if(typeof window.lfSaveStudySession==='function')window.lfSaveStudySession();}catch(_){}
     try{if(typeof window.lfSaveStudyFilterPrefs==='function')window.lfSaveStudyFilterPrefs();}catch(_){}
