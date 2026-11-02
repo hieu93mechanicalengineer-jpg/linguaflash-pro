@@ -79,7 +79,7 @@
         <div class="lf51rt-actions"><button type="button" class="lf51d-btn primary" data-rt-check>Kiểm tra</button></div>
         <div class="lf51rt-result" id="lf51rtResult"></div>`;
     }
-    card.innerHTML = `${modeBar()}${body}`;
+    card.innerHTML = `${modeBar()}${body}<div class="lf51rt-actions" data-rt-ratings></div>`;
   }
 
   function setMode(next){
@@ -154,6 +154,27 @@
     try { speechSynthesis.cancel(); let n=0; const go=()=>{ if(n++>=3)return; const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=.88;u.onend=()=>setTimeout(go,250);speechSynthesis.speak(u);};go(); } catch (_) {}
   }
 
+  function studyCard(el){
+    if (lessonKey() !== 'poodle' || typeof allCards === 'undefined') return null;
+    const item = window.LF51_UNIT2_STUDY_CARDS_V1?.find(c =>
+      (c.sourceSection.endsWith('Examples') || c.cardType === 'vocab') &&
+      (c.cardType === 'sentence' ? c.chinese : c.word) === el.dataset.rtEn &&
+      (c.cardType === 'sentence' ? c.word : c.meaning) === el.dataset.rtVi);
+    return item && allCards.find(c => c.id === item.id);
+  }
+
+  function showRatings(el){
+    const bar = el.querySelector('[data-rt-ratings]');
+    const card = studyCard(el);
+    if (!bar || !card || !window.LFFSRS) return;
+    if (card.nextReview > Date.now() && el.dataset.rtRated === String(card.lastReviewedAt)) {
+      bar.textContent = '✓ Đã ghi nhận mức nhớ'; return;
+    }
+    const labels = window.LFFSRS.previewLabels(card);
+    bar.innerHTML = ['Lại','Khó','Được','Dễ'].map((label,i) =>
+      `<button type="button" class="lf51d-btn soft" data-rt-grade="${i}">${label} · ${esc(labels[i])}</button>`).join('');
+  }
+
   function check(){
     const r=root(); const input=r?.querySelector('#lf51rtInput'); const out=r?.querySelector('#lf51rtResult');
     const card=r?.querySelector('.lf51d-reviewcard'); if(!input||!out||!card)return;
@@ -161,6 +182,7 @@
     const typed=norm(input.value), expected=norm(en);
     const ok=typed===expected;
     const ipa=card.dataset.rtIpa || '';
+    showRatings(card);
     out.style.color=ok?'#15803d':'#b42318';
     out.innerHTML=ok?`✅ Chính xác.${ipa?`<div class="lf51d-ipa" style="margin-top:6px">${esc(ipa)}</div>`:''}`:`❌ Chưa đúng.<div style="margin-top:5px">Đáp án: <b>${esc(en)}</b></div>${ipa?`<div class="lf51d-ipa" style="margin-top:5px">${esc(ipa)}</div>`:''}`;
   }
@@ -168,10 +190,19 @@
   function bind(){
     const r=root(); if(!r || r.dataset.rtBound) return; r.dataset.rtBound='1';
     r.addEventListener('click',e=>{
+      const grade=e.target.closest('[data-rt-grade]');
+      if(grade){
+        const el=grade.closest('.lf51d-reviewcard'), card=studyCard(el);
+        if(!card || !grade.isConnected)return;
+        e.preventDefault();e.stopPropagation();
+        window.LFFSRS.rateListCard(card, Number(grade.dataset.rtGrade));
+        el.dataset.rtRated=String(card.lastReviewedAt);
+        showRatings(el);return;
+      }
       const modeBtn=e.target.closest('[data-rt-mode]'); if(modeBtn){e.preventDefault();e.stopPropagation();setMode(modeBtn.dataset.rtMode);return;}
       const aud=e.target.closest('[data-rt-audio]'); if(aud){e.preventDefault();e.stopPropagation();speak(aud.dataset.rtAudio);return;}
       const rep=e.target.closest('[data-rt-repeat]'); if(rep){e.preventDefault();e.stopPropagation();repeat3(rep.dataset.rtRepeat);return;}
-      const rev=e.target.closest('[data-rt-reveal]'); if(rev){e.preventDefault();e.stopPropagation();const a=r.querySelector('[data-rt-answer]');if(a){a.hidden=!a.hidden;rev.textContent=a.hidden?'Hiện đáp án':'Ẩn đáp án';}return;}
+      const rev=e.target.closest('[data-rt-reveal]'); if(rev){e.preventDefault();e.stopPropagation();const a=r.querySelector('[data-rt-answer]');if(a){a.hidden=!a.hidden;if(!a.hidden)showRatings(rev.closest('.lf51d-reviewcard'));rev.textContent=a.hidden?'Hiện đáp án':'Ẩn đáp án';}return;}
       const chk=e.target.closest('[data-rt-check]'); if(chk){e.preventDefault();e.stopPropagation();check();return;}
     },true);
     r.addEventListener('keydown',e=>{if(e.target?.id==='lf51rtInput'&&e.key==='Enter'){e.preventDefault();check();}});

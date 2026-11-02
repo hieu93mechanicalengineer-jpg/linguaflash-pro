@@ -77,4 +77,5 @@
   document.write('<script src="./study-list-auto-font-v1.js?v=105"><\/script>');
   document.write('<script src="./study-list-hanzi-zoom-v1.js?v=105"><\/script>');
   document.write('<script src="./fsrs-scheduler-v1.js?v=108"><\/script>');
+  document.write('<script src="./english-51talk-review-trainer-v1.js?v=109"><\/script>');
 })();
