@@ -18,7 +18,7 @@
 
   function ensureTranscript() {
     const root = document.querySelector(ROOT);
-    if (!root) return;
+    if (!root || root.dataset.language==='zh') return;
     const active = root.querySelector('.lf51d-tab.active[data-tab="dialogue"]');
     if (!active) return;
 

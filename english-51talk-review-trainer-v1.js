@@ -15,7 +15,8 @@
   let useChoices = false;
 
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const norm = s => String(s || '').toLowerCase().normalize('NFKC').replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
+  const chinese = () => root()?.dataset.language === 'zh';
+  const norm = s => chinese()?String(s||'').normalize('NFKC').replace(/[\s\p{P}]/gu,''): String(s || '').toLowerCase().normalize('NFKC').replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
   const root = () => document.getElementById('lf51DesktopWorkspace');
   const isReview = () => !!root()?.querySelector('.lf51d-tab.active[data-tab="review"]');
   const lessonKey = () => root()?.querySelector('[data-lesson-select]')?.value || 'lesson';
@@ -40,7 +41,7 @@
       #lf51DesktopWorkspace .lf51rt-lock{border:1px solid #cfe4ff;background:linear-gradient(135deg,#f4f9ff,#eef6ff);border-radius:13px;padding:11px;margin-bottom:8px}
       #lf51DesktopWorkspace .lf51rt-lock b{display:block;color:#145da0;font-size:.8rem}.lf51rt-lock span{display:block;color:#65778b;font-size:.72rem;margin-top:3px;line-height:1.45}
       .lf51rt-solution{margin-top:8px;color:#263d59}.lf51rt-solution summary{cursor:pointer;color:#145da0;font-weight:700;padding:6px}
-      #lf51DesktopWorkspace.lf51rt-capturing .lf51d-reviewcard{visibility:hidden}
+      #lf51DesktopWorkspace.lf51rt-capturing .lf51d-reviewcard,#lf51DesktopWorkspace .lf51d-reviewcard[data-source-text]:not([data-rt-trainer]){visibility:hidden}
     `;
     document.head.appendChild(s);
   }
@@ -49,8 +50,8 @@
 
   function modeBar(){
     return `<div class="lf51rt-modes">
-      <button type="button" class="lf51rt-mode ${mode==='en-vi'?'active':''}" data-rt-mode="en-vi">🇬🇧 EN → VI</button>
-      <button type="button" class="lf51rt-mode ${mode==='vi-en'?'active':''}" data-rt-mode="vi-en">🇻🇳 VI → EN</button>
+      <button type="button" class="lf51rt-mode ${mode==='en-vi'?'active':''}" data-rt-mode="en-vi">${chinese()?'🇨🇳 ZH → VI':'🇬🇧 EN → VI'}</button>
+      <button type="button" class="lf51rt-mode ${mode==='vi-en'?'active':''}" data-rt-mode="vi-en">${chinese()?'🇻🇳 VI → ZH':'🇻🇳 VI → EN'}</button>
       <button type="button" class="lf51rt-mode ${mode==='listen'?'active':''}" data-rt-mode="listen">🎧 Listening</button>
     </div>`;
   }
@@ -77,7 +78,8 @@
 
   // Align words before coloring them so an omission does not shift the rest of the sentence.
   function wordFeedback(typed, expected) {
-    const a = typed.split(' ').filter(Boolean), b = expected.split(' ').filter(Boolean);
+    const tokens=s=>chinese()?[...s]:s.split(' ').filter(Boolean);
+    const a=tokens(typed), b=tokens(expected);
     const lengths = Array.from({length:a.length + 1}, () => new Uint16Array(b.length + 1));
     for (let i = a.length - 1; i >= 0; i--)
       for (let j = b.length - 1; j >= 0; j--)
@@ -107,7 +109,7 @@
     delete card.dataset.rtSpoken;
     let body = '';
     if (mode === 'en-vi') {
-      body = `<div class="lf51d-key">Mặt kiểm tra: Tiếng Anh</div>
+      body = `<div class="lf51d-key">Mặt kiểm tra: ${chinese()?'Tiếng Trung':'Tiếng Anh'}</div>
         <div class="lf51d-reviewq">${esc(en)}</div>
         <div class="lf51rt-hint">Tự nhớ nghĩa tiếng Việt trước khi xem đáp án.</div>
         <div class="lf51rt-actions"><button type="button" class="lf51d-btn soft" data-rt-audio="${esc(en)}">🔊 Nghe</button><button type="button" class="lf51d-btn primary" data-rt-reveal>Hiện đáp án</button></div>
@@ -115,8 +117,8 @@
     } else if (mode === 'vi-en') {
       body = `<div class="lf51d-key">Mặt kiểm tra: Tiếng Việt</div>
         <div class="lf51d-reviewq">${esc(vi)}</div>
-        <div class="lf51rt-hint">Hãy tự tạo lại câu/từ tiếng Anh, không nhìn gợi ý.</div>
-        <input class="lf51rt-input" id="lf51rtInput" autocomplete="off" spellcheck="false" placeholder="Nhập tiếng Anh...">
+        <div class="lf51rt-hint">Hãy tự tạo lại câu/từ ${chinese()?'tiếng Trung':'tiếng Anh'}, không nhìn gợi ý.</div>
+        <input class="lf51rt-input" id="lf51rtInput" autocomplete="off" spellcheck="false" maxlength="1000" placeholder="Nhập ${chinese()?'tiếng Trung':'tiếng Anh'}...">
         <div class="lf51rt-actions"><button type="button" class="lf51d-btn primary" data-rt-check>Kiểm tra</button></div>
         <div class="lf51rt-result" id="lf51rtResult"></div>`;
     } else {
@@ -179,6 +181,10 @@
     const card = r.querySelector('.lf51d-reviewcard');
     if (!card) return;
     if (card.dataset.rtTrainer === '1') { r.classList.remove('lf51rt-capturing'); return; }
+    if(card.dataset.sourceText && card.dataset.translation){
+      renderTrainer(card,card.dataset.sourceText,card.dataset.translation,card.dataset.phonetic || '');
+      r.classList.remove('lf51rt-capturing');return;
+    }
     const q = card.querySelector('.lf51d-reviewq');
     if (!q) return;
     const en = q.textContent.trim();
@@ -209,10 +215,10 @@
 
   function speak(text,rate=1){
     if (!text) return;
-    try { speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=rate; speechSynthesis.speak(u); } catch (_) {}
+    try { speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang=chinese()?'zh-CN':'en-US'; u.rate=rate; speechSynthesis.speak(u); } catch (_) {}
   }
   function repeat3(text){
-    try { speechSynthesis.cancel(); let n=0; const go=()=>{ if(n++>=3)return; const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=.88;u.onend=()=>setTimeout(go,250);speechSynthesis.speak(u);};go(); } catch (_) {}
+    try { speechSynthesis.cancel(); let n=0; const go=()=>{ if(n++>=3)return; const u=new SpeechSynthesisUtterance(text);u.lang=chinese()?'zh-CN':'en-US';u.rate=.88;u.onend=()=>setTimeout(go,250);speechSynthesis.speak(u);};go(); } catch (_) {}
   }
 
   function studyCard(el, persist=false){
@@ -248,7 +254,7 @@
     showRatings(card);
     if (ok && card.dataset.rtSpoken !== '1') {
       card.dataset.rtSpoken = '1';
-      if (typeof speakText === 'function') speakText(en, 'Tiếng Anh');
+      if (typeof speakText === 'function') speakText(en, chinese()?'Tiếng Trung':'Tiếng Anh');
       else speak(en);
     }
     out.style.color=ok?'#15803d':'#b42318';

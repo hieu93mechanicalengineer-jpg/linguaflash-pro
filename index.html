@@ -317,29 +317,7 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
   @media(max-width:767px){#lfAccountHeaderBtn .lf-account-label{display:none}.lf-account-btn{padding:7px 9px}.lf-cloud-card{align-items:flex-start;flex-direction:column}.lf-cloud-card>button{width:100%;justify-content:center}}
 </style>
 
-<style>
-#lfChineseStudy[hidden]{display:none!important}
-body.lfzh-browse :is(#flashcardContainer,#studyEmptyState,#studyAnswerPanel,#lfSmartQueueBanner){display:none!important}
-#lfChineseStudy{color:#17365a;background:#f5f8fc;border:1px solid #d8e3f0;border-radius:18px;overflow:hidden}
-#lfChineseStudy header{display:flex;align-items:center;gap:14px;padding:12px 16px;background:linear-gradient(110deg,#153e70,#075ba8);color:white}
-#lfChineseStudy header select{color:#17365a;background:white;flex:1;min-width:0;max-width:100%;padding:8px;border-radius:9px;font-weight:700}
-#lfChineseStudy nav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;background:white;padding:8px}
-#lfChineseStudy button{border:1px solid #d7e3ef;border-radius:9px;background:#f6f9fd;color:#25456a;font-weight:700;padding:8px;line-height:1.25}
-#lfChineseStudy button[aria-pressed=true],#lfChineseStudy form button{background:#126bc3;color:white}
-#lfChineseStudy button:disabled{opacity:.45}
-#lfChineseStudy .zh-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,27%);gap:10px;padding:10px}
-#lfChineseStudy article,#lfChineseStudy aside{background:white;padding:14px;border:1px solid #dce6f1;border-radius:13px;min-width:0;overflow-wrap:anywhere}
-#lfChineseStudy aside label,#lfChineseStudy small{display:block;margin-top:8px}
-#lfChineseStudy textarea,#lfChineseStudy input{width:100%;font-size:16px;border:1px solid #bacce1;border-radius:8px;padding:8px}
-#lfChineseStudy .zh-count{font-size:.88rem;font-weight:700;margin-bottom:8px}
-#lfChineseStudy .zh-word{padding:16px;border-left:4px solid #1677ff;background:#f3f8ff;border-radius:10px}
-#lfChineseStudy .zh-word strong{display:block;font-size:clamp(1.3rem,3vw,2rem);line-height:1.5}
-#lfChineseStudy .zh-pinyin{color:#4453a5}#lfChineseStudy p{margin:8px 0}
-#lfChineseStudy .zh-example,#lfChineseStudy details,#lfChineseStudy form{padding:10px 0}#lfChineseStudy summary{cursor:pointer}
-#lfChineseStudy footer,#lfChineseStudy .zh-modes,#lfChineseStudy .zh-grades{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
-#lfChineseStudy [data-grade]{color:white;flex:1}#lfChineseStudy [data-grade="0"]{background:#a52c32}#lfChineseStudy [data-grade="1"]{background:#965200}#lfChineseStudy [data-grade="2"]{background:#147239}#lfChineseStudy [data-grade="3"]{background:#145fc2}
-@media(max-width:899px){#lfChineseStudy .zh-layout{grid-template-columns:minmax(0,1fr)}#lfChineseStudy nav{grid-template-columns:repeat(3,minmax(0,1fr))}#lfChineseStudy header{flex-wrap:wrap}#lfChineseStudy header select{flex-basis:100%}#lfChineseStudy button{min-height:42px}}
-</style>
+
 </head>
 <body class="min-h-screen flex flex-col pb-24 md:pb-8">
 

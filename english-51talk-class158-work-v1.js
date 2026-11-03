@@ -98,7 +98,7 @@
   function speak(text,rate=1){if(!text)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=rate;speechSynthesis.speak(u);}catch(_){}}
   function play(lines){if(!('speechSynthesis'in window))return;try{speechSynthesis.cancel();let i=0;const next=()=>{if(i>=lines.length)return;const u=new SpeechSynthesisUtterance(lines[i++]);u.lang='en-US';u.rate=.92;u.onend=next;speechSynthesis.speak(u)};next();}catch(_){}}
 
-  function launchButton(){const r=root();if(!r||opened||!r.classList.contains('on'))return;if(r.querySelector('.lf51w158-open'))return;const top=r.querySelector('.lf51d-top');if(!top)return;const b=document.createElement('button');b.type='button';b.className='lf51w158-open';b.dataset.w158Open='1';b.textContent='⭐ Class 158 · Work';const badge=top.querySelector('.lf51d-badge');badge?top.insertBefore(b,badge):top.appendChild(b);}
+  function launchButton(){const r=root();if(!r||r.dataset.language==='zh'||opened||!r.classList.contains('on'))return;if(r.querySelector('.lf51w158-open'))return;const top=r.querySelector('.lf51d-top');if(!top)return;const b=document.createElement('button');b.type='button';b.className='lf51w158-open';b.dataset.w158Open='1';b.textContent='⭐ Class 158 · Work';const badge=top.querySelector('.lf51d-badge');badge?top.insertBefore(b,badge):top.appendChild(b);}
   function saveBackup(){const r=root();if(!r)return;backup=r.innerHTML;}
   function close(){clearTimeout(reviewWake);const r=root();if(!r)return;opened=false;r.dataset.w158='';r.innerHTML=backup;backup='';setTimeout(launchButton,0);}
 

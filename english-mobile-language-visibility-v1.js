@@ -27,14 +27,14 @@
     style.textContent = `
       body.${HIDE_CLASS} #lfEnglishMobileV1,
       body.${HIDE_CLASS} #lfEnglishPracticeV1,
-      body.${HIDE_CLASS} #lf51DesktopWorkspace,
+      body.${HIDE_CLASS} #lf51DesktopWorkspace:not([data-language="zh"]),
       body.${HIDE_CLASS} #lf51CoachShell,
       body.${HIDE_CLASS} #lf51GrammarPanel,
       body.${HIDE_CLASS} #lf51PatternPractice,
       body.${HIDE_CLASS} #lf51Listening,
-      body.${HIDE_CLASS} #lf51PlaylistLauncher,
-      body.${HIDE_CLASS} #lf51PlaylistMini,
-      body.${HIDE_CLASS} #lf51PlaylistOverlay {
+      body.${HIDE_CLASS}:not(.lf-study-chinese) #lf51PlaylistLauncher,
+      body.${HIDE_CLASS}:not(.lf-study-chinese) #lf51PlaylistMini,
+      body.${HIDE_CLASS}:not(.lf-study-chinese) #lf51PlaylistOverlay {
         display: none !important;
         visibility: hidden !important;
         pointer-events: none !important;
@@ -55,10 +55,14 @@
     const body = document.body;
     if (!body) return;
 
-    body.classList.remove('lf51-desktop-active', 'lf-english-mobile-v1-active');
-    document.getElementById('lf51DesktopWorkspace')?.classList.remove('on');
+    body.classList.remove('lf-english-mobile-v1-active');
+    if(document.getElementById('lf51DesktopWorkspace')?.dataset.language !== 'zh'){
+      body.classList.remove('lf51-desktop-active');
+      document.getElementById('lf51DesktopWorkspace')?.classList.remove('on');
+    }
     document.getElementById('lfEnglishMobileV1')?.classList.remove('on');
     document.getElementById('lfEnglishPracticeV1')?.classList.remove('on');
+    if(document.body.classList.contains('lf-study-chinese'))return;
     document.getElementById('lf51PlaylistOverlay')?.classList.remove('open');
 
     // If a hidden English player is still running, stop it so it cannot compete
@@ -69,6 +73,9 @@
 
   function sync() {
     if (!isMobileDevice()) return;
+    const chinese=document.getElementById('studyLangFilter')?.value==='Tiếng Trung';
+    if(chinese!==document.body.classList.contains('lf-study-chinese')){window.LF51ContinuousPlaylist?.stop?.();document.getElementById('lf51PlaylistOverlay')?.classList.remove('open');}
+    document.body.classList.toggle('lf-study-chinese',chinese);
     const english = englishSelected();
     document.body?.classList.toggle(HIDE_CLASS, !english);
     if (!english) hardDisableEnglish();

@@ -178,7 +178,7 @@
 
     document.addEventListener('click', event => {
       const button = event.target?.closest?.('button');
-      if (!button || !manifestLoaded) return;
+      if (!button || !manifestLoaded || button.closest('#lf51DesktopWorkspace[data-language="zh"]')) return;
 
       if (button.dataset?.audio) {
         const text = button.dataset.audio;

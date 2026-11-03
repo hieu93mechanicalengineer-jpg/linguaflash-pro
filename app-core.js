@@ -2916,7 +2916,7 @@
 
     window.addEventListener('keydown', (e) => {
       if (document.getElementById('tab-study').classList.contains('hidden')) return;
-      if (document.body.classList.contains('lfzh-browse') || ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+      if (document.body.classList.contains('lf51-desktop-active') || ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
       if (e.code === 'Space') {
         e.preventDefault();
         flipCard();

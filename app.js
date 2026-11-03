@@ -42,10 +42,10 @@
   document.write('<script src="./data/english-51talk-lessons-v1.js?v=105"><\/script>');
   document.write('<script src="./english-unit2-study-cards-v1.js?v=105"><\/script>');
   document.write('<script src="./data/english-level2-u5-u6-l2.js?v=1"><\/script>');
-  document.write('<script src="./app-core.js?v=116"><\/script>');
+  document.write('<script src="./app-core.js?v=117"><\/script>');
 
   document.write('<script src="./audio-native-bridge-v1.js?v=105"><\/script>');
-  document.write('<script src="./english-hq-audio-v1.js?v=105"><\/script>');
+  document.write('<script src="./english-hq-audio-v1.js?v=117"><\/script>');
   document.write('<script src="./chinese-hq-audio-v1.js?v=105"><\/script>');
   document.write('<script src="./dialogue-full-hq-v1.js?v=105"><\/script>');
   document.write('<script src="./english-audio-admin-v1.js?v=105"><\/script>');
@@ -61,23 +61,23 @@
     document.write('<script src="./english-mobile-unit2-bridge-v1.js?v=105"><\/script>');
     document.write('<script src="./english-mobile-class158-health-bridge-v1.js?v=105"><\/script>');
     document.write('<script src="./english-mobile-class158-bridge-v1.js?v=105"><\/script>');
-    document.write('<script src="./english-mobile-workspace-parity-v1.js?v=115"><\/script>');
-    document.write('<script src="./english-mobile-direction-v1.js?v=105"><\/script>');
-    document.write('<script src="./english-mobile-playlist-v1.js?v=105"><\/script>');
-    document.write('<script src="./english-mobile-language-visibility-v1.js?v=105"><\/script>');
+    document.write('<script src="./english-mobile-workspace-parity-v1.js?v=117"><\/script>');
+    document.write('<script src="./english-mobile-direction-v1.js?v=117"><\/script>');
+    document.write('<script src="./english-mobile-playlist-v1.js?v=117"><\/script>');
+    document.write('<script src="./english-mobile-language-visibility-v1.js?v=117"><\/script>');
   } else {
-    document.write('<script src="./english-desktop-unit2-bridge-v1.js?v=115"><\/script>');
+    document.write('<script src="./english-desktop-unit2-bridge-v1.js?v=117"><\/script>');
   }
 
   document.write('<script src="./audio-hq-bulk-admin-v1.js?v=105"><\/script>');
   document.write('<script src="./chinese-dialogue-hq-status-v1.js?v=105"><\/script>');
-  document.write('<script src="./english-dialogue-transcript-v1.js?v=105"><\/script>');
+  document.write('<script src="./english-dialogue-transcript-v1.js?v=117"><\/script>');
   document.write('<script src="./study-session-v1.js?v=115"><\/script>');
   document.write('<script src="./smart-daily-session-v2.js?v=115"><\/script>');
   document.write('<script src="./study-list-mode-v1.js?v=111"><\/script>');
   document.write('<script src="./study-list-auto-font-v1.js?v=105"><\/script>');
   document.write('<script src="./study-list-hanzi-zoom-v1.js?v=105"><\/script>');
-  document.write('<script src="./chinese-study-workspace.js?v=116"><\/script>');
+  document.write('<script src="./chinese-study-workspace.js?v=117"><\/script>');
   document.write('<script src="./fsrs-scheduler-v1.js?v=115"><\/script>');
-  document.write('<script src="./english-51talk-review-trainer-v1.js?v=116"><\/script>');
+  document.write('<script src="./english-51talk-review-trainer-v1.js?v=117"><\/script>');
 })();
