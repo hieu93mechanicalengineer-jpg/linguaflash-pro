@@ -12,6 +12,7 @@
   if (!['en-vi','vi-en','listen'].includes(mode)) mode = 'en-vi';
   const answers = new Map();
   let raf = 0;
+  let useChoices = false;
 
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const norm = s => String(s || '').toLowerCase().normalize('NFKC').replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
@@ -33,6 +34,9 @@
       #lf51DesktopWorkspace .lf51rt-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:12px}
       #lf51DesktopWorkspace .lf51rt-answer{margin-top:14px;padding:12px 14px;border-radius:12px;background:#eef6ff;color:#263d59;line-height:1.55}
       #lf51DesktopWorkspace .lf51rt-result{margin-top:11px;font-size:.85rem;font-weight:850;line-height:1.55}
+      #lf51DesktopWorkspace .lf51rt-diff{display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:8px auto}
+      #lf51DesktopWorkspace .lf51rt-diff span{padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+      .lf51rt-ok{background:#dcfce7;color:#166534}.lf51rt-wrong{background:#ffe4e6;color:#9f1239;text-decoration:line-through}.lf51rt-missing{background:#fff0c2;color:#794300;border-bottom:2px dashed}
       #lf51DesktopWorkspace .lf51rt-lock{border:1px solid #cfe4ff;background:linear-gradient(135deg,#f4f9ff,#eef6ff);border-radius:13px;padding:11px;margin-bottom:8px}
       #lf51DesktopWorkspace .lf51rt-lock b{display:block;color:#145da0;font-size:.8rem}.lf51rt-lock span{display:block;color:#65778b;font-size:.72rem;margin-top:3px;line-height:1.45}
       #lf51DesktopWorkspace.lf51rt-capturing .lf51d-reviewcard{visibility:hidden}
@@ -50,12 +54,52 @@
     </div>`;
   }
 
+  function choicePanel(el) {
+    const target = studyCard(el);
+    if (!target) return '';
+    const text = c => c.cardType === 'sentence' ? c.chinese : c.word;
+    const pool = allCards.filter(c => c.topic === target.topic && c.cardType === target.cardType);
+    const distinct = new Map();
+    for (const c of pool) {
+      const word = text(c);
+      if (word && norm(word) !== norm(el.dataset.rtEn)) distinct.set(norm(word), word);
+    }
+    if (!distinct.size) return '';
+    const choices = Array.from(distinct.values());
+    for (let i = choices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [choices[i], choices[j]] = [choices[j], choices[i]];
+    }
+    choices.splice(3);
+    choices.splice(Math.floor(Math.random() * (choices.length + 1)), 0, el.dataset.rtEn);
+    return choices.map(word => `<button type="button" class="lf51d-btn soft" data-rt-choice="${esc(word)}">${esc(word)}</button>`).join('');
+  }
+
+  // Align words before coloring them so an omission does not shift the rest of the sentence.
+  function wordFeedback(typed, expected) {
+    const a = typed.split(' ').filter(Boolean), b = expected.split(' ').filter(Boolean);
+    const lengths = Array.from({length:a.length + 1}, () => new Uint16Array(b.length + 1));
+    for (let i = a.length - 1; i >= 0; i--)
+      for (let j = b.length - 1; j >= 0; j--)
+        lengths[i][j] = a[i] === b[j] ? 1 + lengths[i+1][j+1] : Math.max(lengths[i+1][j], lengths[i][j+1]);
+    const parts = [];
+    const mark = (kind, label, word) => parts.push(`<span class="lf51rt-${kind}" title="${label}" aria-label="${label}: ${esc(word)}">${esc(word)}</span>`);
+    let i = 0, j = 0;
+    while (i < a.length || j < b.length) {
+      if (i < a.length && j < b.length && a[i] === b[j]) { mark('ok','Đúng',a[i++]); j++; }
+      else if (i < a.length && (j === b.length || lengths[i+1][j] >= lengths[i][j+1])) mark('wrong','Sai hoặc thừa',a[i++]);
+      else mark('missing','Thiếu',b[j++]);
+    }
+    return `<div class="lf51rt-diff">${parts.join('')}</div><small>Xanh: đúng · Đỏ gạch ngang: sai hoặc thừa · Vàng gạch dưới: thiếu</small>`;
+  }
+
   function renderTrainer(card,en,vi,ipa){
     if (!card || !en || !vi) return;
     card.dataset.rtTrainer = '1';
     card.dataset.rtEn = en;
     card.dataset.rtVi = vi;
     card.dataset.rtIpa = ipa || '';
+    delete card.dataset.rtSpoken;
     let body = '';
     if (mode === 'en-vi') {
       body = `<div class="lf51d-key">Mặt kiểm tra: Tiếng Anh</div>
@@ -80,6 +124,18 @@
         <div class="lf51rt-result" id="lf51rtResult"></div>`;
     }
     card.innerHTML = `${modeBar()}${body}<div class="lf51rt-actions" data-rt-ratings></div>`;
+    if (mode !== 'en-vi') {
+      const choices = choicePanel(card);
+      if (choices) {
+        const input = card.querySelector('#lf51rtInput');
+        input.insertAdjacentHTML('beforebegin', `<div class="lf51rt-actions"><button type="button" class="lf51d-btn soft" data-rt-toggle>${useChoices?'Chuyển sang nhập':'Chọn đáp án'}</button></div>`);
+        if (useChoices) {
+          input.hidden = true;
+          card.querySelector('[data-rt-check]').hidden = true;
+          input.insertAdjacentHTML('afterend', `<div class="lf51rt-actions">${choices}</div>`);
+        }
+      }
+    }
   }
 
   function setMode(next){
@@ -159,7 +215,7 @@
     const topic = lessonKey() === 'poodle' ? window.LF51_UNIT2_STUDY_TOPIC_V1 : window.LF51_LEVEL2_LESSONS?.[lessonKey()]?.topic;
     if (!topic) return null;
     return allCards.find(c => c.topic === topic &&
-      (c.sourceSection.endsWith('Examples') || c.cardType === 'vocab') &&
+      (c.sourceSection?.endsWith('Examples') || c.cardType === 'vocab') &&
       (c.cardType === 'sentence' ? c.chinese : c.word) === el.dataset.rtEn &&
       (c.cardType === 'sentence' ? c.word : c.meaning) === el.dataset.rtVi);
   }
@@ -184,8 +240,14 @@
     const ok=typed===expected;
     const ipa=card.dataset.rtIpa || '';
     showRatings(card);
+    if (ok && card.dataset.rtSpoken !== '1') {
+      card.dataset.rtSpoken = '1';
+      if (typeof speakText === 'function') speakText(en, 'Tiếng Anh');
+      else speak(en);
+    }
     out.style.color=ok?'#15803d':'#b42318';
     out.innerHTML=ok?`✅ Chính xác.${ipa?`<div class="lf51d-ipa" style="margin-top:6px">${esc(ipa)}</div>`:''}`:`❌ Chưa đúng.<div style="margin-top:5px">Đáp án: <b>${esc(en)}</b></div>${ipa?`<div class="lf51d-ipa" style="margin-top:5px">${esc(ipa)}</div>`:''}`;
+    if (!input.hidden) out.insertAdjacentHTML('beforeend', wordFeedback(typed,expected));
   }
 
   function bind(){
@@ -198,7 +260,20 @@
         e.preventDefault();e.stopPropagation();
         window.LFFSRS.rateListCard(card, Number(grade.dataset.rtGrade));
         el.dataset.rtRated=String(card.lastReviewedAt);
-        showRatings(el);return;
+        showRatings(el);
+        r.querySelector('[data-step="review:1"]')?.click();
+        return;
+      }
+      const toggle=e.target.closest('[data-rt-toggle]');
+      if(toggle){ useChoices=!useChoices; setMode(mode); return; }
+      const choice=e.target.closest('[data-rt-choice]');
+      if(choice){
+        const input=r.querySelector('#lf51rtInput');
+        input.value=choice.dataset.rtChoice;
+        check();
+        choice.setAttribute('aria-pressed','true');
+        choice.style.background=norm(input.value)===norm(choice.closest('.lf51d-reviewcard').dataset.rtEn)?'#dcfce7':'#ffe4e6';
+        return;
       }
       const modeBtn=e.target.closest('[data-rt-mode]'); if(modeBtn){e.preventDefault();e.stopPropagation();setMode(modeBtn.dataset.rtMode);return;}
       const aud=e.target.closest('[data-rt-audio]'); if(aud){e.preventDefault();e.stopPropagation();speak(aud.dataset.rtAudio);return;}
