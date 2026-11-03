@@ -39,6 +39,7 @@
       .lf51rt-ok{background:#dcfce7;color:#166534}.lf51rt-wrong{background:#ffe4e6;color:#9f1239;text-decoration:line-through}.lf51rt-missing{background:#fff0c2;color:#794300;border-bottom:2px dashed}
       #lf51DesktopWorkspace .lf51rt-lock{border:1px solid #cfe4ff;background:linear-gradient(135deg,#f4f9ff,#eef6ff);border-radius:13px;padding:11px;margin-bottom:8px}
       #lf51DesktopWorkspace .lf51rt-lock b{display:block;color:#145da0;font-size:.8rem}.lf51rt-lock span{display:block;color:#65778b;font-size:.72rem;margin-top:3px;line-height:1.45}
+      .lf51rt-solution{margin-top:8px;color:#263d59}.lf51rt-solution summary{cursor:pointer;color:#145da0;font-weight:700;padding:6px}
       #lf51DesktopWorkspace.lf51rt-capturing .lf51d-reviewcard{visibility:hidden}
     `;
     document.head.appendChild(s);
@@ -117,7 +118,7 @@
     } else {
       body = `<div class="lf51d-key">Listening Dictation</div>
         <div class="lf51d-reviewq">🎧 Nghe và viết lại câu</div>
-        <div class="lf51rt-hint">Không hiển thị tiếng Anh hoặc tiếng Việt trước khi kiểm tra.</div>
+        <div class="lf51rt-hint">Bấm Hiện đáp án sau khi kiểm tra nếu muốn xem câu gốc.</div>
         <div class="lf51rt-actions"><button type="button" class="lf51d-btn soft" data-rt-audio="${esc(en)}">▶ Nghe câu</button><button type="button" class="lf51d-btn soft" data-rt-repeat="${esc(en)}">🔁 Nghe 3 lần</button></div>
         <input class="lf51rt-input" id="lf51rtInput" autocomplete="off" spellcheck="false" placeholder="Gõ câu bạn nghe được...">
         <div class="lf51rt-actions"><button type="button" class="lf51d-btn primary" data-rt-check>Kiểm tra</button></div>
@@ -246,8 +247,21 @@
       else speak(en);
     }
     out.style.color=ok?'#15803d':'#b42318';
-    out.innerHTML=ok?`✅ Chính xác.${ipa?`<div class="lf51d-ipa" style="margin-top:6px">${esc(ipa)}</div>`:''}`:`❌ Chưa đúng.<div style="margin-top:5px">Đáp án: <b>${esc(en)}</b></div>${ipa?`<div class="lf51d-ipa" style="margin-top:5px">${esc(ipa)}</div>`:''}`;
-    if (!input.hidden) out.insertAdjacentHTML('beforeend', wordFeedback(typed,expected));
+    out.textContent = ok ? '✅ Chính xác.' : '❌ Chưa đúng.';
+    const details = document.createElement('details');
+    details.className = 'lf51rt-solution';
+    const summary = document.createElement('summary');
+    summary.textContent = 'Hiện đáp án';
+    details.appendChild(summary);
+    const answer = document.createElement('div');
+    answer.className = 'lf51rt-answer';
+    answer.innerHTML = `<b>${esc(en)}</b>${ipa ? `<div class="lf51d-ipa">${esc(ipa)}</div>` : ''}`;
+    if (!input.hidden) answer.insertAdjacentHTML('beforeend', wordFeedback(typed, expected));
+    details.appendChild(answer);
+    details.addEventListener('toggle', () => {
+      summary.textContent = details.open ? 'Ẩn đáp án' : 'Hiện đáp án';
+    });
+    out.appendChild(details);
   }
 
   function bind(){
