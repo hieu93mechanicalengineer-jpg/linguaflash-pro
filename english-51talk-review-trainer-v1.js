@@ -59,10 +59,9 @@
     const target = studyCard(el);
     if (!target) return '';
     const text = c => c.cardType === 'sentence' ? c.chinese : c.word;
-    const pool = allCards.filter(c => c.topic === target.topic && c.cardType === target.cardType);
+    const options = window.lf51ReviewOptions && el.dataset.reviewId ? window.lf51ReviewOptions(target.cardType === "sentence") : allCards.filter(c => c.topic === target.topic && c.cardType === target.cardType).map(text);
     const distinct = new Map();
-    for (const c of pool) {
-      const word = text(c);
+    for (const word of options) {
       if (word && norm(word) !== norm(el.dataset.rtEn)) distinct.set(norm(word), word);
     }
     if (!distinct.size) return '';
@@ -216,7 +215,8 @@
     try { speechSynthesis.cancel(); let n=0; const go=()=>{ if(n++>=3)return; const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=.88;u.onend=()=>setTimeout(go,250);speechSynthesis.speak(u);};go(); } catch (_) {}
   }
 
-  function studyCard(el){
+  function studyCard(el, persist=false){
+    if (el.dataset.reviewId && window.lf51QuickReviewCard) return window.lf51QuickReviewCard(el.dataset.reviewId, persist || "preview");
     if (typeof allCards === 'undefined') return null;
     const topic = lessonKey() === 'poodle' ? window.LF51_UNIT2_STUDY_TOPIC_V1 : window.LF51_LEVEL2_LESSONS?.[lessonKey()]?.topic;
     if (!topic) return null;
@@ -278,13 +278,13 @@
     r.addEventListener('click',e=>{
       const grade=e.target.closest('[data-rt-grade]');
       if(grade){
-        const el=grade.closest('.lf51d-reviewcard'), card=studyCard(el);
+        const el=grade.closest('.lf51d-reviewcard'), card=studyCard(el,true);
         if(!card || !grade.isConnected)return;
         e.preventDefault();e.stopPropagation();
         window.LFFSRS.rateListCard(card, Number(grade.dataset.rtGrade));
         el.dataset.rtRated=String(card.lastReviewedAt);
-        showRatings(el);
-        r.querySelector('[data-step="review:1"]')?.click();
+        if (window.lf51RefreshRatedReview) window.lf51RefreshRatedReview();
+        else r.querySelector('[data-step="review:1"]')?.click();
         return;
       }
       const toggle=e.target.closest('[data-rt-toggle]');

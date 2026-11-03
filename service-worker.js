@@ -126,9 +126,9 @@ async function transformIndexResponse(response) {
     './study-filter-prefs.js?v=90'
   ];
   var desktopScripts = [
-    './english-51talk-desktop-workspace-v1.js?v=90',
+    './english-51talk-desktop-workspace-v1.js?v=114',
     './english-51talk-class158-work-v1.js?v=90',
-    './english-51talk-review-trainer-v1.js?v=113',
+    './english-51talk-review-trainer-v1.js?v=114',
     './lazy-large-packs.js?v=90',
     './study-answer-mode.js?v=90',
     './study-input-mobile-hotfix-v1.js?v=90',
