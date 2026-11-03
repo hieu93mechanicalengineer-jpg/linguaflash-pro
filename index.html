@@ -318,7 +318,13 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
 </style>
 
 
-</head>
+<style>
+#lfStudyMethods,#lfStudyReference{display:none;gap:5px;align-items:center;flex-wrap:wrap;color:#475569;font-size:.8rem;font-weight:650}
+body.lf51-desktop-active:not(.lf-study-list-mode) #lfStudyMethods,body.lf51-desktop-active:not(.lf-study-list-mode) #lfStudyReference[data-available=true]{display:flex}
+#lfStudyMethods button,#lfStudyReference button{border:1px solid #cbd5e1;border-radius:9px;padding:6px 9px;background:#f8fafc}
+:is(#lfStudyMethods,#lfStudyReference) button[aria-pressed=true]{background:#155ac3;border-color:#155ac3;color:white}
+@media(max-width:680px){:is(#lfStudyMethods,#lfStudyReference) button{min-height:40px}}
+</style></head>
 <body class="min-h-screen flex flex-col pb-24 md:pb-8">
 
   <!-- Top Header -->
@@ -463,6 +469,19 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
             <option value="Tiếng Trung" data-i18n="opt_zh">🇨🇳 Tiếng Trung</option>
           </select>
 
+          <div id="lfStudyMethods" aria-label="Cách học">
+            <span>Cách học</span>
+            <button type="button" data-method="en-vi">🗂️ Flashcard</button>
+            <button type="button" data-method="vi-en">⌨️ Nhập đáp án</button>
+            <button type="button" data-method="listen">🎧 Nghe viết</button>
+            <button type="button" data-mark>○ Đánh dấu đã học</button>
+          </div>
+          <div id="lfStudyReference" aria-label="Ngôn ngữ đối chiếu cho bài tiếng Trung">
+            <span>Đối chiếu tiếng Trung với</span>
+            <button type="button" data-ref-lang="vi">Việt</button>
+            <button type="button" data-ref-lang="en">Anh</button>
+            <button type="button" data-ref-lang="both">Việt + Anh</button>
+          </div>
           <!-- Hierarchical Topic Filter -->
           <label class="text-xs font-semibold text-slate-500 uppercase ml-1" data-i18n="cat_lbl">Chủ đề lớn:</label>
           <select id="studyCategoryFilter" onchange="updateSubtopicDropdown(); applyStudyFilters();" class="bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-lg px-3 py-1.5 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500">

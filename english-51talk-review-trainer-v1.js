@@ -50,8 +50,8 @@
 
   function modeBar(){
     return `<div class="lf51rt-modes">
-      <button type="button" class="lf51rt-mode ${mode==='en-vi'?'active':''}" data-rt-mode="en-vi">${chinese()?'🇨🇳 ZH → VI':'🇬🇧 EN → VI'}</button>
-      <button type="button" class="lf51rt-mode ${mode==='vi-en'?'active':''}" data-rt-mode="vi-en">${chinese()?'🇻🇳 VI → ZH':'🇻🇳 VI → EN'}</button>
+      <button type="button" class="lf51rt-mode ${mode==='en-vi'?'active':''}" data-rt-mode="en-vi">${chinese()?'🇨🇳 ZH → '+window.lfChineseStudy.refCode:'🇬🇧 EN → VI'}</button>
+      <button type="button" class="lf51rt-mode ${mode==='vi-en'?'active':''}" data-rt-mode="vi-en">${chinese()?window.lfChineseStudy.refCode+' → ZH':'🇻🇳 VI → EN'}</button>
       <button type="button" class="lf51rt-mode ${mode==='listen'?'active':''}" data-rt-mode="listen">🎧 Listening</button>
     </div>`;
   }
@@ -111,11 +111,11 @@
     if (mode === 'en-vi') {
       body = `<div class="lf51d-key">Mặt kiểm tra: ${chinese()?'Tiếng Trung':'Tiếng Anh'}</div>
         <div class="lf51d-reviewq">${esc(en)}</div>
-        <div class="lf51rt-hint">Tự nhớ nghĩa tiếng Việt trước khi xem đáp án.</div>
+        <div class="lf51rt-hint">Tự nhớ nghĩa ${chinese()?window.lfChineseStudy.refLabel:'tiếng Việt'} trước khi xem đáp án.</div>
         <div class="lf51rt-actions"><button type="button" class="lf51d-btn soft" data-rt-audio="${esc(en)}">🔊 Nghe</button><button type="button" class="lf51d-btn primary" data-rt-reveal>Hiện đáp án</button></div>
         <div class="lf51rt-answer" data-rt-answer hidden><b>${esc(vi)}</b>${ipa?`<div class="lf51d-ipa" style="margin-top:7px">${esc(ipa)}</div>`:''}</div>`;
     } else if (mode === 'vi-en') {
-      body = `<div class="lf51d-key">Mặt kiểm tra: Tiếng Việt</div>
+      body = `<div class="lf51d-key">Mặt kiểm tra: ${chinese()?window.lfChineseStudy.refLabel:'Tiếng Việt'}</div>
         <div class="lf51d-reviewq">${esc(vi)}</div>
         <div class="lf51rt-hint">Hãy tự tạo lại câu/từ ${chinese()?'tiếng Trung':'tiếng Anh'}, không nhìn gợi ý.</div>
         <input class="lf51rt-input" id="lf51rtInput" autocomplete="off" spellcheck="false" maxlength="1000" placeholder="Nhập ${chinese()?'tiếng Trung':'tiếng Anh'}...">
@@ -148,6 +148,7 @@
   function setMode(next){
     if (!['en-vi','vi-en','listen'].includes(next)) return;
     mode = next;
+    document.querySelectorAll('#lfStudyMethods [data-method]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.method===mode)));
     try { localStorage.setItem(KEY, mode); } catch (_) {}
     const card = root()?.querySelector('.lf51d-reviewcard');
     if (card?.dataset.rtTrainer === '1' && card.dataset.rtEn && card.dataset.rtVi) {
@@ -157,6 +158,9 @@
     }
     enhance();
   }
+
+  window.lfReviewMode=()=>mode;
+  window.lfSetReviewMode=setMode;
 
   function lockCoach(){
     const r = root(); if (!r || !isReview()) return;
