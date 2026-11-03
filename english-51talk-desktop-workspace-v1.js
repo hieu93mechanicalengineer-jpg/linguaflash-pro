@@ -8,6 +8,7 @@
   window.__LF51_DESKTOP_WORKSPACE_V1__ = true;
 
   const LESSONS = {
+    ...window.LF51_LEVEL2_LESSONS,
     health: {
       id:'health', unit:'BÀI HIỆN TẠI', title:'SỨC KHỎE & CÔNG VIỆC',
       subtitle:'Sức khỏe · Cảm lạnh · Công việc & thích nghi',
@@ -181,6 +182,7 @@
   };
 
   const IPA = {
+    ...window.LF51_LEVEL2_IPA,
     "You don't look well. What happened?":'/ju doʊnt lʊk wel | wʌt ˈhæpənd/',
     'Jenny is not feeling well because she has a headache.':'/ˈdʒeni ɪz nɑːt ˈfiːlɪŋ wel bɪˈkɔːz ʃi hæz ə ˈhedeɪk/',
     'It is raining outside. Remember to bring an umbrella.':'/ɪt ɪz ˈreɪnɪŋ ˌaʊtˈsaɪd | rɪˈmembər tə brɪŋ ən ʌmˈbrelə/',
@@ -226,7 +228,7 @@
     if(document.body.classList.contains('lf-focus-mode')) return false;
     return /51Talk/i.test(cat)||/51Talk/i.test(topic)||String(card?.id||'').startsWith('en51_')||card?.category==='51Talk English';
   }
-  function inferLesson(){const t=String(document.getElementById('studyTopicFilter')?.value||'').toLowerCase();if(/she is a poodle/.test(t))return'poodle';if(/birthday|unit 1|u1/.test(t))return'birthday';if(/dad|appearance|unit 6|u6/.test(t))return'family';return null;}
+  function inferLesson(){const t=String(document.getElementById('studyTopicFilter')?.value||'').toLowerCase();const added = Object.values(window.LF51_LEVEL2_LESSONS || {}).find(lesson => lesson.topic.toLowerCase() === t);if(added)return added.id;if(/she is a poodle/.test(t))return'poodle';if(/birthday|unit 1|u1/.test(t))return'birthday';if(/dad|appearance|unit 6|u6/.test(t))return'family';return null;}
   function speak(text,rate=1){if(!text)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=rate;speechSynthesis.speak(u);}catch(_){try{window.lfSpeak51TalkEnglish?.(text);}catch(__){}}}
   function playSequence(lines){if(!('speechSynthesis'in window))return;try{speechSynthesis.cancel();let i=0;const n=()=>{if(i>=lines.length)return;const u=new SpeechSynthesisUtterance(lines[i++]);u.lang='en-US';u.rate=.92;u.onend=n;speechSynthesis.speak(u)};n();}catch(_){}}
   function reviewItems(){return L().examples.map(x=>({type:'Câu mẫu',en:x[1],vi:x[2]})).concat(L().vocab.map(x=>({type:'Từ vựng',en:x[0],vi:x[2],ipa:x[1]})));}
@@ -280,7 +282,7 @@
   function step(type,delta){const x=L();const map={vocab:['vocab',x.vocab.length],example:['example',x.examples.length],grammar:['grammar',x.grammar.length],speaking:['speaking',x.speaking.length],review:['review',reviewItems().length]};const m=map[type];if(!m)return;state[m[0]]=(state[m[0]]+Number(delta)+m[1])%m[1];state.reveal=false;render();}
   function startRecognition(){const C=window.SpeechRecognition||window.webkitSpeechRecognition;if(!C){const o=document.getElementById('lf51dSpeechResult');if(o)o.textContent='Trình duyệt này chưa hỗ trợ nhận diện giọng nói.';return;}try{recognition?.abort?.();recognition=new C();recognition.lang='en-US';recognition.interimResults=false;recognition.maxAlternatives=1;const o=document.getElementById('lf51dSpeechResult');if(o)o.textContent='🎙️ Đang nghe...';recognition.onresult=e=>{const t=e.results?.[0]?.[0]?.transcript||'';if(o)o.textContent=`Bạn nói: ${t}`;};recognition.onerror=()=>{if(o)o.textContent='Không nhận được giọng nói. Hãy thử lại.';};recognition.start();}catch(_){}}
   function bind(){const r=ensureRoot();if(!r||r.dataset.bound)return;r.dataset.bound='1';r.addEventListener('click',e=>{const b=e.target.closest('button');if(b?.dataset.tab){state.tab=b.dataset.tab;state.tool='coach';render();return;}if(b?.dataset.audio){speak(b.dataset.audio);return;}if(b?.dataset.speed){speak(focus().text,Number(b.dataset.speed));return;}if(b?.dataset.step){const [t,d]=b.dataset.step.split(':');step(t,d);return;}if(b?.hasAttribute('data-reveal')){state.reveal=!state.reveal;render();return;}if(b?.hasAttribute('data-toggle-translation')){state.showTranslation=!state.showTranslation;render();return;}if(b?.hasAttribute('data-play-dialogue')){playSequence(L().dialogue.map(x=>x[1]));return;}if(b?.hasAttribute('data-record')){startRecognition();return;}if(b?.dataset.tool){state.tool=b.dataset.tool;if(b.dataset.tool==='flash')state.tab='review';render();return;}if(b?.hasAttribute('data-learned')){toggleLearned();return;}if(b?.hasAttribute('data-check-main')){const e0=L().examples[state.example]||L().examples[0];checkValue('lf51dMainAnswer',e0[1],'lf51dMainResult');return;}if(b?.hasAttribute('data-check-coach')){checkValue('lf51dCoachInput',focus().text,'lf51dCoachResult');return;}if(b?.hasAttribute('data-check-dictation')){checkValue('lf51dDictationInput',focus().text,'lf51dDictationResult');return;}const line=e.target.closest('[data-dialogue-line]');if(line){state.dialogueLine=Number(line.dataset.dialogueLine)||0;render();}});r.addEventListener('change',e=>{if(e.target.matches('[data-lesson-select]')){const previous=state.lesson;state.lesson=e.target.value;
-      if(state.lesson==='poodle'||previous==='poodle'){
+      if(state.lesson==='poodle'||previous==='poodle'||window.LF51_LEVEL2_LESSONS?.[state.lesson]||window.LF51_LEVEL2_LESSONS?.[previous]){
         const category=document.getElementById('studyCategoryFilter'),topic=document.getElementById('studyTopicFilter');
         if(category&&topic){category.value='51Talk English';updateSubtopicDropdown();
           const title=LESSONS[state.lesson]?.title?.toLowerCase();

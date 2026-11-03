@@ -16,6 +16,7 @@
   }[ch]));
 
   const LESSONS = {
+    ...window.LF51_LEVEL2_LESSONS,
     health: {
       id: 'health',
       unit: 'Bài hiện tại',
@@ -206,6 +207,8 @@
 
   function inferLesson() {
     const topic = String(document.getElementById('studyTopicFilter')?.value || '').toLowerCase();
+    const added = Object.values(window.LF51_LEVEL2_LESSONS || {}).find(lesson => lesson.topic.toLowerCase() === topic);
+    if (added) return added.id;
     if (/birthday|happy birthday|unit 1|u1/.test(topic)) return 'birthday';
     if (/dad|appearance|unit 6|u6/.test(topic)) return 'family';
     if (/headache|health|workplace|2026-10-28|2026-10-29|unit 3/.test(topic)) return 'health';

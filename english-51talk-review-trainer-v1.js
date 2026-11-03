@@ -155,12 +155,13 @@
   }
 
   function studyCard(el){
-    if (lessonKey() !== 'poodle' || typeof allCards === 'undefined') return null;
-    const item = window.LF51_UNIT2_STUDY_CARDS_V1?.find(c =>
+    if (typeof allCards === 'undefined') return null;
+    const topic = lessonKey() === 'poodle' ? window.LF51_UNIT2_STUDY_TOPIC_V1 : window.LF51_LEVEL2_LESSONS?.[lessonKey()]?.topic;
+    if (!topic) return null;
+    return allCards.find(c => c.topic === topic &&
       (c.sourceSection.endsWith('Examples') || c.cardType === 'vocab') &&
       (c.cardType === 'sentence' ? c.chinese : c.word) === el.dataset.rtEn &&
       (c.cardType === 'sentence' ? c.word : c.meaning) === el.dataset.rtVi);
-    return item && allCards.find(c => c.id === item.id);
   }
 
   function showRatings(el){

@@ -180,14 +180,15 @@
     if (filter !== lastFilter) { attempts.clear(); outcomes.clear(); retry=null; page = 0; unitSection = 'all'; }
     lastFilter = filter;
     const deck = getDeck();
-    const unit2 = lang === 'en' && document.getElementById('studyTopicFilter')?.value === window.LF51_UNIT2_STUDY_TOPIC_V1;
+    const selectedLessonTopic = document.getElementById('studyTopicFilter')?.value;
+    const unit2 = lang === 'en' && (selectedLessonTopic === window.LF51_UNIT2_STUDY_TOPIC_V1 || Object.values(window.LF51_LEVEL2_LESSONS || {}).some(lesson => lesson.topic === selectedLessonTopic));
     const sectionNames = {all:'Tất cả', vocab:'Từ vựng', examples:'Câu mẫu', dialogue:'Hội thoại'};
     const sectionOf = card => card.sourceSection?.split(' · ').pop()?.toLowerCase().replace(/^vocabulary$/, 'vocab');
     let sectionBar = '';
     if (unit2) {
       const counts = {all:deck.length, vocab:0, examples:0, dialogue:0};
       for (const card of deck) if (sectionOf(card) in counts) counts[sectionOf(card)]++;
-      sectionBar = '<div class="lfsl-sections" aria-label="Nội dung Unit 2">' + Object.entries(sectionNames).map(([key, name]) =>
+      sectionBar = '<div class="lfsl-sections" aria-label="Nội dung bài học">' + Object.entries(sectionNames).map(([key, name]) =>
         `<button type="button" class="lfsl-quick" data-lfsl-section="${key}" aria-pressed="${unitSection === key}">${name} ${counts[key]}</button>`).join('') + '</div>';
     }
     const selected = unit2 && unitSection !== 'all' ? deck.filter(card => sectionOf(card) === unitSection) : deck;
