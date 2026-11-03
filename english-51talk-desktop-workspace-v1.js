@@ -217,9 +217,7 @@
   let recognition=null;
 
   function L(){return LESSONS[state.lesson]||LESSONS.birthday;}
-  function desktop(){return window.matchMedia?matchMedia('(min-width:900px)').matches:innerWidth>=900;}
   function active(){
-    if(!desktop()) return false;
     const lang=document.getElementById('studyLangFilter')?.value||'';
     if(lang!=='Tiếng Anh') return false;
     const cat=document.getElementById('studyCategoryFilter')?.value||'';
@@ -257,7 +255,22 @@
       .lf51d-coach{padding:11px;overflow:auto}.lf51d-coachTitle{display:flex;align-items:center;gap:8px;font-size:1rem;font-weight:950;color:#174c8b;margin:2px 2px 9px}.lf51d-coachCard{border:1px solid #e0e8f2;border-radius:13px;padding:11px;margin-bottom:8px;background:#fff}.lf51d-coachLabel{font-size:.7rem;font-weight:950;color:#53657b;text-transform:uppercase;letter-spacing:.04em}.lf51d-coachMain{font-size:.95rem;font-weight:850;margin-top:6px;line-height:1.45}.lf51d-speed{display:flex;gap:6px;margin-top:8px}.lf51d-speed button{flex:1;border:1px solid #d2deed;background:#f7faff;border-radius:9px;padding:6px;font-weight:850;cursor:pointer}.lf51d-note{width:100%;min-height:72px;resize:vertical;border:1px solid #d5dfeb;border-radius:9px;padding:8px;font:inherit;font-size:.82rem;margin-top:7px}.lf51d-toolbox input{width:100%;border:1px solid #cbd8e8;border-radius:9px;padding:9px;font-size:.9rem;margin-top:8px}.lf51d-result{margin-top:7px;font-size:.78rem;font-weight:800}.lf51d-pattern{font-size:.78rem;line-height:1.5;color:#475569;margin:5px 0}
       .lf51d-quickbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px 12px 11px;background:#fff;border-top:1px solid #dfe7f1}.lf51d-quick{border:1px solid #dce6f2;border-radius:12px;padding:9px 11px;background:#f8fbff;text-align:left;cursor:pointer}.lf51d-quick b{display:block;font-size:.79rem;color:#153d72}.lf51d-quick span{display:block;font-size:.68rem;color:#6b7b8e;margin-top:2px}.lf51d-quick.learned{background:#ecfdf5;border-color:#bbf7d0}
       @media(max-width:1100px){.lf51d-grid{grid-template-columns:minmax(0,1fr) 300px}.lf51d-tabs{grid-template-columns:repeat(6,minmax(90px,1fr))}.lf51d-cards2{grid-template-columns:1fr}.lf51d-word{font-size:1.65rem}}
-      @media(max-width:899px){#lf51DesktopWorkspace{display:none!important}}
+      #lf51DesktopWorkspace :is(.lf51d-select,.lf51d-main,.lf51d-coach,.lf51d-grid,.lf51d-body){min-width:0;max-width:100%;box-sizing:border-box}
+      @media(max-width:899px){
+        .lf51d-shell{height:auto;min-height:0;display:block}
+        .lf51d-top{display:flex;flex-wrap:wrap;gap:8px}.lf51d-select{flex:1 1 260px}
+        .lf51d-badge{display:none}
+        .lf51d-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+        .lf51d-grid{grid-template-columns:minmax(0,1fr)}
+        .lf51d-main{display:block}.lf51d-body,.lf51d-dialogue{height:auto;overflow:visible}
+        .lf51d-nav,.lf51d-sectionhead{flex-wrap:wrap}.lf51d-quickbar{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .lf51d-line{grid-template-columns:auto minmax(0,1fr) auto}
+        .lf51d-body,.lf51d-coach{overflow-wrap:anywhere}
+        .lf51d-body input,.lf51d-coach input,.lf51d-coach textarea{min-width:0;max-width:100%;box-sizing:border-box}
+      }
+      @media(max-width:480px){.lf51d-select{flex-basis:100%;width:100%}.lf51d-grid{padding:7px}.lf51d-word{font-size:1.45rem}}
+      @media(min-width:900px) and (max-height:680px){.lf51d-shell{min-height:0;height:auto}.lf51d-grid{align-items:start}}
+      body.lf-study-list-mode #lf51DesktopWorkspace.on{display:none!important}
     `;document.head.appendChild(s);
   }
 
@@ -321,6 +334,6 @@
     const button=key==='p'?root.querySelector('.lf51d-main [data-audio]'):key==='a'?root.querySelector('.lf51d-main [data-reveal]'):null;
     if(button){event.preventDefault();button.click();}
   }
-  function init(){ensureStyle();ensureRoot();bind();ensureRoot()?.addEventListener('click',bookmarkUnit);document.addEventListener('keydown',unitShortcut);['studyLangFilter','studyCategoryFilter','studyTopicFilter'].forEach(id=>document.getElementById(id)?.addEventListener('change',()=>setTimeout(sync,0)));addEventListener('resize',()=>setTimeout(sync,50),{passive:true});setTimeout(sync,200);setTimeout(sync,1000);}
+  function init(){ensureStyle();ensureRoot();bind();ensureRoot()?.addEventListener('click',bookmarkUnit);document.addEventListener('keydown',unitShortcut);['studyLangFilter','studyCategoryFilter','studyTopicFilter'].forEach(id=>document.getElementById(id)?.addEventListener('change',()=>setTimeout(sync,0)));setTimeout(sync,200);setTimeout(sync,1000);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();

@@ -11,7 +11,7 @@
 
   try {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', './english-51talk-desktop-workspace-v1.js?v=88', false);
+    xhr.open('GET', './english-51talk-desktop-workspace-v1.js?v=111', false);
     xhr.send(null);
     if (xhr.status >= 200 && xhr.status < 300 && xhr.responseText) {
       let code = window.LF51InjectUnit2IntoWorkspaceSource(xhr.responseText);

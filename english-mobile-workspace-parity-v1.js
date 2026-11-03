@@ -157,7 +157,7 @@
 
   async function loadSharedWorkspace() {
     try {
-      const response = await fetch('./english-51talk-desktop-workspace-v1.js?v=104', { cache:'no-store' });
+      const response = await fetch('./english-51talk-desktop-workspace-v1.js?v=111', { cache:'no-store' });
       if (!response.ok) throw new Error('workspace source unavailable');
       let code = await response.text();
 
@@ -172,12 +172,6 @@
 
       code = code.replaceAll('__LF51_DESKTOP_WORKSPACE_V1__', '__LF51_MOBILE_SHARED_WORKSPACE_V2__');
 
-      const oldGate = "function desktop(){return window.matchMedia?matchMedia('(min-width:900px)').matches:innerWidth>=900;}";
-      const newGate = `function desktop(){const ua=String(navigator.userAgent||'');const m=/Android|iPhone|iPad|iPod|Mobile|IEMobile|Opera Mini/i.test(ua);const t=Number(navigator.maxTouchPoints||0)>0;let c=false;try{c=!!window.matchMedia?.('(pointer: coarse)').matches}catch(_){}const s=Math.min(Number(screen.width||9999),Number(screen.height||9999));return m||(t&&c&&s<=1024);}`;
-      if (!code.includes(oldGate)) throw new Error('workspace device gate changed');
-      code = code.replace(oldGate, newGate);
-
-      code = code.replace('@media(max-width:899px){#lf51DesktopWorkspace{display:none!important}}', '@media(max-width:899px){#lf51DesktopWorkspace{display:block!important}}');
       code = code.replaceAll('Desktop Workspace', 'Mobile Workspace');
 
       Function(`${code}\n//# sourceURL=english-mobile-shared-workspace-v104.js`)();
