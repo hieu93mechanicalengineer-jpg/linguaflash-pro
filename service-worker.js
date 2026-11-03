@@ -32,6 +32,7 @@ const CORE_ASSETS = [
   './data/youtube-podcast.js',
   './app.js',
   './app-core.js',
+  './chinese-study-workspace.js?v=116',
   './english-unit2-data-v1.js',
   './english-class158-health-data-v1.js',
   './english-mobile-lessons-v1.js',
@@ -128,7 +129,7 @@ async function transformIndexResponse(response) {
   var desktopScripts = [
     './english-51talk-desktop-workspace-v1.js?v=115',
     './english-51talk-class158-work-v1.js?v=115',
-    './english-51talk-review-trainer-v1.js?v=114',
+    './english-51talk-review-trainer-v1.js?v=116',
     './lazy-large-packs.js?v=90',
     './study-answer-mode.js?v=90',
     './study-input-mobile-hotfix-v1.js?v=90',

@@ -317,6 +317,29 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
   @media(max-width:767px){#lfAccountHeaderBtn .lf-account-label{display:none}.lf-account-btn{padding:7px 9px}.lf-cloud-card{align-items:flex-start;flex-direction:column}.lf-cloud-card>button{width:100%;justify-content:center}}
 </style>
 
+<style>
+#lfChineseStudy[hidden]{display:none!important}
+body.lfzh-browse :is(#flashcardContainer,#studyEmptyState,#studyAnswerPanel,#lfSmartQueueBanner){display:none!important}
+#lfChineseStudy{color:#17365a;background:#f5f8fc;border:1px solid #d8e3f0;border-radius:18px;overflow:hidden}
+#lfChineseStudy header{display:flex;align-items:center;gap:14px;padding:12px 16px;background:linear-gradient(110deg,#153e70,#075ba8);color:white}
+#lfChineseStudy header select{color:#17365a;background:white;flex:1;min-width:0;max-width:100%;padding:8px;border-radius:9px;font-weight:700}
+#lfChineseStudy nav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;background:white;padding:8px}
+#lfChineseStudy button{border:1px solid #d7e3ef;border-radius:9px;background:#f6f9fd;color:#25456a;font-weight:700;padding:8px;line-height:1.25}
+#lfChineseStudy button[aria-pressed=true],#lfChineseStudy form button{background:#126bc3;color:white}
+#lfChineseStudy button:disabled{opacity:.45}
+#lfChineseStudy .zh-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,27%);gap:10px;padding:10px}
+#lfChineseStudy article,#lfChineseStudy aside{background:white;padding:14px;border:1px solid #dce6f1;border-radius:13px;min-width:0;overflow-wrap:anywhere}
+#lfChineseStudy aside label,#lfChineseStudy small{display:block;margin-top:8px}
+#lfChineseStudy textarea,#lfChineseStudy input{width:100%;font-size:16px;border:1px solid #bacce1;border-radius:8px;padding:8px}
+#lfChineseStudy .zh-count{font-size:.88rem;font-weight:700;margin-bottom:8px}
+#lfChineseStudy .zh-word{padding:16px;border-left:4px solid #1677ff;background:#f3f8ff;border-radius:10px}
+#lfChineseStudy .zh-word strong{display:block;font-size:clamp(1.3rem,3vw,2rem);line-height:1.5}
+#lfChineseStudy .zh-pinyin{color:#4453a5}#lfChineseStudy p{margin:8px 0}
+#lfChineseStudy .zh-example,#lfChineseStudy details,#lfChineseStudy form{padding:10px 0}#lfChineseStudy summary{cursor:pointer}
+#lfChineseStudy footer,#lfChineseStudy .zh-modes,#lfChineseStudy .zh-grades{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+#lfChineseStudy [data-grade]{color:white;flex:1}#lfChineseStudy [data-grade="0"]{background:#a52c32}#lfChineseStudy [data-grade="1"]{background:#965200}#lfChineseStudy [data-grade="2"]{background:#147239}#lfChineseStudy [data-grade="3"]{background:#145fc2}
+@media(max-width:899px){#lfChineseStudy .zh-layout{grid-template-columns:minmax(0,1fr)}#lfChineseStudy nav{grid-template-columns:repeat(3,minmax(0,1fr))}#lfChineseStudy header{flex-wrap:wrap}#lfChineseStudy header select{flex-basis:100%}#lfChineseStudy button{min-height:42px}}
+</style>
 </head>
 <body class="min-h-screen flex flex-col pb-24 md:pb-8">
 
@@ -362,8 +385,8 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
       <div class="app-main-nav">
         <button onclick="switchTab('home')" id="nav-home" class="app-nav-btn active">⌂ <span data-app-i18n="nav_home">Trang chủ</span></button>
         <button onclick="switchTab('study')" id="nav-study" class="app-nav-btn">🎴 <span data-app-i18n="nav_study">Học</span></button>
-        <button onclick="switchTab('practice')" id="nav-practice" class="app-nav-btn">🎯 <span data-app-i18n="nav_practice">Luyện tập</span></button>
-        <button onclick="switchTab('library')" id="nav-library" class="app-nav-btn">📚 <span data-app-i18n="nav_library">Từ vựng</span></button>
+        <button onclick="switchTab('youtube')" id="nav-practice" class="app-nav-btn">🎧 <span data-app-i18n="nav_practice">Podcast</span></button>
+        <button onclick="switchTab('library')" id="nav-library" class="app-nav-btn">📚 <span data-app-i18n="nav_library">Mở rộng</span></button>
         <button onclick="switchTab('stats')" id="nav-stats" class="app-nav-btn">📈 <span data-app-i18n="nav_progress">Tiến độ</span></button>
       </div>
     </div>
@@ -401,7 +424,7 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
       <div class="app-card p-4 sm:p-5"><div class="app-section-kicker">NỘI DUNG ĐÃ ĐÓNG GÓI</div><div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3"><div class="rounded-2xl bg-rose-50 border border-rose-100 p-3"><div class="text-sm font-extrabold text-rose-800">Tiếng Trung Huyền Anh</div><div id="bundleHaCount" class="text-2xl font-extrabold text-slate-900 mt-1">0</div><div class="text-xs text-slate-500">Level 1: Bài 1–15 · Level 2: Bài 1–20 · Level 3: Bài 1–25 · Level 4: Bài 1–25</div></div><div class="rounded-2xl bg-indigo-50 border border-indigo-100 p-3"><div class="text-sm font-extrabold text-indigo-800">Gia Hân</div><div id="bundleGhCount" class="text-2xl font-extrabold text-slate-900 mt-1">0</div><div class="text-xs text-slate-500">Trung cấp 1: Bài 16–30 · Trung cấp 2: Bài 31–45</div></div><div class="rounded-2xl bg-emerald-50 border border-emerald-100 p-3"><div class="text-sm font-extrabold text-emerald-800">TRILINGUAL DICTIONARY</div><div id="bundleDictCount" class="text-2xl font-extrabold text-slate-900 mt-1">0</div><div class="text-xs text-slate-500">Trung – Anh – Việt · có ví dụ</div></div></div></div>
       <div><div class="app-section-kicker" data-app-i18n="quick_actions">TRUY CẬP NHANH</div><h3 class="app-section-heading mt-1 mb-3" data-app-i18n="choose_activity">Chọn hoạt động</h3><div class="app-action-grid">
         <button class="app-action" onclick="openGlobalSearch()"><div class="app-action-icon">🔎</div><div class="app-action-title" data-app-i18n="search_all">Tra từ / Tìm kiếm</div><div class="app-action-desc" data-app-i18n="search_all_desc">Tìm trên toàn bộ Gia Hân, Huyền Anh và TRILINGUAL DICTIONARY.</div></button>
-        <button class="app-action" onclick="switchTab('practice')"><div class="app-action-icon">🎯</div><div class="app-action-title" data-app-i18n="practice_title">Luyện tập</div><div class="app-action-desc" data-app-i18n="practice_desc">Hội thoại, phát âm, kiểm tra trí nhớ và ngữ pháp.</div></button>
+        
         <button class="app-action" onclick="switchTab('youtube')"><div class="app-action-icon">▶️</div><div class="app-action-title" data-app-i18n="youtube_title">YouTube Podcast</div><div class="app-action-desc" data-app-i18n="youtube_desc">20 bài Chinese Daily Podcast đã chọn lọc để luyện nghe, từ vựng, ngữ pháp và Shadowing.</div></button>
         <button class="app-action" onclick="openManageAt('manageAddCardPanel')"><div class="app-action-icon">＋</div><div class="app-action-title" data-app-i18n="add_card">Thêm thẻ mới</div><div class="app-action-desc" data-app-i18n="add_card_desc_short">Tự nhập một từ hoặc câu mới vào bộ thẻ của bạn.</div></button>
         <button class="app-action" onclick="switchTab('stats')"><div class="app-action-icon">📈</div><div class="app-action-title" data-app-i18n="progress_title">Tiến độ học</div><div class="app-action-desc" data-app-i18n="progress_desc">Xem số thẻ cần ôn, mức ghi nhớ và lịch SRS.</div></button>
@@ -410,18 +433,13 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
     </section>
 
     <!-- ==================== PRACTICE HUB ==================== -->
-    <section id="tab-practice" class="hidden space-y-4"><div><div class="app-section-kicker" data-app-i18n="nav_practice">LUYỆN TẬP</div><h2 class="app-page-title mt-1" data-app-i18n="practice_page_title">Luyện theo kỹ năng</h2><p class="app-page-subtitle mt-2" data-app-i18n="practice_page_desc">Chọn đúng kỹ năng bạn muốn luyện. Không cần tìm trong nhiều menu.</p></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <button class="app-card app-hub-card" onclick="switchTab('dialogue')"><div class="app-action-icon">🎧</div><div class="text-left"><div class="app-action-title" data-app-i18n="dialogue">Hội thoại & nghe hiểu</div><div class="app-action-desc" data-app-i18n="dialogue_desc">Nghe từng câu hoặc cả bài và luyện trả lời.</div></div></button>
-      <button class="app-card app-hub-card" onclick="switchTab('pronunciation')"><div class="app-action-icon">🎤</div><div class="text-left"><div class="app-action-title" data-app-i18n="pronunciation">Phát âm</div><div class="app-action-desc" data-app-i18n="pronunciation_desc">Nghe mẫu, nói lại và kiểm tra nhận diện giọng nói.</div></div></button>
-      <button class="app-card app-hub-card" onclick="switchTab('quiz')"><div class="app-action-icon">📝</div><div class="text-left"><div class="app-action-title" data-app-i18n="quiz">Kiểm tra trí nhớ</div><div class="app-action-desc" data-app-i18n="quiz_desc_short">Trắc nghiệm và nhập câu trả lời để củng cố từ vựng.</div></div></button>
-      <button class="app-card app-hub-card" onclick="switchTab('grammar')"><div class="app-action-icon">📚</div><div class="text-left"><div class="app-action-title" data-app-i18n="grammar">Ngữ pháp</div><div class="app-action-desc" data-app-i18n="grammar_desc_short">Xem cấu trúc, ví dụ và ghi chú theo bài học.</div></div></button>
-      <button class="app-card app-hub-card sm:col-span-2" onclick="switchTab('youtube')"><div class="app-action-icon">▶️</div><div class="text-left"><div class="app-action-title" data-app-i18n="youtube_title">YouTube Podcast</div><div class="app-action-desc" data-app-i18n="youtube_desc">20 bài Chinese Daily Podcast đã chọn lọc: đọc hiểu, từ vựng, ngữ pháp, nghe hiểu, Shadowing và kiểm tra ghi nhớ.</div></div></button></div></section>
+    
 
 
     <!-- ==================== YOUTUBE PODCAST ==================== -->
     <section id="tab-youtube" class="hidden space-y-4">
       <div class="flex flex-wrap items-center justify-between gap-3">
-        <button class="app-back-btn" onclick="switchTab('practice')">← <span data-app-i18n="back_practice">Luyện tập</span></button>
+        <button class="app-back-btn" onclick="switchTab('home')">← <span data-app-i18n="nav_home">Trang chủ</span></button>
         <span class="app-section-kicker">CHINESE DAILY PODCAST · 20 BÀI CHỌN LỌC</span>
       </div>
       <div class="app-card p-4 sm:p-5">
@@ -439,12 +457,16 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
     </section>
 
     <!-- ==================== LIBRARY HUB ==================== -->
-    <section id="tab-library" class="hidden space-y-4"><div><div class="app-section-kicker" data-app-i18n="nav_library">TỪ VỰNG</div><h2 class="app-page-title mt-1" data-app-i18n="library_title">Thư viện của bạn</h2><p class="app-page-subtitle mt-2"><span id="libraryCardCount">0</span> <span data-app-i18n="library_count_suffix">thẻ đang được lưu trong ứng dụng.</span></p></div><div class="app-action-grid">
+    <section id="tab-library" class="hidden space-y-4"><div><div class="app-section-kicker" data-app-i18n="nav_library">Mở rộng</div><h2 class="app-page-title mt-1" data-app-i18n="library_title">Thư viện của bạn</h2><p class="app-page-subtitle mt-2"><span id="libraryCardCount">0</span> <span data-app-i18n="library_count_suffix">thẻ đang được lưu trong ứng dụng.</span></p></div><div class="app-action-grid">
       <button class="app-action" onclick="openGlobalSearch()"><div class="app-action-icon">🔎</div><div class="app-action-title" data-app-i18n="search_all">Tra từ / Tìm kiếm</div><div class="app-action-desc" data-app-i18n="library_search_desc">Tìm từ, nghĩa, chữ Hán, pinyin hoặc ví dụ.</div></button>
       <button class="app-action" onclick="openManageAt('manageAddCardPanel')"><div class="app-action-icon">＋</div><div class="app-action-title" data-app-i18n="add_card">Thêm thẻ mới</div><div class="app-action-desc" data-app-i18n="library_add_desc">Nhập nhanh một từ/câu mới và lưu vào bộ thẻ.</div></button>
       <button class="app-action" onclick="openManageAt('tab-manage')"><div class="app-action-icon">📥</div><div class="app-action-title" data-app-i18n="import_excel">Nhập / Xuất Excel</div><div class="app-action-desc" data-app-i18n="import_excel_desc">Dùng cho dữ liệu số lượng lớn và sao lưu.</div></button>
       <button class="app-action" onclick="switchTab('manage')"><div class="app-action-icon">⚙️</div><div class="app-action-title" data-app-i18n="advanced_manage">Quản lý nâng cao</div><div class="app-action-desc" data-app-i18n="advanced_manage_desc">Tạo, đổi tên, xóa chủ đề và quản lý danh sách thẻ.</div></button></div>
       <div class="app-card p-4 sm:p-5"><div class="flex items-center justify-between gap-3"><div><div class="app-section-kicker">TRILINGUAL DICTIONARY</div><div class="app-section-heading mt-1" data-app-i18n="dictionary_hint">Tra cứu nhanh Trung – Anh – Việt</div><p class="app-page-subtitle mt-1" data-app-i18n="dictionary_hint_desc">Nút tìm kiếm sẽ tìm trên toàn bộ dữ liệu, không chỉ bài đang học.</p></div><button class="px-4 py-2.5 rounded-xl bg-indigo-600 text-white font-bold text-sm shrink-0" onclick="openGlobalSearch()">🔎</button></div></div>
+<details class="app-card p-4"><summary class="font-bold cursor-pointer">Công cụ luyện tập</summary><div class="app-action-grid mt-3"><button class="app-card app-hub-card" onclick="switchTab('dialogue')"><div class="app-action-icon">🎧</div><div class="text-left"><div class="app-action-title" data-app-i18n="dialogue">Hội thoại & nghe hiểu</div><div class="app-action-desc" data-app-i18n="dialogue_desc">Nghe từng câu hoặc cả bài và luyện trả lời.</div></div></button>
+<button class="app-card app-hub-card" onclick="switchTab('pronunciation')"><div class="app-action-icon">🎤</div><div class="text-left"><div class="app-action-title" data-app-i18n="pronunciation">Phát âm</div><div class="app-action-desc" data-app-i18n="pronunciation_desc">Nghe mẫu, nói lại và kiểm tra nhận diện giọng nói.</div></div></button>
+<button class="app-card app-hub-card" onclick="switchTab('quiz')"><div class="app-action-icon">📝</div><div class="text-left"><div class="app-action-title" data-app-i18n="quiz">Kiểm tra trí nhớ</div><div class="app-action-desc" data-app-i18n="quiz_desc_short">Trắc nghiệm và nhập câu trả lời để củng cố từ vựng.</div></div></button>
+<button class="app-card app-hub-card" onclick="switchTab('grammar')"><div class="app-action-icon">📚</div><div class="text-left"><div class="app-action-title" data-app-i18n="grammar">Ngữ pháp</div><div class="app-action-desc" data-app-i18n="grammar_desc_short">Xem cấu trúc, ví dụ và ghi chú theo bài học.</div></div></button></div></details>
     </section>
 
     <!-- ==================== TAB 1: STUDY FLASHCARDS ==================== -->
@@ -763,7 +785,7 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
 
     <!-- ==================== TAB 3: GRAMMAR ==================== -->
     <section id="tab-grammar" class="hidden space-y-4 sm:space-y-5">
-      <div class="flex items-center justify-between gap-3"><button class="app-back-btn" onclick="switchTab('practice')">← <span data-app-i18n="back_practice">Luyện tập</span></button><span class="app-section-kicker">GIA HÂN · TRUNG CẤP 1 &amp; 2</span></div>
+      <div class="flex items-center justify-between gap-3"><button class="app-back-btn" onclick="switchTab('study')">← <span data-app-i18n="nav_study">Học</span></button><span class="app-section-kicker">GIA HÂN · TRUNG CẤP 1 &amp; 2</span></div>
       <div class="app-card p-4 sm:p-5">
         <div class="flex flex-col sm:flex-row sm:items-end gap-3">
           <div class="flex-1"><label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-1">Bài học</label><select id="grammarLessonSelector" onchange="renderGiaHanGrammar(this.value)" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-3 text-sm font-semibold"></select></div>
@@ -1189,8 +1211,8 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
   <nav class="mobile-app-nav md:hidden fixed bottom-0 left-0 right-0 border-t border-slate-200 z-40 flex gap-1 py-1.5 px-1.5" style="padding-bottom:max(6px,env(safe-area-inset-bottom,0px))">
     <button onclick="switchTab('home')" id="mnav-home" class="app-mobile-nav-btn active"><span class="nav-ico">⌂</span><span data-app-i18n="nav_home">Trang chủ</span></button>
     <button onclick="switchTab('study')" id="mnav-study" class="app-mobile-nav-btn"><span class="nav-ico">🎴</span><span data-app-i18n="nav_study">Học</span></button>
-    <button onclick="switchTab('practice')" id="mnav-practice" class="app-mobile-nav-btn"><span class="nav-ico">🎯</span><span data-app-i18n="nav_practice">Luyện</span></button>
-    <button onclick="switchTab('library')" id="mnav-library" class="app-mobile-nav-btn"><span class="nav-ico">📚</span><span data-app-i18n="nav_library">Từ vựng</span></button>
+    <button onclick="switchTab('youtube')" id="mnav-practice" class="app-mobile-nav-btn"><span class="nav-ico">🎧</span><span data-app-i18n="nav_practice">Podcast</span></button>
+    <button onclick="switchTab('library')" id="mnav-library" class="app-mobile-nav-btn"><span class="nav-ico">📚</span><span data-app-i18n="nav_library">Mở rộng</span></button>
     <button onclick="switchTab('stats')" id="mnav-stats" class="app-mobile-nav-btn"><span class="nav-ico">📈</span><span data-app-i18n="nav_progress">Tiến độ</span></button>
   </nav>
 

@@ -8,7 +8,7 @@
   window.__LF51_REVIEW_TRAINER_V1__ = true;
 
   const KEY = 'lf51_review_mode_v1';
-  let mode = (() => { try { return localStorage.getItem(KEY) || 'en-vi'; } catch (_) { return 'en-vi'; } })();
+  let mode = (() => { try { return localStorage.getItem(KEY) || 'vi-en'; } catch (_) { return 'vi-en'; } })();
   if (!['en-vi','vi-en','listen'].includes(mode)) mode = 'en-vi';
   const answers = new Map();
   let raf = 0;
@@ -317,6 +317,19 @@
   }
 
   function schedule(){cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{bind();enhance();});}
-  function init(){ensureStyle();bind();const r=root();if(r){new MutationObserver(schedule).observe(r,{childList:true,subtree:true});}schedule();}
+  function init(){
+    ensureStyle();
+    function attach(){
+      const r=root();
+      if(!r) return false;
+      bind();
+      new MutationObserver(schedule).observe(r,{childList:true,subtree:true});
+      schedule();
+      return true;
+    }
+    if(attach()) return;
+    const waiting=new MutationObserver(()=>{if(attach()) waiting.disconnect();});
+    waiting.observe(document.getElementById('tab-study') || document.body,{childList:true,subtree:true});
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,0),{once:true});else setTimeout(init,0);
 })();
