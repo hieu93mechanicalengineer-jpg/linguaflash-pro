@@ -35,7 +35,7 @@
       #lf51DesktopWorkspace .lf51rt-answer{margin-top:14px;padding:12px 14px;border-radius:12px;background:#eef6ff;color:#263d59;line-height:1.55}
       #lf51DesktopWorkspace .lf51rt-result{margin-top:11px;font-size:.85rem;font-weight:850;line-height:1.55}
       #lf51DesktopWorkspace .lf51rt-diff{display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:8px auto}
-      #lf51DesktopWorkspace .lf51rt-diff span{padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+      #lf51DesktopWorkspace .lf51rt-blank{color:#64748b}\n      #lf51DesktopWorkspace .lf51rt-diff span{padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
       .lf51rt-ok{background:#dcfce7;color:#166534}.lf51rt-wrong{background:#ffe4e6;color:#9f1239;text-decoration:line-through}.lf51rt-missing{background:#fff0c2;color:#794300;border-bottom:2px dashed}
       #lf51DesktopWorkspace .lf51rt-lock{border:1px solid #cfe4ff;background:linear-gradient(135deg,#f4f9ff,#eef6ff);border-radius:13px;padding:11px;margin-bottom:8px}
       #lf51DesktopWorkspace .lf51rt-lock b{display:block;color:#145da0;font-size:.8rem}.lf51rt-lock span{display:block;color:#65778b;font-size:.72rem;margin-top:3px;line-height:1.45}
@@ -84,14 +84,19 @@
       for (let j = b.length - 1; j >= 0; j--)
         lengths[i][j] = a[i] === b[j] ? 1 + lengths[i+1][j+1] : Math.max(lengths[i+1][j], lengths[i][j+1]);
     const parts = [];
-    const mark = (kind, label, word) => parts.push(`<span class="lf51rt-${kind}" title="${label}" aria-label="${label}: ${esc(word)}">${esc(word)}</span>`);
+    const slots = [];
+    const mark = (kind, label, word) => {
+      if (kind === 'ok') slots.push(`<span class="lf51rt-ok">${esc(word)}</span>`);
+      if (kind === 'missing') slots.push('<span class="lf51rt-blank" aria-label="Chỗ trống">___</span>');
+      parts.push(`<span class="lf51rt-${kind}" title="${label}" aria-label="${label}: ${esc(word)}">${esc(word)}</span>`);
+    };
     let i = 0, j = 0;
     while (i < a.length || j < b.length) {
       if (i < a.length && j < b.length && a[i] === b[j]) { mark('ok','Đúng',a[i++]); j++; }
       else if (i < a.length && (j === b.length || lengths[i+1][j] >= lengths[i][j+1])) mark('wrong','Sai hoặc thừa',a[i++]);
       else mark('missing','Thiếu',b[j++]);
     }
-    return `<div class="lf51rt-diff">${parts.join('')}</div><small>Xanh: đúng · Đỏ gạch ngang: sai hoặc thừa · Vàng gạch dưới: thiếu</small>`;
+    return {preview: `<div class="lf51rt-diff" aria-label="Từ đúng theo thứ tự câu">${slots.join('')}</div>`, full: `<div class="lf51rt-diff">${parts.join('')}</div><small>Xanh: đúng · Đỏ gạch ngang: sai hoặc thừa · Vàng gạch dưới: thiếu</small>`};
   }
 
   function renderTrainer(card,en,vi,ipa){
@@ -256,7 +261,11 @@
     const answer = document.createElement('div');
     answer.className = 'lf51rt-answer';
     answer.innerHTML = `<b>${esc(en)}</b>${ipa ? `<div class="lf51d-ipa">${esc(ipa)}</div>` : ''}`;
-    if (!input.hidden) answer.insertAdjacentHTML('beforeend', wordFeedback(typed, expected));
+    if (!input.hidden) {
+      const feedback = wordFeedback(typed, expected);
+      out.insertAdjacentHTML('beforeend', feedback.preview);
+      answer.insertAdjacentHTML('beforeend', feedback.full);
+    }
     details.appendChild(answer);
     details.addEventListener('toggle', () => {
       summary.textContent = details.open ? 'Ẩn đáp án' : 'Hiện đáp án';
