@@ -69,24 +69,6 @@
     }
   }
 
-  function patchApplyStudyFilters() {
-    const original = window.applyStudyFilters;
-    if (typeof original !== 'function' || original.__lfShowAllPatched) return;
-
-    const wrapped = function(...args) {
-      const result = original.apply(this, args);
-      try {
-        const topic = optionValue('studyTopicFilter', 'ALL');
-        if (!dueOnlyEnabled() && topic !== 'ALL' && Array.isArray(filteredDeck) && filteredDeck.length === 0) {
-          buildFullLessonDeck({ requireSpecificLesson: true });
-        }
-      } catch (_) {}
-      return result;
-    };
-    wrapped.__lfShowAllPatched = true;
-    window.applyStudyFilters = wrapped;
-  }
-
   function handleEmptyStateAction(event) {
     const empty = event.target?.closest?.('#studyEmptyState');
     if (!empty) return;
@@ -106,12 +88,8 @@
   }
 
   function init() {
-    patchApplyStudyFilters();
     document.addEventListener('click', handleEmptyStateAction, true);
 
-    // Some older wrappers may replace applyStudyFilters after DOM ready.
-    setTimeout(patchApplyStudyFilters, 300);
-    setTimeout(patchApplyStudyFilters, 1200);
   }
 
   window.lfStudyShowAllVocabulary = () => {

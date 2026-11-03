@@ -232,10 +232,11 @@
   // Keep the order of equally urgent cards stable while this lesson is open.
   const reviewTie = new Map();
   let reviewWake, nextLessonDue;
-  window.lf51ReviewOptions = sentence => sentence ? L().examples.map(row=>row[1]) : L().vocab.map(row=>row[0]);
+  function reviewLesson() { return window.lf51WorkReview?.active() ? window.lf51WorkReview.lesson : L(); }
+  window.lf51ReviewOptions = sentence => sentence ? reviewLesson().examples.map(row=>row[1]) : reviewLesson().vocab.map(row=>row[0]);
   function reviewItems() {
-    const lesson = L();
-    const topic = lesson.topic || (state.lesson === 'poodle' && window.LF51_UNIT2_STUDY_TOPIC_V1) || '51Talk English - ' + lesson.unit + ' · ' + lesson.title;
+    const lesson = reviewLesson();
+    const topic = lesson.topic || (lesson.id === 'poodle' && window.LF51_UNIT2_STUDY_TOPIC_V1) || '51Talk English - ' + lesson.unit + ' · ' + lesson.title;
     const pool = typeof allCards === 'undefined' ? [] : allCards.filter(c => c.lang === 'Tiếng Anh' && (c.topic === topic || String(c.topic).toLowerCase().includes(lesson.title.toLowerCase())));
     const rows = lesson.examples.map(x => ({type:'Câu mẫu', en:x[1], vi:x[2]}))
       .concat(lesson.vocab.map(x => ({type:'Từ vựng', en:x[0], vi:x[2], ipa:x[1]})));
@@ -244,7 +245,7 @@
     let reviewLeft = Math.max(0, settings.reviewLimit - (progress.reviewIds || []).length);
     const candidates = rows.map((row, index) => {
       const sentence = row.type === 'Câu mẫu';
-      const id = 'en51_quick_' + state.lesson + '_' + (sentence ? 's' : 'v') + '_' + encodeURIComponent(row.en);
+      const id = 'en51_quick_' + lesson.id + '_' + (sentence ? 's' : 'v') + '_' + encodeURIComponent(row.en);
       const card = pool.find(c => c.id === id) || pool.find(c => (sentence ? c.cardType === 'sentence' && c.chinese === row.en : c.cardType !== 'sentence' && c.word === row.en));
       if (!reviewTie.has(id)) reviewTie.set(id, Math.random());
       const learned = !!(card?.nextReview || card?.lastReviewedAt || card?.repetitions);
@@ -256,6 +257,8 @@
       .filter(x=>x.step || (x.learned ? reviewLeft-- > 0 : newLeft-- > 0));
   }
 
+  window.lf51LessonReviewItems = reviewItems;
+  window.lf51NextLessonDue = () => nextLessonDue;
   window.lf51QuickReviewCard = function(id, create) {
     const stored = allCards.find(c=>String(c.id) === id);
     if (stored || !create) return stored;
@@ -268,7 +271,10 @@
     if (create === true) allCards.push(card);
     return card;
   };
-  window.lf51RefreshRatedReview = () => {state.review=0;state.reveal=false;render();};
+  window.lf51RefreshRatedReview = () => {
+    if (window.lf51WorkReview?.active()) return window.lf51WorkReview.advance();
+    state.review=0;state.reveal=false;render();
+  };
 
   function learnedKey(){return `${state.lesson}:${state.tab}:${state.tab==='vocab'?state.vocab:state.tab==='examples'?state.example:state.tab==='grammar'?state.grammar:state.tab==='speaking'?state.speaking:(state.tab==='review' ? reviewItems()[state.review]?.index : state.review)}`;}
   function learnedSet(){try{return new Set(JSON.parse(localStorage.getItem('lf51_desktop_learned_v1')||'[]'));}catch(_){return new Set();}}

@@ -11,7 +11,7 @@
     const hasHistory = reviewCount > 0 || Number(card?.lastReview || card?.lastReviewedAt || 0) > 0;
     const isNew = !hasHistory;
     const nextReview = Number(card?.nextReview || 0);
-    const due = !!card?.needsReview || (nextReview > 0 && nextReview <= now) || card?.lastAnswerQuality === 0 || card?.lastAnswerQuality === 1;
+    const due = hasHistory && (nextReview > 0 ? nextReview <= now : true);
     let weakScore = 0;
     try { weakScore = Number(window.lfWeakMetrics?.(card)?.score || 0); } catch (_) {}
     const overdueDays = due && nextReview > 0 ? Math.max(0, (now - nextReview) / 86400000) : 0;
@@ -20,12 +20,13 @@
 
   function smartOrder(deck) {
     const now = Date.now();
+    const steps = [];
     const review = [];
     const fresh = [];
     (deck || []).forEach((card, index) => {
       const metrics = cardMetrics(card, now);
       const item = { card, index, metrics };
-      (metrics.isNew ? fresh : review).push(item);
+      (isStudyStep(card) && metrics.due ? steps : metrics.isNew ? fresh : review).push(item);
     });
 
     review.sort((a, b) => {
@@ -35,7 +36,7 @@
       return a.index - b.index;
     });
 
-    const out = [];
+    const out = steps.map(item => item.card);
     let r = 0, n = 0;
     while (r < review.length || n < fresh.length) {
       let taken = 0;
@@ -46,7 +47,7 @@
       if (n < fresh.length) out.push(fresh[n++].card);
       if (r >= review.length) while (n < fresh.length) out.push(fresh[n++].card);
     }
-    return { deck: out, reviewCount: review.length, newCount: fresh.length, dueCount: review.filter(x => x.metrics.due).length };
+    return { deck: out, reviewCount: steps.length + review.length, newCount: fresh.length, dueCount: steps.length + review.filter(x => x.metrics.due).length };
   }
 
   function ensureBanner() {

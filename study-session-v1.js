@@ -88,16 +88,20 @@
     try {
       if (session.day !== dayKey() || !Array.isArray(session.deckIds) || !session.deckIds.length) return false;
       if (typeof allCards === 'undefined' || !Array.isArray(allCards)) return false;
-      const byId = new Map(allCards.filter(c => c?.id).map(c => [c.id, c]));
-      const deck = session.deckIds.map(id => byId.get(id)).filter(Boolean);
-      if (!deck.length) return false;
+      // Rebuild eligibility first. Only resume a saved card if it is still in the scheduled batch.
+      const eligible = filteredDeck.slice();
+      if (!eligible.length) return false;
+      const savedOrder = new Map(session.deckIds.map((id,i) => [id,i]));
+      const priority = c => isStudyStep(c) ? 0 : (c.repetitions || c.lastReviewedAt) ? 1 : 2;
+      const deck = eligible.sort((a,b) => priority(a)-priority(b)
+        || (savedOrder.get(a.id) ?? Infinity) - (savedOrder.get(b.id) ?? Infinity));
       filteredDeck = deck;
       try { activeStudyBatchIds = new Set(deck.map(c => c.id)); } catch (_) {}
       try { activeStudyCompletedIds = new Set(Array.isArray(session.completedIds) ? session.completedIds : []); } catch (_) {}
-      let idx = Math.max(0, Math.min(Number(session.currentIndex) || 0, deck.length - 1));
+      let idx = 0;
       if (session.currentCardId && deck[idx]?.id !== session.currentCardId) {
         const exact = deck.findIndex(c => c.id === session.currentCardId);
-        if (exact >= 0) idx = exact;
+        if (exact >= 0 && priority(deck[exact]) === priority(deck[0])) idx = exact;
       }
       currentIndex = idx;
       try { if (typeof renderCurrentCard === 'function') renderCurrentCard(); } catch (_) {}

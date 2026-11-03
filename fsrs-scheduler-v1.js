@@ -311,9 +311,9 @@
       const p = getDailyProgress();
       const remainingNew = Math.max(0, cleanNum(s.newLimit,20) - new Set(p.newIds || []).size);
       const remainingReview = Math.max(0, cleanNum(s.reviewLimit,30) - new Set(p.reviewIds || []).size);
-      const selectedNew = newCards.filter(c => !isStudyStep(c)).slice(0, remainingNew);
+      const selectedNew = orderFreshStudyCards(newCards.filter(c => !isStudyStep(c)), c => c.id).slice(0, remainingNew);
       const dueSteps = pool.filter(c => isStudyStep(c) && c.nextReview <= now);
-      const selectedReview = [...dueSteps, ...reviewCards.filter(c => !isStudyStep(c)).slice(0, remainingReview)];
+      const selectedReview = [...dueSteps, ...reviewCards.filter(c => !isStudyStep(c) && (!dueOnly || !(c.nextReview > now))).slice(0, remainingReview)];
       filteredDeck = (dueOnly ? selectedReview : [...selectedReview, ...selectedNew]).slice(0,20);
       activeStudyBatchIds = new Set(filteredDeck.map(c => c.id));
       activeStudyCompletedIds = new Set();

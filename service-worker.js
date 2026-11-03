@@ -59,8 +59,8 @@ const CORE_ASSETS = [
   './podcast-auto-pronunciation-v1.js',
   './study-filter-prefs.js',
   './study-session-v1.js',
-  './smart-daily-session-v2.js?v=106',
-  './study-session-v1.js?v=106',
+  './smart-daily-session-v2.js?v=115',
+  './study-session-v1.js?v=115',
   './cloud-sync-v2.js'
 ];
 
@@ -118,7 +118,7 @@ async function transformIndexResponse(response) {
     './lazy-large-packs.js?v=90',
     './study-answer-mode.js?v=90',
     './study-answer-alternatives-v1.js?v=90',
-    './study-show-all-vocab-v1.js?v=90',
+    './study-show-all-vocab-v1.js?v=115',
     './answer-quality-v1.js?v=90',
     './quiz-multi-lesson-v1.js?v=90',
     './auto-pronunciation-v1.js?v=90',
@@ -126,15 +126,15 @@ async function transformIndexResponse(response) {
     './study-filter-prefs.js?v=90'
   ];
   var desktopScripts = [
-    './english-51talk-desktop-workspace-v1.js?v=114',
-    './english-51talk-class158-work-v1.js?v=90',
+    './english-51talk-desktop-workspace-v1.js?v=115',
+    './english-51talk-class158-work-v1.js?v=115',
     './english-51talk-review-trainer-v1.js?v=114',
     './lazy-large-packs.js?v=90',
     './study-answer-mode.js?v=90',
     './study-input-mobile-hotfix-v1.js?v=90',
     './study-navigation-safe-v3.js?v=90',
     './study-answer-alternatives-v1.js?v=90',
-    './study-show-all-vocab-v1.js?v=90',
+    './study-show-all-vocab-v1.js?v=115',
     './study-flip-penalty-v1.js?v=90',
     './study-card-touch-fix-v1.js?v=90',
     './answer-quality-v1.js?v=90',
@@ -147,7 +147,7 @@ async function transformIndexResponse(response) {
     './podcast-auto-pronunciation-v1.js?v=90',
     './study-filter-prefs.js?v=90',
     './weak-words-v1.js?v=90',
-    './smart-study-queue-v1.js?v=90',
+    './smart-study-queue-v1.js?v=115',
     './dialogue-active-recall-v1.js?v=90',
     './learning-loop-v1.js?v=90',
     './learning-loop-tasks-v1.js?v=90',

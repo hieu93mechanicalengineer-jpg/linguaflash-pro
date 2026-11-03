@@ -1084,9 +1084,9 @@
       const progress = getDailyProgress();
       const remainingNew = Math.max(0, settings.newLimit - new Set(progress.newIds || []).size);
       const remainingReview = Math.max(0, settings.reviewLimit - new Set(progress.reviewIds || []).size);
-      const selectedNew = newCards.filter(c => !isStudyStep(c)).slice(0, remainingNew);
+      const selectedNew = orderFreshStudyCards(newCards.filter(c => !isStudyStep(c)), c => c.id).slice(0, remainingNew);
       const dueSteps = pool.filter(c => isStudyStep(c) && c.nextReview <= now);
-      const selectedReview = [...dueSteps, ...reviewCards.filter(c => !isStudyStep(c)).slice(0, remainingReview)];
+      const selectedReview = [...dueSteps, ...reviewCards.filter(c => !isStudyStep(c) && (!dueOnly || !(c.nextReview > now))).slice(0, remainingReview)];
       filteredDeck = (dueOnly ? selectedReview : [...selectedReview, ...selectedNew]).slice(0,20);
       activeStudyBatchIds = new Set(filteredDeck.map(c=>c.id));
       activeStudyCompletedIds = new Set();
@@ -1225,6 +1225,15 @@
 
     function rateCard(quality) {
       if (filteredDeck.length) rateLegacyStudyCard(filteredDeck[currentIndex], quality, false);
+    }
+
+    const freshStudyOrder = new Map();
+    function orderFreshStudyCards(items, idOf) {
+      for (const item of items) {
+        const id = idOf(item);
+        if (!freshStudyOrder.has(id)) freshStudyOrder.set(id, Math.random());
+      }
+      return items.sort((a,b) => freshStudyOrder.get(idOf(a)) - freshStudyOrder.get(idOf(b)));
     }
 
     function isStudyStep(card) { return card.state === "learning" || card.state === "relearning"; }

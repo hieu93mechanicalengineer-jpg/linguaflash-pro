@@ -113,7 +113,7 @@
     } else eligibleReview=learned.filter(x=>x.m.due).sort(reviewSort);
 
     const chosenReview=eligibleReview.slice(0,reviewRemaining);
-    const chosenNew=fresh.slice(0,newRemaining);
+    const chosenNew=orderFreshStudyCards(fresh, item => item.card.id).slice(0,newRemaining);
     const deck=steps.map(x=>x.card), reviewOrdered=chosenReview.slice();
     let r=0,n=0;
     while(r<reviewOrdered.length||n<chosenNew.length){
