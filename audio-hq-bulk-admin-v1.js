@@ -389,6 +389,7 @@
     saveRunReport(outcome);
     let processed = 0;
     setProgress(0, total, '⏳ Bắt đầu tạo 0 / ' + total + ' âm thanh…');
+    document.getElementById('lfAudioProgress')?.scrollIntoView({ behavior:'smooth', block:'center' });
     try {
       for (let i = 0; i < groups.length; i++) {
         const group = groups[i];
@@ -536,6 +537,10 @@
       renderRunReport();
     }
     if (panel.parentElement !== card) card.appendChild(panel);
+    if (!panel.dataset.reportInitialized) {
+      renderRunReport();
+      panel.dataset.reportInitialized = '1';
+    }
     renderScanReport();
 
     // A discoverable shortcut from Library; management hosts the actual controls.
@@ -558,6 +563,7 @@
 
   function openPanel(forceOpen) {
     ensurePanel();
+    renderRunReport();
     const panel = document.getElementById(PANEL_ID);
     if (!panel) return;
     panel.classList.toggle('on', !!forceOpen || !panel.classList.contains('on'));
