@@ -13,6 +13,8 @@
   const PANEL_ID = 'lfAudioBulkAdminPanel';
   const STATUS_ID = 'lfAudioBulkAdminStatus';
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '') ||
+    !!window.matchMedia?.('(max-width: 767px)').matches;
 
   let client = null;
   let session = null;
@@ -70,8 +72,15 @@
   }
 
   // English keeps the full-library policy.
-  function collectEnglishCards(en) {
-    for (const card of getAllCards()) {
+  async function collectEnglishCards(en) {
+    const cards = getAllCards();
+    // Yield to the browser between batches instead of blocking mobile taps.
+    for (let index = 0; index < cards.length; index++) {
+      if (index && index % 160 === 0) {
+        setStatus('🔎 Đang rà soát thẻ tiếng Anh: ' + index + '/' + cards.length + '…');
+        await sleep(0);
+      }
+      const card = cards[index];
       if (!card || String(card.lang || '') !== 'Tiếng Anh') continue;
       const lessonId = card.topic || card.level || card.sourceLabel || 'cards';
       const lessonTitle = card.topic || card.sourceLabel || card.level || lessonId;
@@ -140,14 +149,15 @@
     }
   }
 
-  async function collectAll() {
+  async function collectAll(scope) {
     setStatus('Đang kiểm tra kho HQ: Trung chỉ hội thoại · Anh toàn bộ…');
-    try { await window.lfLoadAllLargePacks?.(); } catch (_) {}
+    // Never load 9+ MB of optional dictionary/level packs during audio scan.
+    // Users can explicitly open a large pack in Study first when needed.
     const zh = new Map();
     const en = new Map();
-    collectEnglishCards(en);
+    if (scope !== 'zh') await collectEnglishCards(en);
     collectDialogueAudio(zh, en);
-    await loadWorkspaceLessons(en);
+    if (scope !== 'zh') await loadWorkspaceLessons(en);
     return { zh: [...zh.values()], en: [...en.values()] };
   }
 
@@ -315,7 +325,7 @@
     const langs = scope === 'both' ? ['zh', 'en'] : scope === 'zh' || scope === 'en' ? [scope] : [];
     if (!langs.length) throw new Error('Hãy chọn ngôn ngữ trước khi kiểm tra.');
     setStatus('🔎 Đang đọc các bài học và đối chiếu với thư viện âm thanh…');
-    const all = await collectAll();
+    const all = await collectAll(scope);
     const groups = [];
     for (const lang of langs) {
       setStatus('🔎 Đang kiểm tra ' + languageLabel(lang) + ' với kho âm thanh đã lưu…');
@@ -534,14 +544,13 @@
       panel.querySelector('#lfAudioLesson').addEventListener('change', refreshGenerateButton);
       panel.querySelector('#lfAudioScan').addEventListener('click', checkAudio);
       panel.querySelector('#lfAudioGenerate').addEventListener('click', generateSelected);
-      renderRunReport();
     }
     if (panel.parentElement !== card) card.appendChild(panel);
     if (!panel.dataset.reportInitialized) {
       renderRunReport();
       panel.dataset.reportInitialized = '1';
     }
-    renderScanReport();
+    // Do not re-render/clear the lesson list whenever authentication checks the panel.
 
     // A discoverable shortcut from Library; management hosts the actual controls.
     const libraryGrid = document.querySelector('#tab-library > .app-action-grid');
@@ -616,13 +625,15 @@
   function init() {
     installStyle();
     ensurePanel();
+    // Wait for Supabase to become available without repeatedly touching the DOM.
     let attempts = 0;
     const timer = setInterval(async () => {
       attempts++;
-      if (!isAdmin && window.supabase?.createClient) await initAuth();
-      ensurePanel();
-      if (isAdmin || attempts >= 50) clearInterval(timer);
-    }, 300);
+      if (window.supabase?.createClient) {
+        clearInterval(timer);
+        await initAuth();
+      } else if (attempts >= 16) clearInterval(timer);
+    }, 650);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
