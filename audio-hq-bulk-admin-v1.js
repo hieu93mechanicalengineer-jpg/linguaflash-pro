@@ -19,6 +19,9 @@
   let isAdmin = false;
   let running = false;
   let authSubscribed = false;
+  let latestScan = null;
+  let reportAfterRun = null;
+  const HISTORY_KEY = 'lf_audio_admin_last_report_v3';
 
   const normEn = value => String(value || '').replace(/[’]/g, "'").replace(/\s+/g, ' ').trim().toLowerCase();
   const normZh = value => String(value || '').replace(/\s+/g, ' ').trim();
@@ -42,7 +45,7 @@
     el.style.color = tone === 'error' ? '#b42318' : tone === 'ok' ? '#15803d' : '#475569';
   }
 
-  function add(map, lang, text, lessonId = 'library', contentType = 'lesson') {
+  function add(map, lang, text, lessonId = 'library', contentType = 'lesson', lessonTitle = '') {
     const clean = String(text || '').replace(/\s+/g, ' ').trim();
     if (!clean) return;
     const normalizer = lang === 'zh' ? normZh : normEn;
@@ -53,6 +56,7 @@
     map.set(key, {
       audio_key: `${lang}_${hashText(clean, normalizer)}`,
       lesson_id: String(lessonId || 'library'),
+      lesson_title: String(lessonTitle || lessonId || 'library'),
       content_type: String(contentType || 'lesson'),
       text: clean
     });
@@ -70,11 +74,12 @@
     for (const card of getAllCards()) {
       if (!card || String(card.lang || '') !== 'Tiếng Anh') continue;
       const lessonId = card.topic || card.level || card.sourceLabel || 'cards';
-      if (card.cardType === 'sentence') add(en, 'en', card.chinese, lessonId, 'sentence');
-      else add(en, 'en', card.word, lessonId, 'vocab');
-      add(en, 'en', card.exampleEnglish, lessonId, 'example');
+      const lessonTitle = card.topic || card.sourceLabel || card.level || lessonId;
+      if (card.cardType === 'sentence') add(en, 'en', card.chinese, lessonId, 'sentence', lessonTitle);
+      else add(en, 'en', card.word, lessonId, 'vocab', lessonTitle);
+      add(en, 'en', card.exampleEnglish, lessonId, 'example', lessonTitle);
       const ex = String(card.example || '').trim();
-      if (ex && hasLatin(ex) && !hasHanzi(ex)) add(en, 'en', ex, lessonId, 'example');
+      if (ex && hasLatin(ex) && !hasHanzi(ex)) add(en, 'en', ex, lessonId, 'example', lessonTitle);
     }
   }
 
@@ -84,10 +89,11 @@
       if (typeof DIALOGUES_DB === 'undefined' || !DIALOGUES_DB) return;
       Object.entries(DIALOGUES_DB).forEach(([dialogueKey, dialogue]) => {
         const lessonId = dialogueKey || dialogue?.id || dialogue?.title || 'dialogue';
+        const lessonTitle = dialogue?.title || dialogue?.topic || lessonId;
         (dialogue?.lines || []).forEach(line => {
-          if (hasHanzi(line?.cn)) add(zh, 'zh', line?.cn, lessonId, 'dialogue');
+          if (hasHanzi(line?.cn)) add(zh, 'zh', line?.cn, lessonId, 'dialogue', lessonTitle);
           // English dialogue translations remain part of the full English HQ library.
-          add(en, 'en', line?.en, lessonId, 'dialogue');
+          add(en, 'en', line?.en, lessonId, 'dialogue', lessonTitle);
         });
       });
     } catch (_) {}
@@ -96,10 +102,11 @@
   function addEnglishLesson(map, lesson) {
     if (!lesson) return;
     const id = lesson.id || lesson.unit || '51talk';
-    (lesson.vocab || []).forEach(row => add(map, 'en', row?.[0], id, 'vocab'));
-    (lesson.examples || []).forEach(row => add(map, 'en', row?.[1], id, 'example'));
-    (lesson.dialogue || []).forEach(row => add(map, 'en', row?.[1], id, 'dialogue'));
-    (lesson.speaking || []).forEach(row => add(map, 'en', row?.[1], id, 'speaking'));
+    const title = lesson.title || lesson.name || lesson.unit || id;
+    (lesson.vocab || []).forEach(row => add(map, 'en', row?.[0], id, 'vocab', title));
+    (lesson.examples || []).forEach(row => add(map, 'en', row?.[1], id, 'example', title));
+    (lesson.dialogue || []).forEach(row => add(map, 'en', row?.[1], id, 'dialogue', title));
+    (lesson.speaking || []).forEach(row => add(map, 'en', row?.[1], id, 'speaking', title));
   }
 
   async function loadWorkspaceLessons(en) {
