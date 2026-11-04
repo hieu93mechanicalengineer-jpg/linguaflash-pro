@@ -365,7 +365,22 @@ body.lf51-desktop-active:not(.lf-study-list-mode) #lfStudyMethods,body.lf51-desk
 #lfStudyMethods button,#lfStudyReference button{border:1px solid #cbd5e1;border-radius:9px;padding:6px 9px;background:#f8fafc}
 :is(#lfStudyMethods,#lfStudyReference) button[aria-pressed=true]{background:#155ac3;border-color:#155ac3;color:white}
 @media(max-width:680px){:is(#lfStudyMethods,#lfStudyReference) button{min-height:40px}}
-</style><style>.lf-phonetic-chip,.lf-target-chip{display:inline-flex;align-items:center;gap:5px;width:max-content;max-width:100%;padding:5px 9px;border:1px solid #cbd5e1;border-radius:999px;background:white;color:#334155;font-size:.78rem;font-weight:650;cursor:pointer}.lf-phonetic-chip:has(:checked),.lf-target-chip[aria-pressed=true]{background:#eef2ff;color:#3435a1;border-color:#a5b4fc}#lf51DesktopWorkspace .lf-target-chip{color:#223b68;white-space:nowrap}#lfStudyViewAnchor{display:none}body:has(#togglePhonetic:not(:checked)) #lf51DesktopWorkspace .lf51d-ipa{display:none!important}</style></head>
+</style><style>.lf-phonetic-chip,.lf-target-chip{display:inline-flex;align-items:center;gap:5px;width:max-content;max-width:100%;padding:5px 9px;border:1px solid #cbd5e1;border-radius:999px;background:white;color:#334155;font-size:.78rem;font-weight:650;cursor:pointer}.lf-phonetic-chip:has(:checked),.lf-target-chip[aria-pressed=true]{background:#eef2ff;color:#3435a1;border-color:#a5b4fc}#lf51DesktopWorkspace .lf-target-chip{color:#223b68;white-space:nowrap}#lfStudyViewAnchor{display:none}body:has(#togglePhonetic:not(:checked)) #lf51DesktopWorkspace .lf51d-ipa{display:none!important}</style><style id="compact-study-scroll">
+  @media (max-width: 1100px), (max-height: 680px) {
+    /* Let the document carry vertical scrolling when the study panels stack. */
+    html > body { overflow-x: clip !important; overscroll-behavior-y: auto; }
+    #lf51DesktopWorkspace .lf51d-shell { height: auto; min-height: 0; }
+    #lf51DesktopWorkspace .lf51d-body,
+    #lf51DesktopWorkspace .lf51d-dialogue,
+    #lf51DesktopWorkspace .lf51d-coach,
+    #lf51DesktopWorkspace.lf-unit2 .lf51d-coach {
+      height: auto;
+      max-height: none;
+      overflow: visible;
+    }
+  }
+</style>
+</head>
 <body class="min-h-screen flex flex-col pb-24 md:pb-8">
 
   <!-- Top Header -->

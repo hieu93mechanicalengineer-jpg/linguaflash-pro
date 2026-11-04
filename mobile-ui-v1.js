@@ -13,7 +13,6 @@
   html { -webkit-text-size-adjust: 100%; }
   html, body { width:100%; max-width:100%; overflow-x:hidden !important; }
   body {
-    overscroll-behavior-y: contain;
     padding-bottom: calc(var(--lf-mobile-nav-h) + env(safe-area-inset-bottom, 0px) + 16px) !important;
   }
   button, a, select, input, textarea { touch-action: manipulation; }
