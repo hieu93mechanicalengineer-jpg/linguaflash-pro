@@ -241,7 +241,7 @@
         return;
       }
       setStatus('Đã kiểm tra: ' + detail);
-      if (!window.confirm('Phát hiện ' + totalMissing + ' âm thanh còn thiếu.\\n' + detail + '\\n\\nTạo bằng HeyGen Turbo Free? Chỉ tạo mục thiếu, không ghi đè mục đã có. Quá trình có thể sử dụng hạn mức HeyGen.')) {
+      if (!window.confirm('Phát hiện ' + totalMissing + ' âm thanh còn thiếu.\n' + detail + '\n\nTạo bằng HeyGen Turbo Free? Chỉ tạo mục thiếu, không ghi đè mục đã có. Quá trình có thể sử dụng hạn mức HeyGen.')) {
         setStatus('Đã kiểm tra nhưng chưa tạo. ' + detail);
         return;
       }
