@@ -2346,19 +2346,31 @@
       showToast('Đã khôi phục dữ liệu Huyền Anh + Gia Hân đã đóng gói!', '🔄');
     }
 
+    // Render only a small set of cards in Management, including on mobile.
+    const MANAGE_PAGE_SIZE = 40;
+    let manageVisibleLimit = MANAGE_PAGE_SIZE;
+    let manageLastQuery = '';
+
     function renderManageTable() {
-      const q = (document.getElementById('searchInput').value || '').toLowerCase();
+      const q = String(document.getElementById('searchInput')?.value || '').trim().toLocaleLowerCase();
       const tbody = document.getElementById('manageTableBody');
-      document.getElementById('manageTotalCount').textContent = allCards.length;
-
-      const list = allCards.filter(c =>
-        c.word.toLowerCase().includes(q) ||
-        c.meaning.toLowerCase().includes(q) ||
-        (c.chinese || '').toLowerCase().includes(q) ||
-        (c.topic || '').toLowerCase().includes(q)
-      );
-
-      tbody.innerHTML = list.map(c => {
+      if (!tbody) return;
+      const total = document.getElementById('manageTotalCount');
+      if (total) total.textContent = allCards.length.toLocaleString('vi-VN');
+      if (q !== manageLastQuery) {
+        manageLastQuery = q;
+        manageVisibleLimit = MANAGE_PAGE_SIZE;
+      }
+      const visible = [];
+      let matches = 0;
+      for (const c of allCards) {
+        if (!c) continue;
+        if (q && ![c.word, c.meaning, c.chinese, c.topic].some(value => String(value || '').toLocaleLowerCase().includes(q))) continue;
+        matches++;
+        if (visible.length < manageVisibleLimit) visible.push(c);
+        if (!q && matches >= manageVisibleLimit + 1) break;
+      }
+      tbody.innerHTML = visible.map(c => {
         const status = getSrsStatusLabel(c);
         const isZh = c.lang === 'Tiếng Trung';
         return `
@@ -2384,6 +2396,32 @@
           </tr>
         `;
       }).join('');
+      
+      let pager = document.getElementById('lfManagePagination');
+      if (!pager) {
+        pager = document.createElement('div');
+        pager.id = 'lfManagePagination';
+        pager.className = 'flex flex-wrap items-center gap-3 mt-3 text-xs text-slate-500';
+        const count = document.createElement('span');
+        count.id = 'lfManagePaginationCount';
+        const more = document.createElement('button');
+        more.type = 'button';
+        more.id = 'lfManageLoadMore';
+        more.className = 'px-4 py-2 rounded-xl font-bold bg-indigo-50 text-indigo-700 border border-indigo-200';
+        more.textContent = 'Xem thêm 40 thẻ';
+        more.addEventListener('click', () => {
+          manageVisibleLimit += MANAGE_PAGE_SIZE;
+          renderManageTable();
+        });
+        pager.append(count, more);
+        tbody.closest('table')?.parentElement?.insertAdjacentElement('afterend', pager);
+      }
+      const count = pager.querySelector('#lfManagePaginationCount');
+      if (count) count.textContent = q
+        ? 'Hiển thị ' + visible.length + '/' + matches + ' kết quả tìm kiếm.'
+        : 'Hiển thị ' + visible.length + '/' + allCards.length.toLocaleString('vi-VN') + ' thẻ. Có thể tìm theo từ hoặc bài học.';
+      const more = pager.querySelector('#lfManageLoadMore');
+      if (more) more.hidden = visible.length >= (q ? matches : allCards.length);
     }
 
     function getQuizPool() {
