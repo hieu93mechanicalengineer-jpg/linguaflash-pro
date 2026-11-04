@@ -236,7 +236,7 @@
     }
     const summary = document.createElement('div');
     summary.className = 'lf-audio-run-title';
-    const state = last.status === 'complete' ? '✅ Đã kết thúc' : last.status === 'running' ? '⏳ Đang xử lý ở lần chạy trước' : '⚠️ Đã dừng / có lỗi';
+    const state = last.status === 'complete' ? '✅ Đã kết thúc' : last.status === 'running' ? '⚠️ Lần chạy trước chưa ghi nhận kết thúc' : '⚠️ Đã dừng / có lỗi';
     const stamp = new Date(last.updatedAt || Date.now()).toLocaleString('vi-VN');
     summary.textContent = state + ' · ' + stamp + ' · Đã tạo ' + (last.generated || 0) + '/' + (last.target || 0) + ' · Lỗi ' + (last.failed || 0);
     host.appendChild(summary);
@@ -451,14 +451,32 @@
     const style = document.createElement('style');
     style.id = 'lfAudioBulkAdminStyle';
     style.textContent = `
-      #${PANEL_ID}{display:none;width:100%;margin-top:9px;padding:10px;border:1px solid #dbe3ef;border-radius:13px;background:#f8fafc;box-sizing:border-box}
+      #${PANEL_ID}{display:none;width:100%;margin-top:14px;padding:16px;border:1px solid #c7d2fe;border-radius:15px;background:#f8faff;box-sizing:border-box}
       #${PANEL_ID}.on{display:block}
-      .lf-audio-bulk-title{font-size:.76rem;font-weight:950;color:#334155;margin-bottom:7px}
-      .lf-audio-bulk-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-      .lf-audio-bulk-actions button{min-height:42px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:#334155;font-size:.72rem;font-weight:900;padding:6px;touch-action:manipulation}
-      .lf-audio-bulk-actions button[data-bulk='both']{background:#4f46e5;border-color:#4f46e5;color:#fff}
-      #${STATUS_ID}{margin-top:7px;font-size:.68rem;line-height:1.4;font-weight:750;color:#64748b}
-      @media(max-width:767px){.lf-audio-bulk-actions{grid-template-columns:1fr}.lf-audio-bulk-actions button{font-size:.82rem;min-height:44px}}
+      .lf-audio-bulk-title{font-size:.87rem;font-weight:900;color:#1e293b;margin-bottom:9px}
+      .lf-audio-controls{display:grid;grid-template-columns:minmax(170px,1fr) auto;gap:9px;align-items:end}
+      .lf-audio-controls label,.lf-audio-lesson-picker label{font-size:.75rem;font-weight:800;color:#475569;display:block;margin-bottom:5px}
+      .lf-audio-controls select,.lf-audio-lesson-picker select{width:100%;padding:10px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;font-size:.83rem}
+      .lf-audio-controls button,.lf-audio-generate{padding:10px 14px;border-radius:10px;background:#4f46e5;color:#fff;font-weight:850;font-size:.82rem;min-height:43px}
+      .lf-audio-generate{width:100%;margin-top:11px;background:#047857}
+      #${PANEL_ID} button:disabled{opacity:.48;cursor:not-allowed}
+      .lf-audio-summary{margin-top:11px;padding:10px 12px;border:1px solid #dbeafe;border-radius:10px;background:#fff;color:#1e293b;font-size:.8rem;font-weight:800}
+      .lf-audio-lesson-picker{margin-top:12px}
+      .lf-audio-lesson-list{max-height:225px;overflow:auto;margin-top:9px;padding:3px 8px;border:1px solid #e2e8f0;border-radius:10px;background:#fff}
+      .lf-audio-lesson-row{display:flex;justify-content:space-between;gap:10px;padding:8px 3px;align-items:flex-start;font-size:.75rem;color:#475569;border-bottom:1px solid #f1f5f9}
+      .lf-audio-lesson-row:last-child{border-bottom:0}
+      .lf-audio-lesson-row strong{font-weight:800;color:#334155;overflow-wrap:anywhere}
+      .lf-audio-lesson-row span{flex:0 0 auto;font-weight:850}
+      #${STATUS_ID}{margin-top:12px;padding:11px 13px;border-radius:10px;background:#eef2ff;color:#3730a3;font-size:.8rem;line-height:1.55;font-weight:800;white-space:pre-wrap;overflow-wrap:anywhere}
+      #lfAudioProgress{margin-top:12px}
+      #lfAudioProgress progress{width:100%;height:11px;accent-color:#4f46e5}
+      #lfAudioProgressText{margin-top:3px;font-size:.78rem;font-weight:800;color:#475569}
+      #lfAudioRunReport{margin-top:8px;font-size:.75rem;color:#64748b}
+      #lfAudioRunReport .lf-audio-run-title{font-size:.79rem;color:#1e293b;font-weight:900;padding:7px 0}
+      #lfAudioRunReport .lf-audio-run-list{max-height:165px;overflow:auto;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:4px 9px}
+      #lfAudioRunReport p{margin-top:5px}
+      .lf-audio-note{font-size:.75rem;color:#64748b;margin-top:8px;line-height:1.5}
+      @media(max-width:640px){.lf-audio-controls{grid-template-columns:1fr}.lf-audio-controls button{width:100%}.lf-audio-lesson-row{flex-direction:column;gap:3px}.lf-audio-lesson-row span{flex:auto}}
     `;
     document.head.appendChild(style);
   }
@@ -477,7 +495,7 @@
       card.innerHTML = '<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">' +
         '<div><h3 class="text-base font-extrabold text-slate-900">🔊 Cập nhật âm thanh bài mới</h3>' +
         '<p class="text-xs sm:text-sm text-slate-500 mt-1">Tự tìm âm thanh HQ còn thiếu sau khi thêm bài. Không ghi đè âm thanh cũ.</p></div>' +
-        '<button id="lfAudioUpdateOpen" type="button" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shrink-0">🎙️ Cập nhật âm thanh</button></div>';
+        '<button id="lfAudioUpdateOpen" type="button" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shrink-0">🎙️ Kiểm tra / cập nhật</button></div>';
       const first = manage.firstElementChild;
       if (first) first.insertAdjacentElement('afterend', card);
       else manage.appendChild(card);
@@ -489,19 +507,36 @@
       panel = document.createElement('div');
       panel.id = PANEL_ID;
       panel.innerHTML =
-        '<div class="lf-audio-bulk-title">Chọn phạm vi · chỉ tạo âm thanh còn thiếu</div>' +
-        '<div class="lf-audio-bulk-actions">' +
-        '<button type="button" data-bulk="zh">🇨🇳 Hội thoại tiếng Trung mới</button>' +
-        '<button type="button" data-bulk="en">🇬🇧 Tiếng Anh mới</button>' +
-        '<button type="button" data-bulk="both">🌐 Cập nhật cả hai</button>' +
-        '</div>' +
-        '<div id="' + STATUS_ID + '">HeyGen Turbo Free · Trung chỉ lưu HQ hội thoại, Anh lưu HQ toàn bộ.</div>';
-      panel.addEventListener('click', event => {
-        const button = event.target.closest('button[data-bulk]');
-        if (button) run(button.dataset.bulk);
+        '<div class="lf-audio-bulk-title">🔍 Kiểm tra trước · chỉ tạo sau khi xác nhận</div>' +
+        '<div class="lf-audio-controls">' +
+        '<div><label for="lfAudioLanguage">1. Chọn ngôn ngữ</label>' +
+        '<select id="lfAudioLanguage"><option value="en">🇬🇧 Tiếng Anh (toàn bộ bài có trong thư viện)</option>' +
+        '<option value="zh">🇨🇳 Tiếng Trung (chỉ hội thoại)</option>' +
+        '<option value="both">🌐 Cả hai ngôn ngữ</option></select></div>' +
+        '<button id="lfAudioScan" type="button">🔎 1. Kiểm tra âm thanh</button></div>' +
+        '<div id="lfAudioScanSummary" class="lf-audio-summary">Chưa kiểm tra. Bấm "1. Kiểm tra âm thanh" để xem bài nào còn thiếu. Chưa tạo file nào.</div>' +
+        '<div class="lf-audio-lesson-picker"><label for="lfAudioLesson">Bài cần cập nhật (sau khi kiểm tra)</label>' +
+        '<select id="lfAudioLesson" disabled><option value="all">Tất cả bài tìm thấy</option></select></div>' +
+        '<div id="lfAudioLessonList" class="lf-audio-lesson-list" aria-label="Tình trạng âm thanh theo bài"></div>' +
+        '<button id="lfAudioGenerate" class="lf-audio-generate" type="button" disabled>🎙️ 2. Kiểm tra trước khi tạo</button>' +
+        '<p class="lf-audio-note">Bước 1 chỉ quét dữ liệu, không tốn lượt tạo. Bước 2 cần xác nhận HeyGen. Câu trùng giữa các bài chỉ tính một lần; tiếng Trung chỉ lưu HQ cho hội thoại.</p>' +
+        '<div id="lfAudioProgress" hidden><progress id="lfAudioProgressBar" value="0" max="1"></progress>' +
+        '<div id="lfAudioProgressText" aria-live="polite"></div></div>' +
+        '<div id="' + STATUS_ID + '" role="status" aria-live="polite">Sẵn sàng. Chọn ngôn ngữ rồi bấm "Kiểm tra".</div>' +
+        '<div class="lf-audio-bulk-title" style="margin-top:15px">📋 Nhật ký lần cập nhật gần nhất</div>' +
+        '<div id="lfAudioRunReport"></div>';
+      panel.querySelector('#lfAudioLanguage').addEventListener('change', () => {
+        latestScan = null;
+        renderScanReport();
+        setStatus('Đã thay đổi ngôn ngữ. Bấm "1. Kiểm tra" để lấy danh sách bài.');
       });
+      panel.querySelector('#lfAudioLesson').addEventListener('change', refreshGenerateButton);
+      panel.querySelector('#lfAudioScan').addEventListener('click', checkAudio);
+      panel.querySelector('#lfAudioGenerate').addEventListener('click', generateSelected);
+      renderRunReport();
     }
     if (panel.parentElement !== card) card.appendChild(panel);
+    renderScanReport();
 
     // A discoverable shortcut from Library; management hosts the actual controls.
     const libraryGrid = document.querySelector('#tab-library > .app-action-grid');
@@ -528,14 +563,14 @@
     panel.classList.toggle('on', !!forceOpen || !panel.classList.contains('on'));
     if (panel.classList.contains('on')) {
       if (!isAdmin) {
-        setStatus('🔒 Bạn cần đăng nhập bằng tài khoản quản trị để tạo âm thanh.');
+        setStatus('🔒 Bạn cần đăng nhập tài khoản quản trị để kiểm tra và tạo âm thanh.');
         void initAuth().then(ok => {
-          if (ok) setStatus('Sẵn sàng. Chọn ngôn ngữ để kiểm tra và tạo audio còn thiếu.');
+          if (ok) setStatus('Sẵn sàng. Bấm "1. Kiểm tra" để xem bài nào thiếu âm thanh; chưa tạo file nào.');
         });
       } else {
-        setStatus('Sẵn sàng. Chọn ngôn ngữ để kiểm tra audio còn thiếu.');
+        if (!latestScan && !running) setStatus('Sẵn sàng. Bấm "1. Kiểm tra" để xem bài nào còn thiếu; chưa tạo file nào.');
       }
-      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
