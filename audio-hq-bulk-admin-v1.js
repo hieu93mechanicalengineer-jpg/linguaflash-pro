@@ -18,6 +18,7 @@
   let session = null;
   let isAdmin = false;
   let running = false;
+  let authSubscribed = false;
 
   const normEn = value => String(value || '').replace(/[’]/g, "'").replace(/\s+/g, ' ').trim().toLowerCase();
   const normZh = value => String(value || '').replace(/\s+/g, ' ').trim();
@@ -214,11 +215,36 @@
   }
 
   async function run(scope) {
-    if (running || !isAdmin || !session?.access_token) return;
+    if (running) return;
+    if (!isAdmin || !session?.access_token) {
+      setStatus('🔒 Đăng nhập bằng tài khoản quản trị để cập nhật âm thanh.', 'error');
+      if (!session?.user && typeof window.lfOpenAuthModal === 'function') window.lfOpenAuthModal();
+      return;
+    }
     running = true;
     document.querySelectorAll(`#${PANEL_ID} button`).forEach(b => b.disabled = true);
     try {
       const all = await collectAll();
+      const languages = scope === 'both' ? ['zh', 'en'] : scope === 'en' || scope === 'zh' ? [scope] : [];
+      if (!languages.length) throw new Error('Vui lòng chọn ngôn ngữ cần cập nhật.');
+      const checks = await Promise.all(languages.map(async lang => {
+        const eligible = lang === 'zh' ? all.zh.filter(item => item.content_type === 'dialogue') : all.en;
+        const existing = await existingSet(lang);
+        const norm = lang === 'zh' ? normZh : normEn;
+        const missing = eligible.filter(item => !existing.has(norm(item.text))).length;
+        return { lang, total: eligible.length, missing };
+      }));
+      const totalMissing = checks.reduce((sum, item) => sum + item.missing, 0);
+      const detail = checks.map(item => (item.lang === 'zh' ? 'Trung (hội thoại)' : 'Anh') + ': ' + item.missing + '/' + item.total + ' còn thiếu').join(' · ');
+      if (!totalMissing) {
+        setStatus('✅ Đã kiểm tra: không có âm thanh mới cần tạo. ' + detail, 'ok');
+        return;
+      }
+      setStatus('Đã kiểm tra: ' + detail);
+      if (!window.confirm('Phát hiện ' + totalMissing + ' âm thanh còn thiếu.\\n' + detail + '\\n\\nTạo bằng HeyGen Turbo Free? Chỉ tạo mục thiếu, không ghi đè mục đã có. Quá trình có thể sử dụng hạn mức HeyGen.')) {
+        setStatus('Đã kiểm tra nhưng chưa tạo. ' + detail);
+        return;
+      }
       const parts = [];
       if (scope === 'zh' || scope === 'both') {
         const r = await generateLanguage('zh', all.zh);
@@ -255,51 +281,109 @@
     document.head.appendChild(style);
   }
 
+
+  // Keep bulk audio tools in management, not above the learning cards.
   function ensurePanel() {
-    if (!isAdmin) return;
+    const manage = document.getElementById('tab-manage');
+    if (!manage) return;
+
+    let card = document.getElementById('lfAudioUpdateCard');
+    if (!card) {
+      card = document.createElement('div');
+      card.id = 'lfAudioUpdateCard';
+      card.className = 'bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-indigo-100';
+      card.innerHTML = '<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">' +
+        '<div><h3 class="text-base font-extrabold text-slate-900">🔊 Cập nhật âm thanh bài mới</h3>' +
+        '<p class="text-xs sm:text-sm text-slate-500 mt-1">Tự tìm âm thanh HQ còn thiếu sau khi thêm bài. Không ghi đè âm thanh cũ.</p></div>' +
+        '<button id="lfAudioUpdateOpen" type="button" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shrink-0">🎙️ Cập nhật âm thanh</button></div>';
+      const first = manage.firstElementChild;
+      if (first) first.insertAdjacentElement('afterend', card);
+      else manage.appendChild(card);
+      card.querySelector('#lfAudioUpdateOpen')?.addEventListener('click', () => openPanel(false));
+    }
+
     let panel = document.getElementById(PANEL_ID);
     if (!panel) {
       panel = document.createElement('div');
       panel.id = PANEL_ID;
-      panel.innerHTML = `
-        <div class="lf-audio-bulk-title">🎙️ HQ Audio · Trung chỉ HỘI THOẠI · Anh toàn bộ · bỏ qua file đã có</div>
-        <div class="lf-audio-bulk-actions">
-          <button type="button" data-bulk="zh">🇨🇳 Tạo toàn bộ HỘI THOẠI Trung</button>
-          <button type="button" data-bulk="en">🇬🇧 Tạo toàn bộ tiếng Anh</button>
-          <button type="button" data-bulk="both">🌐 Tạo cả hai theo chính sách trên</button>
-        </div>
-        <div id="${STATUS_ID}">Admin only · Turbo Free · tiếng Trung không tạo HQ cho vocab/example/card mới.</div>`;
+      panel.innerHTML =
+        '<div class="lf-audio-bulk-title">Chọn phạm vi · chỉ tạo âm thanh còn thiếu</div>' +
+        '<div class="lf-audio-bulk-actions">' +
+        '<button type="button" data-bulk="zh">🇨🇳 Hội thoại tiếng Trung mới</button>' +
+        '<button type="button" data-bulk="en">🇬🇧 Tiếng Anh mới</button>' +
+        '<button type="button" data-bulk="both">🌐 Cập nhật cả hai</button>' +
+        '</div>' +
+        '<div id="' + STATUS_ID + '">HeyGen Turbo Free · Trung chỉ lưu HQ hội thoại, Anh lưu HQ toàn bộ.</div>';
       panel.addEventListener('click', event => {
         const button = event.target.closest('button[data-bulk]');
         if (button) run(button.dataset.bulk);
       });
     }
+    if (panel.parentElement !== card) card.appendChild(panel);
 
-    const filterBox = document.querySelector('#tab-study > .bg-white:first-child');
-    const chinesePanel = document.getElementById('lfChineseAudioAdminPanel');
-    if (chinesePanel?.parentElement) chinesePanel.insertAdjacentElement('afterend', panel);
-    else if (filterBox) filterBox.appendChild(panel);
-    panel.classList.add('on');
+    // A discoverable shortcut from Library; management hosts the actual controls.
+    const libraryGrid = document.querySelector('#tab-library > .app-action-grid');
+    if (libraryGrid && !document.getElementById('lfAudioUpdateLibraryLink')) {
+      const shortcut = document.createElement('button');
+      shortcut.type = 'button';
+      shortcut.id = 'lfAudioUpdateLibraryLink';
+      shortcut.className = 'app-action';
+      shortcut.innerHTML = '<div class="app-action-icon">🎙️</div>' +
+        '<div class="app-action-title">Cập nhật âm thanh</div>' +
+        '<div class="app-action-desc">Tạo giọng đọc cho bài mới, tự bỏ qua âm thanh đã có.</div>';
+      shortcut.addEventListener('click', () => {
+        if (typeof window.switchTab === 'function') window.switchTab('manage');
+        openPanel(true);
+      });
+      libraryGrid.appendChild(shortcut);
+    }
+  }
+
+  function openPanel(forceOpen) {
+    ensurePanel();
+    const panel = document.getElementById(PANEL_ID);
+    if (!panel) return;
+    panel.classList.toggle('on', !!forceOpen || !panel.classList.contains('on'));
+    if (panel.classList.contains('on')) {
+      if (!isAdmin) {
+        setStatus('🔒 Bạn cần đăng nhập bằng tài khoản quản trị để tạo âm thanh.');
+        void initAuth().then(ok => {
+          if (ok) setStatus('Sẵn sàng. Chọn ngôn ngữ để kiểm tra và tạo audio còn thiếu.');
+        });
+      } else {
+        setStatus('Sẵn sàng. Chọn ngôn ngữ để kiểm tra audio còn thiếu.');
+      }
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }
 
   async function initAuth() {
     if (!cfg.url || !cfg.anonKey || !window.supabase?.createClient) return false;
     try {
-      client = window.supabase.createClient(cfg.url, cfg.anonKey, {
-        auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
-      });
+      if (!client) {
+        client = window.supabase.createClient(cfg.url, cfg.anonKey, {
+          auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+        });
+      }
+      if (!authSubscribed) {
+        authSubscribed = true;
+        client.auth.onAuthStateChange((_event, nextSession) => {
+          session = nextSession || null;
+          isAdmin = false;
+          setTimeout(() => { void initAuth(); }, 60);
+        });
+      }
       const { data } = await client.auth.getSession();
       session = data?.session || null;
-      if (!session?.user) return false;
+      if (!session?.user) { isAdmin = false; return false; }
       const { data: admin, error } = await client
         .from('linguaflash_admins')
         .select('role')
         .eq('user_id', session.user.id)
         .maybeSingle();
-      if (error || !admin) return false;
-      isAdmin = true;
+      isAdmin = !error && !!admin;
       ensurePanel();
-      return true;
+      return isAdmin;
     } catch (error) {
       console.warn('[HQ Bulk] admin init skipped', error);
       return false;
@@ -308,11 +392,12 @@
 
   function init() {
     installStyle();
+    ensurePanel();
     let attempts = 0;
     const timer = setInterval(async () => {
       attempts++;
       if (!isAdmin && window.supabase?.createClient) await initAuth();
-      if (isAdmin) ensurePanel();
+      ensurePanel();
       if (isAdmin || attempts >= 50) clearInterval(timer);
     }, 300);
   }
@@ -322,6 +407,7 @@
 
   window.LFAudioHQBulkAdmin = {
     run,
+    open: () => openPanel(true),
     policy: { zh: 'dialogue-only', en: 'full-library' },
     canGenerate: () => isAdmin && !!session?.access_token
   };
