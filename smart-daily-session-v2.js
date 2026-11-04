@@ -141,19 +141,33 @@
     const unit = window.lfPendingUnit2?.();
     const session = unit ? {topic:'Unit 2 · She Is a Poodle'} : window.lfPendingSession?.();
     const lang = typeof currentUiLang === 'string' ? currentUiLang : 'vi';
-    const labels = ({vi:['Học tiếp','Chọn bài khác'], en:['Continue learning','Choose a lesson'], zh:['继续学习','选择课程']})[lang] || ['Học tiếp','Chọn bài khác'];
-    const title = session ? labels[0] : plan.goalsComplete ? t.done : t.title;
-    const detail = session && session.topic !== 'ALL' ? session.topic : t.goal(plan.reviewRemaining,plan.newRemaining);
-    el.innerHTML = `<h2 class="text-2xl sm:text-3xl font-bold mt-2"></h2><p class="mt-2"></p><div class="flex flex-wrap gap-2 mt-4"><button type="button" class="app-primary-btn"></button><button type="button" class="app-secondary-btn"></button></div>`;
-    el.querySelector('h2').textContent = title;
-    el.querySelector('p').textContent = detail;
-    const [primary, choose] = el.querySelectorAll('button');
-    const chooseLesson = () => { switchTab('study'); document.getElementById('studyTopicFilter')?.focus(); };
-    primary.textContent = session ? labels[0] : plan.deck.length ? t.start(plan.minutes) : labels[1];
-    primary.onclick = unit ? window.lfResumeUnit2 : session ? () => window.lfContinuePendingSession() : plan.deck.length ? openSmartDaily : chooseLesson;
-    choose.textContent = labels[1];
-    choose.hidden = !session && !plan.deck.length;
-    choose.onclick = chooseLesson;
+    const copy = ({
+      vi: {empty:'Hôm nay chưa có thẻ đến hạn', due:n=>'Ôn '+n+' thẻ đến hạn', resume:'Học tiếp bài gần nhất', choose:'Chọn bài khác'},
+      en: {empty:'No cards are due now', due:n=>'Review '+n+' due cards', resume:'Continue last lesson', choose:'Choose a lesson'},
+      zh: {empty:'目前没有到期卡片', due:n=>'复习 '+n+' 张到期卡片', resume:'继续上次课程', choose:'选择课程'}
+    })[lang] || {empty:'Hôm nay chưa có thẻ đến hạn', due:n=>'Ôn '+n+' thẻ đến hạn', resume:'Học tiếp bài gần nhất', choose:'Chọn bài khác'};
+    const counter = document.getElementById('headerDueCount');
+    const due = Number(counter?.textContent) || 0;
+    const last = window.lfLastStudyLesson?.();
+    const resume = unit ? window.lfResumeUnit2 : session ? window.lfContinuePendingSession : last ? window.lfOpenLastStudyLesson : null;
+    el.innerHTML = '<h2 class="text-2xl sm:text-3xl font-bold mt-2"></h2><p class="mt-2"></p><p class="mt-1 text-sm"></p><div class="flex flex-wrap gap-2 mt-4"></div>';
+    el.querySelector('h2').textContent = t.title;
+    const [schedule, goal] = el.querySelectorAll('p');
+    schedule.textContent = due ? copy.due(due) : copy.empty;
+    goal.textContent = t.goal(plan.reviewRemaining,plan.newRemaining);
+    const actions = el.lastElementChild;
+    function action(label, run) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = actions.childElementCount ? 'app-secondary-btn' : 'app-primary-btn';
+      button.textContent = label;
+      button.onclick = run;
+      actions.appendChild(button);
+    }
+    if (due) action(copy.due(due), () => counter.closest('button').click());
+    if (resume) action(copy.resume, resume);
+    if (plan.deck.length && !resume) action(t.start(plan.minutes), openSmartDaily);
+    action(copy.choose, () => { switchTab('study'); document.getElementById('studyTopicFilter')?.focus(); });
 
   }
 
@@ -230,6 +244,8 @@
 
   function init(){
     injectFocusStyle();ensureFocusBar();patchRuntime();renderHomeCard();
+    const counter = document.getElementById('headerDueCount');
+    if (counter) new MutationObserver(renderHomeCard).observe(counter,{childList:true,characterData:true,subtree:true});
     ['studyLangFilter','studyCategoryFilter','studyTopicFilter','studyDueOnly'].forEach(id=>document.getElementById(id)?.addEventListener('change',()=>{activeSummary=null;if(document.body.classList.contains(FOCUS_CLASS))exitFocus();setTimeout(renderHomeCard,0);}));
     ['dailyNewLimit','dailyReviewLimit','dailyReviewMode'].forEach(id=>document.getElementById(id)?.addEventListener('change',()=>setTimeout(renderHomeCard,0)));
     window.addEventListener('storage',()=>setTimeout(renderHomeCard,50));

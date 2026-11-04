@@ -257,6 +257,18 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
   else start();
 
+  window.lfLastStudyLesson = () => {
+    const saved = readLocal();
+    return saved?.topic && saved.topic !== 'ALL' ? saved : null;
+  };
+  window.lfOpenLastStudyLesson = async () => {
+    const saved = window.lfLastStudyLesson();
+    if (!saved) return;
+    switchTab('study');
+    await ensureCategoryLoaded(saved.category);
+    applyFiltersFromSession(saved);
+    applyStudyFilters();
+  };
   window.lfPendingSession = () => {
     const s = readLocal();
     if (!s || s.day !== dayKey() || !s.deckIds?.length) return null;

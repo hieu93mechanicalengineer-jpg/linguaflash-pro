@@ -49,10 +49,13 @@
   function pairKey(en){ return `${lessonKey()}::${en}`; }
 
   function modeBar(){
+    const source = chinese() ? 'Trung' : 'Anh';
+    const reference = chinese() ? ({VI:'Việt',EN:'Anh','VI/EN':'Việt + Anh'}[window.lfChineseStudy.refCode]) : 'Việt';
+    const options = [['en-vi',source+' → '+reference+' · Lật thẻ'],['vi-en',reference+' → '+source],['listen','Nghe '+source+' · Chép lại']];
+    const phonetic = document.getElementById('togglePhonetic');
     return `<div class="lf51rt-modes">
-      <button type="button" class="lf51rt-mode ${mode==='en-vi'?'active':''}" data-rt-mode="en-vi">${chinese()?'🇨🇳 ZH → '+window.lfChineseStudy.refCode:'🇬🇧 EN → VI'}</button>
-      <button type="button" class="lf51rt-mode ${mode==='vi-en'?'active':''}" data-rt-mode="vi-en">${chinese()?window.lfChineseStudy.refCode+' → ZH':'🇻🇳 VI → EN'}</button>
-      <button type="button" class="lf51rt-mode ${mode==='listen'?'active':''}" data-rt-mode="listen">🎧 Listening</button>
+      <select class="lf51rt-mode" aria-label="Hướng học" data-rt-direction>${options.map(([value,label])=>`<option value="${value}" ${mode===value?'selected':''}>${label}</option>`).join('')}</select>
+      ${phonetic?`<label class="lf51rt-mode"><input type="checkbox" data-rt-phonetic ${phonetic.checked?'checked':''}> ${chinese()?'Pinyin':'IPA'}</label>`:''}
     </div>`;
   }
 
@@ -135,7 +138,7 @@
       const choices = choicePanel(card);
       if (choices) {
         const input = card.querySelector('#lf51rtInput');
-        input.insertAdjacentHTML('beforebegin', `<div class="lf51rt-actions"><button type="button" class="lf51d-btn soft" data-rt-toggle>${useChoices?'Chuyển sang nhập':'Chọn đáp án'}</button></div>`);
+        card.querySelector('[data-rt-direction]').insertAdjacentHTML('afterend', `<select aria-label="Cách trả lời" class="lf51rt-mode" data-rt-method><option value="type">Nhập đáp án</option><option value="choice" ${useChoices?'selected':''}>Chọn đáp án</option></select>`);
         if (useChoices) {
           input.hidden = true;
           card.querySelector('[data-rt-check]').hidden = true;
@@ -286,6 +289,21 @@
 
   function bind(){
     const r=root(); if(!r || r.dataset.rtBound) return; r.dataset.rtBound='1';
+    r.addEventListener('change', e => {
+      if (e.target.matches('[data-rt-direction]')) setMode(e.target.value);
+      if (e.target.matches('[data-rt-method]')) {
+        useChoices = e.target.value === 'choice';
+        setMode(mode);
+      }
+      if (e.target.matches('[data-rt-phonetic]')) {
+        const original = document.getElementById('togglePhonetic');
+        if (original && original.checked !== e.target.checked) original.click();
+      }
+    });
+    document.getElementById('togglePhonetic')?.addEventListener('change', e => {
+      const local = r.querySelector('[data-rt-phonetic]');
+      if (local) local.checked = e.target.checked;
+    });
     r.addEventListener('click',e=>{
       const grade=e.target.closest('[data-rt-grade]');
       if(grade){
