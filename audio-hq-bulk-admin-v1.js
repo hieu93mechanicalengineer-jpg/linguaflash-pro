@@ -183,7 +183,7 @@
         Authorization: `Bearer ${session?.access_token || ''}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ model: MODEL, items: safeItems })
+      body: JSON.stringify({ model: MODEL, items: safeItems.map(item => ({ audio_key:item.audio_key, lesson_id:item.lesson_id, content_type:item.content_type, text:item.text })) })
     });
     const raw = await response.text();
     let payload = null;
