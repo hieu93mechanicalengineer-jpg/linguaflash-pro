@@ -43,7 +43,7 @@
   document.write('<script src="./english-unit2-study-cards-v1.js?v=105"><\/script>');
   document.write('<script src="./data/business-elementary1-unit1.js?v=119"><\/script>');
   document.write('<script src="./data/english-level2-u5-u6-l2.js?v=119"><\/script>');
-  document.write('<script src="./app-core.js?v=117"><\/script>');
+  document.write('<script src="./app-core.js?v=123"><\/script>');
 
   document.write('<script src="./audio-native-bridge-v1.js?v=105"><\/script>');
   document.write('<script src="./english-hq-audio-v1.js?v=117"><\/script>');
@@ -70,7 +70,7 @@
     document.write('<script src="./english-desktop-unit2-bridge-v1.js?v=119"><\/script>');
   }
 
-  document.write('<script src="./audio-hq-bulk-admin-v1.js?v=122"><\/script>');
+  document.write('<script src="./audio-hq-bulk-admin-v1.js?v=123"><\/script>');
   document.write('<script src="./chinese-dialogue-hq-status-v1.js?v=105"><\/script>');
   document.write('<script src="./english-dialogue-transcript-v1.js?v=117"><\/script>');
   document.write('<script src="./study-session-v1.js?v=120"><\/script>');
