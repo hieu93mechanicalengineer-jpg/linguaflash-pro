@@ -33,6 +33,7 @@ const CORE_ASSETS = [
   './data/youtube-podcast.js',
   './app.js',
   './data/business-elementary1-unit1.js?v=119',
+  './data/english-level2-u5-u6-l2.js?v=125',
   './app-core.js',
   './chinese-study-workspace.js?v=119',
   './english-unit2-data-v1.js',

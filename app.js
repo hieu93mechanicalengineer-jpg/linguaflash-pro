@@ -42,7 +42,7 @@
   document.write('<script src="./data/english-51talk-lessons-v1.js?v=105"><\/script>');
   document.write('<script src="./english-unit2-study-cards-v1.js?v=105"><\/script>');
   document.write('<script src="./data/business-elementary1-unit1.js?v=119"><\/script>');
-  document.write('<script src="./data/english-level2-u5-u6-l2.js?v=119"><\/script>');
+  document.write('<script src="./data/english-level2-u5-u6-l2.js?v=125"><\/script>');
   document.write('<script src="./app-core.js?v=123"><\/script>');
 
   document.write('<script src="./audio-native-bridge-v1.js?v=105"><\/script>');
@@ -55,7 +55,7 @@
   document.write('<script src="./english-class158-health-data-v1.js?v=105"><\/script>');
 
   if (mobile) {
-    document.write('<script src="./english-mobile-lessons-v1.js?v=110"><\/script>');
+    document.write('<script src="./english-mobile-lessons-v1.js?v=125"><\/script>');
     document.write('<script src="./english-mobile-51talk-entry-v1.js?v=105"><\/script>');
     document.write('<script src="./english-mobile-practice-v1.js?v=105"><\/script>');
     document.write('<script src="./english-mobile-practice-layout-fix-v1.js?v=105"><\/script>');

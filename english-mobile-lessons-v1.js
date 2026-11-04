@@ -16,7 +16,12 @@
   }[ch]));
 
   const LESSONS = {
-    ...window.LF51_LEVEL2_LESSONS,
+    ...Object.fromEntries(Object.entries(window.LF51_LEVEL2_LESSONS || {}).map(([id, lesson]) => [id,
+      lesson.ipa ? { ...lesson,
+        examples: lesson.examples.map(([, en, vi]) => [en, lesson.ipa[en], vi]),
+        dialogue: lesson.dialogue.map(([role, en, vi]) => [role, en, lesson.ipa[en], vi])
+      } : lesson
+    ])),
     health: {
       id: 'health',
       unit: 'Bài hiện tại',

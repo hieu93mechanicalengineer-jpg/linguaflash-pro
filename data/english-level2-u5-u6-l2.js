@@ -484,7 +484,730 @@
         "He has blonde hair, blue eyes, and fair skin. He's really cute. → No, he is short and slim."
       ]
     ]
+  },
+{
+  "id": "classicL4U5L1",
+  "unit": "Level 4 · Unit 5 · Lesson 1",
+  "level": "51Talk · Level 4",
+  "title": "The Post Office Opens at Nine",
+  "subtitle": "Mail service · Hỏi giờ mở cửa, đóng cửa và cách gửi thư",
+  "vocab": [
+    [
+      "opening time",
+      "/ˈəʊp(ə)nɪŋ taɪm/",
+      "Giờ mở cửa, thời gian bắt đầu làm việc",
+      "Trọng tâm · Cách dùng: The opening time of the bank is from 11 a.m. to 4 p.m. Đồng nghĩa (Trang 1): opening hours, business hours · Trái nghĩa (Trang 8): closing time /ˈkləʊzɪŋ taɪm/ (giờ đóng cửa)"
+    ],
+    [
+      "geography class",
+      "/dʒiˈɒɡrəfi klɑːs/",
+      "Tiết học Địa lý",
+      "Trọng tâm · Chú ý trọng âm: Từ geography /dʒiˈɒɡrəfi/ có 4 âm tiết, nhấn trọng âm vào âm tiết thứ 2 (-og-). Cụm động từ đi kèm: have a geography class (có tiết Địa lý), miss my geography class (bỏ lỡ tiết Địa lý) Anh-Mỹ: class /klæs/."
+    ],
+    [
+      "mailbox",
+      "/ˈmeɪlbɒks/",
+      "Hòm thư, thùng thư bưu điện",
+      "Trọng tâm · Cách dùng: Số nhiều thêm -es → mailboxes /ˈmeɪlbɒksɪz/. Cụm đi kèm: drop it into the mailbox, leave it in a mailbox. Đồng nghĩa (Anh-Anh): postbox /ˈpəʊstbɒks/, letterbox"
+    ],
+    [
+      "envelope",
+      "/ˈenvələʊp/",
+      "Phong bì, bao thư",
+      "Trọng tâm · Cách dùng: Dùng giới từ on khi viết địa chỉ hoặc dán tem lên bề mặt phong bì: write the address down on the envelope · put a stamp on the envelope (bỏ thư vào trong dùng in the envelope)."
+    ],
+    [
+      "put a stamp on",
+      "/pʊt ə stæmp ɒn/",
+      "Dán tem lên",
+      "Trọng tâm · Chia động từ: Động từ put giữ nguyên ở cả 3 cột (put – put – put). Trong bài: Tracy put a stamp on the card · Why don't you just put a stamp on the envelope?"
+    ],
+    [
+      "post office",
+      "/ˈpəʊst ɒfɪs/",
+      "Bưu điện",
+      "Mở rộng · Tiêu đề bài học: The post office opens at nine. Nhân viên đưa thư (Trang 5) gọi là mailman /ˈmeɪlmæn/ (hoặc postman)."
+    ],
+    [
+      "mail service",
+      "/meɪl ˈsɜːvɪs/",
+      "Dịch vụ bưu chính",
+      "Mở rộng · Tiêu đề bài học: The post office opens at nine. Nhân viên đưa thư (Trang 5) gọi là mailman /ˈmeɪlmæn/ (hoặc postman)."
+    ],
+    [
+      "a.m.",
+      "/ˌeɪ ˈem/",
+      "Giờ buổi sáng (trước trưa)",
+      "Mở rộng · Cách nói giờ (Trang 2): 9 a.m. = nine in the morning; 5 p.m. = five in the afternoon. half past eight = 8 giờ 30 phút (8:30)."
+    ],
+    [
+      "p.m.",
+      "/ˌpiː ˈem/",
+      "Giờ sau buổi trưa",
+      "Mở rộng · Cách nói giờ (Trang 2): 9 a.m. = nine in the morning; 5 p.m. = five in the afternoon. half past eight = 8 giờ 30 phút (8:30)."
+    ],
+    [
+      "half past",
+      "/hɑːf pɑːst/",
+      "… giờ rưỡi",
+      "Mở rộng · Cách nói giờ (Trang 2): 9 a.m. = nine in the morning; 5 p.m. = five in the afternoon. half past eight = 8 giờ 30 phút (8:30)."
+    ],
+    [
+      "I have no idea.",
+      "/aɪ hæv nəʊ aɪˈdɪə/",
+      "Tôi hoàn toàn không biết.",
+      "Mở rộng · Cách dùng: Cách nói tự nhiên thay thế cho \"I don't know\" khi ai đó hỏi thông tin mà bạn chưa rõ."
+    ],
+    [
+      "overseas student",
+      "/ˌəʊvəˈsiːz ˈstjuːdnt/",
+      "Du học sinh",
+      "Mở rộng · Bối cảnh hội thoại (Trang 4): Chris là an overseas student (du học sinh), đang trò chuyện cùng bạn cùng lớp James on campus (luôn dùng giới từ on)."
+    ],
+    [
+      "on campus",
+      "/ɒn ˈkæmpəs/",
+      "Trong khuôn viên trường",
+      "Mở rộng · Bối cảnh hội thoại (Trang 4): Chris là an overseas student (du học sinh), đang trò chuyện cùng bạn cùng lớp James on campus (luôn dùng giới từ on)."
+    ],
+    [
+      "as soon as possible",
+      "/æz suːn æz ˈpɒsəbl/",
+      "Càng sớm càng tốt (ASAP)",
+      "Mở rộng · Trong bài (Trang 5): I need to send an important letter as soon as possible. (Trong email công việc thường viết tắt là ASAP)."
+    ],
+    [
+      "collect the mail",
+      "/kəˈlekt ðə meɪl/",
+      "Thu gom thư từ",
+      "Mở rộng · Trong bài (Trang 5 & 10): The mailman collects the mail twice a day, at 10 a.m. and 4 p.m. (1 lần/ngày: once a day; 3 lần/ngày: three times a day)."
+    ],
+    [
+      "twice a day",
+      "/twaɪs ə deɪ/",
+      "Hai lần một ngày",
+      "Mở rộng · Trong bài (Trang 5 & 10): The mailman collects the mail twice a day, at 10 a.m. and 4 p.m. (1 lần/ngày: once a day; 3 lần/ngày: three times a day)."
+    ],
+    [
+      "write down",
+      "/raɪt daʊn/",
+      "Viết hoặc ghi lại",
+      "Mở rộng · Trong bài (Trang 3): write the address down on the envelope (ghi địa chỉ lên phong bì; âm w trong write là âm câm) · dropped it into the mailbox."
+    ],
+    [
+      "drop into",
+      "/drɒp ˈɪntuː/",
+      "Thả vào trong",
+      "Mở rộng · Trong bài (Trang 3): write the address down on the envelope (ghi địa chỉ lên phong bì; âm w trong write là âm câm) · dropped it into the mailbox."
+    ],
+    [
+      "Not at all.",
+      "/nɒt æt ɔːl/",
+      "Không có chi.",
+      "Mở rộng · Cách dùng: Đáp lại lịch sự khi người khác nói \"Thank you\" (đồng nghĩa với: You're welcome, No problem, My pleasure)."
+    ],
+    [
+      "closing time",
+      "/ˈkləʊzɪŋ taɪm/",
+      "Giờ đóng cửa",
+      "Mở rộng · Trái nghĩa với opening time. The closing time is 5:00 p.m."
+    ]
+  ],
+  "examples": [
+    [
+      "opening time",
+      "The opening time of the bank on Sunday is from 11 a.m. to 4 p.m.",
+      "Giờ mở cửa của ngân hàng vào Chủ nhật là từ 11 giờ sáng đến 4 giờ chiều."
+    ],
+    [
+      "geography class",
+      "The kids are having a geography class with Miss Lee now.",
+      "Hiện giờ bọn trẻ đang học tiết Địa lý với cô Lee."
+    ],
+    [
+      "mailbox",
+      "There is a red mailbox outside my building.",
+      "Có một thùng thư màu đỏ ở bên ngoài tòa nhà của tôi."
+    ],
+    [
+      "envelope",
+      "I need to write the address down on the envelope.",
+      "Tôi cần viết địa chỉ lên trên chiếc phong bì."
+    ],
+    [
+      "put a stamp on",
+      "Tracy put a stamp on the card to her grandpa and dropped it into the mailbox.",
+      "Tracy đã dán tem lên tấm thiệp gửi ông của cô bé rồi bỏ nó vào thùng thư."
+    ],
+    [
+      "Mẫu 1 · Bưu điện",
+      "Do you know when the post office opens and closes?",
+      "Bạn có biết bưu điện mở cửa và đóng cửa lúc mấy giờ không?"
+    ],
+    [
+      "Mẫu 1 · Trả lời",
+      "It opens at 9:00 a.m. and closes at 5:00 p.m.",
+      "Bưu điện mở lúc 9 giờ sáng và đóng lúc 5 giờ chiều."
+    ],
+    [
+      "Mẫu 2 · Ngân hàng",
+      "Do you know when the bank opens?",
+      "Bạn có biết ngân hàng mở cửa lúc mấy giờ không?"
+    ],
+    [
+      "Mẫu 2 · Trả lời",
+      "It opens at 8:30 a.m. and closes at 4:30 p.m.",
+      "Ngân hàng mở lúc 8 giờ rưỡi sáng và đóng lúc 4 giờ rưỡi chiều."
+    ],
+    [
+      "Mẫu 3 · Thư viện / siêu thị",
+      "Do you know when the library closes?",
+      "Bạn có biết thư viện đóng cửa lúc mấy giờ không?"
+    ],
+    [
+      "Mẫu 3 · Thay địa điểm",
+      "Do you know when the supermarket closes?",
+      "Bạn có biết siêu thị đóng cửa lúc mấy giờ không?"
+    ],
+    [
+      "Mẫu 3 · Trả lời",
+      "It closes at 9:00 p.m.",
+      "Nơi đó đóng cửa lúc 9 giờ tối."
+    ],
+    [
+      "Đọc hiểu 1",
+      "What suggestion does James give Chris?",
+      "James gợi ý gì cho Chris?"
+    ],
+    [
+      "Đọc hiểu 1 · Đáp",
+      "The suggestion is to put a stamp on the envelope and leave it in a mailbox at the school gate now.",
+      "James gợi ý dán tem lên phong bì rồi bỏ ngay vào hòm thư ở cổng trường."
+    ],
+    [
+      "Đọc hiểu 2",
+      "How often does the mailman collect the mail from a mailbox?",
+      "Người đưa thư lấy thư trong hòm bao lâu một lần?"
+    ],
+    [
+      "Đọc hiểu 2 · Đáp",
+      "The mailman collects the mail twice a day, at 10 a.m. and 4 p.m.",
+      "Người đưa thư thu gom thư hai lần mỗi ngày, lúc 10 giờ sáng và 4 giờ chiều."
+    ]
+  ],
+  "grammar": [
+    [
+      "Do you know when…?",
+      "Trong câu hỏi gián tiếp, giữ thứ tự chủ ngữ + động từ. Do you know when the bank opens and closes? Chủ ngữ số ít đi với opens / closes."
+    ],
+    [
+      "Tần suất và giờ",
+      "The mailman collects the mail twice a day, at 10 a.m. and 4 p.m. Có thể thay bằng at 9 a.m. and 3 p.m."
+    ],
+    [
+      "Why don’t you (just) + động từ nguyên mẫu…?",
+      "Gợi ý thân thiện: Why don't you just put a stamp on the envelope and leave it in a mailbox now?"
+    ],
+    [
+      "Be different from",
+      "The opening time is a bit different from that in my country. That thay cho the opening time để tránh lặp."
+    ],
+    [
+      "Hiện tại tiếp diễn",
+      "The kids are having a geography class with Miss Lee now. Dùng are having cho hoạt động đang diễn ra."
+    ],
+    [
+      "Điền từ · Trang 7",
+      "The opening time is a bit different… → Why don't you just put a stamp on the envelope and leave it in a mailbox now?"
+    ],
+    [
+      "Word tips · Speak Out",
+      "opening time / closing time · stamp · envelope · leave in the mailbox · twice a day"
+    ]
+  ],
+  "dialogue": [
+    [
+      "Chris",
+      "James, do you know when the post office opens and closes?",
+      "James ơi, bạn có biết bưu điện mở cửa và đóng cửa lúc mấy giờ không?"
+    ],
+    [
+      "James",
+      "It opens at nine in the morning and closes at five in the afternoon.",
+      "Bưu điện mở cửa lúc 9 giờ sáng và đóng cửa lúc 5 giờ chiều."
+    ],
+    [
+      "Chris",
+      "I see. The opening time is a bit different from that in my country.",
+      "Mình hiểu rồi. Giờ mở cửa hơi khác một chút so với ở đất nước của mình."
+    ],
+    [
+      "James",
+      "Why do you ask?",
+      "Sao bạn lại hỏi vậy?"
+    ],
+    [
+      "Chris",
+      "I need to send an important letter as soon as possible, but I don't want to miss my geography class at nine o'clock tomorrow morning.",
+      "Mình cần gửi một bức thư quan trọng càng sớm càng tốt, nhưng mình lại không muốn bị lỡ tiết học Địa lý vào lúc 9 giờ sáng ngày mai."
+    ],
+    [
+      "James",
+      "Why don't you just put a stamp on the envelope and leave it in a mailbox now? The mailman collects the mail twice a day, at 10 a.m. and 4 p.m.",
+      "Sao bây giờ bạn không dán tem lên phong bì rồi bỏ nó vào trong thùng thư luôn đi? Nhân viên đưa thư thu gom thư hai lần một ngày, vào lúc 10 giờ sáng và 4 giờ chiều đấy."
+    ],
+    [
+      "Chris",
+      "Good idea. But I never noticed any mailboxes at school. Have you seen one?",
+      "Ý hay đấy. Nhưng mình chưa từng để ý thấy thùng thư nào ở trường cả. Bạn có thấy cái nào không?"
+    ],
+    [
+      "James",
+      "I remember there is a mailbox at the school gate.",
+      "Mình nhớ là có một thùng thư ở ngay cổng trường."
+    ],
+    [
+      "Chris",
+      "That's great! I'll go and send the letter right now. Thank you, James.",
+      "Tuyệt quá! Mình sẽ đi gửi bức thư ngay bây giờ. Cảm ơn bạn nhé, James."
+    ],
+    [
+      "James",
+      "Not at all.",
+      "Không có chi đâu."
+    ]
+  ],
+  "speaking": [
+    [
+      "Teacher Eva",
+      "Hi, Mr. Harry! Can you tell me something about sending a letter in Vietnam (or China)? Does the post office open on weekends?",
+      "Chào Harry! Anh có thể kể về việc gửi thư ở Việt Nam (hoặc Trung Quốc) không? Bưu điện có mở cuối tuần không?"
+    ],
+    [
+      "You (Harry)",
+      "Yes, in my city, the post office opens on Saturday morning. From Monday to Friday, the opening time is 7:30 a.m. (half past seven), and the closing time is 5:00 p.m.",
+      "Có, ở thành phố tôi, bưu điện mở sáng thứ Bảy. Từ thứ Hai đến thứ Sáu, bưu điện mở lúc 7 giờ rưỡi sáng và đóng lúc 5 giờ chiều."
+    ],
+    [
+      "Teacher Eva",
+      "How do people send a letter there?",
+      "Ở đó mọi người gửi thư như thế nào?"
+    ],
+    [
+      "You (Harry)",
+      "It is very simple. First, we write the address on the envelope and put a stamp on it.",
+      "Rất đơn giản. Đầu tiên, chúng tôi viết địa chỉ lên phong bì rồi dán tem."
+    ],
+    [
+      "Teacher Eva",
+      "Do people go to the post office or use a mailbox?",
+      "Mọi người đến bưu điện hay dùng hòm thư?"
+    ],
+    [
+      "You (Harry)",
+      "We can go to the post office, or just leave it in the mailbox. The mailman collects the mail twice a day, in the morning and in the afternoon!",
+      "Chúng tôi có thể đến bưu điện hoặc bỏ thư vào hòm. Người đưa thư lấy thư hai lần mỗi ngày, vào buổi sáng và buổi chiều!"
+    ]
+  ],
+  "extras": [
+    [
+      "Điền từ · Trang 7",
+      "The opening time is a bit different… → Why don't you just put a stamp on the envelope and leave it in a mailbox now?"
+    ],
+    [
+      "Word tips · Speak Out",
+      "opening time / closing time · stamp · envelope · leave in the mailbox · twice a day"
+    ]
+  ],
+  "ipa": {
+    "The opening time of the bank on Sunday is from 11 a.m. to 4 p.m.": "/ði ˈəʊpənɪŋ taɪm əv ðə bæŋk ɒn ˈsʌndeɪ ɪz frəm ɪˈlevən ˌeɪ ˈem tə fɔː ˌpiː ˈem/",
+    "The kids are having a geography class with Miss Lee now.": "/ðə kɪdz ɑː ˈhævɪŋ ə dʒiˈɒɡrəfi klɑːs wɪð mɪs liː naʊ/",
+    "There is a red mailbox outside my building.": "/ðeə ɪz ə red ˈmeɪlbɒks ˌaʊtˈsaɪd maɪ ˈbɪldɪŋ/",
+    "I need to write the address down on the envelope.": "/aɪ niːd tə raɪt ði əˈdres daʊn ɒn ði ˈenvələʊp/",
+    "Tracy put a stamp on the card to her grandpa and dropped it into the mailbox.": "/ˈtreɪsi pʊt ə stæmp ɒn ðə kɑːd tə hɜː ˈɡrænpɑː ənd drɒpt ɪt ˈɪntuː ðə ˈmeɪlbɒks/",
+    "Do you know when the post office opens and closes?": "/duː juː nəʊ wen ðə pəʊst ˈɒfɪs ˈəʊpənz ənd ˈkləʊzɪz/",
+    "It opens at 9:00 a.m. and closes at 5:00 p.m.": "/ɪt ˈəʊpənz æt naɪn ˌeɪ ˈem ənd ˈkləʊzɪz æt faɪv ˌpiː ˈem/",
+    "Do you know when the bank opens?": "/duː juː nəʊ wen ðə bæŋk ˈəʊpənz/",
+    "It opens at 8:30 a.m. and closes at 4:30 p.m.": "/ɪt ˈəʊpənz æt eɪt ˈθɜːti ˌeɪ ˈem ənd ˈkləʊzɪz æt fɔː ˈθɜːti ˌpiː ˈem/",
+    "Do you know when the library closes?": "/duː juː nəʊ wen ðə ˈlaɪbrəri ˈkləʊzɪz/",
+    "Do you know when the supermarket closes?": "/duː juː nəʊ wen ðə ˈsuːpəmɑːkɪt ˈkləʊzɪz/",
+    "It closes at 9:00 p.m.": "/ɪt ˈkləʊzɪz æt naɪn ˌpiː ˈem/",
+    "What suggestion does James give Chris?": "/wɒt səˈdʒestʃən dʌz dʒeɪmz ɡɪv krɪs/",
+    "The suggestion is to put a stamp on the envelope and leave it in a mailbox at the school gate now.": "/ðə səˈdʒestʃən ɪz tə pʊt ə stæmp ɒn ði ˈenvələʊp ənd liːv ɪt ɪn ə ˈmeɪlbɒks æt ðə skuːl ɡeɪt naʊ/",
+    "How often does the mailman collect the mail from a mailbox?": "/haʊ ˈɒfən dʌz ðə ˈmeɪlmæn kəˈlekt ðə meɪl frəm ə ˈmeɪlbɒks/",
+    "The mailman collects the mail twice a day, at 10 a.m. and 4 p.m.": "/ðə ˈmeɪlmæn kəˈlekts ðə meɪl twaɪs ə deɪ æt ten ˌeɪ ˈem ənd fɔː ˌpiː ˈem/",
+    "James, do you know when the post office opens and closes?": "/dʒeɪmz duː juː nəʊ wen ðə pəʊst ˈɒfɪs ˈəʊpənz ənd ˈkləʊzɪz/",
+    "It opens at nine in the morning and closes at five in the afternoon.": "/ɪt ˈəʊpənz æt naɪn ɪn ðə ˈmɔːnɪŋ ənd ˈkləʊzɪz æt faɪv ɪn ði ˌɑːftəˈnuːn/",
+    "I see. The opening time is a bit different from that in my country.": "/aɪ siː ði ˈəʊpənɪŋ taɪm ɪz ə bɪt ˈdɪfrənt frəm ðæt ɪn maɪ ˈkʌntri/",
+    "Why do you ask?": "/waɪ duː juː ɑːsk/",
+    "I need to send an important letter as soon as possible, but I don't want to miss my geography class at nine o'clock tomorrow morning.": "/aɪ niːd tə send ən ɪmˈpɔːtənt ˈletə æz suːn æz ˈpɒsəbəl bʌt aɪ dəʊnt wɒnt tə mɪs maɪ dʒiˈɒɡrəfi klɑːs æt naɪn əˈklɒk təˈmɒrəʊ ˈmɔːnɪŋ/",
+    "Why don't you just put a stamp on the envelope and leave it in a mailbox now? The mailman collects the mail twice a day, at 10 a.m. and 4 p.m.": "/waɪ dəʊnt juː dʒʌst pʊt ə stæmp ɒn ði ˈenvələʊp ənd liːv ɪt ɪn ə ˈmeɪlbɒks naʊ ðə ˈmeɪlmæn kəˈlekts ðə meɪl twaɪs ə deɪ æt ten ˌeɪ ˈem ənd fɔː ˌpiː ˈem/",
+    "Good idea. But I never noticed any mailboxes at school. Have you seen one?": "/ɡʊd aɪˈdɪə bʌt aɪ ˈnevə ˈnəʊtɪst ˈeni ˈmeɪlbɒksɪz æt skuːl hæv juː siːn wʌn/",
+    "I remember there is a mailbox at the school gate.": "/aɪ rɪˈmembə ðeə ɪz ə ˈmeɪlbɒks æt ðə skuːl ɡeɪt/",
+    "That's great! I'll go and send the letter right now. Thank you, James.": "/ðæts ɡreɪt aɪl ɡəʊ ənd send ðə ˈletə raɪt naʊ θæŋk juː dʒeɪmz/",
+    "Not at all.": "/nɒt æt ɔːl/",
+    "Hi, Mr. Harry! Can you tell me something about sending a letter in Vietnam (or China)? Does the post office open on weekends?": "/haɪ ˈmɪstə ˈhæri kæn juː tel miː ˈsʌmθɪŋ əˈbaʊt ˈsendɪŋ ə ˈletə ɪn ˌvjetˈnæm ɔː ˈtʃaɪnə dʌz ðə pəʊst ˈɒfɪs ˈəʊpən ɒn ˌwiːkˈendz/",
+    "Yes, in my city, the post office opens on Saturday morning. From Monday to Friday, the opening time is 7:30 a.m. (half past seven), and the closing time is 5:00 p.m.": "/jes ɪn maɪ ˈsɪti ðə pəʊst ˈɒfɪs ˈəʊpənz ɒn ˈsætədeɪ ˈmɔːnɪŋ frəm ˈmʌndeɪ tə ˈfraɪdeɪ ði ˈəʊpənɪŋ taɪm ɪz ˈsevən ˈθɜːti ˌeɪ ˈem hɑːf pɑːst ˈsevən ənd ðə ˈkləʊzɪŋ taɪm ɪz faɪv ˌpiː ˈem/",
+    "How do people send a letter there?": "/haʊ duː ˈpiːpəl send ə ˈletə ðeə/",
+    "It is very simple. First, we write the address on the envelope and put a stamp on it.": "/ɪt ɪz ˈveri ˈsɪmpəl fɜːst wiː raɪt ði əˈdres ɒn ði ˈenvələʊp ənd pʊt ə stæmp ɒn ɪt/",
+    "Do people go to the post office or use a mailbox?": "/duː ˈpiːpəl ɡəʊ tə ðə pəʊst ˈɒfɪs ɔː juːz ə ˈmeɪlbɒks/",
+    "We can go to the post office, or just leave it in the mailbox. The mailman collects the mail twice a day, in the morning and in the afternoon!": "/wiː kæn ɡəʊ tə ðə pəʊst ˈɒfɪs ɔː dʒʌst liːv ɪt ɪn ðə ˈmeɪlbɒks ðə ˈmeɪlmæn kəˈlekts ðə meɪl twaɪs ə deɪ ɪn ðə ˈmɔːnɪŋ ənd ɪn ði ˌɑːftəˈnuːn/"
   }
+},
+{
+  "id": "classicL4U6L2",
+  "unit": "Level 4 · Unit 6 · Lesson 2",
+  "level": "51Talk · Level 4",
+  "title": "Do You See the Stadium on the Map?",
+  "subtitle": "I got lost in the big city! · Dùng bản đồ và biển báo để tìm đường",
+  "vocab": [
+    [
+      "the way to",
+      "/ðə weɪ tuː/",
+      "Đường đi tới, lối dẫn đến",
+      "Trọng tâm · Cấu trúc: the way to + [Địa điểm] (luôn dùng giới từ to): the way to the stadium (đường đến sân vận động), the way to the city. Mở rộng (Trang 4): on one's way to... (trên đường đi tới đâu)"
+    ],
+    [
+      "stadium",
+      "/ˈsteɪdiəm/",
+      "Sân vận động",
+      "Trọng tâm · Cách dùng: Do you see the stadium on the map? · came to the stadium to watch the final game. Từ cùng nhóm: sports center (trung tâm thể thao), gym / arena (nhà thi đấu)"
+    ],
+    [
+      "subway station",
+      "/ˈsʌbweɪ ˈsteɪʃn/",
+      "Ga tàu điện ngầm",
+      "Trọng tâm · Cách dùng: where the nearest subway station is · at the back of the subway station. Đồng nghĩa: metro station, underground station (Anh-Anh)"
+    ],
+    [
+      "the sign for",
+      "/ðə saɪn fɔː(r)/",
+      "Biển chỉ dẫn cho",
+      "Trọng tâm · Lưu ý phát âm: Âm g trong từ sign /saɪn/ là âm câm (không đọc âm /ɡ/). Đi với giới từ for: the sign for the entrance, the sign for the stairway. Từ liên quan (Trang 1): road signs /rəʊd saɪnz/ (biển báo giao thông)"
+    ],
+    [
+      "entrance",
+      "/ˈentrəns/",
+      "Lối vào, cổng vào",
+      "Trọng tâm · Cách dùng: Số nhiều là entrances /ˈentrənsɪz/ (There are two entrances). Động từ gốc là enter /ˈentə(r)/ (đi vào). Trái nghĩa (Hình 1 Trang 3): exit /ˈeksɪt/ hoặc /ˈeɡzɪt/ (lối ra, lối thoát hiểm)"
+    ],
+    [
+      "turn right",
+      "/tɜː(r)n raɪt/",
+      "Rẽ phải",
+      "Mở rộng · Biển báo 1 (Trang 2): Hình mũi tên cong sang phải = turn right. Mở rộng: go straight /ɡəʊ streɪt/ (đi thẳng)."
+    ],
+    [
+      "turn left",
+      "/tɜː(r)n left/",
+      "Rẽ trái",
+      "Mở rộng · Biển báo 1 (Trang 2): Hình mũi tên cong sang phải = turn right. Mở rộng: go straight /ɡəʊ streɪt/ (đi thẳng)."
+    ],
+    [
+      "parking",
+      "/ˈpɑː(r)kɪŋ/",
+      "Nơi đỗ xe",
+      "Mở rộng · Biển báo 2 & 3 (Trang 2): Vòng tròn đỏ gạch chéo = no parking; biển màu xanh có chữ P và hình ô tô = parking."
+    ],
+    [
+      "no parking",
+      "/nəʊ ˈpɑː(r)kɪŋ/",
+      "Cấm đỗ xe",
+      "Mở rộng · Biển báo 2 & 3 (Trang 2): Vòng tròn đỏ gạch chéo = no parking; biển màu xanh có chữ P và hình ô tô = parking."
+    ],
+    [
+      "roundabout",
+      "/ˈraʊndəbaʊt/",
+      "Bùng binh, vòng xuyến",
+      "Mở rộng · Biển báo 4 (Trang 2): Hình 3 mũi tên xoay tròn = roundabout (tương ứng với từ tiếng Trung 环岛 / 转盘 bạn vừa học trước đó)."
+    ],
+    [
+      "get lost",
+      "/ɡet lɒst/",
+      "Bị lạc đường",
+      "Mở rộng · Tiêu đề Unit 6 (Trang 1): I got lost in the big city! (Tôi đã bị lạc đường trong thành phố lớn!)."
+    ],
+    [
+      "got lost",
+      "/ɡɒt lɒst/",
+      "Đã bị lạc đường",
+      "Mở rộng · Tiêu đề Unit 6 (Trang 1): I got lost in the big city! (Tôi đã bị lạc đường trong thành phố lớn!)."
+    ],
+    [
+      "go the wrong way",
+      "/ɡəʊ ðə rɒŋ weɪ/",
+      "Đi nhầm đường",
+      "Mở rộng · Hội thoại (trang 5 & 8): We went the wrong way (quá khứ go → went; âm w trong wrong là âm câm) · We need to go the other way."
+    ],
+    [
+      "go the other way",
+      "/ɡəʊ ði ˈʌðə weɪ/",
+      "Đi theo hướng ngược lại",
+      "Mở rộng · Hội thoại (trang 5 & 8): We went the wrong way (quá khứ go → went; âm w trong wrong là âm câm) · We need to go the other way."
+    ],
+    [
+      "at the back of",
+      "/æt ðə bæk əv/",
+      "Ở phía sau của",
+      "Mở rộng · Chỉ vị trí trên bản đồ (Trang 5, 8 & 10): The stadium is at the back of the subway station. · opposite /ˈɒpəzɪt/ = đối diện với."
+    ],
+    [
+      "in front of",
+      "/ɪn frʌnt əv/",
+      "Ở phía trước của",
+      "Mở rộng · Chỉ vị trí trên bản đồ (Trang 5, 8 & 10): The stadium is at the back of the subway station. · opposite /ˈɒpəzɪt/ = đối diện với."
+    ],
+    [
+      "make it on time",
+      "/meɪk ɪt ɒn taɪm/",
+      "Đến kịp giờ",
+      "Mở rộng · Cực kỳ tự nhiên trong giao tiếp (Trang 5 & 8): I don't think we can make it on time. (Mình không nghĩ là tụi mình có thể tới kịp giờ đâu)."
+    ],
+    [
+      "stairway",
+      "/ˈsteəweɪ/",
+      "Cầu thang bộ",
+      "Mở rộng · Trong câu ví dụ d (Trang 3): notice the sign for the stairway in an emergency (chú ý biển chỉ dẫn cầu thang bộ khi có sự cố khẩn cấp)."
+    ],
+    [
+      "in an emergency",
+      "/ɪn ən ɪˈmɜːdʒənsi/",
+      "Trong tình huống khẩn cấp",
+      "Mở rộng · Trong câu ví dụ d (Trang 3): notice the sign for the stairway in an emergency (chú ý biển chỉ dẫn cầu thang bộ khi có sự cố khẩn cấp)."
+    ]
+  ],
+  "examples": [
+    [
+      "the way to",
+      "I am pretty sure this is the way to the city.",
+      "Tôi khá chắc chắn rằng đây là đường đi vào thành phố."
+    ],
+    [
+      "stadium",
+      "Thousands of people came to the stadium to watch the final game.",
+      "Hàng ngàn người đã đến sân vận động để xem trận chung kết."
+    ],
+    [
+      "subway station",
+      "Do you know where the nearest subway station is?",
+      "Bạn có biết ga tàu điện ngầm gần nhất ở đâu không?"
+    ],
+    [
+      "the sign for",
+      "It's very important for people to notice the sign for the stairway in an emergency.",
+      "Việc mọi người chú ý đến biển chỉ dẫn cầu thang bộ trong tình huống khẩn cấp là rất quan trọng."
+    ],
+    [
+      "entrance",
+      "There are two entrances — one at the front of the building and one round the back.",
+      "Có hai lối vào — một lối ở mặt trước tòa nhà và một lối vòng ra phía sau."
+    ],
+    [
+      "Vị trí 1 · Sân vận động",
+      "Do you see the stadium on the map?",
+      "Bạn có thấy sân vận động trên bản đồ không?"
+    ],
+    [
+      "Vị trí 2 · Ga tàu điện ngầm",
+      "It's at the back of the subway station.",
+      "Nó nằm ở phía sau ga tàu điện ngầm."
+    ],
+    [
+      "Vị trí 3 · Bệnh viện",
+      "Do you see the hospital on the map?",
+      "Bạn có thấy bệnh viện trên bản đồ không?"
+    ],
+    [
+      "Vị trí 3 · Tòa nhà",
+      "Do you see the building on the map?",
+      "Bạn có thấy tòa nhà trên bản đồ không?"
+    ],
+    [
+      "Vị trí 4 · Trạm xe buýt",
+      "It's opposite the bus stop.",
+      "Nó nằm đối diện trạm xe buýt."
+    ],
+    [
+      "Vị trí 4 · Bến xe buýt",
+      "It's opposite the bus station.",
+      "Nó nằm đối diện bến xe buýt."
+    ],
+    [
+      "Đọc hiểu 1",
+      "Where are Ivy and Mike going?",
+      "Ivy và Mike đang đi đâu?"
+    ],
+    [
+      "Đọc hiểu 1 · Đáp",
+      "They are going to the stadium to watch a baseball game.",
+      "Họ đang đến sân vận động để xem một trận bóng chày."
+    ],
+    [
+      "Đọc hiểu 2",
+      "What time will the game start?",
+      "Trận đấu sẽ bắt đầu lúc mấy giờ?"
+    ],
+    [
+      "Đọc hiểu 2 · Đáp",
+      "It will start at eight.",
+      "Trận đấu sẽ bắt đầu lúc tám giờ."
+    ]
+  ],
+  "grammar": [
+    [
+      "Do you see + địa điểm + on the map?",
+      "Do you see the stadium (or the subway station) on the map? Dùng on the map khi nói một nơi xuất hiện trên bản đồ, look at the map khi nhìn bản đồ."
+    ],
+    [
+      "Vị trí tương đối",
+      "The stadium is at the back of the subway station. The car park is at the back of our building. Dùng in front of cho phía trước, opposite cho đối diện."
+    ],
+    [
+      "I don’t think + mệnh đề",
+      "Đưa phủ định lên trước think: I don't think this is the way to the stadium. I don't think we can make it on time."
+    ],
+    [
+      "Hiện tại đơn cho lịch trình",
+      "The game starts at eight. Trận đấu bắt đầu lúc tám giờ. There are only twelve minutes till it starts. Till = until."
+    ],
+    [
+      "Câu hỏi gián tiếp với where",
+      "Do you know where the nearest subway station is? Giữ thứ tự chủ ngữ + is trong mệnh đề sau where."
+    ],
+    [
+      "Bối cảnh hội thoại",
+      "Sau câu “Of course! Let’s hurry!”, mười phút trôi qua (Ten minutes later) trước khi Ivy nói với Mike rằng có thể họ sẽ đến muộn."
+    ],
+    [
+      "Điền từ · Trang 7",
+      "Do you see the stadium on the map? → at the back of the subway station → Look! I can see the sign for the entrance."
+    ],
+    [
+      "Word tips · Speak Out",
+      "at the back of / in front of · go the other way · entrance · the sign for · make it"
+    ]
+  ],
+  "dialogue": [
+    [
+      "Ivy",
+      "I don't think this is the way to the stadium.",
+      "Mình không nghĩ đây là đường đi tới sân vận động đâu."
+    ],
+    [
+      "Mike",
+      "It's not? Let me look at the map.",
+      "Không phải ư? Để mình xem bản đồ nào."
+    ],
+    [
+      "Ivy",
+      "Do you see the stadium on the map?",
+      "Bạn có nhìn thấy sân vận động ở trên bản đồ không?"
+    ],
+    [
+      "Mike",
+      "Oh, you're right. We went the wrong way. The stadium is at the back of the subway station.",
+      "Ồ, bạn nói đúng rồi. Tụi mình đã đi nhầm đường. Sân vận động nằm ở phía sau ga tàu điện ngầm cơ."
+    ],
+    [
+      "Ivy",
+      "Oh no! We need to go the other way. Should we run? The game starts at eight. There are only twelve minutes till it starts.",
+      "Ôi không! Tụi mình cần phải đi ngược lại hướng kia. Tụi mình có nên chạy không? Trận đấu bắt đầu lúc 8 giờ. Chỉ còn đúng 12 phút nữa là bắt đầu rồi."
+    ],
+    [
+      "Mike",
+      "Of course! Let's hurry!",
+      "Tất nhiên rồi! Nhanh chân lên nào!"
+    ],
+    [
+      "Ivy",
+      "Mike, I don't think we can make it on time.",
+      "Mike ơi, mình không nghĩ là tụi mình có thể đến kịp giờ đâu."
+    ],
+    [
+      "Mike",
+      "Look! I can see the sign for the entrance. It's just over there.",
+      "Nhìn kìa! Mình nhìn thấy biển chỉ dẫn lối vào rồi. Nó ở ngay đằng kia thôi."
+    ],
+    [
+      "Ivy",
+      "Great. Let's run!",
+      "Tuyệt quá. Cùng chạy nào!"
+    ]
+  ],
+  "speaking": [
+    [
+      "Teacher Eva",
+      "Hi, Mr. Harry! We are late for the football game! Where is the stadium?",
+      "Chào Harry! Chúng ta trễ trận bóng đá rồi! Sân vận động ở đâu?"
+    ],
+    [
+      "You (Harry)",
+      "The map says the stadium is at the back of (or in front of) the subway station.",
+      "Theo bản đồ, sân vận động ở phía sau (hoặc phía trước) ga tàu điện ngầm."
+    ],
+    [
+      "Teacher Eva",
+      "Oh no, are we going the right way?",
+      "Ôi không, chúng ta có đang đi đúng đường không?"
+    ],
+    [
+      "You (Harry)",
+      "No, we went the wrong way! We need to go the other way. Let's hurry!",
+      "Không, chúng ta đã đi nhầm đường! Chúng ta cần đi hướng ngược lại. Nhanh lên nào!"
+    ],
+    [
+      "Teacher Eva",
+      "Can we make it on time? The game will start soon!",
+      "Chúng ta đến kịp giờ không? Trận đấu sắp bắt đầu rồi!"
+    ],
+    [
+      "You (Harry)",
+      "Yes, we can make it! Look, I can see the sign for the entrance over there. Let's run!",
+      "Có, chúng ta sẽ đến kịp! Nhìn kìa, tôi thấy biển chỉ lối vào ở đằng kia. Chạy thôi!"
+    ]
+  ],
+  "extras": [
+    [
+      "Điền từ · Trang 7",
+      "Do you see the stadium on the map? → at the back of the subway station → Look! I can see the sign for the entrance."
+    ],
+    [
+      "Word tips · Speak Out",
+      "at the back of / in front of · go the other way · entrance · the sign for · make it"
+    ]
+  ],
+  "ipa": {
+    "I am pretty sure this is the way to the city.": "/aɪ æm ˈprɪti ʃʊə ðɪs ɪz ðə weɪ tə ðə ˈsɪti/",
+    "Thousands of people came to the stadium to watch the final game.": "/ˈθaʊzəndz əv ˈpiːpəl keɪm tə ðə ˈsteɪdiəm tə wɒtʃ ðə ˈfaɪnəl ɡeɪm/",
+    "Do you know where the nearest subway station is?": "/duː juː nəʊ weə ðə ˈnɪərɪst ˈsʌbweɪ ˈsteɪʃən ɪz/",
+    "It's very important for people to notice the sign for the stairway in an emergency.": "/ɪts ˈveri ɪmˈpɔːtənt fə ˈpiːpəl tə ˈnəʊtɪs ðə saɪn fə ðə ˈsteəweɪ ɪn ən ɪˈmɜːdʒənsi/",
+    "There are two entrances — one at the front of the building and one round the back.": "/ðeə ɑː tuː ˈentrənsɪz wʌn æt ðə frʌnt əv ðə ˈbɪldɪŋ ənd wʌn raʊnd ðə bæk/",
+    "Do you see the stadium on the map?": "/duː juː siː ðə ˈsteɪdiəm ɒn ðə mæp/",
+    "It's at the back of the subway station.": "/ɪts æt ðə bæk əv ðə ˈsʌbweɪ ˈsteɪʃən/",
+    "Do you see the hospital on the map?": "/duː juː siː ðə ˈhɒspɪtəl ɒn ðə mæp/",
+    "Do you see the building on the map?": "/duː juː siː ðə ˈbɪldɪŋ ɒn ðə mæp/",
+    "It's opposite the bus stop.": "/ɪts ˈɒpəzɪt ðə bʌs stɒp/",
+    "It's opposite the bus station.": "/ɪts ˈɒpəzɪt ðə bʌs ˈsteɪʃən/",
+    "Where are Ivy and Mike going?": "/weə ɑː ˈaɪvi ənd maɪk ˈɡəʊɪŋ/",
+    "They are going to the stadium to watch a baseball game.": "/ðeɪ ɑː ˈɡəʊɪŋ tə ðə ˈsteɪdiəm tə wɒtʃ ə ˈbeɪsbɔːl ɡeɪm/",
+    "What time will the game start?": "/wɒt taɪm wɪl ðə ɡeɪm stɑːt/",
+    "It will start at eight.": "/ɪt wɪl stɑːt æt eɪt/",
+    "I don't think this is the way to the stadium.": "/aɪ dəʊnt θɪŋk ðɪs ɪz ðə weɪ tə ðə ˈsteɪdiəm/",
+    "It's not? Let me look at the map.": "/ɪts nɒt let miː lʊk æt ðə mæp/",
+    "Oh, you're right. We went the wrong way. The stadium is at the back of the subway station.": "/əʊ jɔː raɪt wiː went ðə rɒŋ weɪ ðə ˈsteɪdiəm ɪz æt ðə bæk əv ðə ˈsʌbweɪ ˈsteɪʃən/",
+    "Oh no! We need to go the other way. Should we run? The game starts at eight. There are only twelve minutes till it starts.": "/əʊ nəʊ wiː niːd tə ɡəʊ ði ˈʌðə weɪ ʃʊd wiː rʌn ðə ɡeɪm stɑːts æt eɪt ðeə ɑː ˈəʊnli twelv ˈmɪnɪts tɪl ɪt stɑːts/",
+    "Of course! Let's hurry!": "/əv kɔːs lets ˈhʌri/",
+    "Mike, I don't think we can make it on time.": "/maɪk aɪ dəʊnt θɪŋk wiː kæn meɪk ɪt ɒn taɪm/",
+    "Look! I can see the sign for the entrance. It's just over there.": "/lʊk aɪ kæn siː ðə saɪn fə ði ˈentrəns ɪts dʒʌst ˈəʊvə ðeə/",
+    "Great. Let's run!": "/ɡreɪt lets rʌn/",
+    "Hi, Mr. Harry! We are late for the football game! Where is the stadium?": "/haɪ ˈmɪstə ˈhæri wiː ɑː leɪt fə ðə ˈfʊtbɔːl ɡeɪm weə ɪz ðə ˈsteɪdiəm/",
+    "The map says the stadium is at the back of (or in front of) the subway station.": "/ðə mæp sez ðə ˈsteɪdiəm ɪz æt ðə bæk əv ɔː ɪn frʌnt əv ðə ˈsʌbweɪ ˈsteɪʃən/",
+    "Oh no, are we going the right way?": "/əʊ nəʊ ɑː wiː ˈɡəʊɪŋ ðə raɪt weɪ/",
+    "No, we went the wrong way! We need to go the other way. Let's hurry!": "/nəʊ wiː went ðə rɒŋ weɪ wiː niːd tə ɡəʊ ði ˈʌðə weɪ lets ˈhʌri/",
+    "Can we make it on time? The game will start soon!": "/kæn wiː meɪk ɪt ɒn taɪm ðə ɡeɪm wɪl stɑːt suːn/",
+    "Yes, we can make it! Look, I can see the sign for the entrance over there. Let's run!": "/jes wiː kæn meɪk ɪt lʊk aɪ kæn siː ðə saɪn fə ði ˈentrəns ˈəʊvə ðeə lets rʌn/"
+  }
+}
 ];
   window.LF51_LEVEL2_LESSONS = Object.fromEntries(lessons.map(lesson => [lesson.id, lesson]));
   window.LF51_LEVEL2_IPA = {
@@ -492,6 +1215,7 @@
     'I like playing basketball and football.':'/aɪ laɪk ˈpleɪɪŋ ˈbæskɪtbɔːl ænd ˈfʊtbɔːl/',
     'I am good at playing ping pong.':'/aɪ æm ɡʊd æt ˈpleɪɪŋ pɪŋ pɒŋ/'
   };
+  for (const lesson of lessons) Object.assign(window.LF51_LEVEL2_IPA, lesson.ipa);
   const existing = new Set(DEFAULT_CARDS.map(card => card.id));
   for (const lesson of lessons) {
     lesson.topic = '51Talk English - ' + lesson.unit + ' · ' + lesson.title;
@@ -507,8 +1231,13 @@
       const example = lesson.examples.find(row => row[0] === word);
       add('Vocabulary', i, {cardType:'vocab', word, phonetic, meaning, usage, example:example?.[1] || '', exampleTrans:example?.[2] || ''});
     });
-    for (const [section, rows] of [['Examples',lesson.examples], ['Dialogue',lesson.dialogue]]) {
-      rows.forEach(([sourceLabel,en,vi], i) => add(section,i,{cardType:'sentence', word:vi, chinese:en, phonetic:window.LF51_LEVEL2_IPA[en] || '', meaning:'', example:en, exampleTrans:vi, sourceLabel}));
+    const seenSentences = new Set();
+    for (const [section, rows] of [['Examples',lesson.examples], ['Dialogue',lesson.dialogue], ['Speaking',lesson.ipa ? lesson.speaking : []]]) {
+      rows.forEach(([sourceLabel,en,vi], i) => {
+        if (lesson.ipa && seenSentences.has(en)) return;
+        seenSentences.add(en);
+        add(section,i,{cardType:'sentence', word:vi, chinese:en, phonetic:window.LF51_LEVEL2_IPA[en] || '', meaning:'', example:en, exampleTrans:vi, sourceLabel});
+      });
     }
   }
 })();
