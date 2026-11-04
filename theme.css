@@ -1,0 +1,28 @@
+/* The light palette remains the default. Shared by the app and its Podcast document. */
+html[data-theme="dark"]{
+  color-scheme:dark;--bg:#10151d;--card:#19212d;--ink:#edf2fa;--muted:#b5c1d0;--line:#3c4b60;
+  --brand:#a5b4fc;--brand2:#67d9e9;--good:#83e4b1;--warn:#ffd28c;--bad:#ffaaaa;
+  background:var(--bg);color:var(--ink)
+}
+#lfThemeSelect{border:1px solid #506078;border-radius:8px;background:#1e293b;color:#fff;padding:6px;font:600 .78rem system-ui;max-width:100%}
+html[data-theme="dark"] body{background:#10151d!important;color:#edf2fa!important}
+html[data-theme="dark"] :is(.app-card,.app-stat,.app-action,.app-hub-card,.mobile-app-nav,.lf-auth-panel,.lf-cloud-card,.lf51d-shell,.lf51d-main,.lf51d-coach,.lf51d-tabs,.lf51d-grid,.lf51d-body,.lf51d-nav,.lf51d-quickbar,.lf51d-sectionhead,.lfsl-row,.lfsl-columns,.lfsl-panel-top,.lfsl-head,.lfsl-sections,.lfsl-list,#lfStudyListPanel,.card,.panel,table,th,td,[class~="bg-white"],[class~="bg-slate-50"],[class~="bg-gray-50"],[class~="bg-slate-100"]){background:#19212d!important;color:#edf2fa!important;border-color:#3c4b60!important}
+html[data-theme="dark"] :is(.app-hero,.app-secondary-btn,.app-action-icon,.lf-user-box,.lf-config-warning,.lf51d-info,.lf51d-vocabhero,.lf51d-bubble,.lf51d-reviewcard,.lf51d-reviewa,.lf51d-coachCard,.lf51d-pattern,.lf51d-grammarbox,.lf51d-speakrow,.lf51d-extra,.lf51rt-answer,.lf51rt-lock,.lfsl-quick,.lfsl-chip,.lfsl-view,.lfsl-listen,.lf51d-btn,.lf51d-tab,.lf51d-listen,.lf51d-speed button,.lf51rt-mode,.lf-phonetic-chip,.lf-target-chip,.lf-auth-tabs,.app-context-back,.stat,.pill,.lesson-line,.grammar,.q,.answer,.notice,.quiz-option,.podcast-item,.summary-row,.shadow-card,.tab-btn,.secondary,.ghost,#lfFsrsRibbon,#lfFsrsMemoryPanel,#lfSmartQueueBanner,#lf51PlaylistSheet,#lfStudyMethods button,#lfStudyReference button){background:#222e3d!important;color:#edf2fa!important;border-color:#44556c!important}
+html[data-theme="dark"] :is(input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select,option){background:#222e3d!important;color:#edf2fa!important;border-color:#44556c!important}
+html[data-theme="dark"] ::placeholder{color:#aab8c9!important;opacity:1}
+html[data-theme="dark"] :is(.app-page-title,.app-section-heading,.app-action-title,.app-stat-value,.lf51d-word,.lf51d-meaning,.lf51d-example,.lf51d-reviewq,.lf51d-coachTitle,.lf51d-coachMain,.lf51d-speaktext,.lfsl-source,.lfsl-cell,.lfsl-panel-top b,.lf51d-sectionhead h2,.lf51d-info b,[class~="text-slate-900"],[class~="text-slate-800"],[class~="text-gray-900"],[class~="text-black"]){color:#edf2fa!important}
+html[data-theme="dark"] :is(.app-page-subtitle,.app-action-desc,.app-stat-label,.lf51d-count,.lf51d-vi,.lf51d-translation,.lf51rt-hint,.lfsl-caption,.lfsl-topic,.lfsl-example-sub,.app-mobile-nav-btn,#lfStudyMethods,#lfStudyReference,[class~="text-slate-700"],[class~="text-slate-600"],[class~="text-slate-500"]){color:#b5c1d0!important}
+html[data-theme="dark"] :is(.app-section-kicker,.app-inline-link,.lf51d-ipa,.lfsl-phonetic,.lf51d-key,.lf51d-coachLabel,.lf51d-speaker,.lf51rt-solution summary,[class~="text-indigo-700"],[class~="text-blue-700"]){color:#b5c4ff!important}
+html[data-theme="dark"] :is(.lf51d-tab.active,.lf51rt-mode.active,.lfsl-chip.on,.lfsl-view.active,.mobile-app-nav .app-mobile-nav-btn.active,.tab-btn.active,.lf51d-btn.primary,#lfStudyMethods button[aria-pressed=true],#lfStudyReference button[aria-pressed=true],.lfsl-sections button[aria-pressed=true]){background:#334782!important;color:#f4f6ff!important;border-color:#829bf0!important}
+html[data-theme="dark"] :is(.lf51rt-ok,.correct,.is-correct,[data-grade="2"],[data-lf-grade="2"],[class~="bg-emerald-50"],[class~="bg-green-50"]){background:#163c30!important;color:#aff4ce!important;border-color:#aff4ce75!important}
+html[data-theme="dark"] :is(.lf51rt-wrong,.wrong,.is-wrong,[data-grade="0"],[data-lf-grade="0"],[class~="bg-rose-50"],[class~="bg-red-50"]){background:#502a34!important;color:#ffc0c6!important;border-color:#ffc0c675!important}
+html[data-theme="dark"] :is(.lf51rt-missing,[data-grade="1"],[data-lf-grade="1"],[class~="bg-amber-50"]){background:#4a361c!important;color:#ffdc99!important;border-color:#ffdc9975!important}
+html[data-theme="dark"] :is([data-grade="3"],[data-lf-grade="3"],[class~="bg-indigo-50"],[class~="bg-blue-50"]){background:#28395b!important;color:#ccdaff!important;border-color:#ccdaff75!important}
+html[data-theme="dark"] :focus-visible{outline:2px solid #9db9ff;outline-offset:2px}
+
+html[data-theme="dark"] :is(#dailyGoalsPanel,#lfYoutubeFrame,.lf51m-direction,.lf51m-dir-buttons button,.app-primary-btn,.app-context-back,.lfsl-mobile-detail,.lfsl-listen,.lf51d-toolbox,.lf-auth-tab,.lfpl-sheet,.lfpl-head,.lfpl-block,.lfpl-check,.lfpl-mini,.lf51d-sectionhead,.lf51rt-input,[class~="bg-blue-100"],[class~="bg-indigo-100"]){background:#222e3d!important;color:#e3ebfa!important;border-color:#44556c!important}
+html[data-theme="dark"] :is(.lf51d-speed button.active,.lf51m-dir-buttons button.active,.lf-auth-tab.active){background:#334782!important;color:#fff!important}
+html[data-theme="dark"] :is(.lf-field span,.lfpl-title,.lf51d-quick b,.lf51d-grammarbox h3,.lf51rt-answer b){color:#e3ebfa!important}
+html[data-theme="dark"] :is(.lf51d-reviewa,.lf51rt-result[style*="21, 128, 61"]){color:#a3e9bd!important}
+html[data-theme="dark"] .lf51rt-result[style*="180, 35, 24"]{color:#ffb4ba!important}
+html[data-theme="dark"] :is(#frontPhonetic,.lf51rt-solution summary,.pinyin,.py,[class~="text-indigo-600"]){color:#b8c6ff!important}

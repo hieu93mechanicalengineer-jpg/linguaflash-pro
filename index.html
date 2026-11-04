@@ -11,6 +11,47 @@
   <title>LinguaFlash Pro - PWA</title>
   <!-- PWA -->
   <meta name="theme-color" content="#4f46e5" />
+  <link id="lfThemeStyles" rel="stylesheet" href="./theme.css?v=1">
+  <script>
+  (() => {
+    const page=document.documentElement, key='lf_color_theme';
+    function apply(value){
+      page.dataset.theme=value==='dark'?'dark':'light';
+      document.querySelector('meta[name="theme-color"]').content=page.dataset.theme==='dark'?'#10151d':'#4f46e5';
+      const picker=document.getElementById('lfThemeSelect');
+      if(picker)picker.value=page.dataset.theme;
+      syncPodcast();
+    }
+    function syncPodcast(){
+      const frame=document.getElementById('lfYoutubeFrame');
+      const doc=frame?.contentDocument;
+      if(!doc?.head)return;
+      doc.documentElement.dataset.theme=page.dataset.theme;
+      if(!doc.getElementById('lfThemeStyles')){
+        const link=document.getElementById('lfThemeStyles').cloneNode();
+        link.href=document.getElementById('lfThemeStyles').href;
+        doc.head.appendChild(link);
+      }
+    }
+    let initial='light';
+    try{initial=localStorage.getItem(key);}catch(_){}
+    apply(initial);
+    document.addEventListener('DOMContentLoaded',()=>{
+      const picker=document.getElementById('lfThemeSelect'),lang=document.getElementById('uiLangSelector');
+      picker.value=page.dataset.theme;
+      function labels(){
+        const [title,light,dark]=({en:['Theme','Light','Dark'],zh:['界面主题','浅色','深色']})[lang.value] || ['Giao diện','Sáng','Tối'];
+        picker.setAttribute('aria-label',title);picker.title=title;
+        picker.options[0].textContent='☀ '+light;picker.options[1].textContent='☾ '+dark;
+      }
+      labels();lang.addEventListener('change',labels);
+      picker.addEventListener('change',()=>{apply(picker.value);try{localStorage.setItem(key,picker.value);}catch(_){}});
+      document.getElementById('lfYoutubeFrame')?.addEventListener('load',syncPodcast);
+      syncPodcast();
+    });
+    window.addEventListener('storage',e=>{if(e.key===key)apply(e.newValue);});
+  })();
+  </script>
   <meta name="mobile-web-app-capable" content="yes" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
@@ -349,6 +390,7 @@ body.lf51-desktop-active:not(.lf-study-list-mode) #lfStudyMethods,body.lf51-desk
           <option value="en">🇬🇧 English</option>
           <option value="zh">🇨🇳 中文</option>
         </select>
+        <select id="lfThemeSelect" aria-label="Giao diện" title="Giao diện"><option value="light">☀ Sáng</option><option value="dark">☾ Tối</option></select>
         <button id="lfAccountHeaderBtn" type="button" class="lf-account-btn" onclick="lfOpenAuthModal()" title="Tài khoản & đồng bộ">👤 <span class="lf-account-label">Tài khoản</span></button>
 
         <button type="button" onclick="openGlobalSearch()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold whitespace-nowrap" title="Tìm trong toàn bộ ứng dụng">🔎 <span class="hidden sm:inline">Tìm toàn app</span></button>

@@ -4,6 +4,7 @@ const CACHE_NAME = 'linguaflash-v90-audio-language-guard';
 // and HQ audio; the service worker only adds generic study helpers and caches them.
 const CORE_ASSETS = [
   './manifest.webmanifest',
+  './theme.css?v=1',
   './supabase-config.js',
   './mobile-ui-v1.js',
   './english-hq-audio-v1.js',
