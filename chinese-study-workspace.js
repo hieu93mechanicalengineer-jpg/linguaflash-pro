@@ -13,10 +13,16 @@
   }
   let targetEnglish=false;
   try{targetEnglish=localStorage.getItem('lf_zh_target')==='en';}catch(_){}
+  function courseSelected(){
+    return ['Gia Hân','Tiếng Trung Huyền Anh'].includes(select('studyCategoryFilter')?.value);
+  }
+  function englishTarget(){
+    return select('studyLangFilter')?.value==='Tiếng Anh' && courseSelected() || targetEnglish;
+  }
   let cached, ref, size, scope, topics;
   function lesson(requestedTopic,reference=refLang){
     const category=select('studyCategoryFilter').value, topic=requestedTopic ?? select('studyTopicFilter').value;
-    const english=targetEnglish && requestedTopic===undefined;
+    const english=englishTarget() && requestedTopic===undefined;
     const key=JSON.stringify([category,topic,reference,english]);
     if(ref===allCards && size===allCards.length && scope===key) return cached;
     ref=allCards;size=allCards.length;scope=key;
@@ -51,13 +57,14 @@
       const items=topic==='ALL'?Object.values(GIA_HAN_GRAMMAR_DB).flat():/^Gia Hân/i.test(topic)?GIA_HAN_GRAMMAR_DB[number] || []:[];
       for(const x of items)if(english){if(x.en)grammar.push([x.en,x.vi||x.note||'']);}else grammar.push([x.cn || x.code || 'Ngữ pháp',[x.pinyin,translation(x.vi,x.en,reference),x.note].filter(Boolean).join(' · ')]);
     }
-    cached={unit:'中文',id:'zh:'+JSON.stringify([category,topic]),title:topic==='ALL'?'Tất cả bài':topic,topic,vocab,examples,dialogue,grammar,speaking,review,phonetics};
+    cached={unit:category,id:'zh:'+JSON.stringify([category,topic,english]),title:topic==='ALL'?'Tất cả bài':topic,topic,vocab,examples,dialogue,grammar,speaking,review,phonetics};
     return cached;
   }
-  window.lfChineseStudy={lesson,get targetEnglish(){return targetEnglish;},toggleTarget(){targetEnglish=!targetEnglish;try{localStorage.setItem("lf_zh_target",targetEnglish?"en":"zh");}catch(_){}window.lfSharedStudySync?.();},get reference(){return refLang;},get refCode(){if(targetEnglish)return 'VI';return {vi:'VI',en:'EN',both:'VI/EN'}[refLang];},get refLabel(){if(targetEnglish)return 'tiếng Việt';return {vi:'tiếng Việt',en:'tiếng Anh',both:'tiếng Việt và tiếng Anh'}[refLang];},setReference(value){
+  window.lfChineseStudy={lesson,get active(){const lang=select('studyLangFilter')?.value;return lang==='Tiếng Trung' || lang==='Tiếng Anh' && courseSelected();},get targetEnglish(){return englishTarget();},toggleTarget(){targetEnglish=!englishTarget();if(select('studyLangFilter')?.value==='Tiếng Anh' && courseSelected()){select('studyLangFilter').value='Tiếng Trung';select('studyLangFilter').dispatchEvent(new Event('change',{bubbles:true}));}try{localStorage.setItem("lf_zh_target",targetEnglish?"en":"zh");}catch(_){}window.lfSharedStudySync?.();},get reference(){return refLang;},get refCode(){if(englishTarget())return 'VI';return {vi:'VI',en:'EN',both:'VI/EN'}[refLang];},get refLabel(){if(englishTarget())return 'tiếng Việt';return {vi:'tiếng Việt',en:'tiếng Anh',both:'tiếng Việt và tiếng Anh'}[refLang];},setReference(value){
       if(!['vi','en','both'].includes(value))return;
       targetEnglish=false;refLang=value;try{localStorage.setItem("lf_zh_target","zh");localStorage.setItem('lf_zh_reference',value);}catch(_){}
       window.lfSharedStudySync?.();
     },topics(){lesson();return topics;},
     sync(){window.lfSharedStudySync?.();},openReview(){window.lfSharedStudyReview?.();}};
 })();
+

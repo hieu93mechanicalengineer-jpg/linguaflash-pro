@@ -31,13 +31,22 @@
   const outcomes = new Map();
   let retry = null;
   let roundIds = [];
+  const SHORT_ROUND_SIZE = 10;
+  let shortRound = false;
+  let roundStart = 0;
+  let availableCount = 0;
   function retryFooter(){
     const results = retry || outcomes;
     const missed = roundIds.filter(id => results.get(id)?.correct === false);
     const finished = roundIds.length && roundIds.every(id => results.get(id)?.checked);
-    const start = missed.length && (!retry || finished) ? `<button type="button" class="lfsl-quick" data-retry-start>Luyện lại ${missed.length} câu vừa sai</button>` : '';
-    const done = finished && !missed.length ? '<strong>✓ Hoàn thành lượt luyện</strong>' : '';
-    return [done,start,retry ? '<button type="button" class="lfsl-quick" data-retry-end>Về danh sách</button>' : ''].filter(Boolean).join(' ');
+    const start = missed.length && (finished || (!retry && !shortRound)) ? `<button type="button" class="lfsl-quick" data-retry-start>Luyện lại ${missed.length} câu vừa sai</button>` : '';
+    const done = finished ? '<strong>✓ Hoàn thành lượt luyện</strong>' : '';
+    const next = shortRound && finished && roundStart + SHORT_ROUND_SIZE < availableCount ? '<button type="button" class="lfsl-quick" data-round-next>Luyện lượt tiếp theo →</button>' : '';
+    return [done,start,next,retry ? '<button type="button" class="lfsl-quick" data-retry-end>Về lượt ban đầu</button>' : ''].filter(Boolean).join(' ');
+  }
+  function progressText(){
+    const results = retry || outcomes;
+    return `${retry ? 'Luyện lại' : 'Đã kiểm tra'} ${roundIds.filter(id => results.get(id)?.checked).length}/${roundIds.length}`;
   }
   let practice = false;
   const grades = ['Lại', 'Khó', 'Được', 'Dễ'];
@@ -168,7 +177,18 @@
   function controlsHtml(lang){
     const l=labelSet(lang),c=columns[lang];
     const chips=['source','phonetic','meaning','other','example'].map(k=>`<button type="button" class="lfsl-chip ${c[k]?'on':''}" data-lfsl-col="${k}">${c[k]?'✓ ':''}${esc(l[k])}</button>`).join('');
-    return `<div class="lfsl-columns"><span class="lfsl-caption">Cột hiển thị:</span><button type="button" class="lfsl-chip ${practice?'on':''}" aria-pressed="${practice}" data-practice>✍ Nhập đáp án</button>${practice?'':chips}<button type="button" class="lfsl-quick" data-lfsl-quick="answers">🙈 Ẩn đáp án</button><button type="button" class="lfsl-quick" data-lfsl-quick="word">👁 Chỉ hiện từ</button><button type="button" class="lfsl-quick" data-lfsl-quick="all">Hiện tất cả</button></div>`;
+    const modes = [['browse','Xem danh sách'],['type','Luyện gõ']];
+    const switcher = modes.map(([key,label]) => {
+      const on = practice === (key === 'type');
+      return `<button type="button" class="lfsl-chip ${on?'on':''}" aria-pressed="${on}" data-list-activity="${key}">${label}</button>`;
+    }).join('');
+    const options = practice
+      ? [['all','Toàn bài'],['short','Luyện 10 từ']].map(([key,label]) => {
+          const on = shortRound === (key === 'short');
+          return `<button type="button" class="lfsl-chip ${on?'on':''}" aria-pressed="${on}" data-round-size="${key}">${label}</button>`;
+        }).join('')
+      : chips + '<button type="button" class="lfsl-quick" data-lfsl-quick="answers">🙈 Ẩn đáp án</button><button type="button" class="lfsl-quick" data-lfsl-quick="word">👁 Chỉ hiện từ</button><button type="button" class="lfsl-quick" data-lfsl-quick="all">Hiện tất cả</button>';
+    return `<div class="lfsl-switch" role="group" aria-label="Chế độ danh sách">${switcher}</div><div class="lfsl-columns"><span class="lfsl-caption">${practice?'Phạm vi luyện':'Cột hiển thị'}</span>${options}</div>`;
   }
 
   function render(){
@@ -178,7 +198,7 @@
     document.body?.classList.toggle(BODY_CLASS,mode==='list');panel.classList.toggle('active',mode==='list');
     const tools=root.querySelector('.lfsl-tools');if(tools)tools.innerHTML=mode==='list'?controlsHtml(lang):'';if(mode!=='list')return;
     const filter = JSON.stringify([lang, document.getElementById('studyCategoryFilter')?.value, document.getElementById('studyTopicFilter')?.value]);
-    if (filter !== lastFilter) { attempts.clear(); outcomes.clear(); retry=null; page = 0; unitSection = 'all'; }
+    if (filter !== lastFilter) { attempts.clear(); outcomes.clear(); retry=null; roundStart=0; page = 0; unitSection = 'all'; }
     lastFilter = filter;
     const deck = getDeck();
     const selectedLessonTopic = document.getElementById('studyTopicFilter')?.value;
@@ -193,8 +213,10 @@
         `<button type="button" class="lfsl-quick" data-lfsl-section="${key}" aria-pressed="${unitSection === key}">${name} ${counts[key]}</button>`).join('') + '</div>';
     }
     const selected = unit2 && unitSection !== 'all' ? deck.filter(card => sectionOf(card) === unitSection) : deck;
-    const active = retry ? selected.filter(card => retry.has(String(card.id))) : selected;
-    const rows = active.map(card => normalizeCard(card, lang)).filter(row => row.source);
+    let rows = selected.map(card => normalizeCard(card, lang)).filter(row => row.source);
+    availableCount = rows.length;
+    if (practice && shortRound) rows = rows.slice(roundStart, roundStart + SHORT_ROUND_SIZE);
+    if (retry) rows = rows.filter(row => retry.has(row.id));
     if (unit2 && unitSection === 'dialogue') {
       for (const row of rows) if (row.exVi === row.meaning) row.exVi = '';
       sectionBar += `<label class="lfsl-rate">Tốc độ nghe <select data-dialogue-rate><option value="0.75" ${dialogueRate === 0.75 ? 'selected' : ''}>0,75×</option><option value="1" ${dialogueRate === 1 ? 'selected' : ''}>1×</option></select></label>`;
@@ -207,7 +229,11 @@
     const pager = pages > 1 ? `<nav aria-label="Phân trang danh sách"><button type="button" class="lfsl-quick" data-lfsl-page="-1" ${page === 0 ? 'disabled' : ''}>← Trước</button> Trang ${page + 1} / ${pages} <button type="button" class="lfsl-quick" data-lfsl-page="1" ${page + 1 === pages ? 'disabled' : ''}>Sau →</button></nav>` : '';
     const selectedTopic=document.getElementById('studyTopicFilter')?.selectedOptions?.[0]?.textContent||'Tất cả bài học';
     panel.innerHTML=`<div class="lfsl-panel-top"><div><b>📋 ${esc(labelSet(lang).title)}</b><span>${rows.length} mục · ${esc(selectedTopic)} · toàn bộ bài, không giới hạn bởi SRS/đến hạn</span></div>${pager}</div>${sectionBar}${visible.length?`<div class="lfsl-list">${renderRows(visible,lang,unit2)}</div>`:'<div class="lfsl-empty">Không có nội dung phù hợp với bộ lọc hiện tại.</div>'}`;
-    if(unit2 && practice) panel.insertAdjacentHTML('beforeend',`<div class="lfsl-sections" data-retry-footer aria-live="polite">${retryFooter()}</div>`);
+    if(practice && rows.length){
+      panel.querySelector('.lfsl-panel-top span').textContent = selectedTopic;
+      panel.querySelector('.lfsl-panel-top').insertAdjacentHTML('beforeend', `<strong data-round-progress aria-live="polite">${progressText()}</strong>`);
+      panel.insertAdjacentHTML('beforeend',`<div class="lfsl-sections" data-retry-footer aria-live="polite">${retryFooter()}</div>`);
+    }
 
 
   }
@@ -242,6 +268,25 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
     if(document.getElementById(ROOT_ID))return true;const toggle=document.getElementById('togglePhonetic'),flash=document.getElementById('flashcardContainer');if(!toggle||!flash)return false;installStyle();const anchor=document.getElementById('lfStudyViewAnchor')||flash.previousElementSibling;const root=document.createElement('section');root.id=ROOT_ID;root.innerHTML='<div class="lfsl-switch"><button type="button" class="lfsl-view" data-lfsl-view="card">🃏 Thẻ</button><button type="button" class="lfsl-view" data-lfsl-view="list">📋 Danh sách</button></div><div class="lfsl-tools"></div>';const panel=document.createElement('section');panel.id=PANEL_ID;anchor?.insertAdjacentElement('afterend',root);root.insertAdjacentElement('afterend',panel);render();return true;
   }
 
+  function updateRoundStatus(){
+    const progress = document.querySelector('[data-round-progress]');
+    if (progress) progress.textContent = progressText();
+    const footer = document.querySelector('[data-retry-footer]');
+    if (footer) footer.innerHTML = retryFooter();
+  }
+  function focusNextAnswer(id){
+    const current = roundIds.indexOf(id);
+    for (let step=1; step<=roundIds.length; step++){
+      const index = (current + step) % roundIds.length;
+      const next = roundIds[index];
+      if (retry ? retry.get(next)?.checked : attempts.get(next)?.grade != null) continue;
+      const nextPage = Math.floor(index / PAGE_SIZE);
+      if (page !== nextPage) { page=nextPage; render(); }
+      document.querySelector(`.lfsl-test[data-card="${CSS.escape(next)}"] input`)?.focus();
+      return;
+    }
+    document.querySelector('[data-retry-footer] button')?.focus();
+  }
   function bind(){
     document.getElementById("togglePhonetic")?.addEventListener("change",render);
     document.addEventListener('change', event => {
@@ -250,7 +295,13 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
     document.addEventListener('input', e => {
       const form = e.target.closest('.lfsl-test');
       if (!form) return;
-      (retry || attempts).set(form.dataset.card, {value:e.target.value});
+      const id = form.dataset.card;
+      const wasChecked = (retry || outcomes).get(id)?.checked;
+      (retry || attempts).set(id, {value:e.target.value});
+      if (wasChecked) {
+        if (!retry) outcomes.delete(id);
+        updateRoundStatus();
+      }
       form.querySelector('[role=status]').textContent = '';
       form.querySelector('.lfsl-grades')?.remove();
     });
@@ -263,16 +314,19 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
       const lang = currentLang(), row = normalizeCard(card, lang);
       const value = form.querySelector('input').value;
       if (!answerKey(value)) return;
-      const feedback = answerKey(value) === answerKey(row.source) ? '✓ Đúng' : '✗ Chưa đúng · ' + row.source;
       const correct = answerKey(value) === answerKey(row.source);
+      const feedback = correct ? '✓ Đúng' : '✗ Chưa đúng · ' + row.source;
       if (retry) retry.set(row.id,{value,checked:true,feedback,correct});
       else {
         attempts.set(row.id,{value,checked:true,feedback,labels:window.LFFSRS.previewLabels(card)});
         outcomes.set(row.id,{checked:true,correct});
       }
-      const footer = document.querySelector('[data-retry-footer]');
-      if (footer) footer.innerHTML=retryFooter();
+      updateRoundStatus();
+      const dialogue = form.closest('.lfsl-row')?.querySelector('[data-dialogue-audio]');
       form.outerHTML = exercise(row,lang);
+      speak(row.source, lang, dialogue ? dialogueRate : undefined);
+      if (retry) focusNextAnswer(row.id);
+      else document.querySelector(`.lfsl-test[data-card="${CSS.escape(row.id)}"] [data-grade]`)?.focus({preventScroll:true});
     });
     document.addEventListener('click', e => {
       if (e.target.closest('[data-retry-start]')) {
@@ -281,7 +335,21 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
         page=0; render(); document.querySelector('.lfsl-test input')?.focus(); return;
       }
       if (e.target.closest('[data-retry-end]')) { retry=null; render(); return; }
-      if (e.target.closest('[data-practice]')) { retry=null; practice = !practice; render(); return; }
+      const activity = e.target.closest('[data-list-activity]');
+      if (activity) {
+        const type = activity.dataset.listActivity === 'type';
+        if (practice !== type) { retry=null; practice=type; page=0; render(); }
+        return;
+      }
+      const size = e.target.closest('[data-round-size]');
+      if (size || e.target.closest('[data-round-next]')) {
+        if (size && shortRound === (size.dataset.roundSize === 'short')) return;
+        shortRound = size ? size.dataset.roundSize === 'short' : true;
+        roundStart = size ? 0 : roundStart + SHORT_ROUND_SIZE;
+        retry=null; page=0; render();
+        document.querySelector('.lfsl-test input:not([readonly])')?.focus();
+        return;
+      }
       const btn = e.target.closest('.lfsl-test [data-grade]');
       if (!btn || retry) return;
       const form = btn.closest('form'), id = form.dataset.card, attempt = attempts.get(id);
@@ -299,10 +367,11 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
         if (current) current.outerHTML = exercise(normalizeCard(card,currentLang()),currentLang());
       }, Math.max(0,card.nextReview-Date.now()));
       form.outerHTML = exercise(normalizeCard(card,currentLang()),currentLang());
+      focusNextAnswer(id);
     });
     document.addEventListener('click', event => {
       const section = event.target.closest?.('[data-lfsl-section]');
-      if (section) { retry=null; unitSection = section.dataset.lfslSection; page = 0; render(); return; }
+      if (section) { retry=null; roundStart=0; unitSection = section.dataset.lfslSection; page = 0; render(); return; }
       const button = event.target.closest?.('[data-lfsl-page]');
       if (!button || button.disabled) return;
       page += Number(button.dataset.lfslPage);
@@ -315,3 +384,4 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
   window.LFStudyListMode={render,setMode,getMode:()=>mode,getFullDeck:getDeck};
 })();
+

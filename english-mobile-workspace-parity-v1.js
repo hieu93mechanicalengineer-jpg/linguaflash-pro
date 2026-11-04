@@ -157,7 +157,7 @@
 
   async function loadSharedWorkspace() {
     try {
-      const response = await fetch('./english-51talk-desktop-workspace-v1.js?v=119', { cache:'no-store' });
+      const response = await fetch('./english-51talk-desktop-workspace-v1.js?v=127', { cache:'no-store' });
       if (!response.ok) throw new Error('workspace source unavailable');
       let code = await response.text();
 
@@ -190,3 +190,4 @@
     loadSharedWorkspace();
   }
 })();
+

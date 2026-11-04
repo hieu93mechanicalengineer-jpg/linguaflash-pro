@@ -361,6 +361,8 @@ body{background:var(--app-bg)!important}.app-main-nav{display:flex;gap:6px;align
 
 <style>
 #lfStudyMethods,#lfStudyReference{display:none;gap:5px;align-items:center;flex-wrap:wrap;color:#475569;font-size:.8rem;font-weight:650}
+/* The 51Talk card workspace has its own lesson picker. List view uses the topic filter. */
+body.lf51-desktop-active:not(.lf-study-list-mode):has(#studyCategoryFilter option[value="51Talk English"]:checked):has(#lf51DesktopWorkspace.on[data-language="en"] [data-lesson-select]) :is(label[for="studyTopicFilter"], #studyTopicFilter){display:none}
 body.lf51-desktop-active:not(.lf-study-list-mode) #lfStudyMethods,body.lf51-desktop-active:not(.lf-study-list-mode) #lfStudyReference[data-available=true]{display:flex}
 #lfStudyMethods button,#lfStudyReference button{border:1px solid #cbd5e1;border-radius:9px;padding:6px 9px;background:#f8fafc}
 :is(#lfStudyMethods,#lfStudyReference) button[aria-pressed=true]{background:#155ac3;border-color:#155ac3;color:white}
@@ -546,7 +548,7 @@ body.lf51-desktop-active:not(.lf-study-list-mode) #lfStudyMethods,body.lf51-desk
             <option value="ALL" data-i18n="opt_all_cats">🌐 Tất cả chủ đề lớn</option>
           </select>
 
-          <label class="text-xs font-semibold text-slate-500 uppercase ml-1" data-i18n="topic_lbl">Chủ đề con / Bài:</label>
+          <label for="studyTopicFilter" class="text-xs font-semibold text-slate-500 uppercase ml-1" data-i18n="topic_lbl">Chủ đề con / Bài:</label>
           <select id="studyTopicFilter" onchange="applyStudyFilters()" class="bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-lg px-3 py-1.5 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500">
             <option value="ALL" data-i18n="opt_all_topics">Tất cả bài học</option>
           </select>
@@ -1271,7 +1273,7 @@ body.lf51-desktop-active:not(.lf-study-list-mode) #lfStudyMethods,body.lf51-desk
 <script src="./data/dialogues.js"></script>
 <script src="./data/giahan-grammar-extra.js"></script>
 <script src="./data/dictionary.js"></script>
-<script src="./app.js"></script>
+<script src="./app.js?v=127"></script>
 
   <style>
     #globalSearchOverlay{position:fixed;inset:0;z-index:99990;background:rgba(15,23,42,.62);display:none;align-items:flex-start;justify-content:center;padding:8vh 12px 20px}
@@ -1577,3 +1579,4 @@ body.lf51-desktop-active:not(.lf-study-list-mode) #lfStudyMethods,body.lf51-desk
 
 </body>
 </html>
+

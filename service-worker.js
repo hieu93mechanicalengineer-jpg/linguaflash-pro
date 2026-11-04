@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-v90-audio-language-guard';
+const CACHE_NAME = 'linguaflash-v127-bilingual-courses';
 
 // Common startup shell. app.js is now the source of truth for English mobile UI
 // and HQ audio; the service worker only adds generic study helpers and caches them.
@@ -35,7 +35,7 @@ const CORE_ASSETS = [
   './data/business-elementary1-unit1.js?v=119',
   './data/english-level2-u5-u6-l2.js?v=125',
   './app-core.js',
-  './chinese-study-workspace.js?v=119',
+  './chinese-study-workspace.js?v=127',
   './english-unit2-data-v1.js',
   './english-class158-health-data-v1.js',
   './english-mobile-lessons-v1.js',
@@ -104,10 +104,10 @@ async function transformIndexResponse(response) {
   // app.js v90 owns English workspace/audio startup. Do not inject old v78/v79
   // English mobile modules again; only add generic study helpers here.
   html = html.replace(
-    '<script src="./app.js"></script>',
+    /<script src="\.\/app\.js(?:\?v=\d+)?"><\/script>/,
     `<script src="./data/giahan-translation-practice-v2.js?v=90"></script>
 <script src="./data/giahan-translation-practice-tc2-fix-v1.js?v=90"></script>
-<script src="./app.js"></script>
+<script src="./app.js?v=127"></script>
 <script>
 (function(){
   var ua = String(navigator.userAgent || '');
@@ -130,7 +130,7 @@ async function transformIndexResponse(response) {
     './study-filter-prefs.js?v=90'
   ];
   var desktopScripts = [
-    './english-51talk-desktop-workspace-v1.js?v=119',
+    './english-51talk-desktop-workspace-v1.js?v=127',
     './english-51talk-class158-work-v1.js?v=118',
     './english-51talk-review-trainer-v1.js?v=119',
     './lazy-large-packs.js?v=90',
@@ -266,3 +266,4 @@ self.addEventListener('fetch', event => {
 
   event.respondWith(fetch(req).catch(() => caches.match(req)));
 });
+
