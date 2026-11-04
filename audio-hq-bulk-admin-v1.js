@@ -239,8 +239,14 @@
     if (value) value.textContent = label || (done + ' / ' + total);
   }
 
+  let lastReportSave = 0;
   function saveRunReport(report) {
     reportAfterRun = report;
+    const now = Date.now();
+    // Generating a large library may involve hundreds of network batches.
+    // Persist/redraw at most once per second while running to keep mobile responsive.
+    if (report.status === 'running' && lastReportSave && now - lastReportSave < 1000) return;
+    lastReportSave = now;
     try { localStorage.setItem(HISTORY_KEY, JSON.stringify(report)); } catch (_) {}
     renderRunReport();
   }
