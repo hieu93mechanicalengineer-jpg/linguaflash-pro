@@ -119,6 +119,21 @@
   }
 
   async function loadWorkspaceLessons(en) {
+    // Mobile: use modules already loaded in memory rather than fetching,
+    // regex-matching and evaluating separate workspace scripts.
+    if (isMobile) {
+      try {
+        const loaded = window.LF51_LEVEL2_LESSONS || {};
+        Object.values(loaded).forEach(lesson => addEnglishLesson(en, lesson));
+        const business = window.LF51_BUSINESS_UNIT1;
+        if (Array.isArray(business)) business.forEach(lesson => addEnglishLesson(en, lesson));
+        addEnglishLesson(en, window.LF51_UNIT2_LESSON_V1);
+        addEnglishLesson(en, window.LF51_CLASS158_HEALTH_LESSON_V1);
+      } catch (error) {
+        console.warn('[HQ Bulk] mobile loaded lesson scan skipped', error);
+      }
+      return;
+    }
     try {
       const response = await fetch('./english-51talk-desktop-workspace-v1.js?v=91', { cache: 'no-store' });
       if (response.ok) {
@@ -530,7 +545,7 @@
         '<select id="lfAudioLesson" disabled><option value="all">Tất cả bài tìm thấy</option></select></div>' +
         '<div id="lfAudioLessonList" class="lf-audio-lesson-list" aria-label="Tình trạng âm thanh theo bài"></div>' +
         '<button id="lfAudioGenerate" class="lf-audio-generate" type="button" disabled>🎙️ 2. Kiểm tra trước khi tạo</button>' +
-        '<p class="lf-audio-note">Bước 1 chỉ quét dữ liệu, không tốn lượt tạo. Bước 2 cần xác nhận HeyGen. Câu trùng giữa các bài chỉ tính một lần; tiếng Trung chỉ lưu HQ cho hội thoại.</p>' +
+        '<p class="lf-audio-note">Bước 1 chỉ kiểm tra, không tốn lượt HeyGen. Bước 2 xác nhận mới tạo file. Trên điện thoại chỉ quét các bài đang có trong bộ nhớ, không tự tải các bộ từ điển lớn. Câu trùng giữa các bài chỉ tính một lần; tiếng Trung chỉ lưu HQ hội thoại.</p>' +
         '<div id="lfAudioProgress" hidden><progress id="lfAudioProgressBar" value="0" max="1"></progress>' +
         '<div id="lfAudioProgressText" aria-live="polite"></div></div>' +
         '<div id="' + STATUS_ID + '" role="status" aria-live="polite">Sẵn sàng. Chọn ngôn ngữ rồi bấm "Kiểm tra".</div>' +
