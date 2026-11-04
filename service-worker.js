@@ -31,8 +31,9 @@ const CORE_ASSETS = [
   './giahan-usage-hotfix-v1.js',
   './data/youtube-podcast.js',
   './app.js',
+  './data/business-elementary1-unit1.js?v=119',
   './app-core.js',
-  './chinese-study-workspace.js?v=118',
+  './chinese-study-workspace.js?v=119',
   './english-unit2-data-v1.js',
   './english-class158-health-data-v1.js',
   './english-mobile-lessons-v1.js',
@@ -127,9 +128,9 @@ async function transformIndexResponse(response) {
     './study-filter-prefs.js?v=90'
   ];
   var desktopScripts = [
-    './english-51talk-desktop-workspace-v1.js?v=118',
+    './english-51talk-desktop-workspace-v1.js?v=119',
     './english-51talk-class158-work-v1.js?v=118',
-    './english-51talk-review-trainer-v1.js?v=118',
+    './english-51talk-review-trainer-v1.js?v=119',
     './lazy-large-packs.js?v=90',
     './study-answer-mode.js?v=90',
     './study-input-mobile-hotfix-v1.js?v=90',

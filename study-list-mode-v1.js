@@ -143,12 +143,13 @@
   }
 
   function labelSet(lang){return lang==='zh'?{source:'Từ',phonetic:'Pinyin',meaning:'Nghĩa',other:'English',example:'Ví dụ',title:'Danh sách học tiếng Trung'}:{source:'English',phonetic:'IPA',meaning:'Nghĩa',other:'Tiếng Trung',example:'Ví dụ',title:'Danh sách học tiếng Anh'};}
-  function gridTemplate(lang){if(practice)return "minmax(140px,1fr) minmax(230px,2fr) 56px";const c=columns[lang],p=[];if(c.source)p.push('minmax(150px,1.1fr)');if(c.phonetic)p.push('minmax(120px,.85fr)');if(c.meaning)p.push('minmax(160px,1.15fr)');if(c.other)p.push('minmax(150px,1.1fr)');if(c.example)p.push('minmax(260px,2fr)');p.push('56px');return p.join(' ');}
+  function shownColumns(lang){return {...columns[lang],phonetic:columns[lang].phonetic && document.getElementById('togglePhonetic')?.checked!==false};}
+  function gridTemplate(lang){if(practice)return "minmax(140px,1fr) minmax(230px,2fr) 56px";const c=shownColumns(lang),p=[];if(c.source)p.push('minmax(150px,1.1fr)');if(c.phonetic)p.push('minmax(120px,.85fr)');if(c.meaning)p.push('minmax(160px,1.15fr)');if(c.other)p.push('minmax(150px,1.1fr)');if(c.example)p.push('minmax(260px,2fr)');p.push('56px');return p.join(' ');}
   function exampleHtml(row,lang){if(!row.example&&!row.exVi&&!row.exEn)return'—';const b=[];if(row.example)b.push(`<div class="lfsl-example-main">${esc(row.example)}</div>`);if(row.exVi&&row.exVi!==row.example)b.push(`<div class="lfsl-example-sub">${esc(row.exVi)}</div>`);if(lang==='zh'&&row.exEn&&row.exEn!==row.example)b.push(`<div class="lfsl-example-en">${esc(row.exEn)}</div>`);return b.join('');}
   function cell(key,label,content){return `<div class="lfsl-cell lfsl-${key}" data-label="${esc(label)}">${content||'—'}</div>`;}
 
   function renderRows(rows,lang,unit2){
-    const labels=labelSet(lang),c=practice?{meaning:true}:columns[lang],grid=gridTemplate(lang);
+    const labels=labelSet(lang),c=practice?{meaning:true}:shownColumns(lang),grid=gridTemplate(lang);
     const dialogue = unit2 && unitSection === 'dialogue';
     const foldMeaning = dialogue && !practice;
     const head=[c.source?`<div>${esc(labels.source)}</div>`:'',c.phonetic?`<div>${esc(labels.phonetic)}</div>`:'',c.meaning?`<div>${esc(labels.meaning)}</div>`:'',c.other?`<div>${esc(labels.other)}</div>`:'',c.example?`<div>${esc(labels.example)}</div>`:'',practice?'<div>Nhập đáp án</div>':'','<div>🔊</div>'].join('');
@@ -238,10 +239,11 @@ body.${BODY_CLASS} #flashcardContainer,body.${BODY_CLASS} #studyEmptyState,body.
   }
 
   function ensureUI(){
-    if(document.getElementById(ROOT_ID))return true;const toggle=document.getElementById('togglePhonetic'),flash=document.getElementById('flashcardContainer');if(!toggle||!flash)return false;installStyle();const anchor=toggle.closest('.bg-white')||toggle.parentElement;const root=document.createElement('section');root.id=ROOT_ID;root.innerHTML='<div class="lfsl-switch"><button type="button" class="lfsl-view" data-lfsl-view="card">🃏 Thẻ</button><button type="button" class="lfsl-view" data-lfsl-view="list">📋 Danh sách</button></div><div class="lfsl-tools"></div>';const panel=document.createElement('section');panel.id=PANEL_ID;anchor?.insertAdjacentElement('afterend',root);root.insertAdjacentElement('afterend',panel);render();return true;
+    if(document.getElementById(ROOT_ID))return true;const toggle=document.getElementById('togglePhonetic'),flash=document.getElementById('flashcardContainer');if(!toggle||!flash)return false;installStyle();const anchor=document.getElementById('lfStudyViewAnchor')||flash.previousElementSibling;const root=document.createElement('section');root.id=ROOT_ID;root.innerHTML='<div class="lfsl-switch"><button type="button" class="lfsl-view" data-lfsl-view="card">🃏 Thẻ</button><button type="button" class="lfsl-view" data-lfsl-view="list">📋 Danh sách</button></div><div class="lfsl-tools"></div>';const panel=document.createElement('section');panel.id=PANEL_ID;anchor?.insertAdjacentElement('afterend',root);root.insertAdjacentElement('afterend',panel);render();return true;
   }
 
   function bind(){
+    document.getElementById("togglePhonetic")?.addEventListener("change",render);
     document.addEventListener('change', event => {
       if (event.target.matches?.('[data-dialogue-rate]')) dialogueRate = event.target.value === '0.75' ? 0.75 : 1;
     });

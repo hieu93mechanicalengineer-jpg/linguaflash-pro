@@ -1,6 +1,7 @@
 /* 51Talk Classic English Level 2 · User-supplied Unit 5 and Unit 6 Lesson 2 PDFs. */
 (() => {
   const lessons = [
+    ...(window.LF51_BUSINESS_UNIT1 || []),
   {
       id:'birthday', unit:'UNIT 1', title:'MY BIRTHDAY IS COMING!',
       subtitle:'Lesson 1: Cách hỏi và trả lời về Ngày tháng · Sinh nhật & Công việc',
@@ -494,7 +495,7 @@
   const existing = new Set(DEFAULT_CARDS.map(card => card.id));
   for (const lesson of lessons) {
     lesson.topic = '51Talk English - ' + lesson.unit + ' · ' + lesson.title;
-    const base = {lang:'Tiếng Anh', level:lesson.id === 'birthday' ? '51Talk · Unit 1' : '51Talk · Level 2', category:'51Talk English', topic:lesson.topic,
+    const base = {lang:'Tiếng Anh', level:lesson.level || (lesson.id === 'birthday' ? '51Talk · Unit 1' : '51Talk · Level 2'), category:'51Talk English', topic:lesson.topic,
       interval:0, repetitions:0, easeFactor:2.5, nextReview:0};
     function add(section, index, fields) {
       const id = 'en51_' + lesson.id + '_' + section + '_' + (index + 1);

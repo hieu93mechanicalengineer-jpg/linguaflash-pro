@@ -15,7 +15,7 @@
   let useChoices = false;
 
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const chinese = () => root()?.dataset.language === 'zh';
+  const chinese = () => root()?.dataset.language === 'zh' && !window.lfChineseStudy?.targetEnglish;
   const norm = s => chinese()?String(s||'').normalize('NFKC').replace(/[\s\p{P}]/gu,''): String(s || '').toLowerCase().normalize('NFKC').replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
   const root = () => document.getElementById('lf51DesktopWorkspace');
   const isReview = () => !!root()?.querySelector('.lf51d-tab.active[data-tab="review"]');
@@ -253,7 +253,8 @@
     const card=r?.querySelector('.lf51d-reviewcard'); if(!input||!out||!card)return;
     const en = card.dataset.rtEn || '';
     const typed=norm(input.value), expected=norm(en);
-    const ok=typed===expected;
+    const alternatives=window.lfChineseStudy?.targetEnglish && root()?.dataset.language==='zh' && studyCard(card)?.cardType==='vocab' ? en.split(/\s*[;,]\s*/).map(norm) : [];
+    const ok=typed===expected || alternatives.includes(typed);
     const ipa=card.dataset.rtIpa || '';
     showRatings(card);
     if (ok && card.dataset.rtSpoken !== '1') {
@@ -272,7 +273,7 @@
     answer.className = 'lf51rt-answer';
     answer.innerHTML = `<b>${esc(en)}</b>${ipa ? `<div class="lf51d-ipa">${esc(ipa)}</div>` : ''}`;
     if (!input.hidden) {
-      const feedback = wordFeedback(typed, expected);
+      const feedback = wordFeedback(typed, ok?typed:expected);
       out.insertAdjacentHTML('beforeend', feedback.preview);
       answer.insertAdjacentHTML('beforeend', feedback.full);
     }

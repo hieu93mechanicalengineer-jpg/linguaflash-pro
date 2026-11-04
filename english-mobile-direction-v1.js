@@ -61,7 +61,7 @@
     const r=root(); if(!r || r.querySelector('.lf51m-direction')) return;
     const tabs=r.querySelector('.lf51d-tabs'); if(!tabs) return;
     const bar=document.createElement('div'); bar.className='lf51m-direction';
-    bar.innerHTML=`<div class="lf51m-dir-label">Chiều học</div><div class="lf51m-dir-buttons"><button data-lf-dir="vi-en">${r.dataset.language==='zh'?window.lfChineseStudy.refCode+' → ZH':'🇻🇳 VI → EN'}</button><button data-lf-dir="en-vi">${r.dataset.language==='zh'?'🇨🇳 ZH → '+window.lfChineseStudy.refCode:'🇬🇧 EN → VI'}</button></div>`;
+    bar.innerHTML=`<div class="lf51m-dir-label">Chiều học</div><div class="lf51m-dir-buttons"><button data-lf-dir="vi-en">${r.dataset.target==='zh'?window.lfChineseStudy.refCode+' → ZH':'🇻🇳 VI → EN'}</button><button data-lf-dir="en-vi">${r.dataset.target==='zh'?'🇨🇳 ZH → '+window.lfChineseStudy.refCode:'🇬🇧 EN → VI'}</button></div>`;
     tabs.parentElement?.insertBefore(bar,tabs);
   }
 
@@ -91,7 +91,7 @@
       const x=L.vocab?.[i]||L.vocab?.[0]; if(x){
         const word=r.querySelector('.lf51d-word'), ipa=r.querySelector('.lf51d-vocabhero .lf51d-ipa'), meaning=r.querySelector('.lf51d-vocabhero .lf51d-meaning');
         if(word&&ipa&&meaning){
-          if(direction==='vi-en'){word.textContent=x[2]; ipa.textContent=r.dataset.language==='zh'?window.lfChineseStudy.refLabel+' → nhớ tiếng Trung':'🇻🇳 Tiếng Việt → nhớ tiếng Anh'; meaning.innerHTML=`<span style="color:#1677ff;font-weight:950">${esc(x[0])}</span> <span style="font-weight:500;color:#6b7a90">${esc(x[1]||'')}</span>`;}
+          if(direction==='vi-en'){word.textContent=x[2]; ipa.textContent=r.dataset.target==='zh'?window.lfChineseStudy.refLabel+' → nhớ tiếng Trung':'🇻🇳 Tiếng Việt → nhớ tiếng Anh'; meaning.innerHTML=`<span style="color:#1677ff;font-weight:950">${esc(x[0])}</span> <span style="font-weight:500;color:#6b7a90">${esc(x[1]||'')}</span>`;}
           else{word.textContent=x[0]; ipa.textContent=x[1]||''; meaning.textContent=x[2];}
         }
       }
@@ -104,13 +104,13 @@
           if(ex&&vi){ if(direction==='vi-en'){ex.textContent=x[2]; vi.textContent=x[1]; vi.style.fontStyle='normal'; vi.style.fontWeight='850'; vi.style.color='#1677ff';} else {ex.textContent=x[1];vi.textContent=x[2];vi.style.fontStyle='italic';vi.style.fontWeight='';vi.style.color='';} }
         }
         const task=r.querySelector('.lf51d-toolbox');
-        if(task){const title=task.querySelector('b');const prompt=task.querySelector('.lf51d-vi');const input=task.querySelector('input');if(direction==='en-vi'){if(title)title.textContent=r.dataset.language==='zh'?'✍️ Bài tập nhỏ · ZH → '+window.lfChineseStudy.refCode:'✍️ Bài tập nhỏ · EN → VI';if(prompt){prompt.textContent=x[1];prompt.style.fontStyle='normal'}if(input)input.placeholder='Nhập nghĩa '+(r.dataset.language==='zh'?window.lfChineseStudy.refLabel:'tiếng Việt')+'...';}else{if(title)title.textContent=r.dataset.language==='zh'?'✍️ Bài tập nhỏ · '+window.lfChineseStudy.refCode+' → ZH':'✍️ Bài tập nhỏ · VI → EN';if(prompt)prompt.textContent=x[2];if(input)input.placeholder=r.dataset.language==='zh'?'Nhập câu tiếng Trung...':'Nhập câu tiếng Anh...';}}
+        if(task){const title=task.querySelector('b');const prompt=task.querySelector('.lf51d-vi');const input=task.querySelector('input');if(direction==='en-vi'){if(title)title.textContent=r.dataset.target==='zh'?'✍️ Bài tập nhỏ · ZH → '+window.lfChineseStudy.refCode:'✍️ Bài tập nhỏ · EN → VI';if(prompt){prompt.textContent=x[1];prompt.style.fontStyle='normal'}if(input)input.placeholder='Nhập nghĩa '+(r.dataset.target==='zh'?window.lfChineseStudy.refLabel:'tiếng Việt')+'...';}else{if(title)title.textContent=r.dataset.target==='zh'?'✍️ Bài tập nhỏ · '+window.lfChineseStudy.refCode+' → ZH':'✍️ Bài tập nhỏ · VI → EN';if(prompt)prompt.textContent=x[2];if(input)input.placeholder=r.dataset.target==='zh'?'Nhập câu tiếng Trung...':'Nhập câu tiếng Anh...';}}
       }
     }
 
     const inputTool=[...r.querySelectorAll('.lf51d-coachCard')].find(x=>/Luyện nhập đáp án/i.test(x.textContent||''));
     const p=pair();
-    if(inputTool&&p){const main=inputTool.querySelector('.lf51d-coachMain');const inp=inputTool.querySelector('input');if(direction==='en-vi'){if(main)main.textContent=p.en;if(inp)inp.placeholder='Nhập nghĩa '+(r.dataset.language==='zh'?window.lfChineseStudy.refLabel:'tiếng Việt')+'...';}else{if(main)main.textContent=p.vi;if(inp)inp.placeholder=r.dataset.language==='zh'?'Nhập tiếng Trung...':'Nhập tiếng Anh...';}}
+    if(inputTool&&p){const main=inputTool.querySelector('.lf51d-coachMain');const inp=inputTool.querySelector('input');if(direction==='en-vi'){if(main)main.textContent=p.en;if(inp)inp.placeholder='Nhập nghĩa '+(r.dataset.target==='zh'?window.lfChineseStudy.refLabel:'tiếng Việt')+'...';}else{if(main)main.textContent=p.vi;if(inp)inp.placeholder=r.dataset.target==='zh'?'Nhập tiếng Trung...':'Nhập tiếng Anh...';}}
   }
 
   function customCheck(button){
@@ -122,7 +122,7 @@
     else if(button.hasAttribute('data-check-coach')){input=r.querySelector('#lf51dCoachInput');out=r.querySelector('#lf51dCoachResult');}
     else return false;
     if(!input||!out) return false;
-    const variants = r.dataset.language==='zh' && window.lfChineseStudy.reference==='both' ? p.vi.split(' · ').map(v=>v.replace(/^(VI|EN): /,'')) : [p.vi];
+    const variants = r.dataset.target==='zh' && window.lfChineseStudy.reference==='both' ? p.vi.split(' · ').map(v=>v.replace(/^(VI|EN): /,'')) : [p.vi];
     const ok=variants.some(v=>norm(input.value)===norm(v));
     out.textContent=ok?'✅ Chính xác.':`❌ Chưa đúng. Đáp án: ${p.vi}`;
     out.style.color=ok?'#15803d':'#b42318';
