@@ -1207,6 +1207,303 @@
     "Can we make it on time? The game will start soon!": "/kæn wiː meɪk ɪt ɒn taɪm ðə ɡeɪm wɪl stɑːt suːn/",
     "Yes, we can make it! Look, I can see the sign for the entrance over there. Let's run!": "/jes wiː kæn meɪk ɪt lʊk aɪ kæn siː ðə saɪn fə ði ˈentrəns ˈəʊvə ðeə lets rʌn/"
   }
+},
+{
+  "id": "classicL2U8L2",
+  "unit": "Level 2 · Unit 8 · Lesson 2",
+  "level": "51Talk · Level 2",
+  "title": "I Work in a Bank",
+  "subtitle": "Tên gọi các nơi làm việc · Hỏi đáp về công việc hằng ngày",
+  "vocab": [
+    [
+      "bank",
+      "/bæŋk/",
+      "Ngân hàng",
+      "Trọng tâm · work in a bank; banker / bank clerk = nhân viên ngân hàng."
+    ],
+    [
+      "factory",
+      "/ˈfækt(ə)ri/",
+      "Nhà máy, xí nghiệp, xưởng sản xuất",
+      "Trọng tâm · Số nhiều: factories. work in a food factory / a furniture factory. Có thể đọc 2 hoặc 3 âm tiết."
+    ],
+    [
+      "bar",
+      "/bɑː(r)/",
+      "Quán bar, quầy phục vụ đồ uống",
+      "Trọng tâm · go to a bar; work in a bar late at night. bartender = nhân viên pha chế; pub, club."
+    ],
+    [
+      "late at night",
+      "/leɪt æt naɪt/",
+      "Khuya, vào đêm muộn",
+      "Trọng tâm · at night; in the morning / afternoon / evening. Trái nghĩa: in the day / during the day, early in the morning."
+    ],
+    [
+      "busy at work",
+      "/ˈbɪzi æt wɜː(r)k/",
+      "Bận rộn ở chỗ làm, bận rộn với công việc",
+      "Trọng tâm · am/is/are + busy at work. Chữ u trong busy đọc /ɪ/. Đồng nghĩa: busy with work."
+    ],
+    [
+      "workplace",
+      "/ˈwɜː(r)kpleɪs/",
+      "Nơi làm việc, chỗ làm",
+      "Mở rộng · learn the names of different workplaces."
+    ],
+    [
+      "school",
+      "/skuːl/",
+      "Trường học",
+      "Mở rộng · I work in a school."
+    ],
+    [
+      "restaurant",
+      "/ˈrestrɒnt/",
+      "Nhà hàng",
+      "Mở rộng · I work in a restaurant. Có thể đọc gọn 2 hoặc 3 âm tiết."
+    ],
+    [
+      "in his office",
+      "/ɪn hɪz ˈɒfɪs/",
+      "Ở trong văn phòng của anh ấy",
+      "Mở rộng · in my office = ở trong văn phòng của tôi; nói chung: in an office / at the office."
+    ],
+    [
+      "in my office",
+      "/ɪn maɪ ˈɒfɪs/",
+      "Ở trong văn phòng của tôi",
+      "Mở rộng · in his office = ở trong văn phòng của anh ấy."
+    ],
+    [
+      "be closed on weekends",
+      "/biː kləʊzd ɒn ˈwiːkendz/",
+      "Đóng cửa vào các ngày cuối tuần",
+      "Mở rộng · closed = đóng cửa; open = mở cửa."
+    ],
+    [
+      "How often ...?",
+      "/haʊ ˈɒfn/",
+      "Bao lâu một lần? Có thường xuyên... không?",
+      "Mở rộng · Hỏi tần suất; trả lời: sometimes (thỉnh thoảng), rarely (hiếm khi), never (không bao giờ)."
+    ],
+    [
+      "have a date with ...",
+      "/hæv ə deɪt wɪð/",
+      "Có cuộc hẹn hò với ai đó",
+      "Mở rộng · Dan has a date with Jane. date cũng có nghĩa là ngày tháng."
+    ],
+    [
+      "work two jobs",
+      "/wɜːk tuː dʒɒbz/",
+      "Làm hai công việc cùng lúc",
+      "Mở rộng · Cũng có thể nói have two jobs."
+    ],
+    [
+      "work hard",
+      "/wɜːk hɑːd/",
+      "Làm việc vất vả, chăm chỉ",
+      "Mở rộng · You work really hard!"
+    ],
+    [
+      "in the day",
+      "/ɪn ðə deɪ/",
+      "Vào ban ngày",
+      "Mở rộng · Đối lập với late at night; cũng có thể nói during the day."
+    ]
+  ],
+  "examples": [
+    [
+      "bank",
+      "The bank is closed on weekends.",
+      "Ngân hàng đóng cửa vào những ngày cuối tuần."
+    ],
+    [
+      "factory",
+      "Kathy's parents work in a food factory.",
+      "Bố mẹ của Kathy làm việc trong một nhà máy thực phẩm."
+    ],
+    [
+      "bar",
+      "How often do you go to a bar?",
+      "Bạn có thường xuyên đi quán bar không?"
+    ],
+    [
+      "late at night",
+      "My dad always works late at night.",
+      "Bố tôi luôn làm việc đến tận đêm khuya."
+    ],
+    [
+      "busy at work",
+      "Tom is so busy at work.",
+      "Tom rất bận rộn ở chỗ làm."
+    ],
+    [
+      "Sắp xếp câu 1",
+      "Where do you work?",
+      "Bạn làm việc ở đâu?"
+    ],
+    [
+      "Sắp xếp câu 2",
+      "Lisa works in a bank.",
+      "Lisa làm việc ở một ngân hàng."
+    ],
+    [
+      "Sắp xếp câu 3",
+      "John works in his office late at night.",
+      "John làm việc trong văn phòng của anh ấy đến tận đêm muộn."
+    ]
+  ],
+  "dialogue": [
+    [
+      "Dan",
+      "Where do you work, Jane?",
+      "Em làm việc ở đâu vậy, Jane?"
+    ],
+    [
+      "Jane",
+      "I work in a bank. What about you?",
+      "Em làm việc ở một ngân hàng. Thế còn anh thì sao?"
+    ],
+    [
+      "Dan",
+      "I work two jobs.",
+      "Anh làm hai công việc."
+    ],
+    [
+      "Jane",
+      "Two jobs? You work really hard! Where do you work?",
+      "Hai công việc ư? Anh làm việc chăm chỉ thật đấy! Anh làm việc ở đâu?"
+    ],
+    [
+      "Dan",
+      "I work in a factory in the day, and I work in a bar late at night.",
+      "Anh làm việc ở một nhà máy vào ban ngày, và làm việc ở một quán bar vào đêm muộn."
+    ],
+    [
+      "Jane",
+      "Wow, you're so busy at work.",
+      "Chà, anh bận rộn với công việc quá."
+    ]
+  ],
+  "grammar": [
+    [
+      "Hỏi và trả lời về nơi làm việc",
+      "Where do you work? → I work in a factory / bank / school / restaurant. Dùng in + a/an + nơi làm việc khi nói làm việc trong một cơ sở cụ thể."
+    ],
+    [
+      "Ngôi thứ ba số ít",
+      "Where does he/she work? → He/She works in a bank. Sau does dùng work nguyên mẫu; câu khẳng định he/she thêm -s. Kathy's parents là số nhiều nên dùng work."
+    ],
+    [
+      "work và busy at work",
+      "work là động từ: I work in a factory. Trong at work, work là danh từ. busy là tính từ, cần am/is/are: I am busy at work. / Tom is busy at work."
+    ],
+    [
+      "Trật tự nơi chốn và thời gian",
+      "John works in his office late at night. Nơi chốn (in his office) đứng trước thời gian (late at night)."
+    ],
+    [
+      "Giới từ chỉ thời gian",
+      "in the morning / afternoon / evening; at night; late at night. in the day / during the day = ban ngày."
+    ]
+  ],
+  "speaking": [
+    [
+      "Teacher Eva",
+      "Hi, Mr. Harry! How is your job?",
+      "Chào Harry! Công việc của bạn thế nào?"
+    ],
+    [
+      "You (Harry)",
+      "Hi, Teacher! My job is good, but I am very busy at work.",
+      "Chào cô! Công việc của em tốt, nhưng em rất bận ở chỗ làm."
+    ],
+    [
+      "Teacher Eva",
+      "Oh, really? Where do you work?",
+      "Ồ, thật sao? Bạn làm việc ở đâu?"
+    ],
+    [
+      "You (Harry)",
+      "I work in a furniture factory.",
+      "Em làm việc trong một nhà máy nội thất."
+    ],
+    [
+      "Teacher Eva",
+      "Do you often work overtime or work late at night?",
+      "Bạn có thường tăng ca hoặc làm việc đến khuya không?"
+    ],
+    [
+      "You (Harry)",
+      "Yes, I often work overtime for two hours in the evening, and sometimes I work late at night.",
+      "Có, em thường tăng ca hai tiếng vào buổi tối, và đôi khi em làm việc đến khuya."
+    ],
+    [
+      "Teacher Eva",
+      "What about your wife? Where does she work?",
+      "Còn vợ bạn thì sao? Cô ấy làm việc ở đâu?"
+    ],
+    [
+      "You (Harry)",
+      "She works in a company, too. We both work really hard!",
+      "Cô ấy cũng làm việc ở một công ty. Cả hai chúng em đều làm việc rất chăm chỉ!"
+    ]
+  ],
+  "extras": [
+    [
+      "Bối cảnh hội thoại",
+      "Dan has a date with Jane. — Dan có buổi hẹn hò với Jane."
+    ],
+    [
+      "Sắp xếp câu 1",
+      "work / do / Where / you / ? → Where do you work?"
+    ],
+    [
+      "Sắp xếp câu 2",
+      "works / Lisa / in / a bank / . → Lisa works in a bank."
+    ],
+    [
+      "Sắp xếp câu 3",
+      "works / John / his office / in / late at night / . → John works in his office late at night."
+    ],
+    [
+      "Điền lời thoại · Trang 6",
+      "1. I work in a bank. What about you? → 2. Wow, you're so busy at work."
+    ],
+    [
+      "Speak Out · Phương án thay thế",
+      "I work in an office and a factory. — Em làm việc ở văn phòng và nhà máy. She works in a factory / an office, too. — Cô ấy cũng làm việc ở nhà máy / văn phòng. Chọn câu phù hợp thực tế; đây là kịch bản mẫu."
+    ],
+    [
+      "Nguồn và phiên âm",
+      "Unit 8 Lesson 2 - I Work in a Bank.pdf, 5 trang. Giữ nội dung tiếng Anh và nghĩa tiếng Việt; bổ sung bản dịch Speak Out và IPA toàn câu để luyện học."
+    ]
+  ],
+  "ipa": {
+    "The bank is closed on weekends.": "/ðə bæŋk ɪz kləʊzd ɒn ˈwiːkendz/",
+    "Kathy's parents work in a food factory.": "/ˈkæθiz ˈpeərənts wɜːk ɪn ə fuːd ˈfæktəri/",
+    "How often do you go to a bar?": "/haʊ ˈɒfn duː juː ɡəʊ tə ə bɑː/",
+    "My dad always works late at night.": "/maɪ dæd ˈɔːlweɪz wɜːks leɪt æt naɪt/",
+    "Tom is so busy at work.": "/tɒm ɪz səʊ ˈbɪzi æt wɜːk/",
+    "Where do you work?": "/weə duː juː wɜːk/",
+    "Lisa works in a bank.": "/ˈliːsə wɜːks ɪn ə bæŋk/",
+    "John works in his office late at night.": "/dʒɒn wɜːks ɪn hɪz ˈɒfɪs leɪt æt naɪt/",
+    "Where do you work, Jane?": "/weə duː juː wɜːk dʒeɪn/",
+    "I work in a bank. What about you?": "/aɪ wɜːk ɪn ə bæŋk wɒt əˈbaʊt juː/",
+    "I work two jobs.": "/aɪ wɜːk tuː dʒɒbz/",
+    "Two jobs? You work really hard! Where do you work?": "/tuː dʒɒbz juː wɜːk ˈrɪəli hɑːd weə duː juː wɜːk/",
+    "I work in a factory in the day, and I work in a bar late at night.": "/aɪ wɜːk ɪn ə ˈfæktəri ɪn ðə deɪ ənd aɪ wɜːk ɪn ə bɑː leɪt æt naɪt/",
+    "Wow, you're so busy at work.": "/waʊ jɔː səʊ ˈbɪzi æt wɜːk/",
+    "Hi, Mr. Harry! How is your job?": "/haɪ ˈmɪstə ˈhæri haʊ ɪz jɔː dʒɒb/",
+    "Hi, Teacher! My job is good, but I am very busy at work.": "/haɪ ˈtiːtʃə maɪ dʒɒb ɪz ɡʊd bət aɪ æm ˈveri ˈbɪzi æt wɜːk/",
+    "Oh, really? Where do you work?": "/əʊ ˈrɪəli weə duː juː wɜːk/",
+    "I work in a furniture factory.": "/aɪ wɜːk ɪn ə ˈfɜːnɪtʃə ˈfæktəri/",
+    "Do you often work overtime or work late at night?": "/duː juː ˈɒfn wɜːk ˈəʊvətaɪm ɔː wɜːk leɪt æt naɪt/",
+    "Yes, I often work overtime for two hours in the evening, and sometimes I work late at night.": "/jes aɪ ˈɒfn wɜːk ˈəʊvətaɪm fə tuː ˈaʊəz ɪn ði ˈiːvnɪŋ ənd ˈsʌmtaɪmz aɪ wɜːk leɪt æt naɪt/",
+    "What about your wife? Where does she work?": "/wɒt əˈbaʊt jɔː waɪf weə dʌz ʃiː wɜːk/",
+    "She works in a company, too. We both work really hard!": "/ʃiː wɜːks ɪn ə ˈkʌmpəni tuː wiː bəʊθ wɜːk ˈrɪəli hɑːd/"
+  }
 }
 ];
   window.LF51_LEVEL2_LESSONS = Object.fromEntries(lessons.map(lesson => [lesson.id, lesson]));
