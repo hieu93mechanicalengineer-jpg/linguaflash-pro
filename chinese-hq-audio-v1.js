@@ -35,13 +35,20 @@
     if (!SUPABASE_URL || !API_KEY) { manifestLoaded = true; return 0; }
     try {
       const endpoint = `${SUPABASE_URL}/rest/v1/chinese_audio_manifest?select=audio_key,lesson_id,content_type,source_text,locale,generated_speed,storage_path,duration_seconds&locale=eq.zh-CN`;
-      const response = await fetch(endpoint, { headers: { apikey: API_KEY, Accept: 'application/json' }, cache: 'no-store' });
-      if (!response.ok) throw new Error(`Chinese HQ manifest HTTP ${response.status}`);
-      const rows = await response.json();
+      const allEntries = new Map();
+      const pageSize = 500;
+      for (let offset = 0; ; offset += pageSize) {
+        const page = endpoint + '&order=audio_key&limit=' + pageSize + '&offset=' + offset;
+        const response = await fetch(page, { headers: { apikey: API_KEY, Accept: 'application/json' }, cache: 'no-store' });
+        if (!response.ok) throw new Error(`Chinese HQ manifest HTTP ${response.status}`);
+        const rows = await response.json();
+        for (const row of rows) {
+          if (row?.source_text && row?.storage_path) allEntries.set(norm(row.source_text), row);
+        }
+        if (rows.length < pageSize) break;
+      }
       entries.clear();
-      (Array.isArray(rows) ? rows : []).forEach(row => {
-        if (row?.source_text && row?.storage_path) entries.set(norm(row.source_text), row);
-      });
+      for (const [text, row] of allEntries) entries.set(text, row);
       manifestLoaded = true;
       return entries.size;
     } catch (error) {
