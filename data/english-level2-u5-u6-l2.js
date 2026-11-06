@@ -1209,6 +1209,453 @@
   }
 },
 {
+  "id": "classicL4U3L2",
+  "unit": "Level 4 · Unit 3 · Lesson 2",
+  "level": "51Talk · Level 4",
+  "title": "Sounds Like You Have the Flu",
+  "subtitle": "Miêu tả triệu chứng bệnh",
+  "vocab": [
+    [
+      "sore throat",
+      "/sɔː(r) θrəʊt/",
+      "Đau họng, viêm rát cổ họng",
+      "Cách dùng: Luôn đi kèm động từ have và mạo từ a: I have a sore throat · Lisa has a sore throat. Giải nghĩa từ: sore /sɔː(r)/ = đau rát, nhức · throat /θrəʊt/ = cổ họng (chú ý âm /θ/ đặt lưỡi giữa hai hàm răng)",
+      ""
+    ],
+    [
+      "sneeze",
+      "/sniːz/",
+      "Hắt hơi, nhảy mũi",
+      "Cách dùng: Khi thêm đuôi -ing thì bỏ chữ e ở cuối → sneezing /ˈsniːzɪŋ/. Cấu trúc trong bài (Trang 3, 5 & 10): make me sneeze (làm tôi hắt hơi) · keep sneezing all the time (cứ hắt hơi liên tục)",
+      ""
+    ],
+    [
+      "have a runny nose",
+      "/hæv ə ˈrʌni nəʊz/",
+      "Bị sổ mũi, chảy nước mũi",
+      "Cách dùng: Chia theo chủ ngữ: I have a runny nose / She has a runny nose. Từ liên quan: need a tissue /ˈtɪʃuː/ (cần khăn giấy) · stuffy / blocked nose (nghẹt mũi)",
+      ""
+    ],
+    [
+      "flu",
+      "/fluː/",
+      "Bệnh cúm, cảm cúm",
+      "Quy tắc mạo từ: Khác với catch a cold (dùng a), từ flu luôn đi với mạo từ the: have the flu, get the flu, in bed with the flu. Phân biệt: a cold (cảm lạnh thông thường) vs. the flu (cảm cúm nặng hơn, thường kèm sốt/đau họng)",
+      ""
+    ],
+    [
+      "see a doctor",
+      "/siː ə ˈdɒktə(r)/",
+      "Đi khám bác sĩ, gặp bác sĩ",
+      "Cách dùng: need to see a doctor · You may need to see a doctor. Đồng nghĩa (Trang 5 & Lesson 1): go to the hospital (đi bệnh viện), take some medicine (uống thuốc)",
+      ""
+    ],
+    [
+      "not feeling well & illness",
+      "/nɒt ˈfiːlɪŋ wel/",
+      "Cảm thấy không khỏe (trong người) & Căn bệnh / Sự ốm đau",
+      "Tên Unit 3 (Trang 1): I'm not feeling well (= I feel terrible / I feel sick). Danh từ của tính từ ill (ốm) là illness /ˈɪlnəs/.",
+      ""
+    ],
+    [
+      "weak · cold · tired",
+      "/wiːk/",
+      "Yếu ớt (mệt lả) · Lạnh người · Mệt mỏi",
+      "Cách trả lời Warm-up (Trang 2): Khi bị cảm (had a cold), bạn cảm thấy thế nào? → I felt weak, cold, and tired.",
+      ""
+    ],
+    [
+      "pepper & tissue",
+      "/ˈpepə(r)/",
+      "Hạt tiêu (tiêu xay) & Khăn giấy",
+      "Trong câu ví dụ (Trang 3): The pepper in the food made me sneeze · Susan needs a tissue because she has a runny nose.",
+      ""
+    ],
+    [
+      "in bed with ...",
+      "/ɪn bed wɪð/",
+      "Nằm liệt giường vì (mắc bệnh gì)",
+      "Trong bài (Trang 3): Julia's still in bed with the flu. (Julia vẫn đang phải nằm trên giường vì bị cúm — không có the trước bed).",
+      ""
+    ],
+    [
+      "roommate & classmate",
+      "/ˈruːmmeɪt/",
+      "Bạn cùng phòng & Bạn cùng lớp",
+      "Bối cảnh hội thoại (Trang 4): Jack và Tony vừa là roommates (bạn cùng phòng) vừa là classmates (bạn học cùng lớp). Mở rộng: colleague / coworker (đồng nghiệp).",
+      ""
+    ],
+    [
+      "Your voice sounds terrible.",
+      "/jɔː(r) vɔɪs saʊndz ˈterəbl/",
+      "Giọng của bạn nghe tệ quá (khàn đặc/yếu ớt).",
+      "Cách dùng: Động từ sound /saʊnd/ (nghe có vẻ) + tính từ: Your voice sounds terrible (do bị đau họng sore throat).",
+      ""
+    ],
+    [
+      "be strict with ...",
+      "/biː strɪkt wɪð/",
+      "Nghiêm khắc, khắt khe với (ai đó)",
+      "Đi với giới từ with khi nói về người: He is very strict with his students. (Thầy Carter rất nghiêm khắc với học sinh).",
+      ""
+    ],
+    [
+      "plan to + V (nguyên mẫu)",
+      "/plæn tuː/",
+      "Dự định / Có kế hoạch làm gì",
+      "Trong bài (Trang 5): I plan to go to the hospital this afternoon. (Chiều nay mình dự định sẽ tới bệnh viện).",
+      ""
+    ]
+  ],
+  "examples": [
+    [
+      "sore throat",
+      "Lisa has a sore throat, so she didn't talk much in the meeting.",
+      "Lisa bị đau họng, vì vậy cô ấy đã không nói nhiều trong cuộc họp."
+    ],
+    [
+      "sneeze",
+      "The pepper in the food made me sneeze.",
+      "Hạt tiêu trong thức ăn đã làm tôi bị hắt hơi. (Cấu trúc sai khiến: make + somebody + V nguyên mẫu)."
+    ],
+    [
+      "have a runny nose",
+      "Susan needs a tissue because she has a runny nose.",
+      "Susan cần một tờ khăn giấy bởi vì cô ấy đang bị sổ mũi."
+    ],
+    [
+      "flu",
+      "Julia's still in bed with the flu.",
+      "Julia vẫn đang nằm liệt giường vì bị cảm cúm. (Julia's = Julia is)."
+    ],
+    [
+      "see a doctor",
+      "Ann is so ill that she needs to see a doctor.",
+      "Ann bị ốm nặng đến mức cô ấy cần phải đi khám bác sĩ. (Cấu trúc so + tính từ + that...: quá... đến nỗi mà...)."
+    ]
+  ],
+  "dialogue": [
+    [
+      "Tony",
+      "Morning, Jack.",
+      "Chào buổi sáng, Jack."
+    ],
+    [
+      "Jack",
+      "Morning, Tony.",
+      "Chào buổi sáng, Tony."
+    ],
+    [
+      "Tony",
+      "What happened to you? Your voice sounds terrible.",
+      "Có chuyện gì xảy ra với bạn thế? Giọng của bạn nghe tệ quá (khàn đặc)."
+    ],
+    [
+      "Jack",
+      "I have a sore throat. I'm afraid I can't go to class today.",
+      "Mình bị đau họng. Mình e là hôm nay mình không thể đi học được."
+    ],
+    [
+      "Tony",
+      "Are you sure? Today is Mr. Carter's class. He is very strict with his students.",
+      "Bạn chắc chứ? Hôm nay là tiết học của thầy Carter đấy. Thầy ấy rất nghiêm khắc với sinh viên."
+    ],
+    [
+      "Jack",
+      "I know, but I feel terrible. I keep sneezing all the time, and I also have a runny nose.",
+      "Mình biết, nhưng mình cảm thấy mệt khủng khiếp. Mình cứ hắt hơi liên tục suốt, và còn bị sổ mũi nữa."
+    ],
+    [
+      "Tony",
+      "Sounds like you have the flu. I'll tell Mr. Carter about that. You can stay at home and have a rest.",
+      "Nghe có vẻ như bạn bị cảm cúm rồi. Mình sẽ báo với thầy Carter về việc đó. Bạn có thể ở nhà và nghỉ ngơi đi."
+    ],
+    [
+      "Jack",
+      "Thanks, Tony.",
+      "Cảm ơn bạn nhé, Tony."
+    ],
+    [
+      "Tony",
+      "It's all right. People often get the flu in this season. You may need to see a doctor.",
+      "Không có gì đâu. Mọi người thường hay bị cúm vào mùa này mà. Có lẽ bạn cần phải đi khám bác sĩ đấy."
+    ],
+    [
+      "Jack",
+      "Yes. I plan to go to the hospital this afternoon.",
+      "Ừ. Mình dự định chiều nay sẽ đến bệnh viện."
+    ]
+  ],
+  "grammar": [
+    [
+      "1. Hai Mẫu Câu Trọng Tâm trong Phần Summary (Trang 10) trọng tâm",
+      "Trong phần tổng kết cuối bài (Summary trang 10), giáo trình yêu cầu bạn đặt câu với 2 cấu trúc cực kỳ thông dụng sau: • Mẫu 1: I keep + V-ing + all the time. (Tôi cứ bị / làm gì đó liên tục suốt — động từ sau keep bắt buộc thêm -ing) → I keep sneezing (or coughing) all the time. (Tôi cứ bị hắt hơi / ho liên tục suốt). • Mẫu 2: Sounds like + Mệnh đề (S + V) / Danh từ. (Nghe có vẻ như là... — rút gọn của \"It sounds like...\") → Sounds like you have the flu. / Sounds like a good idea!"
+    ],
+    [
+      "2. Tổng hợp Các Cụm từ Nói về Triệu chứng Bệnh (Kết hợp Lesson 1 & Lesson",
+      "2) mở rộng • Đi với \"a\": have a headache (đau đầu) · have a sore throat (đau họng) · have a runny nose (sổ mũi) · have a fever (bị sốt) · catch a cold (bị cảm lạnh). • Đi với \"the\": have / get the flu (bị cảm cúm). • Câu xin phép nghỉ lịch sự: I'm afraid I can't + V... (I'm afraid I can't go to class / go to work today = Em e là hôm nay em không thể đi học / đi làm được)."
+    ],
+    [
+      "3. Kịch bản Mẫu Luyện nói cùng Giáo viên (Task 4: Speak Out - Trang 8) trọng tâm",
+      "Sử dụng trọn vẹn các từ gợi ý trong hộp Word tips (flu, weak/cold, sneeze, have a runny nose/sore throat, see a doctor) kết hợp với câu trả lời quen thuộc ở buổi học trước với cô Eva: Teacher Eva: Hi, Mr. Harry! When was the last time you were ill? You (Harry): Hi, Teacher! The last time I was ill was last month. I got wet in the heavy rain and caught the flu /fluː/. Teacher Eva: Oh, I'm sorry to hear that. How did you feel and what were your symptoms? You (Harry): I felt very weak, cold, and tired. I had a sore throat /sɔː(r) θrəʊt/ and a runny nose /ə ˈrʌni nəʊz/, and I kept sneezing /ˈsniːzɪŋ/ all the time. Teacher Eva: Did you see a doctor? You (Harry): Yes, I went to see a doctor /siː ə ˈdɒktə(r)/ and bought some medicine. Then I stayed at home, had a good rest, and drank a lot of warm water and orange juice!"
+    ]
+  ],
+  "speaking": [
+    [
+      "Tony",
+      "Morning, Jack.",
+      "Chào buổi sáng, Jack."
+    ],
+    [
+      "Jack",
+      "Morning, Tony.",
+      "Chào buổi sáng, Tony."
+    ],
+    [
+      "Tony",
+      "What happened to you? Your voice sounds terrible.",
+      "Có chuyện gì xảy ra với bạn thế? Giọng của bạn nghe tệ quá (khàn đặc)."
+    ],
+    [
+      "Jack",
+      "I have a sore throat. I'm afraid I can't go to class today.",
+      "Mình bị đau họng. Mình e là hôm nay mình không thể đi học được."
+    ],
+    [
+      "Tony",
+      "Are you sure? Today is Mr. Carter's class. He is very strict with his students.",
+      "Bạn chắc chứ? Hôm nay là tiết học của thầy Carter đấy. Thầy ấy rất nghiêm khắc với sinh viên."
+    ],
+    [
+      "Jack",
+      "I know, but I feel terrible. I keep sneezing all the time, and I also have a runny nose.",
+      "Mình biết, nhưng mình cảm thấy mệt khủng khiếp. Mình cứ hắt hơi liên tục suốt, và còn bị sổ mũi nữa."
+    ],
+    [
+      "Tony",
+      "Sounds like you have the flu. I'll tell Mr. Carter about that. You can stay at home and have a rest.",
+      "Nghe có vẻ như bạn bị cảm cúm rồi. Mình sẽ báo với thầy Carter về việc đó. Bạn có thể ở nhà và nghỉ ngơi đi."
+    ],
+    [
+      "Jack",
+      "Thanks, Tony.",
+      "Cảm ơn bạn nhé, Tony."
+    ],
+    [
+      "Tony",
+      "It's all right. People often get the flu in this season. You may need to see a doctor.",
+      "Không có gì đâu. Mọi người thường hay bị cúm vào mùa này mà. Có lẽ bạn cần phải đi khám bác sĩ đấy."
+    ],
+    [
+      "Jack",
+      "Yes. I plan to go to the hospital this afternoon.",
+      "Ừ. Mình dự định chiều nay sẽ đến bệnh viện."
+    ]
+  ],
+  "extras": [],
+  "ipa": {}
+},
+{
+  "id": "classicL2U7L2",
+  "unit": "Level 2 · Unit 7 · Lesson 2",
+  "level": "51Talk · Level 2",
+  "title": "Do You Know Where This Hotel Is?",
+  "subtitle": "Hỏi đường đến khách sạn",
+  "vocab": [
+    [
+      "hotel",
+      "/həʊˈtel/",
+      "Khách sạn",
+      "Chú ý trọng âm: Nhấn trọng âm vào âm tiết thứ 2 (hơu-theo, không đọc là hô-teo). Trong bài: Do you know where this hotel is? · a quiet and clean hotel (khách sạn yên tĩnh và sạch sẽ).",
+      ""
+    ],
+    [
+      "bus",
+      "/bʌs/",
+      "Xe buýt, xe khách",
+      "Cách dùng: Số nhiều là buses /ˈbʌsɪz/. Bắt xe buýt số mấy: take Bus + [Số] (take Bus 10 — không dùng the). Cụm từ liên quan (Trang 5): bus stop /ˈbʌs stɒp/ (trạm dừng xe buýt), by bus (bằng xe buýt)",
+      ""
+    ],
+    [
+      "building",
+      "/ˈbɪldɪŋ/",
+      "Tòa nhà, cao ốc",
+      "Chú ý phát âm: Chữ u là âm câm, đọc là /ˈbɪldɪŋ/ (bíu-đình). Số nhiều thêm -s: buildings /ˈbɪldɪŋz/. Trong bài: tall buildings in the city (các tòa nhà cao tầng) · behind that building (phía sau tòa nhà kia).",
+      ""
+    ],
+    [
+      "a little bit",
+      "/ə ˈlɪtl bɪt/",
+      "Hơi, một chút, một ít",
+      "Cách dùng: Đứng trước tính từ để giảm nhẹ sắc thái: a little bit + Tính từ. Trong bài: It is a little bit far from here. (Nó hơi xa đây một chút). Đồng nghĩa: a bit, a little.",
+      ""
+    ],
+    [
+      "get there",
+      "/ɡet ðeə(r)/",
+      "Đến đó, đi tới đó",
+      "Quy tắc giới từ: Vì there (ở đó) là trạng từ chỉ nơi chốn nên KHÔNG dùng giới từ \"to\" ở giữa (nói get there, tuyệt đối không nói get to there; nhưng nếu có danh từ thì dùng get to the hotel).",
+      ""
+    ],
+    [
+      "ask for directions",
+      "/ɑːsk fɔː(r) dəˈrekʃnz/",
+      "Hỏi đường, xin chỉ dẫn đường đi",
+      "Cách dùng: Danh từ directions luôn ở dạng số nhiều (có -s) khi mang nghĩa là \"lời chỉ đường\". Cụm tương đương (Trang 5): ask the way to... (hỏi đường tới...).",
+      ""
+    ],
+    [
+      "Excuse me (sir / madam).",
+      "/ɪkˈskjuːz miː/",
+      "Xin lỗi (cho tôi hỏi một chút, thưa ông/bà).",
+      "Cách dùng: Luôn dùng Excuse me để mở lời lịch sự khi bắt chuyện hoặc hỏi đường người lạ (không dùng I'm sorry).",
+      ""
+    ],
+    [
+      "quiet and clean",
+      "/ˈkwaɪət ænd kliːn/",
+      "Yên tĩnh và sạch sẽ",
+      "Trong bài (Trang 3): This is a quiet and clean hotel. (Chú ý quiet / ˈkwaɪət/ có 2 âm tiết = yên tĩnh; tránh nhầm với quite /kwaɪt/ = khá).",
+      ""
+    ],
+    [
+      "far from here ≠ near here",
+      "/fɑː(r) frɒm hɪə(r)/",
+      "Xa nơi này (xa đây) ≠ Gần đây",
+      "Trong bài: It's a little bit far from here · Is there any bus stop near here? (Có trạm xe buýt nào gần đây không?).",
+      ""
+    ],
+    [
+      "take Bus 10 & bus stop",
+      "/teɪk bʌs ten/",
+      "Bắt xe buýt số 10 & Trạm dừng xe buýt",
+      "Trong bài: You need to take Bus 10 to get there · find a bus stop just behind /bɪˈhaɪnd/ that building (ngay phía sau tòa nhà kia).",
+      ""
+    ],
+    [
+      "bookstore · cinema · pharmacy",
+      "/ˈbʊkstɔː(r)/",
+      "Hiệu sách · Rạp chiếu phim · Hiệu thuốc (Nhà thuốc)",
+      "Các địa điểm trên Main Street (Trang 7): Điểm đứng của bạn (You're here) nằm ngay trước Bookstore; đi dọc theo Main Street sẽ thấy Cinema và Pharmacy.",
+      ""
+    ],
+    [
+      "fire station & gas station",
+      "/ˈfaɪə steɪʃn/",
+      "Trạm cứu hỏa & Trạm xăng (Cây xăng)",
+      "Các địa điểm trên North Street (Trang 7): Gồm có School (trường học), Supermarket (siêu thị), Fire station và Gas station.",
+      ""
+    ]
+  ],
+  "examples": [
+    [
+      "hotel",
+      "This is a quiet and clean hotel.",
+      "Đây là một khách sạn yên tĩnh và sạch sẽ."
+    ],
+    [
+      "bus",
+      "There is a bus on the road.",
+      "Có một chiếc xe buýt ở trên đường."
+    ],
+    [
+      "building",
+      "There are different tall buildings in the city.",
+      "Có nhiều tòa nhà cao tầng khác nhau ở trong thành phố. (Có There are + different nên dùng danh từ số nhiều buildings)."
+    ],
+    [
+      "a little bit",
+      "It is a little bit far from here.",
+      "Nó cách đây hơi xa một chút."
+    ],
+    [
+      "get there",
+      "How can I get there?",
+      "Làm thế nào tôi có thể đi đến đó? (Câu hỏi trực tiếp nên đảo can lên trước I)."
+    ]
+  ],
+  "dialogue": [
+    [
+      "Tom",
+      "Excuse me. Do you know where this hotel is?",
+      "Xin lỗi cho tôi hỏi. Bạn có biết khách sạn này ở đâu không?"
+    ],
+    [
+      "Jean",
+      "Yes. It's a little bit far from here.",
+      "Có chứ. Nó cách đây hơi xa một chút."
+    ],
+    [
+      "Tom",
+      "Do you know how I can get there?",
+      "Bạn có biết làm thế nào để tôi có thể đi tới đó không?"
+    ],
+    [
+      "Jean",
+      "Well, you need to take Bus 10.",
+      "À, bạn cần bắt xe buýt số 10."
+    ],
+    [
+      "Tom",
+      "Is there any bus stop near here?",
+      "Có trạm dừng xe buýt nào ở gần đây không?"
+    ],
+    [
+      "Jean",
+      "Yes, you can find a bus stop just behind that building.",
+      "Có đấy, bạn có thể tìm thấy một trạm xe buýt ở ngay phía sau tòa nhà kia."
+    ]
+  ],
+  "grammar": [
+    [
+      "1. Câu Hỏi Gián Tiếp Lịch Sự: \"Do you know where / how + Chủ ngữ + Động",
+      "từ?\" trọng tâm Khi ghép câu hỏi vào sau cụm Do you know... để hỏi đường lịch sự hơn, mệnh đề phía sau KHÔNG đảo ngữ mà giữ nguyên trật tự câu kể (Chủ ngữ + Động từ): • Hỏi trực tiếp: W here is this hotel? → Hỏi lịch sự: Do you know where this hotel is? (Động từ is đặt ở cuối câu). • Hỏi trực tiếp: How can I get there? → Hỏi lịch sự (Summary Trang 9): Do you know how I can get there? (I can đứng xuôi, không đảo thành can I)."
+    ],
+    [
+      "2. Trả lời Câu hỏi Warm-up (Trang 2): \"When and where was the last time you",
+      "got lost?\" mở rộng • Câu trả lời mẫu tự nhiên cho bạn: \"The last time I got lost was two years ago when I traveled to a new city. I used Google Maps on my phone and asked local people for directions to my hotel.\""
+    ],
+    [
+      "3. Kịch bản Chỉ đường theo Bản đồ Thực hành cùng Giáo viên (3. Speak Out -",
+      "Trang 7) trọng tâm Ở trang 7, cô Eva đóng vai người hỏi đường từ điểm \"You're here\" (trên đường M ain Street) tới các địa điểm trên bản đồ (như Supermarket, Pharmacy, Gas station, Cinema). Bạn có thể trả lời theo 2 cách (đi xe buýt theo đúng mẫu bài học hoặc chỉ đường trực tiếp trên bản đồ): Teacher Eva: Excuse me. Do you know where this supermarket (or pharmacy / gas station) is? You (Harry): Yes. It's on North Street (or Main Street). It's a little bit /ə ˈlɪtl bɪt/ far from here. Teacher Eva: Do you know how I can get there? You (Harry) - Cách 1 (Theo mẫu hội thoại): W ell, you need to take Bus 10 to get there. You (Harry) - Cách 2 (Chỉ đường theo bản đồ): You can go along Main Street, turn left onto First Street, and go straight to North Street. Teacher Eva: Thank you! Is there any bus stop near here? You (Harry): Yes, you can find a bus stop just behind that building /ˈbɪldɪŋ/ (near the bookstore)!"
+    ]
+  ],
+  "speaking": [
+    [
+      "Tom",
+      "Excuse me. Do you know where this hotel is?",
+      "Xin lỗi cho tôi hỏi. Bạn có biết khách sạn này ở đâu không?"
+    ],
+    [
+      "Jean",
+      "Yes. It's a little bit far from here.",
+      "Có chứ. Nó cách đây hơi xa một chút."
+    ],
+    [
+      "Tom",
+      "Do you know how I can get there?",
+      "Bạn có biết làm thế nào để tôi có thể đi tới đó không?"
+    ],
+    [
+      "Jean",
+      "Well, you need to take Bus 10.",
+      "À, bạn cần bắt xe buýt số 10."
+    ],
+    [
+      "Tom",
+      "Is there any bus stop near here?",
+      "Có trạm dừng xe buýt nào ở gần đây không?"
+    ],
+    [
+      "Jean",
+      "Yes, you can find a bus stop just behind that building.",
+      "Có đấy, bạn có thể tìm thấy một trạm xe buýt ở ngay phía sau tòa nhà kia."
+    ]
+  ],
+  "extras": [],
+  "ipa": {}
+},
+{
   "id": "classicL2U8L2",
   "unit": "Level 2 · Unit 8 · Lesson 2",
   "level": "51Talk · Level 2",
