@@ -1,6 +1,6 @@
 /* LinguaFlash · HQ Audio Bulk Admin v2
    English: complete HQ library.
-   Chinese: HQ storage is DIALOGUE ONLY to control Supabase usage.
+   Chinese: scan lesson vocabulary, example sentences and dialogue.
    Existing manifest rows are skipped, so repeated runs are resumable and non-duplicating.
 */
 (() => {
@@ -53,7 +53,7 @@
     const normalizer = lang === 'zh' ? normZh : normEn;
     if (lang === 'zh' && !hasHanzi(clean)) return;
     if (lang === 'en' && (!hasLatin(clean) || hasHanzi(clean))) return;
-    const key = normalizer(clean);
+    const key = lang === 'zh' ? JSON.stringify([lessonId, normalizer(clean)]) : normalizer(clean);
     if (map.has(key)) return;
     map.set(key, {
       audio_key: `${lang}_${hashText(clean, normalizer)}`,
@@ -92,7 +92,29 @@
     }
   }
 
-  // Chinese storage policy: only source dialogue lines are eligible for new HQ files.
+  function chineseText(value) {
+    const text = normZh(value).split(/Ví dụ:\s*/i).pop().split('|')[0].trim();
+    return hasHanzi(text) && !/[A-Za-zÀ-ỹ]/.test(text) ? text : '';
+  }
+
+  async function collectChineseCards(map) {
+    const cards = [...getAllCards(), ...(window.CORE_STARTER_CARDS || []), ...(window.GIA_HAN_CORE_CARDS || [])];
+    for (let i = 0; i < cards.length; i++) {
+      if (i && i % 160 === 0) await sleep(0);
+      const card = cards[i];
+      if (!['zh','Tiếng Trung'].includes(card?.lang)) continue;
+      const lesson = card.lang === 'zh'
+        ? [card.category, card.topic].filter(Boolean).join(' - ').replace(/\s+[–—]\s+/g, ' - ')
+        : card.topic || card.category;
+      const sentence = card.cardType === 'sentence';
+      const target = card.lang === 'zh' ? card.front : sentence ? card.meaning : card.word;
+      add(map,'zh',chineseText(target),lesson,sentence ? 'sentence' : 'vocab');
+      for (const example of [card.example, card.exampleChinese]) {
+        add(map,'zh',chineseText(example),lesson,'example');
+      }
+    }
+  }
+
   function collectDialogueAudio(zh, en) {
     try {
       if (typeof DIALOGUES_DB === 'undefined' || !DIALOGUES_DB) return;
@@ -100,7 +122,10 @@
         const lessonId = dialogueKey || dialogue?.id || dialogue?.title || 'dialogue';
         const lessonTitle = dialogue?.title || dialogue?.topic || lessonId;
         (dialogue?.lines || []).forEach(line => {
-          if (hasHanzi(line?.cn)) add(zh, 'zh', line?.cn, lessonId, 'dialogue', lessonTitle);
+          if (hasHanzi(line?.cn)) {
+            const topic = dialogue.course && dialogue.topic ? dialogue.course + ' - ' + dialogue.topic : lessonId;
+            add(zh, 'zh', line.cn, topic, 'dialogue', topic);
+          }
           // English dialogue translations remain part of the full English HQ library.
           add(en, 'en', line?.en, lessonId, 'dialogue', lessonTitle);
         });
@@ -165,12 +190,21 @@
   }
 
   async function collectAll(scope) {
-    setStatus('Đang kiểm tra kho HQ: Trung chỉ hội thoại · Anh toàn bộ…');
+    setStatus('Đang kiểm tra kho HQ: từ vựng, câu mẫu và hội thoại…');
     // Never load 9+ MB of optional dictionary/level packs during audio scan.
     // Users can explicitly open a large pack in Study first when needed.
     const zh = new Map();
     const en = new Map();
     if (scope !== 'zh') await collectEnglishCards(en);
+    if (scope !== 'en') {
+      await collectChineseCards(zh);
+      if (typeof GIA_HAN_GRAMMAR_DB !== 'undefined') {
+        for (const [n, items] of Object.entries(GIA_HAN_GRAMMAR_DB)) {
+          const lesson = 'Gia Hân - Trung cấp ' + (Number(n) < 31 ? 1 : 2) + ' - Bài ' + n;
+          for (const item of items) add(zh,'zh',chineseText(item.cn),lesson,'grammar');
+        }
+      }
+    }
     collectDialogueAudio(zh, en);
     if (scope !== 'zh') await loadWorkspaceLessons(en);
     return { zh: [...zh.values()], en: [...en.values()] };
@@ -186,6 +220,7 @@
         .from(table)
         .select('source_text')
         .eq('locale', locale)
+        .order('audio_key')
         .range(from, from + 999);
       if (error) throw error;
       (data || []).forEach(row => row?.source_text && result.add(normalizer(row.source_text)));
@@ -196,10 +231,8 @@
 
   async function callGenerator(lang, items) {
     const endpoint = lang === 'zh' ? 'generate-chinese-audio' : 'generate-english-audio';
-    const safeItems = lang === 'zh'
-      ? (items || []).filter(item => item?.content_type === 'dialogue')
-      : (items || []);
-    if (!safeItems.length) throw new Error(lang === 'zh' ? 'Tiếng Trung chỉ tạo HQ cho hội thoại.' : 'Không có nội dung để tạo audio.');
+    const safeItems = items || [];
+    if (!safeItems.length) throw new Error('Chưa có nội dung để tạo âm thanh.');
 
     const response = await fetch(`${String(cfg.url || '').replace(/\/$/, '')}/functions/v1/${endpoint}`, {
       method: 'POST',
@@ -219,7 +252,7 @@
 
 
   function languageLabel(lang) {
-    return lang === 'zh' ? '🇨🇳 Tiếng Trung · hội thoại' : '🇬🇧 Tiếng Anh';
+    return lang === 'zh' ? '🇨🇳 Tiếng Trung' : '🇬🇧 Tiếng Anh';
   }
 
   function setBusy(busy) {
@@ -294,10 +327,22 @@
     return wanted === 'all' ? latestScan.groups : latestScan.groups.filter(group => group.key === wanted);
   }
 
+  function selectedMissingGroups() {
+    const seen = new Set();
+    return selectedScanGroups().map(group => {
+      const itemsMissing = group.itemsMissing.filter(item => {
+        if (seen.has(item.audio_key)) return false;
+        seen.add(item.audio_key);
+        return true;
+      });
+      return { ...group, itemsMissing };
+    }).filter(group => group.itemsMissing.length);
+  }
+
   function refreshGenerateButton() {
     const button = document.getElementById('lfAudioGenerate');
     if (!button) return;
-    const missing = selectedScanGroups().reduce((n, group) => n + group.itemsMissing.length, 0);
+    const missing = selectedMissingGroups().reduce((n, group) => n + group.itemsMissing.length, 0);
     button.textContent = missing ? '🎙️ Tạo ' + missing + ' âm thanh còn thiếu' : '🎙️ Chưa có âm thanh cần tạo';
     button.disabled = !isAdmin || !latestScan || !missing || running;
   }
@@ -350,7 +395,7 @@
     const groups = [];
     for (const lang of langs) {
       setStatus('🔎 Đang kiểm tra ' + languageLabel(lang) + ' với kho âm thanh đã lưu…');
-      const source = lang === 'zh' ? all.zh.filter(item => item.content_type === 'dialogue') : all.en;
+      const source = lang === 'zh' ? all.zh : all.en;
       const stored = await existingSet(lang);
       const normalizer = lang === 'zh' ? normZh : normEn;
       const byLesson = new Map();
@@ -401,7 +446,7 @@
 
   async function generateSelected() {
     if (running || !latestScan || !isAdmin || !session?.access_token) return;
-    const groups = selectedScanGroups().filter(group => group.itemsMissing.length);
+    const groups = selectedMissingGroups();
     const total = groups.reduce((n, group) => n + group.itemsMissing.length, 0);
     if (!total) {
       setStatus('✅ Không có mục mới cần tạo. Hãy kiểm tra lại nếu bạn vừa thêm bài.');
@@ -449,8 +494,11 @@
           outcome.updatedAt = Date.now();
           saveRunReport(outcome);
           setProgress(processed, total, 'Đã xử lý ' + processed + '/' + total + ' · tạo được ' + outcome.generated + ' · lỗi ' + outcome.failed);
-          if (group.lang === 'zh') await window.LFChineseHQAudio?.refresh?.();
-          else await window.LFEnglishHQAudio?.refresh?.();
+          if (failed) {
+            const failure = payload.results?.find(item => item.ok === false);
+            row.error = String(failure?.error || 'Dịch vụ tạo giọng báo lỗi.');
+            throw new Error(group.title + ': ' + row.error);
+          }
           if (offset + batchSize < group.itemsMissing.length) await sleep(250);
         }
       }
@@ -465,6 +513,9 @@
       setStatus('⚠️ Đã dừng khi xử lý ' + processed + '/' + total + ' mục. Đã tạo ' + outcome.generated + ', lỗi đã báo ' + outcome.failed + '. ' + String(error?.message || error) + '. Kiểm tra lại để tiếp tục các mục thiếu.', 'error');
     } finally {
       running = false;
+      const languages = new Set(groups.map(group => group.lang));
+      if (languages.has('zh')) void window.LFChineseHQAudio?.refresh?.();
+      if (languages.has('en')) void window.LFEnglishHQAudio?.refresh?.();
       latestScan = null; // Force a fresh manifest check before another generation.
       setBusy(false);
       renderScanReport();
@@ -484,7 +535,7 @@
     style.id = 'lfAudioBulkAdminStyle';
     style.textContent = `
       #${PANEL_ID}{display:none;width:100%;margin-top:14px;padding:16px;border:1px solid #c7d2fe;border-radius:15px;background:#f8faff;box-sizing:border-box}
-      #${PANEL_ID}.on{display:block}
+      #lfAudioUpdateCard #${PANEL_ID}.on{display:block!important}
       .lf-audio-bulk-title{font-size:.87rem;font-weight:900;color:#1e293b;margin-bottom:9px}
       .lf-audio-controls{display:grid;grid-template-columns:minmax(170px,1fr) auto;gap:9px;align-items:end}
       .lf-audio-controls label,.lf-audio-lesson-picker label{font-size:.75rem;font-weight:800;color:#475569;display:block;margin-bottom:5px}
@@ -543,7 +594,7 @@
         '<div class="lf-audio-controls">' +
         '<div><label for="lfAudioLanguage">1. Chọn ngôn ngữ</label>' +
         '<select id="lfAudioLanguage"><option value="en">🇬🇧 Tiếng Anh (toàn bộ bài có trong thư viện)</option>' +
-        '<option value="zh">🇨🇳 Tiếng Trung (chỉ hội thoại)</option>' +
+        '<option value="zh">🇨🇳 Tiếng Trung (từ vựng, câu mẫu, hội thoại)</option>' +
         '<option value="both">🌐 Cả hai ngôn ngữ</option></select></div>' +
         '<button id="lfAudioScan" type="button">🔎 1. Kiểm tra âm thanh</button></div>' +
         '<div id="lfAudioScanSummary" class="lf-audio-summary">Chưa kiểm tra. Bấm "1. Kiểm tra âm thanh" để xem bài nào còn thiếu. Chưa tạo file nào.</div>' +
@@ -551,7 +602,7 @@
         '<select id="lfAudioLesson" disabled><option value="all">Tất cả bài tìm thấy</option></select></div>' +
         '<div id="lfAudioLessonList" class="lf-audio-lesson-list" aria-label="Tình trạng âm thanh theo bài"></div>' +
         '<button id="lfAudioGenerate" class="lf-audio-generate" type="button" disabled>🎙️ 2. Kiểm tra trước khi tạo</button>' +
-        '<p class="lf-audio-note">Bước 1 chỉ kiểm tra, không tốn lượt HeyGen. Bước 2 xác nhận mới tạo file. Trên điện thoại chỉ quét các bài đang có trong bộ nhớ, không tự tải các bộ từ điển lớn. Câu trùng giữa các bài chỉ tính một lần; tiếng Trung chỉ lưu HQ hội thoại.</p>' +
+        '<p class="lf-audio-note">Bước 1 chỉ kiểm tra, không tốn lượt HeyGen. Bước 2 xác nhận mới tạo file. Trên điện thoại chỉ quét các bài đang có trong bộ nhớ, không tự tải các bộ từ điển lớn. Khi tạo nhiều bài, mỗi câu trùng chỉ tạo một lần.</p>' +
         '<div id="lfAudioProgress" hidden><progress id="lfAudioProgressBar" value="0" max="1"></progress>' +
         '<div id="lfAudioProgressText" aria-live="polite"></div></div>' +
         '<div id="' + STATUS_ID + '" role="status" aria-live="polite">Sẵn sàng. Chọn ngôn ngữ rồi bấm "Kiểm tra".</div>' +
@@ -663,7 +714,7 @@
   window.LFAudioHQBulkAdmin = {
     run,
     open: () => openPanel(true),
-    policy: { zh: 'dialogue-only', en: 'full-library' },
+    policy: { zh: 'lesson-content', en: 'full-library' },
     canGenerate: () => isAdmin && !!session?.access_token
   };
 })();
