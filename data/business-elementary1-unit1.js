@@ -771,5 +771,434 @@ window.LF51_BUSINESS_UNIT1 = [
     "subtitle": "Giới thiệu hoạt động kinh doanh",
     "level": "Business English · Elementary 1",
     "extras": []
+  },
+  {
+    "id": "businessE1U1L4",
+    "unit": "Business English · Elementary 1 · Unit 1 · Lesson 4",
+    "title": "Your Duty and Your Task",
+    "subtitle": "Trách nhiệm công việc · Nhận nhiệm vụ và xác nhận thời hạn",
+    "level": "Business English · Elementary 1",
+    "vocab": [
+      [
+        "be familiar with",
+        "/biː fəˈmɪliə wɪð/",
+        "Quen thuộc với",
+        "be familiar with + danh từ; I am not familiar with this job."
+      ],
+      [
+        "job responsibility",
+        "/dʒɒb rɪˌspɒnsəˈbɪləti/",
+        "Trách nhiệm công việc",
+        "Số nhiều: job responsibilities."
+      ],
+      [
+        "need it done by",
+        "/niːd ɪt dʌn baɪ/",
+        "Cần hoàn thành việc đó trước hoặc chậm nhất vào",
+        "need + tân ngữ + quá khứ phân từ; by + thời hạn."
+      ],
+      [
+        "have a brief for",
+        "/hæv ə briːf fɔː/",
+        "Có bản yêu cầu hoặc hướng dẫn cho",
+        "brief ở đây là danh từ: bản tóm tắt yêu cầu công việc."
+      ],
+      [
+        "How would you like ...?",
+        "/haʊ wʊd juː laɪk/",
+        "Bạn muốn ... như thế nào?",
+        "Hỏi cách thức hoặc hình thức người nhận mong muốn."
+      ],
+      [
+        "work on",
+        "/wɜːk ɒn/",
+        "Thực hiện, làm một việc gì",
+        "work on a weekly report = làm báo cáo tuần."
+      ],
+      [
+        "complete",
+        "/kəmˈpliːt/",
+        "Hoàn thành",
+        "be completed = được hoàn thành."
+      ],
+      [
+        "top priority",
+        "/tɒp praɪˈɒrəti/",
+        "Ưu tiên hàng đầu",
+        "make it my top priority = đặt việc đó làm ưu tiên hàng đầu."
+      ],
+      [
+        "duty",
+        "/ˈdjuːti/",
+        "Nhiệm vụ, bổn phận",
+        "main duties = những nhiệm vụ chính."
+      ],
+      [
+        "task",
+        "/tɑːsk/",
+        "Đầu việc, nhiệm vụ cụ thể",
+        "assign somebody a task = giao nhiệm vụ cho ai."
+      ],
+      [
+        "supervisor",
+        "/ˈsuːpəvaɪzə/",
+        "Người giám sát, cấp trên trực tiếp",
+        "get tasks from your supervisor."
+      ],
+      [
+        "assign",
+        "/əˈsaɪn/",
+        "Phân công, giao việc",
+        "assign somebody several tasks."
+      ],
+      [
+        "deal with documents",
+        "/diːl wɪð ˈdɒkjəmənts/",
+        "Xử lý tài liệu",
+        "Sau include dùng danh từ hoặc V-ing: include dealing with documents."
+      ],
+      [
+        "send and receive e-mails",
+        "/send ənd rɪˈsiːv ˈiːmeɪlz/",
+        "Gửi và nhận thư điện tử",
+        "sending and receiving e-mails."
+      ],
+      [
+        "weekly report",
+        "/ˈwiːkli rɪˈpɔːt/",
+        "Báo cáo tuần",
+        "make a weekly report = lập báo cáo tuần."
+      ],
+      [
+        "handle",
+        "/ˈhændl/",
+        "Xử lý, đảm đương",
+        "Can you handle that? = Bạn đảm đương được việc đó chứ?"
+      ],
+      [
+        "type and print",
+        "/taɪp ənd prɪnt/",
+        "Đánh máy và in",
+        "type and print these materials."
+      ],
+      [
+        "hand in",
+        "/hænd ɪn/",
+        "Nộp",
+        "hand it in; đại từ it đứng giữa hand và in."
+      ],
+      [
+        "specific requirements",
+        "/spəˈsɪfɪk rɪˈkwaɪəmənts/",
+        "Yêu cầu cụ thể",
+        "specific requirements for this report."
+      ],
+      [
+        "in printed form",
+        "/ɪn ˈprɪntɪd fɔːm/",
+        "Dưới dạng bản in",
+        "by e-mail or in printed form."
+      ],
+      [
+        "by the end of this week",
+        "/baɪ ði end əv ðɪs wiːk/",
+        "Chậm nhất vào cuối tuần này",
+        "by nêu hạn chót; before = trước thời điểm đó."
+      ],
+      [
+        "wedding invitation",
+        "/ˈwedɪŋ ˌɪnvɪˈteɪʃn/",
+        "Thiệp mời đám cưới",
+        "mail the invitations = gửi thiệp mời qua bưu điện."
+      ]
+    ],
+    "dialogue": [
+      [
+        "Kate",
+        "Excuse me, Alex. As I am not familiar with this job, may I ask what my major job responsibilities are?",
+        "Xin lỗi anh Alex. Vì tôi chưa quen công việc này, cho tôi hỏi những trách nhiệm công việc chính của tôi là gì?"
+      ],
+      [
+        "Alex",
+        "Your responsibilities include dealing with documents, sending and receiving e-mails.",
+        "Trách nhiệm của bạn gồm xử lý tài liệu, gửi và nhận e-mail."
+      ],
+      [
+        "Kate",
+        "Okay. Is there anything else I need to do?",
+        "Vâng. Tôi còn cần làm việc gì khác không?"
+      ],
+      [
+        "Alex",
+        "Yes. You also need to make weekly reports. Can you handle that?",
+        "Có. Bạn cũng cần lập báo cáo tuần. Bạn đảm đương được chứ?"
+      ],
+      [
+        "Kate",
+        "No problem. What should I do today?",
+        "Không vấn đề gì. Hôm nay tôi nên làm gì?"
+      ],
+      [
+        "Alex",
+        "Please type and print these materials for me.",
+        "Vui lòng đánh máy và in những tài liệu này giúp tôi."
+      ],
+      [
+        "Kate",
+        "Sure. May I ask when you need it done by?",
+        "Vâng. Cho tôi hỏi anh cần hoàn thành việc này chậm nhất vào lúc nào?"
+      ],
+      [
+        "Alex",
+        "2 p.m. this afternoon.",
+        "Hai giờ chiều nay."
+      ],
+      [
+        "Kate",
+        "Okay, I will do it right now.",
+        "Vâng, tôi sẽ làm ngay bây giờ."
+      ],
+      [
+        "Alex",
+        "I would like you to work on a weekly report for our department.",
+        "Tôi muốn bạn làm một báo cáo tuần cho phòng ban chúng ta."
+      ],
+      [
+        "Kate",
+        "When do you need it to be completed?",
+        "Anh cần nó được hoàn thành vào lúc nào?"
+      ],
+      [
+        "Alex",
+        "I need to send it out before the next meeting. You have to hand it in by the end of this week.",
+        "Tôi cần gửi nó đi trước cuộc họp tiếp theo. Bạn phải nộp chậm nhất vào cuối tuần này."
+      ],
+      [
+        "Kate",
+        "I will make it my top priority to have it done by Thursday. Do you have a brief for this report?",
+        "Tôi sẽ ưu tiên hàng đầu để hoàn thành chậm nhất vào thứ Năm. Anh có bản yêu cầu cho báo cáo này không?"
+      ],
+      [
+        "Alex",
+        "Yes. I'd like you to include all the tasks we have done this week.",
+        "Có. Tôi muốn bạn đưa vào tất cả những nhiệm vụ chúng ta đã làm trong tuần này."
+      ],
+      [
+        "Kate",
+        "How would you like the report? By e-mail or in printed form?",
+        "Anh muốn nhận báo cáo dưới hình thức nào? Qua e-mail hay bản in?"
+      ],
+      [
+        "Alex",
+        "Both, please.",
+        "Cho tôi cả hai nhé."
+      ]
+    ],
+    "examples": [
+      [
+        "Khởi động",
+        "Do you still remember your first task at your company?",
+        "Bạn còn nhớ nhiệm vụ đầu tiên của mình ở công ty không?"
+      ],
+      [
+        "Khởi động",
+        "What are your main duties at work now?",
+        "Hiện nay những nhiệm vụ chính của bạn ở chỗ làm là gì?"
+      ],
+      [
+        "be familiar with",
+        "I am not familiar with my new job. May I ask what my major responsibility is?",
+        "Tôi chưa quen công việc mới. Cho tôi hỏi trách nhiệm chính của tôi là gì?"
+      ],
+      [
+        "Language Focus 2",
+        "Anything else do I need to do?",
+        "Tôi có cần làm gì khác không?"
+      ],
+      [
+        "need it done by",
+        "May I ask when you need it done by?",
+        "Cho tôi hỏi anh cần hoàn thành việc đó chậm nhất vào lúc nào?"
+      ],
+      [
+        "have a brief for",
+        "Do you have a brief for this report?",
+        "Anh có bản yêu cầu cho báo cáo này không?"
+      ],
+      [
+        "How would you like ...?",
+        "How would you like the report?",
+        "Anh muốn nhận báo cáo dưới hình thức nào?"
+      ],
+      [
+        "Language Focus a",
+        "Do you have any specific requirements for this report?",
+        "Anh có yêu cầu cụ thể nào cho báo cáo này không?"
+      ],
+      [
+        "Language Focus b",
+        "Are there any other tasks that you need me to do?",
+        "Anh có cần tôi làm nhiệm vụ nào khác không?"
+      ],
+      [
+        "Language Focus c · Câu gốc PDF",
+        "I'm new at this job. What is my main job description?",
+        "Tôi mới làm công việc này. Nội dung mô tả công việc chính của tôi là gì?"
+      ],
+      [
+        "Language Focus d",
+        "In what form do you want me to send you the report?",
+        "Anh muốn tôi gửi báo cáo dưới hình thức nào?"
+      ],
+      [
+        "Language Focus e",
+        "When do you need the report to be completed?",
+        "Anh cần báo cáo được hoàn thành vào lúc nào?"
+      ],
+      [
+        "Tổng kết · Trách nhiệm",
+        "May I ask what my major responsibilities are?",
+        "Cho tôi hỏi những trách nhiệm chính của tôi là gì?"
+      ],
+      [
+        "Tổng kết · Việc khác",
+        "Is there anything else I need to do?",
+        "Tôi còn cần làm việc gì khác không?"
+      ],
+      [
+        "Tổng kết · Hạn chót",
+        "When does it need to be done by?",
+        "Việc đó cần được hoàn thành chậm nhất vào lúc nào?"
+      ]
+    ],
+    "speaking": [
+      [
+        "You (Assistant)",
+        "May I ask what you would like me to do?",
+        "Cho tôi hỏi thầy/cô muốn tôi làm gì?"
+      ],
+      [
+        "Teacher",
+        "Please prepare wedding invitations for one thousand people.",
+        "Vui lòng chuẩn bị thiệp cưới cho một nghìn người."
+      ],
+      [
+        "You (Assistant)",
+        "When do you need them to be completed?",
+        "Thầy/cô cần chúng được hoàn thành vào lúc nào?"
+      ],
+      [
+        "Teacher",
+        "By the end of next week. You have five days left.",
+        "Chậm nhất vào cuối tuần sau. Bạn còn năm ngày."
+      ],
+      [
+        "You (Assistant)",
+        "How would you like me to send the invitations?",
+        "Thầy/cô muốn tôi gửi thiệp mời bằng cách nào?"
+      ],
+      [
+        "Teacher",
+        "Please mail the invitations.",
+        "Vui lòng gửi thiệp mời qua bưu điện."
+      ],
+      [
+        "You (Assistant)",
+        "No problem. I will make it my top priority.",
+        "Không vấn đề gì. Tôi sẽ đặt việc này làm ưu tiên hàng đầu."
+      ]
+    ],
+    "ipa": {
+      "Excuse me, Alex. As I am not familiar with this job, may I ask what my major job responsibilities are?": "/ɪkˈskjuːz miː ˈælɪks | æz aɪ æm nɒt fəˈmɪliə wɪð ðɪs dʒɒb | meɪ aɪ ɑːsk wɒt maɪ ˈmeɪdʒə dʒɒb rɪˌspɒnsəˈbɪlətiz ɑː/",
+      "Your responsibilities include dealing with documents, sending and receiving e-mails.": "/jɔː rɪˌspɒnsəˈbɪlətiz ɪnˈkluːd ˈdiːlɪŋ wɪð ˈdɒkjəmənts | ˈsendɪŋ ənd rɪˈsiːvɪŋ ˈiːmeɪlz/",
+      "Okay. Is there anything else I need to do?": "/əʊˈkeɪ | ɪz ðeər ˈeniθɪŋ els aɪ niːd tə duː/",
+      "Yes. You also need to make weekly reports. Can you handle that?": "/jes | juː ˈɔːlsəʊ niːd tə meɪk ˈwiːkli rɪˈpɔːts | kæn juː ˈhændl ðæt/",
+      "No problem. What should I do today?": "/nəʊ ˈprɒbləm | wɒt ʃʊd aɪ duː təˈdeɪ/",
+      "Please type and print these materials for me.": "/pliːz taɪp ənd prɪnt ðiːz məˈtɪəriəlz fə miː/",
+      "Sure. May I ask when you need it done by?": "/ʃʊə | meɪ aɪ ɑːsk wen juː niːd ɪt dʌn baɪ/",
+      "2 p.m. this afternoon.": "/tuː piː em ðɪs ˌɑːftəˈnuːn/",
+      "Okay, I will do it right now.": "/əʊˈkeɪ | aɪ wɪl duː ɪt raɪt naʊ/",
+      "I would like you to work on a weekly report for our department.": "/aɪ wʊd laɪk juː tə wɜːk ɒn ə ˈwiːkli rɪˈpɔːt fər aʊə dɪˈpɑːtmənt/",
+      "When do you need it to be completed?": "/wen duː juː niːd ɪt tə biː kəmˈpliːtɪd/",
+      "I need to send it out before the next meeting. You have to hand it in by the end of this week.": "/aɪ niːd tə send ɪt aʊt bɪˈfɔː ðə nekst ˈmiːtɪŋ | juː hæv tə hænd ɪt ɪn baɪ ði end əv ðɪs wiːk/",
+      "I will make it my top priority to have it done by Thursday. Do you have a brief for this report?": "/aɪ wɪl meɪk ɪt maɪ tɒp praɪˈɒrəti tə hæv ɪt dʌn baɪ ˈθɜːzdeɪ | duː juː hæv ə briːf fə ðɪs rɪˈpɔːt/",
+      "Yes. I'd like you to include all the tasks we have done this week.": "/jes | aɪd laɪk juː tə ɪnˈkluːd ɔːl ðə tɑːsks wiː hæv dʌn ðɪs wiːk/",
+      "How would you like the report? By e-mail or in printed form?": "/haʊ wʊd juː laɪk ðə rɪˈpɔːt | baɪ ˈiːmeɪl ɔːr ɪn ˈprɪntɪd fɔːm/",
+      "Both, please.": "/bəʊθ pliːz/",
+      "Do you still remember your first task at your company?": "/duː juː stɪl rɪˈmembə jɔː fɜːst tɑːsk ət jɔː ˈkʌmpəni/",
+      "What are your main duties at work now?": "/wɒt ɑː jɔː meɪn ˈdjuːtiz ət wɜːk naʊ/",
+      "I am not familiar with my new job. May I ask what my major responsibility is?": "/aɪ æm nɒt fəˈmɪliə wɪð maɪ njuː dʒɒb | meɪ aɪ ɑːsk wɒt maɪ ˈmeɪdʒə rɪˌspɒnsəˈbɪləti ɪz/",
+      "Anything else do I need to do?": "/ˈeniθɪŋ els duː aɪ niːd tə duː/",
+      "May I ask when you need it done by?": "/meɪ aɪ ɑːsk wen juː niːd ɪt dʌn baɪ/",
+      "Do you have a brief for this report?": "/duː juː hæv ə briːf fə ðɪs rɪˈpɔːt/",
+      "How would you like the report?": "/haʊ wʊd juː laɪk ðə rɪˈpɔːt/",
+      "Do you have any specific requirements for this report?": "/duː juː hæv ˈeni spəˈsɪfɪk rɪˈkwaɪəmənts fə ðɪs rɪˈpɔːt/",
+      "Are there any other tasks that you need me to do?": "/ɑː ðeər ˈeni ˈʌðə tɑːsks ðæt juː niːd miː tə duː/",
+      "I'm new at this job. What is my main job description?": "/aɪm njuː ət ðɪs dʒɒb | wɒt ɪz maɪ meɪn dʒɒb dɪˈskrɪpʃn/",
+      "In what form do you want me to send you the report?": "/ɪn wɒt fɔːm duː juː wɒnt miː tə send juː ðə rɪˈpɔːt/",
+      "When do you need the report to be completed?": "/wen duː juː niːd ðə rɪˈpɔːt tə biː kəmˈpliːtɪd/",
+      "May I ask what my major responsibilities are?": "/meɪ aɪ ɑːsk wɒt maɪ ˈmeɪdʒə rɪˌspɒnsəˈbɪlətiz ɑː/",
+      "Is there anything else I need to do?": "/ɪz ðeər ˈeniθɪŋ els aɪ niːd tə duː/",
+      "When does it need to be done by?": "/wen dʌz ɪt niːd tə biː dʌn baɪ/",
+      "May I ask what you would like me to do?": "/meɪ aɪ ɑːsk wɒt juː wʊd laɪk miː tə duː/",
+      "Please prepare wedding invitations for one thousand people.": "/pliːz prɪˈpeə ˈwedɪŋ ˌɪnvɪˈteɪʃnz fə wʌn ˈθaʊzənd ˈpiːpl/",
+      "When do you need them to be completed?": "/wen duː juː niːd ðəm tə biː kəmˈpliːtɪd/",
+      "By the end of next week. You have five days left.": "/baɪ ði end əv nekst wiːk | juː hæv faɪv deɪz left/",
+      "How would you like me to send the invitations?": "/haʊ wʊd juː laɪk miː tə send ði ˌɪnvɪˈteɪʃnz/",
+      "Please mail the invitations.": "/pliːz meɪl ði ˌɪnvɪˈteɪʃnz/",
+      "No problem. I will make it my top priority.": "/nəʊ ˈprɒbləm | aɪ wɪl meɪk ɪt maɪ tɒp praɪˈɒrəti/"
+    },
+    "grammar": [
+      [
+        "Hỏi trách nhiệm bằng câu hỏi gián tiếp",
+        "May I ask what my major job responsibilities are? Sau May I ask what/when giữ trật tự chủ ngữ + động từ; không đảo are lên trước my responsibilities."
+      ],
+      [
+        "Xác nhận hạn chót",
+        "May I ask when you need it done by? / When does it need to be done by? by + thời điểm = chậm nhất vào thời điểm đó. need it done có nghĩa cần việc đó được hoàn thành."
+      ],
+      [
+        "Hỏi yêu cầu và hình thức bàn giao",
+        "Do you have a brief for this report? = Do you have any specific requirements for this report? How would you like the report? = In what form do you want me to send you the report?"
+      ],
+      [
+        "include + V-ing",
+        "Your responsibilities include dealing with documents, sending and receiving e-mails. Sau include có thể dùng danh từ hoặc V-ing."
+      ],
+      [
+        "Lời giao việc lịch sự",
+        "I would like you to work on a weekly report. Cấu trúc would like + người + to + động từ. Please type and print these materials for me."
+      ],
+      [
+        "Language Focus · Đáp án",
+        "1–c; 2–b; 3–e; 4–a; 5–d. Câu gốc 'What is my main job description?' được giữ theo PDF; cách hỏi tự nhiên về nhiệm vụ là 'What are my main responsibilities?'."
+      ]
+    ],
+    "extras": [
+      [
+        "Mục tiêu và bối cảnh",
+        "Nhận nhiệm vụ từ cấp trên và bắt đầu công việc. Kate là trợ lý mới của Alex tại Johnson & Johnson; cô hỏi về trách nhiệm và chi tiết các nhiệm vụ được giao."
+      ],
+      [
+        "Hội thoại · Hai thời điểm",
+        "Phần 1: ngày nhận việc. Phần 2: một tuần sau, Alex hài lòng với công việc của Kate và giao thêm nhiệm vụ."
+      ],
+      [
+        "Đọc hiểu · Trách nhiệm của Kate",
+        "1. Xử lý tài liệu. 2. Gửi và nhận e-mail. 3. Lập báo cáo tuần."
+      ],
+      [
+        "Task Memo · Hội thoại phần 2",
+        "What: báo cáo tuần của phòng ban, gồm mọi nhiệm vụ đã thực hiện trong tuần. When: hạn cuối tuần này; Kate cam kết hoàn thành trước hoặc vào thứ Năm. How: cả e-mail và bản in."
+      ],
+      [
+        "Practice · Đề bài gốc",
+        "Đóng vai trợ lý của giáo viên và xác nhận nhiệm vụ: chuẩn bị thiệp cưới cho 1.000 người; hạn cuối tuần sau (PDF ghi còn 5 ngày); gửi thiệp qua bưu điện. Dùng May I ask what ...?, When do you ...?, How would you ...?"
+      ],
+      [
+        "Nguồn",
+        "unit 1 lesson 4.pdf · 8 trang · 51Talk Business English 180 Situational Conversations · Elementary. Hội thoại và Language Focus theo PDF; bản dịch và IPA được bổ sung. Phần Luyện nói là kịch bản mẫu cho đề Practice."
+      ]
+    ]
   }
 ];
