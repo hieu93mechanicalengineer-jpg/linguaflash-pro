@@ -26,7 +26,7 @@
     "reading": [
       {
         "zh": "最近我的学习进步很慢，所以我决定调整计划。",
-        "py": "zuì jìn wǒ de xué xí jìn bù hěn màn， suǒ yǐ wǒ jué dìng diào zhěng jì huà。",
+        "py": "zuì jìn wǒ de xué xí jìn bù hěn màn， suǒ yǐ wǒ jué dìng tiáo zhěng jì huà。",
         "vi": "Gần đây tôi tiến bộ chậm nên quyết định điều chỉnh kế hoạch.",
         "en": "My progress has been slow lately, so I decided to adjust my plan."
       },
@@ -56,7 +56,7 @@
         "vi": "điều chỉnh",
         "en": "adjust",
         "example": "最近我的学习进步很慢，所以我决定调整计划。",
-        "examplePy": "zuì jìn wǒ de xué xí jìn bù hěn màn， suǒ yǐ wǒ jué dìng diào zhěng jì huà。",
+        "examplePy": "zuì jìn wǒ de xué xí jìn bù hěn màn， suǒ yǐ wǒ jué dìng tiáo zhěng jì huà。",
         "exampleVi": "Gần đây tôi tiến bộ chậm nên quyết định điều chỉnh kế hoạch.",
         "exampleEn": "My progress has been slow lately, so I decided to adjust my plan."
       },
@@ -118,7 +118,7 @@
     "shadowing": [
       {
         "zh": "最近我的学习进步很慢，所以我决定调整计划。",
-        "py": "zuì jìn wǒ de xué xí jìn bù hěn màn， suǒ yǐ wǒ jué dìng diào zhěng jì huà。",
+        "py": "zuì jìn wǒ de xué xí jìn bù hěn màn， suǒ yǐ wǒ jué dìng tiáo zhěng jì huà。",
         "vi": "Gần đây tôi tiến bộ chậm nên quyết định điều chỉnh kế hoạch.",
         "en": "My progress has been slow lately, so I decided to adjust my plan."
       },
@@ -221,7 +221,7 @@
     "reading": [
       {
         "zh": "看到一条令人吃惊的消息时，我先检查它的来源。",
-        "py": "kàn dào yī tiáo lìng rén chī jīng de xiāo xī shí， wǒ xiān jiǎn chá tā de lái yuán。",
+        "py": "kàn dào yī tiáo lìng rén chī jīng de xiāo xi shí， wǒ xiān jiǎn chá tā de lái yuán。",
         "vi": "Khi thấy một tin gây ngạc nhiên, tôi kiểm tra nguồn trước.",
         "en": "When I see surprising news, I check its source first."
       },
@@ -251,7 +251,7 @@
         "vi": "nguồn",
         "en": "source",
         "example": "看到一条令人吃惊的消息时，我先检查它的来源。",
-        "examplePy": "kàn dào yī tiáo lìng rén chī jīng de xiāo xī shí， wǒ xiān jiǎn chá tā de lái yuán。",
+        "examplePy": "kàn dào yī tiáo lìng rén chī jīng de xiāo xi shí， wǒ xiān jiǎn chá tā de lái yuán。",
         "exampleVi": "Khi thấy một tin gây ngạc nhiên, tôi kiểm tra nguồn trước.",
         "exampleEn": "When I see surprising news, I check its source first."
       },
@@ -313,7 +313,7 @@
     "shadowing": [
       {
         "zh": "看到一条令人吃惊的消息时，我先检查它的来源。",
-        "py": "kàn dào yī tiáo lìng rén chī jīng de xiāo xī shí， wǒ xiān jiǎn chá tā de lái yuán。",
+        "py": "kàn dào yī tiáo lìng rén chī jīng de xiāo xi shí， wǒ xiān jiǎn chá tā de lái yuán。",
         "vi": "Khi thấy một tin gây ngạc nhiên, tôi kiểm tra nguồn trước.",
         "en": "When I see surprising news, I check its source first."
       },
@@ -416,7 +416,7 @@
     "reading": [
       {
         "zh": "搬家时，我才发现自己积累了许多不用的东西。",
-        "py": "bān jiā shí， wǒ cái fā xiàn zì jǐ jī lěi le xǔ duō bù yòng de dōng xī。",
+        "py": "bān jiā shí， wǒ cái fā xiàn zì jǐ jī lěi le xǔ duō bù yòng de dōng xi。",
         "vi": "Khi chuyển nhà, tôi mới phát hiện mình tích lũy nhiều đồ không dùng.",
         "en": "When moving, I realized I had accumulated many unused things."
       },
@@ -446,7 +446,7 @@
         "vi": "tích lũy",
         "en": "accumulate",
         "example": "搬家时，我才发现自己积累了许多不用的东西。",
-        "examplePy": "bān jiā shí， wǒ cái fā xiàn zì jǐ jī lěi le xǔ duō bù yòng de dōng xī。",
+        "examplePy": "bān jiā shí， wǒ cái fā xiàn zì jǐ jī lěi le xǔ duō bù yòng de dōng xi。",
         "exampleVi": "Khi chuyển nhà, tôi mới phát hiện mình tích lũy nhiều đồ không dùng.",
         "exampleEn": "When moving, I realized I had accumulated many unused things."
       },
@@ -508,7 +508,7 @@
     "shadowing": [
       {
         "zh": "搬家时，我才发现自己积累了许多不用的东西。",
-        "py": "bān jiā shí， wǒ cái fā xiàn zì jǐ jī lěi le xǔ duō bù yòng de dōng xī。",
+        "py": "bān jiā shí， wǒ cái fā xiàn zì jǐ jī lěi le xǔ duō bù yòng de dōng xi。",
         "vi": "Khi chuyển nhà, tôi mới phát hiện mình tích lũy nhiều đồ không dùng.",
         "en": "When moving, I realized I had accumulated many unused things."
       },
@@ -824,7 +824,7 @@
       },
       {
         "zh": "我先肯定他的努力，再说明需要修改的地方。",
-        "py": "wǒ xiān kěn dìng tā de nǔ lì， zài shuō míng xū yào xiū gǎi de dì fāng。",
+        "py": "wǒ xiān kěn dìng tā de nǔ lì， zài shuō míng xū yào xiū gǎi de dì fang。",
         "vi": "Tôi ghi nhận nỗ lực của anh ấy trước rồi chỉ ra chỗ cần sửa.",
         "en": "I acknowledged his effort first, then explained what needed revision."
       }
@@ -866,7 +866,7 @@
         "vi": "sửa đổi",
         "en": "revise",
         "example": "我先肯定他的努力，再说明需要修改的地方。",
-        "examplePy": "wǒ xiān kěn dìng tā de nǔ lì， zài shuō míng xū yào xiū gǎi de dì fāng。",
+        "examplePy": "wǒ xiān kěn dìng tā de nǔ lì， zài shuō míng xū yào xiū gǎi de dì fang。",
         "exampleVi": "Tôi ghi nhận nỗ lực của anh ấy trước rồi chỉ ra chỗ cần sửa.",
         "exampleEn": "I acknowledged his effort first, then explained what needed revision."
       }
@@ -916,7 +916,7 @@
       },
       {
         "zh": "我先肯定他的努力，再说明需要修改的地方。",
-        "py": "wǒ xiān kěn dìng tā de nǔ lì， zài shuō míng xū yào xiū gǎi de dì fāng。",
+        "py": "wǒ xiān kěn dìng tā de nǔ lì， zài shuō míng xū yào xiū gǎi de dì fang。",
         "vi": "Tôi ghi nhận nỗ lực của anh ấy trước rồi chỉ ra chỗ cần sửa.",
         "en": "I acknowledged his effort first, then explained what needed revision."
       }
@@ -1013,7 +1013,7 @@
       },
       {
         "zh": "遇到困难时，我会向值得信任的朋友请教。",
-        "py": "yù dào kùn nán shí， wǒ huì xiàng zhí de xìn rèn de péng yǒu qǐng jiào。",
+        "py": "yù dào kùn nán shí， wǒ huì xiàng zhí de xìn rèn de péng you qǐng jiào。",
         "vi": "Khi gặp khó khăn, tôi sẽ hỏi ý kiến người bạn đáng tin.",
         "en": "When I face difficulties, I ask a trusted friend for advice."
       },
@@ -1051,7 +1051,7 @@
         "vi": "tin tưởng",
         "en": "trust",
         "example": "遇到困难时，我会向值得信任的朋友请教。",
-        "examplePy": "yù dào kùn nán shí， wǒ huì xiàng zhí de xìn rèn de péng yǒu qǐng jiào。",
+        "examplePy": "yù dào kùn nán shí， wǒ huì xiàng zhí de xìn rèn de péng you qǐng jiào。",
         "exampleVi": "Khi gặp khó khăn, tôi sẽ hỏi ý kiến người bạn đáng tin.",
         "exampleEn": "When I face difficulties, I ask a trusted friend for advice."
       },
@@ -1105,7 +1105,7 @@
       },
       {
         "zh": "遇到困难时，我会向值得信任的朋友请教。",
-        "py": "yù dào kùn nán shí， wǒ huì xiàng zhí de xìn rèn de péng yǒu qǐng jiào。",
+        "py": "yù dào kùn nán shí， wǒ huì xiàng zhí de xìn rèn de péng you qǐng jiào。",
         "vi": "Khi gặp khó khăn, tôi sẽ hỏi ý kiến người bạn đáng tin.",
         "en": "When I face difficulties, I ask a trusted friend for advice."
       },
@@ -1202,13 +1202,13 @@
       },
       {
         "zh": "即使收入增加了，他也不愿意失去所有休息时间。",
-        "py": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xī shí jiān。",
+        "py": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xi shí jiān。",
         "vi": "Dù thu nhập tăng, anh ấy cũng không muốn mất hết thời gian nghỉ ngơi.",
         "en": "Even if his income rises, he does not want to lose all his rest time."
       },
       {
         "zh": "他决定和经理商量，合理安排每周的任务。",
-        "py": "tā jué dìng hé jīng lǐ shāng liáng， hé lǐ ān pái měi zhōu de rèn wù。",
+        "py": "tā jué dìng hé jīng lǐ shāng liang， hé lǐ ān pái měi zhōu de rèn wù。",
         "vi": "Anh quyết định bàn với quản lý để sắp xếp hợp lý nhiệm vụ hằng tuần.",
         "en": "He decided to discuss a reasonable weekly workload with his manager."
       },
@@ -1236,7 +1236,7 @@
         "vi": "thu nhập",
         "en": "income",
         "example": "即使收入增加了，他也不愿意失去所有休息时间。",
-        "examplePy": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xī shí jiān。",
+        "examplePy": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xi shí jiān。",
         "exampleVi": "Dù thu nhập tăng, anh ấy cũng không muốn mất hết thời gian nghỉ ngơi.",
         "exampleEn": "Even if his income rises, he does not want to lose all his rest time."
       },
@@ -1246,7 +1246,7 @@
         "vi": "hợp lý",
         "en": "reasonable",
         "example": "他决定和经理商量，合理安排每周的任务。",
-        "examplePy": "tā jué dìng hé jīng lǐ shāng liáng， hé lǐ ān pái měi zhōu de rèn wù。",
+        "examplePy": "tā jué dìng hé jīng lǐ shāng liang， hé lǐ ān pái měi zhōu de rèn wù。",
         "exampleVi": "Anh quyết định bàn với quản lý để sắp xếp hợp lý nhiệm vụ hằng tuần.",
         "exampleEn": "He decided to discuss a reasonable weekly workload with his manager."
       },
@@ -1266,7 +1266,7 @@
         "pattern": "即使……也……",
         "meaning": "dù… cũng…",
         "ex": "即使收入增加了，他也不愿意失去所有休息时间。",
-        "py": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xī shí jiān。",
+        "py": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xi shí jiān。",
         "vi": "Dù thu nhập tăng, anh ấy cũng không muốn mất hết thời gian nghỉ ngơi.",
         "note": "Nêu tình huống nhượng bộ; kết quả vẫn không thay đổi."
       }
@@ -1294,13 +1294,13 @@
       },
       {
         "zh": "即使收入增加了，他也不愿意失去所有休息时间。",
-        "py": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xī shí jiān。",
+        "py": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xi shí jiān。",
         "vi": "Dù thu nhập tăng, anh ấy cũng không muốn mất hết thời gian nghỉ ngơi.",
         "en": "Even if his income rises, he does not want to lose all his rest time."
       },
       {
         "zh": "他决定和经理商量，合理安排每周的任务。",
-        "py": "tā jué dìng hé jīng lǐ shāng liáng， hé lǐ ān pái měi zhōu de rèn wù。",
+        "py": "tā jué dìng hé jīng lǐ shāng liang， hé lǐ ān pái měi zhōu de rèn wù。",
         "vi": "Anh quyết định bàn với quản lý để sắp xếp hợp lý nhiệm vụ hằng tuần.",
         "en": "He decided to discuss a reasonable weekly workload with his manager."
       },
@@ -1409,7 +1409,7 @@
       },
       {
         "zh": "热闹的气氛让大家暂时忘记了工作的疲劳。",
-        "py": "rè nào de qì fēn ràng dà jiā zàn shí wàng jì le gōng zuò de pí láo。",
+        "py": "rè nao de qì fēn ràng dà jiā zàn shí wàng jì le gōng zuò de pí láo。",
         "vi": "Không khí náo nhiệt khiến mọi người tạm quên mệt mỏi công việc.",
         "en": "The lively atmosphere helped everyone briefly forget their work fatigue."
       }
@@ -1451,7 +1451,7 @@
         "vi": "bầu không khí",
         "en": "atmosphere",
         "example": "热闹的气氛让大家暂时忘记了工作的疲劳。",
-        "examplePy": "rè nào de qì fēn ràng dà jiā zàn shí wàng jì le gōng zuò de pí láo。",
+        "examplePy": "rè nao de qì fēn ràng dà jiā zàn shí wàng jì le gōng zuò de pí láo。",
         "exampleVi": "Không khí náo nhiệt khiến mọi người tạm quên mệt mỏi công việc.",
         "exampleEn": "The lively atmosphere helped everyone briefly forget their work fatigue."
       }
@@ -1501,7 +1501,7 @@
       },
       {
         "zh": "热闹的气氛让大家暂时忘记了工作的疲劳。",
-        "py": "rè nào de qì fēn ràng dà jiā zàn shí wàng jì le gōng zuò de pí láo。",
+        "py": "rè nao de qì fēn ràng dà jiā zàn shí wàng jì le gōng zuò de pí láo。",
         "vi": "Không khí náo nhiệt khiến mọi người tạm quên mệt mỏi công việc.",
         "en": "The lively atmosphere helped everyone briefly forget their work fatigue."
       }
@@ -1592,7 +1592,7 @@
       },
       {
         "zh": "即使我第一次尝试，她也耐心地教我每个步骤。",
-        "py": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn dì jiào wǒ měi gè bù zhòu。",
+        "py": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn de jiāo wǒ měi gè bù zhòu。",
         "vi": "Dù tôi thử lần đầu, cô ấy vẫn kiên nhẫn dạy từng bước.",
         "en": "Even though it was my first attempt, she patiently taught me each step."
       },
@@ -1604,7 +1604,7 @@
       },
       {
         "zh": "下午大家去河边观看龙舟比赛，感受节日的热闹。",
-        "py": "xià wǔ dà jiā qù hé biān guān kàn lóng zhōu bǐ sài， gǎn shòu jié rì de rè nào。",
+        "py": "xià wǔ dà jiā qù hé biān guān kàn lóng zhōu bǐ sài， gǎn shòu jié rì de rè nao。",
         "vi": "Chiều mọi người ra bờ sông xem đua thuyền rồng, cảm nhận không khí lễ hội.",
         "en": "In the afternoon, everyone watched the dragon boat race by the river and enjoyed the festival."
       }
@@ -1626,7 +1626,7 @@
         "vi": "bước thực hiện",
         "en": "step",
         "example": "即使我第一次尝试，她也耐心地教我每个步骤。",
-        "examplePy": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn dì jiào wǒ měi gè bù zhòu。",
+        "examplePy": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn de jiāo wǒ měi gè bù zhòu。",
         "exampleVi": "Dù tôi thử lần đầu, cô ấy vẫn kiên nhẫn dạy từng bước.",
         "exampleEn": "Even though it was my first attempt, she patiently taught me each step."
       },
@@ -1646,7 +1646,7 @@
         "vi": "xem",
         "en": "watch",
         "example": "下午大家去河边观看龙舟比赛，感受节日的热闹。",
-        "examplePy": "xià wǔ dà jiā qù hé biān guān kàn lóng zhōu bǐ sài， gǎn shòu jié rì de rè nào。",
+        "examplePy": "xià wǔ dà jiā qù hé biān guān kàn lóng zhōu bǐ sài， gǎn shòu jié rì de rè nao。",
         "exampleVi": "Chiều mọi người ra bờ sông xem đua thuyền rồng, cảm nhận không khí lễ hội.",
         "exampleEn": "In the afternoon, everyone watched the dragon boat race by the river and enjoyed the festival."
       }
@@ -1656,7 +1656,7 @@
         "pattern": "即使……也……",
         "meaning": "dù… cũng…",
         "ex": "即使我第一次尝试，她也耐心地教我每个步骤。",
-        "py": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn dì jiào wǒ měi gè bù zhòu。",
+        "py": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn de jiāo wǒ měi gè bù zhòu。",
         "vi": "Dù tôi thử lần đầu, cô ấy vẫn kiên nhẫn dạy từng bước.",
         "note": "Nêu tình huống nhượng bộ; kết quả vẫn không thay đổi."
       }
@@ -1684,7 +1684,7 @@
       },
       {
         "zh": "即使我第一次尝试，她也耐心地教我每个步骤。",
-        "py": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn dì jiào wǒ měi gè bù zhòu。",
+        "py": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn de jiāo wǒ měi gè bù zhòu。",
         "vi": "Dù tôi thử lần đầu, cô ấy vẫn kiên nhẫn dạy từng bước.",
         "en": "Even though it was my first attempt, she patiently taught me each step."
       },
@@ -1696,7 +1696,7 @@
       },
       {
         "zh": "下午大家去河边观看龙舟比赛，感受节日的热闹。",
-        "py": "xià wǔ dà jiā qù hé biān guān kàn lóng zhōu bǐ sài， gǎn shòu jié rì de rè nào。",
+        "py": "xià wǔ dà jiā qù hé biān guān kàn lóng zhōu bǐ sài， gǎn shòu jié rì de rè nao。",
         "vi": "Chiều mọi người ra bờ sông xem đua thuyền rồng, cảm nhận không khí lễ hội.",
         "en": "In the afternoon, everyone watched the dragon boat race by the river and enjoyed the festival."
       }
@@ -1988,7 +1988,7 @@
       },
       {
         "zh": "原来是抽屉的位置太低，并不是整个设计都不好。",
-        "py": "yuán lái shì chōu tì de wèi zhì tài dī， bìng bú shì zhěng gè shè jì dōu bù hǎo。",
+        "py": "yuán lái shì chōu ti de wèi zhì tài dī， bìng bú shì zhěng gè shè jì dōu bù hǎo。",
         "vi": "Hóa ra vị trí ngăn kéo quá thấp chứ không phải toàn bộ thiết kế đều dở.",
         "en": "It turned out the drawer was too low, rather than the whole design being bad."
       },
@@ -2022,11 +2022,11 @@
       },
       {
         "zh": "抽屉",
-        "py": "chōu tì",
+        "py": "chōu ti",
         "vi": "ngăn kéo",
         "en": "drawer",
         "example": "原来是抽屉的位置太低，并不是整个设计都不好。",
-        "examplePy": "yuán lái shì chōu tì de wèi zhì tài dī， bìng bú shì zhěng gè shè jì dōu bù hǎo。",
+        "examplePy": "yuán lái shì chōu ti de wèi zhì tài dī， bìng bú shì zhěng gè shè jì dōu bù hǎo。",
         "exampleVi": "Hóa ra vị trí ngăn kéo quá thấp chứ không phải toàn bộ thiết kế đều dở.",
         "exampleEn": "It turned out the drawer was too low, rather than the whole design being bad."
       },
@@ -2080,7 +2080,7 @@
       },
       {
         "zh": "原来是抽屉的位置太低，并不是整个设计都不好。",
-        "py": "yuán lái shì chōu tì de wèi zhì tài dī， bìng bú shì zhěng gè shè jì dōu bù hǎo。",
+        "py": "yuán lái shì chōu ti de wèi zhì tài dī， bìng bú shì zhěng gè shè jì dōu bù hǎo。",
         "vi": "Hóa ra vị trí ngăn kéo quá thấp chứ không phải toàn bộ thiết kế đều dở.",
         "en": "It turned out the drawer was too low, rather than the whole design being bad."
       },
@@ -2171,7 +2171,7 @@
     "reading": [
       {
         "zh": "我和老朋友虽然住在不同城市，却一直保持联系。",
-        "py": "wǒ hé lǎo péng yǒu suī rán zhù zài bù tóng chéng shì， què yì zhí bǎo chí lián xì。",
+        "py": "wǒ hé lǎo péng you suī rán zhù zài bù tóng chéng shì， què yì zhí bǎo chí lián xì。",
         "vi": "Tuy sống ở hai thành phố khác nhau, tôi và bạn cũ vẫn giữ liên lạc.",
         "en": "Although my old friend and I live in different cities, we stay in touch."
       },
@@ -2201,7 +2201,7 @@
         "vi": "liên lạc",
         "en": "contact",
         "example": "我和老朋友虽然住在不同城市，却一直保持联系。",
-        "examplePy": "wǒ hé lǎo péng yǒu suī rán zhù zài bù tóng chéng shì， què yì zhí bǎo chí lián xì。",
+        "examplePy": "wǒ hé lǎo péng you suī rán zhù zài bù tóng chéng shì， què yì zhí bǎo chí lián xì。",
         "exampleVi": "Tuy sống ở hai thành phố khác nhau, tôi và bạn cũ vẫn giữ liên lạc.",
         "exampleEn": "Although my old friend and I live in different cities, we stay in touch."
       },
@@ -2263,7 +2263,7 @@
     "shadowing": [
       {
         "zh": "我和老朋友虽然住在不同城市，却一直保持联系。",
-        "py": "wǒ hé lǎo péng yǒu suī rán zhù zài bù tóng chéng shì， què yì zhí bǎo chí lián xì。",
+        "py": "wǒ hé lǎo péng you suī rán zhù zài bù tóng chéng shì， què yì zhí bǎo chí lián xì。",
         "vi": "Tuy sống ở hai thành phố khác nhau, tôi và bạn cũ vẫn giữ liên lạc.",
         "en": "Although my old friend and I live in different cities, we stay in touch."
       },
@@ -2378,7 +2378,7 @@
       },
       {
         "zh": "认真完成工作、照顾家人，都是值得珍惜的事情。",
-        "py": "rèn zhēn wán chéng gōng zuò、 zhào gù jiā rén， dōu shì zhí de zhēn xī de shì qíng。",
+        "py": "rèn zhēn wán chéng gōng zuò、 zhào gù jiā rén， dōu shì zhí de zhēn xī de shì qing。",
         "vi": "Làm việc chu đáo và chăm sóc gia đình đều là những điều đáng trân trọng.",
         "en": "Doing my work carefully and caring for my family are both worth appreciating."
       },
@@ -2416,7 +2416,7 @@
         "vi": "trân trọng",
         "en": "cherish",
         "example": "认真完成工作、照顾家人，都是值得珍惜的事情。",
-        "examplePy": "rèn zhēn wán chéng gōng zuò、 zhào gù jiā rén， dōu shì zhí de zhēn xī de shì qíng。",
+        "examplePy": "rèn zhēn wán chéng gōng zuò、 zhào gù jiā rén， dōu shì zhí de zhēn xī de shì qing。",
         "exampleVi": "Làm việc chu đáo và chăm sóc gia đình đều là những điều đáng trân trọng.",
         "exampleEn": "Doing my work carefully and caring for my family are both worth appreciating."
       },
@@ -2470,7 +2470,7 @@
       },
       {
         "zh": "认真完成工作、照顾家人，都是值得珍惜的事情。",
-        "py": "rèn zhēn wán chéng gōng zuò、 zhào gù jiā rén， dōu shì zhí de zhēn xī de shì qíng。",
+        "py": "rèn zhēn wán chéng gōng zuò、 zhào gù jiā rén， dōu shì zhí de zhēn xī de shì qing。",
         "vi": "Làm việc chu đáo và chăm sóc gia đình đều là những điều đáng trân trọng.",
         "en": "Doing my work carefully and caring for my family are both worth appreciating."
       },
@@ -2567,7 +2567,7 @@
       },
       {
         "zh": "与其继续等待，不如先邀请两个朋友一起试试。",
-        "py": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng yǒu yì qǐ shì shì。",
+        "py": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng you yì qǐ shì shì。",
         "vi": "Thay vì tiếp tục đợi, chi bằng mời hai người bạn thử trước.",
         "en": "Rather than waiting, I could invite two friends to try it first."
       },
@@ -2601,7 +2601,7 @@
         "vi": "chờ đợi",
         "en": "wait",
         "example": "与其继续等待，不如先邀请两个朋友一起试试。",
-        "examplePy": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng yǒu yì qǐ shì shì。",
+        "examplePy": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng you yì qǐ shì shì。",
         "exampleVi": "Thay vì tiếp tục đợi, chi bằng mời hai người bạn thử trước.",
         "exampleEn": "Rather than waiting, I could invite two friends to try it first."
       },
@@ -2631,7 +2631,7 @@
         "pattern": "与其……不如……",
         "meaning": "thay vì… chi bằng…",
         "ex": "与其继续等待，不如先邀请两个朋友一起试试。",
-        "py": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng yǒu yì qǐ shì shì。",
+        "py": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng you yì qǐ shì shì。",
         "vi": "Thay vì tiếp tục đợi, chi bằng mời hai người bạn thử trước.",
         "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
       }
@@ -2659,7 +2659,7 @@
       },
       {
         "zh": "与其继续等待，不如先邀请两个朋友一起试试。",
-        "py": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng yǒu yì qǐ shì shì。",
+        "py": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng you yì qǐ shì shì。",
         "vi": "Thay vì tiếp tục đợi, chi bằng mời hai người bạn thử trước.",
         "en": "Rather than waiting, I could invite two friends to try it first."
       },
@@ -2756,7 +2756,7 @@
     "reading": [
       {
         "zh": "每次回家，父母都会问我什么时候考虑结婚。",
-        "py": "měi cì huí jiā， fù mǔ dū huì wèn wǒ shén me shí hòu kǎo lǜ jié hūn。",
+        "py": "měi cì huí jiā， fù mǔ dōu huì wèn wǒ shén me shí hou kǎo lǜ jié hūn。",
         "vi": "Mỗi lần về nhà, bố mẹ đều hỏi khi nào tôi tính chuyện kết hôn.",
         "en": "Whenever I go home, my parents ask when I will consider marriage."
       },
@@ -2768,13 +2768,13 @@
       },
       {
         "zh": "我告诉他们，自己目前更希望把事业安排稳定。",
-        "py": "wǒ gào sù tā men， zì jǐ mù qián gèng xī wàng bǎ shì yè ān pái wěn dìng。",
+        "py": "wǒ gào su tā men， zì jǐ mù qián gèng xī wàng bǎ shì yè ān pái wěn dìng。",
         "vi": "Tôi nói hiện giờ mình muốn ổn định sự nghiệp hơn.",
         "en": "I told them that, for now, I would prefer to establish a stable career."
       },
       {
         "zh": "平静地解释自己的计划，比互相争吵更容易取得理解。",
-        "py": "píng jìng dì jiě shì zì jǐ de jì huà， bǐ hù xiāng zhēng chǎo gèng róng yì qǔ dé lǐ jiě。",
+        "py": "píng jìng de jiě shì zì jǐ de jì huà， bǐ hù xiāng zhēng chǎo gèng róng yì qǔ dé lǐ jiě。",
         "vi": "Bình tĩnh giải thích kế hoạch dễ đạt được thấu hiểu hơn cãi nhau.",
         "en": "Calmly explaining my plans makes understanding easier than arguing."
       }
@@ -2786,7 +2786,7 @@
         "vi": "kết hôn",
         "en": "marry",
         "example": "每次回家，父母都会问我什么时候考虑结婚。",
-        "examplePy": "měi cì huí jiā， fù mǔ dū huì wèn wǒ shén me shí hòu kǎo lǜ jié hūn。",
+        "examplePy": "měi cì huí jiā， fù mǔ dōu huì wèn wǒ shén me shí hou kǎo lǜ jié hūn。",
         "exampleVi": "Mỗi lần về nhà, bố mẹ đều hỏi khi nào tôi tính chuyện kết hôn.",
         "exampleEn": "Whenever I go home, my parents ask when I will consider marriage."
       },
@@ -2806,7 +2806,7 @@
         "vi": "sự nghiệp",
         "en": "career",
         "example": "我告诉他们，自己目前更希望把事业安排稳定。",
-        "examplePy": "wǒ gào sù tā men， zì jǐ mù qián gèng xī wàng bǎ shì yè ān pái wěn dìng。",
+        "examplePy": "wǒ gào su tā men， zì jǐ mù qián gèng xī wàng bǎ shì yè ān pái wěn dìng。",
         "exampleVi": "Tôi nói hiện giờ mình muốn ổn định sự nghiệp hơn.",
         "exampleEn": "I told them that, for now, I would prefer to establish a stable career."
       },
@@ -2816,7 +2816,7 @@
         "vi": "cãi nhau",
         "en": "argue",
         "example": "平静地解释自己的计划，比互相争吵更容易取得理解。",
-        "examplePy": "píng jìng dì jiě shì zì jǐ de jì huà， bǐ hù xiāng zhēng chǎo gèng róng yì qǔ dé lǐ jiě。",
+        "examplePy": "píng jìng de jiě shì zì jǐ de jì huà， bǐ hù xiāng zhēng chǎo gèng róng yì qǔ dé lǐ jiě。",
         "exampleVi": "Bình tĩnh giải thích kế hoạch dễ đạt được thấu hiểu hơn cãi nhau.",
         "exampleEn": "Calmly explaining my plans makes understanding easier than arguing."
       }
@@ -2848,7 +2848,7 @@
     "shadowing": [
       {
         "zh": "每次回家，父母都会问我什么时候考虑结婚。",
-        "py": "měi cì huí jiā， fù mǔ dū huì wèn wǒ shén me shí hòu kǎo lǜ jié hūn。",
+        "py": "měi cì huí jiā， fù mǔ dōu huì wèn wǒ shén me shí hou kǎo lǜ jié hūn。",
         "vi": "Mỗi lần về nhà, bố mẹ đều hỏi khi nào tôi tính chuyện kết hôn.",
         "en": "Whenever I go home, my parents ask when I will consider marriage."
       },
@@ -2860,13 +2860,13 @@
       },
       {
         "zh": "我告诉他们，自己目前更希望把事业安排稳定。",
-        "py": "wǒ gào sù tā men， zì jǐ mù qián gèng xī wàng bǎ shì yè ān pái wěn dìng。",
+        "py": "wǒ gào su tā men， zì jǐ mù qián gèng xī wàng bǎ shì yè ān pái wěn dìng。",
         "vi": "Tôi nói hiện giờ mình muốn ổn định sự nghiệp hơn.",
         "en": "I told them that, for now, I would prefer to establish a stable career."
       },
       {
         "zh": "平静地解释自己的计划，比互相争吵更容易取得理解。",
-        "py": "píng jìng dì jiě shì zì jǐ de jì huà， bǐ hù xiāng zhēng chǎo gèng róng yì qǔ dé lǐ jiě。",
+        "py": "píng jìng de jiě shì zì jǐ de jì huà， bǐ hù xiāng zhēng chǎo gèng róng yì qǔ dé lǐ jiě。",
         "vi": "Bình tĩnh giải thích kế hoạch dễ đạt được thấu hiểu hơn cãi nhau.",
         "en": "Calmly explaining my plans makes understanding easier than arguing."
       }
@@ -3164,7 +3164,7 @@
       },
       {
         "zh": "完成任务以后再休息，这样比较容易保持专注。",
-        "py": "wán chéng rèn wù yǐ hòu zài xiū xī， zhè yàng bǐ jiào róng yì bǎo chí zhuān zhù。",
+        "py": "wán chéng rèn wù yǐ hòu zài xiū xi， zhè yàng bǐ jiào róng yì bǎo chí zhuān zhù。",
         "vi": "Hoàn thành việc rồi nghỉ sẽ dễ giữ tập trung hơn.",
         "en": "Resting after completing the task makes it easier to stay focused."
       }
@@ -3206,7 +3206,7 @@
         "vi": "tập trung",
         "en": "focus",
         "example": "完成任务以后再休息，这样比较容易保持专注。",
-        "examplePy": "wán chéng rèn wù yǐ hòu zài xiū xī， zhè yàng bǐ jiào róng yì bǎo chí zhuān zhù。",
+        "examplePy": "wán chéng rèn wù yǐ hòu zài xiū xi， zhè yàng bǐ jiào róng yì bǎo chí zhuān zhù。",
         "exampleVi": "Hoàn thành việc rồi nghỉ sẽ dễ giữ tập trung hơn.",
         "exampleEn": "Resting after completing the task makes it easier to stay focused."
       }
@@ -3256,7 +3256,7 @@
       },
       {
         "zh": "完成任务以后再休息，这样比较容易保持专注。",
-        "py": "wán chéng rèn wù yǐ hòu zài xiū xī， zhè yàng bǐ jiào róng yì bǎo chí zhuān zhù。",
+        "py": "wán chéng rèn wù yǐ hòu zài xiū xi， zhè yàng bǐ jiào róng yì bǎo chí zhuān zhù。",
         "vi": "Hoàn thành việc rồi nghỉ sẽ dễ giữ tập trung hơn.",
         "en": "Resting after completing the task makes it easier to stay focused."
       }
@@ -3341,7 +3341,7 @@
     "reading": [
       {
         "zh": "朋友请我推荐一道中国菜，我先问他喜欢什么口味。",
-        "py": "péng yǒu qǐng wǒ tuī jiàn yī dào zhōng guó cài， wǒ xiān wèn tā xǐ huān shén me kǒu wèi。",
+        "py": "péng you qǐng wǒ tuī jiàn yī dào zhōng guó cài， wǒ xiān wèn tā xǐ huān shén me kǒu wèi。",
         "vi": "Bạn nhờ giới thiệu món Trung Quốc, tôi hỏi bạn thích vị gì trước.",
         "en": "A friend asked me to recommend a Chinese dish, so I first asked about his taste."
       },
@@ -3371,7 +3371,7 @@
         "vi": "giới thiệu, đề xuất",
         "en": "recommend",
         "example": "朋友请我推荐一道中国菜，我先问他喜欢什么口味。",
-        "examplePy": "péng yǒu qǐng wǒ tuī jiàn yī dào zhōng guó cài， wǒ xiān wèn tā xǐ huān shén me kǒu wèi。",
+        "examplePy": "péng you qǐng wǒ tuī jiàn yī dào zhōng guó cài， wǒ xiān wèn tā xǐ huān shén me kǒu wèi。",
         "exampleVi": "Bạn nhờ giới thiệu món Trung Quốc, tôi hỏi bạn thích vị gì trước.",
         "exampleEn": "A friend asked me to recommend a Chinese dish, so I first asked about his taste."
       },
@@ -3433,7 +3433,7 @@
     "shadowing": [
       {
         "zh": "朋友请我推荐一道中国菜，我先问他喜欢什么口味。",
-        "py": "péng yǒu qǐng wǒ tuī jiàn yī dào zhōng guó cài， wǒ xiān wèn tā xǐ huān shén me kǒu wèi。",
+        "py": "péng you qǐng wǒ tuī jiàn yī dào zhōng guó cài， wǒ xiān wèn tā xǐ huān shén me kǒu wèi。",
         "vi": "Bạn nhờ giới thiệu món Trung Quốc, tôi hỏi bạn thích vị gì trước.",
         "en": "A friend asked me to recommend a Chinese dish, so I first asked about his taste."
       },
@@ -3554,7 +3554,7 @@
       },
       {
         "zh": "行程不用安排得太满，留一些时间才能慢慢体验。",
-        "py": "xíng chéng bù yòng ān pái dé tài mǎn， liú yī xiē shí jiān cái néng màn màn tǐ yàn。",
+        "py": "xíng chéng bù yòng ān pái de tài mǎn， liú yī xiē shí jiān cái néng màn màn tǐ yàn。",
         "vi": "Lịch trình không cần quá kín, để chút thời gian mới từ từ trải nghiệm được.",
         "en": "The itinerary need not be too packed; spare time lets us enjoy the experience."
       }
@@ -3596,7 +3596,7 @@
         "vi": "trải nghiệm",
         "en": "experience",
         "example": "行程不用安排得太满，留一些时间才能慢慢体验。",
-        "examplePy": "xíng chéng bù yòng ān pái dé tài mǎn， liú yī xiē shí jiān cái néng màn màn tǐ yàn。",
+        "examplePy": "xíng chéng bù yòng ān pái de tài mǎn， liú yī xiē shí jiān cái néng màn màn tǐ yàn。",
         "exampleVi": "Lịch trình không cần quá kín, để chút thời gian mới từ từ trải nghiệm được.",
         "exampleEn": "The itinerary need not be too packed; spare time lets us enjoy the experience."
       }
@@ -3646,7 +3646,7 @@
       },
       {
         "zh": "行程不用安排得太满，留一些时间才能慢慢体验。",
-        "py": "xíng chéng bù yòng ān pái dé tài mǎn， liú yī xiē shí jiān cái néng màn màn tǐ yàn。",
+        "py": "xíng chéng bù yòng ān pái de tài mǎn， liú yī xiē shí jiān cái néng màn màn tǐ yàn。",
         "vi": "Lịch trình không cần quá kín, để chút thời gian mới từ từ trải nghiệm được.",
         "en": "The itinerary need not be too packed; spare time lets us enjoy the experience."
       }
