@@ -1,0 +1,3902 @@
+[
+  {
+    "id": "cdp-133",
+    "number": 133,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/11/podcast-133why-you-want-to-quit.html",
+    "sourceTitle": "🎙️ Podcast #133｜Why You Want to Quit Learning Chinese: Overcoming the Learning Plateau",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "学习遇到瓶颈怎么办？",
+    "titleVi": "Vượt qua giai đoạn chững lại khi học",
+    "titleEn": "Overcoming a learning plateau",
+    "youtubeId": "UKUY_0HSRE8",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "最近我的学习进步很慢，所以我决定调整计划。",
+        "py": "zuì jìn wǒ de xué xí jìn bù hěn màn， suǒ yǐ wǒ jué dìng diào zhěng jì huà。",
+        "vi": "Gần đây tôi tiến bộ chậm nên quyết định điều chỉnh kế hoạch.",
+        "en": "My progress has been slow lately, so I decided to adjust my plan."
+      },
+      {
+        "zh": "与其每天增加新任务，不如先复习上周的内容。",
+        "py": "yǔ qí měi tiān zēng jiā xīn rèn wù， bù rú xiān fù xí shàng zhōu de nèi róng。",
+        "vi": "Thay vì thêm nhiệm vụ mới mỗi ngày, chi bằng ôn nội dung tuần trước.",
+        "en": "Rather than adding new tasks every day, I would review last week's material first."
+      },
+      {
+        "zh": "我把一次练习分成几个阶段，每完成一个阶段就记录下来。",
+        "py": "wǒ bǎ yī cì liàn xí fēn chéng jǐ gè jiē duàn， měi wán chéng yí gè jiē duàn jiù jì lù xià lái。",
+        "vi": "Tôi chia một buổi luyện tập thành vài giai đoạn và ghi lại mỗi giai đoạn đã hoàn thành.",
+        "en": "I divide a practice session into stages and record each completed stage."
+      },
+      {
+        "zh": "即使暂时看不到明显的变化，我也会继续尝试。",
+        "py": "jí shǐ zàn shí kàn bú dào míng xiǎn de biàn huà， wǒ yě huì jì xù cháng shì。",
+        "vi": "Dù tạm thời chưa thấy thay đổi rõ rệt, tôi vẫn sẽ tiếp tục thử.",
+        "en": "Even if I cannot see an obvious change yet, I will keep trying."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "调整",
+        "py": "tiáo zhěng",
+        "vi": "điều chỉnh",
+        "en": "adjust",
+        "example": "最近我的学习进步很慢，所以我决定调整计划。",
+        "examplePy": "zuì jìn wǒ de xué xí jìn bù hěn màn， suǒ yǐ wǒ jué dìng diào zhěng jì huà。",
+        "exampleVi": "Gần đây tôi tiến bộ chậm nên quyết định điều chỉnh kế hoạch.",
+        "exampleEn": "My progress has been slow lately, so I decided to adjust my plan."
+      },
+      {
+        "zh": "复习",
+        "py": "fù xí",
+        "vi": "ôn tập",
+        "en": "review",
+        "example": "与其每天增加新任务，不如先复习上周的内容。",
+        "examplePy": "yǔ qí měi tiān zēng jiā xīn rèn wù， bù rú xiān fù xí shàng zhōu de nèi róng。",
+        "exampleVi": "Thay vì thêm nhiệm vụ mới mỗi ngày, chi bằng ôn nội dung tuần trước.",
+        "exampleEn": "Rather than adding new tasks every day, I would review last week's material first."
+      },
+      {
+        "zh": "阶段",
+        "py": "jiē duàn",
+        "vi": "giai đoạn",
+        "en": "stage",
+        "example": "我把一次练习分成几个阶段，每完成一个阶段就记录下来。",
+        "examplePy": "wǒ bǎ yī cì liàn xí fēn chéng jǐ gè jiē duàn， měi wán chéng yí gè jiē duàn jiù jì lù xià lái。",
+        "exampleVi": "Tôi chia một buổi luyện tập thành vài giai đoạn và ghi lại mỗi giai đoạn đã hoàn thành.",
+        "exampleEn": "I divide a practice session into stages and record each completed stage."
+      },
+      {
+        "zh": "明显",
+        "py": "míng xiǎn",
+        "vi": "rõ rệt",
+        "en": "obvious",
+        "example": "即使暂时看不到明显的变化，我也会继续尝试。",
+        "examplePy": "jí shǐ zàn shí kàn bú dào míng xiǎn de biàn huà， wǒ yě huì jì xù cháng shì。",
+        "exampleVi": "Dù tạm thời chưa thấy thay đổi rõ rệt, tôi vẫn sẽ tiếp tục thử.",
+        "exampleEn": "Even if I cannot see an obvious change yet, I will keep trying."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "与其……不如……",
+        "meaning": "thay vì… chi bằng…",
+        "ex": "与其每天增加新任务，不如先复习上周的内容。",
+        "py": "yǔ qí měi tiān zēng jiā xīn rèn wù， bù rú xiān fù xí shàng zhōu de nèi róng。",
+        "vi": "Thay vì thêm nhiệm vụ mới mỗi ngày, chi bằng ôn nội dung tuần trước.",
+        "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "最近我的学习进步很慢，所以我决定调整计划。",
+        "aVi": "Gần đây tôi tiến bộ chậm nên quyết định điều chỉnh kế hoạch."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "即使暂时看不到明显的变化，我也会继续尝试。",
+        "aVi": "Dù tạm thời chưa thấy thay đổi rõ rệt, tôi vẫn sẽ tiếp tục thử."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "最近我的学习进步很慢，所以我决定调整计划。",
+        "py": "zuì jìn wǒ de xué xí jìn bù hěn màn， suǒ yǐ wǒ jué dìng diào zhěng jì huà。",
+        "vi": "Gần đây tôi tiến bộ chậm nên quyết định điều chỉnh kế hoạch.",
+        "en": "My progress has been slow lately, so I decided to adjust my plan."
+      },
+      {
+        "zh": "与其每天增加新任务，不如先复习上周的内容。",
+        "py": "yǔ qí měi tiān zēng jiā xīn rèn wù， bù rú xiān fù xí shàng zhōu de nèi róng。",
+        "vi": "Thay vì thêm nhiệm vụ mới mỗi ngày, chi bằng ôn nội dung tuần trước.",
+        "en": "Rather than adding new tasks every day, I would review last week's material first."
+      },
+      {
+        "zh": "我把一次练习分成几个阶段，每完成一个阶段就记录下来。",
+        "py": "wǒ bǎ yī cì liàn xí fēn chéng jǐ gè jiē duàn， měi wán chéng yí gè jiē duàn jiù jì lù xià lái。",
+        "vi": "Tôi chia một buổi luyện tập thành vài giai đoạn và ghi lại mỗi giai đoạn đã hoàn thành.",
+        "en": "I divide a practice session into stages and record each completed stage."
+      },
+      {
+        "zh": "即使暂时看不到明显的变化，我也会继续尝试。",
+        "py": "jí shǐ zàn shí kàn bú dào míng xiǎn de biàn huà， wǒ yě huì jì xù cháng shì。",
+        "vi": "Dù tạm thời chưa thấy thay đổi rõ rệt, tôi vẫn sẽ tiếp tục thử.",
+        "en": "Even if I cannot see an obvious change yet, I will keep trying."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“调整” nghĩa là gì?",
+        "opts": [
+          "điều chỉnh",
+          "ôn tập",
+          "giai đoạn",
+          "rõ rệt"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“复习” nghĩa là gì?",
+        "opts": [
+          "điều chỉnh",
+          "ôn tập",
+          "giai đoạn",
+          "rõ rệt"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“阶段” nghĩa là gì?",
+        "opts": [
+          "điều chỉnh",
+          "ôn tập",
+          "giai đoạn",
+          "rõ rệt"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“明显” nghĩa là gì?",
+        "opts": [
+          "điều chỉnh",
+          "ôn tập",
+          "giai đoạn",
+          "rõ rệt"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "cdp-130",
+    "number": 130,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/10/podcast-130the-brutal-power-of-words.html",
+    "sourceTitle": "🎙️ Podcast #130｜The Brutal Power of Words Cyberbullying",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "网络上的语言与责任",
+    "titleVi": "Lời nói và trách nhiệm trên mạng",
+    "titleEn": "Words and responsibility online",
+    "youtubeId": "DlhLSgjwfVU",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "看到一条令人吃惊的消息时，我先检查它的来源。",
+        "py": "kàn dào yī tiáo lìng rén chī jīng de xiāo xī shí， wǒ xiān jiǎn chá tā de lái yuán。",
+        "vi": "Khi thấy một tin gây ngạc nhiên, tôi kiểm tra nguồn trước.",
+        "en": "When I see surprising news, I check its source first."
+      },
+      {
+        "zh": "即使很多人转发，也不能证明内容一定真实。",
+        "py": "jí shǐ hěn duō rén zhuǎn fā， yě bù néng zhèng míng nèi róng yí dìng zhēn shí。",
+        "vi": "Dù nhiều người chia sẻ, cũng không chứng minh nội dung chắc chắn là thật.",
+        "en": "Even if many people share it, that does not prove it is true."
+      },
+      {
+        "zh": "我们可以提出不同意见，但应该避免攻击别人。",
+        "py": "wǒ men kě yǐ tí chū bù tóng yì jiàn， dàn yīng gāi bì miǎn gōng jī bié rén。",
+        "vi": "Chúng ta có thể nêu ý kiến khác nhưng nên tránh công kích người khác.",
+        "en": "We can disagree, but should avoid attacking others."
+      },
+      {
+        "zh": "发布评论之前，我会考虑这些话可能造成的影响。",
+        "py": "fā bù píng lùn zhī qián， wǒ huì kǎo lǜ zhè xiē huà kě néng zào chéng de yǐng xiǎng。",
+        "vi": "Trước khi đăng bình luận, tôi cân nhắc ảnh hưởng mà những lời này có thể gây ra.",
+        "en": "Before posting a comment, I consider the effect my words may have."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "来源",
+        "py": "lái yuán",
+        "vi": "nguồn",
+        "en": "source",
+        "example": "看到一条令人吃惊的消息时，我先检查它的来源。",
+        "examplePy": "kàn dào yī tiáo lìng rén chī jīng de xiāo xī shí， wǒ xiān jiǎn chá tā de lái yuán。",
+        "exampleVi": "Khi thấy một tin gây ngạc nhiên, tôi kiểm tra nguồn trước.",
+        "exampleEn": "When I see surprising news, I check its source first."
+      },
+      {
+        "zh": "证明",
+        "py": "zhèng míng",
+        "vi": "chứng minh",
+        "en": "prove",
+        "example": "即使很多人转发，也不能证明内容一定真实。",
+        "examplePy": "jí shǐ hěn duō rén zhuǎn fā， yě bù néng zhèng míng nèi róng yí dìng zhēn shí。",
+        "exampleVi": "Dù nhiều người chia sẻ, cũng không chứng minh nội dung chắc chắn là thật.",
+        "exampleEn": "Even if many people share it, that does not prove it is true."
+      },
+      {
+        "zh": "避免",
+        "py": "bì miǎn",
+        "vi": "tránh",
+        "en": "avoid",
+        "example": "我们可以提出不同意见，但应该避免攻击别人。",
+        "examplePy": "wǒ men kě yǐ tí chū bù tóng yì jiàn， dàn yīng gāi bì miǎn gōng jī bié rén。",
+        "exampleVi": "Chúng ta có thể nêu ý kiến khác nhưng nên tránh công kích người khác.",
+        "exampleEn": "We can disagree, but should avoid attacking others."
+      },
+      {
+        "zh": "影响",
+        "py": "yǐng xiǎng",
+        "vi": "ảnh hưởng",
+        "en": "influence",
+        "example": "发布评论之前，我会考虑这些话可能造成的影响。",
+        "examplePy": "fā bù píng lùn zhī qián， wǒ huì kǎo lǜ zhè xiē huà kě néng zào chéng de yǐng xiǎng。",
+        "exampleVi": "Trước khi đăng bình luận, tôi cân nhắc ảnh hưởng mà những lời này có thể gây ra.",
+        "exampleEn": "Before posting a comment, I consider the effect my words may have."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "即使……也……",
+        "meaning": "dù… cũng…",
+        "ex": "即使很多人转发，也不能证明内容一定真实。",
+        "py": "jí shǐ hěn duō rén zhuǎn fā， yě bù néng zhèng míng nèi róng yí dìng zhēn shí。",
+        "vi": "Dù nhiều người chia sẻ, cũng không chứng minh nội dung chắc chắn là thật.",
+        "note": "Nêu tình huống nhượng bộ; kết quả vẫn không thay đổi."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "看到一条令人吃惊的消息时，我先检查它的来源。",
+        "aVi": "Khi thấy một tin gây ngạc nhiên, tôi kiểm tra nguồn trước."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "发布评论之前，我会考虑这些话可能造成的影响。",
+        "aVi": "Trước khi đăng bình luận, tôi cân nhắc ảnh hưởng mà những lời này có thể gây ra."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "看到一条令人吃惊的消息时，我先检查它的来源。",
+        "py": "kàn dào yī tiáo lìng rén chī jīng de xiāo xī shí， wǒ xiān jiǎn chá tā de lái yuán。",
+        "vi": "Khi thấy một tin gây ngạc nhiên, tôi kiểm tra nguồn trước.",
+        "en": "When I see surprising news, I check its source first."
+      },
+      {
+        "zh": "即使很多人转发，也不能证明内容一定真实。",
+        "py": "jí shǐ hěn duō rén zhuǎn fā， yě bù néng zhèng míng nèi róng yí dìng zhēn shí。",
+        "vi": "Dù nhiều người chia sẻ, cũng không chứng minh nội dung chắc chắn là thật.",
+        "en": "Even if many people share it, that does not prove it is true."
+      },
+      {
+        "zh": "我们可以提出不同意见，但应该避免攻击别人。",
+        "py": "wǒ men kě yǐ tí chū bù tóng yì jiàn， dàn yīng gāi bì miǎn gōng jī bié rén。",
+        "vi": "Chúng ta có thể nêu ý kiến khác nhưng nên tránh công kích người khác.",
+        "en": "We can disagree, but should avoid attacking others."
+      },
+      {
+        "zh": "发布评论之前，我会考虑这些话可能造成的影响。",
+        "py": "fā bù píng lùn zhī qián， wǒ huì kǎo lǜ zhè xiē huà kě néng zào chéng de yǐng xiǎng。",
+        "vi": "Trước khi đăng bình luận, tôi cân nhắc ảnh hưởng mà những lời này có thể gây ra.",
+        "en": "Before posting a comment, I consider the effect my words may have."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“来源” nghĩa là gì?",
+        "opts": [
+          "nguồn",
+          "chứng minh",
+          "tránh",
+          "ảnh hưởng"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“证明” nghĩa là gì?",
+        "opts": [
+          "nguồn",
+          "chứng minh",
+          "tránh",
+          "ảnh hưởng"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“避免” nghĩa là gì?",
+        "opts": [
+          "nguồn",
+          "chứng minh",
+          "tránh",
+          "ảnh hưởng"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“影响” nghĩa là gì?",
+        "opts": [
+          "nguồn",
+          "chứng minh",
+          "tránh",
+          "ảnh hưởng"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 0
+      }
+    ]
+  },
+  {
+    "id": "cdp-127",
+    "number": 127,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/09/podcast-126eat-less-live-longer-ancient.html",
+    "sourceTitle": "🎙️ Podcast #127｜Eat Less, Live Longer: Ancient Chinese Wisdom for Health & Contentment",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "给生活留一点空间",
+    "titleVi": "Để cuộc sống có thêm khoảng trống",
+    "titleEn": "Making space in daily life",
+    "youtubeId": "nhc2fTDBq4o",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "搬家时，我才发现自己积累了许多不用的东西。",
+        "py": "bān jiā shí， wǒ cái fā xiàn zì jǐ jī lěi le xǔ duō bù yòng de dōng xī。",
+        "vi": "Khi chuyển nhà, tôi mới phát hiện mình tích lũy nhiều đồ không dùng.",
+        "en": "When moving, I realized I had accumulated many unused things."
+      },
+      {
+        "zh": "与其继续买新的，不如先整理已经拥有的。",
+        "py": "yǔ qí jì xù mǎi xīn de， bù rú xiān zhěng lǐ yǐ jīng yōng yǒu de。",
+        "vi": "Thay vì tiếp tục mua mới, chi bằng sắp xếp đồ đã có trước.",
+        "en": "Rather than buying more, I should organize what I already own."
+      },
+      {
+        "zh": "我把仍然适合使用的物品送给了需要的人。",
+        "py": "wǒ bǎ réng rán shì hé shǐ yòng de wù pǐn sòng gěi le xū yào de rén。",
+        "vi": "Tôi tặng những đồ vẫn dùng được cho người cần.",
+        "en": "I gave usable items to people who needed them."
+      },
+      {
+        "zh": "减少不必要的消费以后，我有更多时间陪家人。",
+        "py": "jiǎn shǎo bù bì yào de xiāo fèi yǐ hòu， wǒ yǒu gèng duō shí jiān péi jiā rén。",
+        "vi": "Sau khi giảm chi tiêu không cần thiết, tôi có thêm thời gian bên gia đình.",
+        "en": "After reducing unnecessary consumption, I have more time for my family."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "积累",
+        "py": "jī lěi",
+        "vi": "tích lũy",
+        "en": "accumulate",
+        "example": "搬家时，我才发现自己积累了许多不用的东西。",
+        "examplePy": "bān jiā shí， wǒ cái fā xiàn zì jǐ jī lěi le xǔ duō bù yòng de dōng xī。",
+        "exampleVi": "Khi chuyển nhà, tôi mới phát hiện mình tích lũy nhiều đồ không dùng.",
+        "exampleEn": "When moving, I realized I had accumulated many unused things."
+      },
+      {
+        "zh": "整理",
+        "py": "zhěng lǐ",
+        "vi": "sắp xếp",
+        "en": "organize",
+        "example": "与其继续买新的，不如先整理已经拥有的。",
+        "examplePy": "yǔ qí jì xù mǎi xīn de， bù rú xiān zhěng lǐ yǐ jīng yōng yǒu de。",
+        "exampleVi": "Thay vì tiếp tục mua mới, chi bằng sắp xếp đồ đã có trước.",
+        "exampleEn": "Rather than buying more, I should organize what I already own."
+      },
+      {
+        "zh": "物品",
+        "py": "wù pǐn",
+        "vi": "đồ vật",
+        "en": "item",
+        "example": "我把仍然适合使用的物品送给了需要的人。",
+        "examplePy": "wǒ bǎ réng rán shì hé shǐ yòng de wù pǐn sòng gěi le xū yào de rén。",
+        "exampleVi": "Tôi tặng những đồ vẫn dùng được cho người cần.",
+        "exampleEn": "I gave usable items to people who needed them."
+      },
+      {
+        "zh": "消费",
+        "py": "xiāo fèi",
+        "vi": "tiêu dùng",
+        "en": "consumption",
+        "example": "减少不必要的消费以后，我有更多时间陪家人。",
+        "examplePy": "jiǎn shǎo bù bì yào de xiāo fèi yǐ hòu， wǒ yǒu gèng duō shí jiān péi jiā rén。",
+        "exampleVi": "Sau khi giảm chi tiêu không cần thiết, tôi có thêm thời gian bên gia đình.",
+        "exampleEn": "After reducing unnecessary consumption, I have more time for my family."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "与其……不如……",
+        "meaning": "thay vì… chi bằng…",
+        "ex": "与其继续买新的，不如先整理已经拥有的。",
+        "py": "yǔ qí jì xù mǎi xīn de， bù rú xiān zhěng lǐ yǐ jīng yōng yǒu de。",
+        "vi": "Thay vì tiếp tục mua mới, chi bằng sắp xếp đồ đã có trước.",
+        "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "搬家时，我才发现自己积累了许多不用的东西。",
+        "aVi": "Khi chuyển nhà, tôi mới phát hiện mình tích lũy nhiều đồ không dùng."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "减少不必要的消费以后，我有更多时间陪家人。",
+        "aVi": "Sau khi giảm chi tiêu không cần thiết, tôi có thêm thời gian bên gia đình."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "搬家时，我才发现自己积累了许多不用的东西。",
+        "py": "bān jiā shí， wǒ cái fā xiàn zì jǐ jī lěi le xǔ duō bù yòng de dōng xī。",
+        "vi": "Khi chuyển nhà, tôi mới phát hiện mình tích lũy nhiều đồ không dùng.",
+        "en": "When moving, I realized I had accumulated many unused things."
+      },
+      {
+        "zh": "与其继续买新的，不如先整理已经拥有的。",
+        "py": "yǔ qí jì xù mǎi xīn de， bù rú xiān zhěng lǐ yǐ jīng yōng yǒu de。",
+        "vi": "Thay vì tiếp tục mua mới, chi bằng sắp xếp đồ đã có trước.",
+        "en": "Rather than buying more, I should organize what I already own."
+      },
+      {
+        "zh": "我把仍然适合使用的物品送给了需要的人。",
+        "py": "wǒ bǎ réng rán shì hé shǐ yòng de wù pǐn sòng gěi le xū yào de rén。",
+        "vi": "Tôi tặng những đồ vẫn dùng được cho người cần.",
+        "en": "I gave usable items to people who needed them."
+      },
+      {
+        "zh": "减少不必要的消费以后，我有更多时间陪家人。",
+        "py": "jiǎn shǎo bù bì yào de xiāo fèi yǐ hòu， wǒ yǒu gèng duō shí jiān péi jiā rén。",
+        "vi": "Sau khi giảm chi tiêu không cần thiết, tôi có thêm thời gian bên gia đình.",
+        "en": "After reducing unnecessary consumption, I have more time for my family."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“积累” nghĩa là gì?",
+        "opts": [
+          "tích lũy",
+          "sắp xếp",
+          "đồ vật",
+          "tiêu dùng"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“整理” nghĩa là gì?",
+        "opts": [
+          "tích lũy",
+          "sắp xếp",
+          "đồ vật",
+          "tiêu dùng"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“物品” nghĩa là gì?",
+        "opts": [
+          "tích lũy",
+          "sắp xếp",
+          "đồ vật",
+          "tiêu dùng"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“消费” nghĩa là gì?",
+        "opts": [
+          "tích lũy",
+          "sắp xếp",
+          "đồ vật",
+          "tiêu dùng"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "cdp-123",
+    "number": 123,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/08/podcast-123stop-rushing-best-chinese.html",
+    "sourceTitle": "🎙️ Podcast #123｜Stop Rushing! Best Chinese Learning Tips & The Wisdom of Deep Roots",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "把基础打牢",
+    "titleVi": "Xây nền tảng vững chắc",
+    "titleEn": "Building a solid foundation",
+    "youtubeId": "JgyQgB-g9i8",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "同事建议我先把基础打牢，再学习复杂的表达。",
+        "py": "tóng shì jiàn yì wǒ xiān bǎ jī chǔ dǎ láo， zài xué xí fù zá de biǎo dá。",
+        "vi": "Đồng nghiệp khuyên tôi xây nền tảng vững trước rồi học cách diễn đạt phức tạp.",
+        "en": "My colleague suggested building a solid foundation before learning complex expressions."
+      },
+      {
+        "zh": "即使一个句型已经学过，我也会换个情景再练习。",
+        "py": "jí shǐ yí gè jù xíng yǐ jīng xué guò， wǒ yě huì huàn gè qíng jǐng zài liàn xí。",
+        "vi": "Dù đã học một mẫu câu, tôi vẫn đổi tình huống để luyện lại.",
+        "en": "Even if I have learned a pattern, I practice it in another situation."
+      },
+      {
+        "zh": "每天坚持二十分钟，比偶尔练习几个小时更适合我。",
+        "py": "měi tiān jiān chí èr shí fēn zhōng， bǐ ǒu ěr liàn xí jǐ gè xiǎo shí gèng shì hé wǒ。",
+        "vi": "Kiên trì hai mươi phút mỗi ngày phù hợp với tôi hơn thỉnh thoảng luyện vài giờ.",
+        "en": "Twenty minutes every day suits me better than several hours occasionally."
+      },
+      {
+        "zh": "我不再急着比较速度，而是关注自己能否真正运用。",
+        "py": "wǒ bù zài jí zhe bǐ jiào sù dù， ér shì guān zhù zì jǐ néng fǒu zhēn zhèng yùn yòng。",
+        "vi": "Tôi không còn vội so sánh tốc độ mà chú ý mình có thực sự vận dụng được không.",
+        "en": "I no longer rush to compare speed, but focus on whether I can actually apply what I learn."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "基础",
+        "py": "jī chǔ",
+        "vi": "nền tảng",
+        "en": "foundation",
+        "example": "同事建议我先把基础打牢，再学习复杂的表达。",
+        "examplePy": "tóng shì jiàn yì wǒ xiān bǎ jī chǔ dǎ láo， zài xué xí fù zá de biǎo dá。",
+        "exampleVi": "Đồng nghiệp khuyên tôi xây nền tảng vững trước rồi học cách diễn đạt phức tạp.",
+        "exampleEn": "My colleague suggested building a solid foundation before learning complex expressions."
+      },
+      {
+        "zh": "情景",
+        "py": "qíng jǐng",
+        "vi": "tình huống",
+        "en": "situation",
+        "example": "即使一个句型已经学过，我也会换个情景再练习。",
+        "examplePy": "jí shǐ yí gè jù xíng yǐ jīng xué guò， wǒ yě huì huàn gè qíng jǐng zài liàn xí。",
+        "exampleVi": "Dù đã học một mẫu câu, tôi vẫn đổi tình huống để luyện lại.",
+        "exampleEn": "Even if I have learned a pattern, I practice it in another situation."
+      },
+      {
+        "zh": "坚持",
+        "py": "jiān chí",
+        "vi": "kiên trì",
+        "en": "persist",
+        "example": "每天坚持二十分钟，比偶尔练习几个小时更适合我。",
+        "examplePy": "měi tiān jiān chí èr shí fēn zhōng， bǐ ǒu ěr liàn xí jǐ gè xiǎo shí gèng shì hé wǒ。",
+        "exampleVi": "Kiên trì hai mươi phút mỗi ngày phù hợp với tôi hơn thỉnh thoảng luyện vài giờ.",
+        "exampleEn": "Twenty minutes every day suits me better than several hours occasionally."
+      },
+      {
+        "zh": "运用",
+        "py": "yùn yòng",
+        "vi": "vận dụng",
+        "en": "apply",
+        "example": "我不再急着比较速度，而是关注自己能否真正运用。",
+        "examplePy": "wǒ bù zài jí zhe bǐ jiào sù dù， ér shì guān zhù zì jǐ néng fǒu zhēn zhèng yùn yòng。",
+        "exampleVi": "Tôi không còn vội so sánh tốc độ mà chú ý mình có thực sự vận dụng được không.",
+        "exampleEn": "I no longer rush to compare speed, but focus on whether I can actually apply what I learn."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "即使……也……",
+        "meaning": "dù… cũng…",
+        "ex": "即使一个句型已经学过，我也会换个情景再练习。",
+        "py": "jí shǐ yí gè jù xíng yǐ jīng xué guò， wǒ yě huì huàn gè qíng jǐng zài liàn xí。",
+        "vi": "Dù đã học một mẫu câu, tôi vẫn đổi tình huống để luyện lại.",
+        "note": "Nêu tình huống nhượng bộ; kết quả vẫn không thay đổi."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "同事建议我先把基础打牢，再学习复杂的表达。",
+        "aVi": "Đồng nghiệp khuyên tôi xây nền tảng vững trước rồi học cách diễn đạt phức tạp."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "我不再急着比较速度，而是关注自己能否真正运用。",
+        "aVi": "Tôi không còn vội so sánh tốc độ mà chú ý mình có thực sự vận dụng được không."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "同事建议我先把基础打牢，再学习复杂的表达。",
+        "py": "tóng shì jiàn yì wǒ xiān bǎ jī chǔ dǎ láo， zài xué xí fù zá de biǎo dá。",
+        "vi": "Đồng nghiệp khuyên tôi xây nền tảng vững trước rồi học cách diễn đạt phức tạp.",
+        "en": "My colleague suggested building a solid foundation before learning complex expressions."
+      },
+      {
+        "zh": "即使一个句型已经学过，我也会换个情景再练习。",
+        "py": "jí shǐ yí gè jù xíng yǐ jīng xué guò， wǒ yě huì huàn gè qíng jǐng zài liàn xí。",
+        "vi": "Dù đã học một mẫu câu, tôi vẫn đổi tình huống để luyện lại.",
+        "en": "Even if I have learned a pattern, I practice it in another situation."
+      },
+      {
+        "zh": "每天坚持二十分钟，比偶尔练习几个小时更适合我。",
+        "py": "měi tiān jiān chí èr shí fēn zhōng， bǐ ǒu ěr liàn xí jǐ gè xiǎo shí gèng shì hé wǒ。",
+        "vi": "Kiên trì hai mươi phút mỗi ngày phù hợp với tôi hơn thỉnh thoảng luyện vài giờ.",
+        "en": "Twenty minutes every day suits me better than several hours occasionally."
+      },
+      {
+        "zh": "我不再急着比较速度，而是关注自己能否真正运用。",
+        "py": "wǒ bù zài jí zhe bǐ jiào sù dù， ér shì guān zhù zì jǐ néng fǒu zhēn zhèng yùn yòng。",
+        "vi": "Tôi không còn vội so sánh tốc độ mà chú ý mình có thực sự vận dụng được không.",
+        "en": "I no longer rush to compare speed, but focus on whether I can actually apply what I learn."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“基础” nghĩa là gì?",
+        "opts": [
+          "nền tảng",
+          "tình huống",
+          "kiên trì",
+          "vận dụng"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“情景” nghĩa là gì?",
+        "opts": [
+          "nền tảng",
+          "tình huống",
+          "kiên trì",
+          "vận dụng"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“坚持” nghĩa là gì?",
+        "opts": [
+          "nền tảng",
+          "tình huống",
+          "kiên trì",
+          "vận dụng"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“运用” nghĩa là gì?",
+        "opts": [
+          "nền tảng",
+          "tình huống",
+          "kiên trì",
+          "vận dụng"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 0
+      }
+    ]
+  },
+  {
+    "id": "cdp-118",
+    "number": 118,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/08/podcast-118chinese-face-culture.html",
+    "sourceTitle": "🎙️ Podcast #118｜Chinese \"Face\" Culture Explained",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "理解中国的面子文化",
+    "titleVi": "Hiểu văn hóa thể diện",
+    "titleEn": "Understanding face in Chinese culture",
+    "youtubeId": "IwGR-KzTKmY",
+    "level": "HSK 3–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "开会时，我发现同事的方案有一个小问题。",
+        "py": "kāi huì shí， wǒ fā xiàn tóng shì de fāng àn yǒu yí gè xiǎo wèn tí。",
+        "vi": "Trong cuộc họp, tôi phát hiện phương án của đồng nghiệp có một vấn đề nhỏ.",
+        "en": "During a meeting, I noticed a small problem in a colleague's proposal."
+      },
+      {
+        "zh": "与其当众批评，不如会后私下和他讨论。",
+        "py": "yǔ qí dāng zhòng pī píng， bù rú huì hòu sī xià hé tā tǎo lùn。",
+        "vi": "Thay vì phê bình trước mọi người, chi bằng thảo luận riêng sau cuộc họp.",
+        "en": "Rather than criticizing him publicly, I could discuss it privately afterward."
+      },
+      {
+        "zh": "尊重对方的感受，并不意味着必须同意所有观点。",
+        "py": "zūn zhòng duì fāng de gǎn shòu， bìng bù yì wèi zhe bì xū tóng yì suǒ yǒu guān diǎn。",
+        "vi": "Tôn trọng cảm xúc đối phương không có nghĩa phải đồng ý mọi quan điểm.",
+        "en": "Respecting someone's feelings does not mean agreeing with every view."
+      },
+      {
+        "zh": "我先肯定他的努力，再说明需要修改的地方。",
+        "py": "wǒ xiān kěn dìng tā de nǔ lì， zài shuō míng xū yào xiū gǎi de dì fāng。",
+        "vi": "Tôi ghi nhận nỗ lực của anh ấy trước rồi chỉ ra chỗ cần sửa.",
+        "en": "I acknowledged his effort first, then explained what needed revision."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "方案",
+        "py": "fāng àn",
+        "vi": "phương án",
+        "en": "proposal",
+        "example": "开会时，我发现同事的方案有一个小问题。",
+        "examplePy": "kāi huì shí， wǒ fā xiàn tóng shì de fāng àn yǒu yí gè xiǎo wèn tí。",
+        "exampleVi": "Trong cuộc họp, tôi phát hiện phương án của đồng nghiệp có một vấn đề nhỏ.",
+        "exampleEn": "During a meeting, I noticed a small problem in a colleague's proposal."
+      },
+      {
+        "zh": "批评",
+        "py": "pī píng",
+        "vi": "phê bình",
+        "en": "criticize",
+        "example": "与其当众批评，不如会后私下和他讨论。",
+        "examplePy": "yǔ qí dāng zhòng pī píng， bù rú huì hòu sī xià hé tā tǎo lùn。",
+        "exampleVi": "Thay vì phê bình trước mọi người, chi bằng thảo luận riêng sau cuộc họp.",
+        "exampleEn": "Rather than criticizing him publicly, I could discuss it privately afterward."
+      },
+      {
+        "zh": "尊重",
+        "py": "zūn zhòng",
+        "vi": "tôn trọng",
+        "en": "respect",
+        "example": "尊重对方的感受，并不意味着必须同意所有观点。",
+        "examplePy": "zūn zhòng duì fāng de gǎn shòu， bìng bù yì wèi zhe bì xū tóng yì suǒ yǒu guān diǎn。",
+        "exampleVi": "Tôn trọng cảm xúc đối phương không có nghĩa phải đồng ý mọi quan điểm.",
+        "exampleEn": "Respecting someone's feelings does not mean agreeing with every view."
+      },
+      {
+        "zh": "修改",
+        "py": "xiū gǎi",
+        "vi": "sửa đổi",
+        "en": "revise",
+        "example": "我先肯定他的努力，再说明需要修改的地方。",
+        "examplePy": "wǒ xiān kěn dìng tā de nǔ lì， zài shuō míng xū yào xiū gǎi de dì fāng。",
+        "exampleVi": "Tôi ghi nhận nỗ lực của anh ấy trước rồi chỉ ra chỗ cần sửa.",
+        "exampleEn": "I acknowledged his effort first, then explained what needed revision."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "与其……不如……",
+        "meaning": "thay vì… chi bằng…",
+        "ex": "与其当众批评，不如会后私下和他讨论。",
+        "py": "yǔ qí dāng zhòng pī píng， bù rú huì hòu sī xià hé tā tǎo lùn。",
+        "vi": "Thay vì phê bình trước mọi người, chi bằng thảo luận riêng sau cuộc họp.",
+        "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "开会时，我发现同事的方案有一个小问题。",
+        "aVi": "Trong cuộc họp, tôi phát hiện phương án của đồng nghiệp có một vấn đề nhỏ."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "我先肯定他的努力，再说明需要修改的地方。",
+        "aVi": "Tôi ghi nhận nỗ lực của anh ấy trước rồi chỉ ra chỗ cần sửa."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "开会时，我发现同事的方案有一个小问题。",
+        "py": "kāi huì shí， wǒ fā xiàn tóng shì de fāng àn yǒu yí gè xiǎo wèn tí。",
+        "vi": "Trong cuộc họp, tôi phát hiện phương án của đồng nghiệp có một vấn đề nhỏ.",
+        "en": "During a meeting, I noticed a small problem in a colleague's proposal."
+      },
+      {
+        "zh": "与其当众批评，不如会后私下和他讨论。",
+        "py": "yǔ qí dāng zhòng pī píng， bù rú huì hòu sī xià hé tā tǎo lùn。",
+        "vi": "Thay vì phê bình trước mọi người, chi bằng thảo luận riêng sau cuộc họp.",
+        "en": "Rather than criticizing him publicly, I could discuss it privately afterward."
+      },
+      {
+        "zh": "尊重对方的感受，并不意味着必须同意所有观点。",
+        "py": "zūn zhòng duì fāng de gǎn shòu， bìng bù yì wèi zhe bì xū tóng yì suǒ yǒu guān diǎn。",
+        "vi": "Tôn trọng cảm xúc đối phương không có nghĩa phải đồng ý mọi quan điểm.",
+        "en": "Respecting someone's feelings does not mean agreeing with every view."
+      },
+      {
+        "zh": "我先肯定他的努力，再说明需要修改的地方。",
+        "py": "wǒ xiān kěn dìng tā de nǔ lì， zài shuō míng xū yào xiū gǎi de dì fāng。",
+        "vi": "Tôi ghi nhận nỗ lực của anh ấy trước rồi chỉ ra chỗ cần sửa.",
+        "en": "I acknowledged his effort first, then explained what needed revision."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“方案” nghĩa là gì?",
+        "opts": [
+          "phương án",
+          "phê bình",
+          "tôn trọng",
+          "sửa đổi"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“批评” nghĩa là gì?",
+        "opts": [
+          "phương án",
+          "phê bình",
+          "tôn trọng",
+          "sửa đổi"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“尊重” nghĩa là gì?",
+        "opts": [
+          "phương án",
+          "phê bình",
+          "tôn trọng",
+          "sửa đổi"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“修改” nghĩa là gì?",
+        "opts": [
+          "phương án",
+          "phê bình",
+          "tôn trọng",
+          "sửa đổi"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "cdp-114",
+    "number": 114,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/07/podcast-114-why-keeping-secrets-brings.html",
+    "sourceTitle": "🎙️ Podcast #114 Why Keeping Secrets Brings Good Luck",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "计划需要马上公开吗？",
+    "titleVi": "Có nên công khai kế hoạch ngay?",
+    "titleEn": "Should plans be shared immediately?",
+    "youtubeId": "HsSxcmLyqx4",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "我打算参加一个设计比赛，但是还没有完成初稿。",
+        "py": "wǒ dǎ suàn cān jiā yí gè shè jì bǐ sài， dàn shì hái méi yǒu wán chéng chū gǎo。",
+        "vi": "Tôi định tham gia cuộc thi thiết kế nhưng chưa hoàn thành bản nháp.",
+        "en": "I plan to enter a design competition, but have not finished my draft."
+      },
+      {
+        "zh": "与其到处宣布目标，不如先安排实际的工作。",
+        "py": "yǔ qí dào chù xuān bù mù biāo， bù rú xiān ān pái shí jì de gōng zuò。",
+        "vi": "Thay vì tuyên bố mục tiêu khắp nơi, chi bằng sắp xếp công việc thực tế trước.",
+        "en": "Rather than announcing my goal everywhere, I should organize the actual work first."
+      },
+      {
+        "zh": "遇到困难时，我会向值得信任的朋友请教。",
+        "py": "yù dào kùn nán shí， wǒ huì xiàng zhí de xìn rèn de péng yǒu qǐng jiào。",
+        "vi": "Khi gặp khó khăn, tôi sẽ hỏi ý kiến người bạn đáng tin.",
+        "en": "When I face difficulties, I ask a trusted friend for advice."
+      },
+      {
+        "zh": "等作品准备好了，我再向大家介绍整个过程。",
+        "py": "děng zuò pǐn zhǔn bèi hǎo le， wǒ zài xiàng dà jiā jiè shào zhěng gè guò chéng。",
+        "vi": "Đợi tác phẩm sẵn sàng, tôi sẽ giới thiệu toàn bộ quá trình cho mọi người.",
+        "en": "Once the work is ready, I will introduce the whole process."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "初稿",
+        "py": "chū gǎo",
+        "vi": "bản nháp đầu tiên",
+        "en": "first draft",
+        "example": "我打算参加一个设计比赛，但是还没有完成初稿。",
+        "examplePy": "wǒ dǎ suàn cān jiā yí gè shè jì bǐ sài， dàn shì hái méi yǒu wán chéng chū gǎo。",
+        "exampleVi": "Tôi định tham gia cuộc thi thiết kế nhưng chưa hoàn thành bản nháp.",
+        "exampleEn": "I plan to enter a design competition, but have not finished my draft."
+      },
+      {
+        "zh": "宣布",
+        "py": "xuān bù",
+        "vi": "tuyên bố",
+        "en": "announce",
+        "example": "与其到处宣布目标，不如先安排实际的工作。",
+        "examplePy": "yǔ qí dào chù xuān bù mù biāo， bù rú xiān ān pái shí jì de gōng zuò。",
+        "exampleVi": "Thay vì tuyên bố mục tiêu khắp nơi, chi bằng sắp xếp công việc thực tế trước.",
+        "exampleEn": "Rather than announcing my goal everywhere, I should organize the actual work first."
+      },
+      {
+        "zh": "信任",
+        "py": "xìn rèn",
+        "vi": "tin tưởng",
+        "en": "trust",
+        "example": "遇到困难时，我会向值得信任的朋友请教。",
+        "examplePy": "yù dào kùn nán shí， wǒ huì xiàng zhí de xìn rèn de péng yǒu qǐng jiào。",
+        "exampleVi": "Khi gặp khó khăn, tôi sẽ hỏi ý kiến người bạn đáng tin.",
+        "exampleEn": "When I face difficulties, I ask a trusted friend for advice."
+      },
+      {
+        "zh": "过程",
+        "py": "guò chéng",
+        "vi": "quá trình",
+        "en": "process",
+        "example": "等作品准备好了，我再向大家介绍整个过程。",
+        "examplePy": "děng zuò pǐn zhǔn bèi hǎo le， wǒ zài xiàng dà jiā jiè shào zhěng gè guò chéng。",
+        "exampleVi": "Đợi tác phẩm sẵn sàng, tôi sẽ giới thiệu toàn bộ quá trình cho mọi người.",
+        "exampleEn": "Once the work is ready, I will introduce the whole process."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "与其……不如……",
+        "meaning": "thay vì… chi bằng…",
+        "ex": "与其到处宣布目标，不如先安排实际的工作。",
+        "py": "yǔ qí dào chù xuān bù mù biāo， bù rú xiān ān pái shí jì de gōng zuò。",
+        "vi": "Thay vì tuyên bố mục tiêu khắp nơi, chi bằng sắp xếp công việc thực tế trước.",
+        "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "我打算参加一个设计比赛，但是还没有完成初稿。",
+        "aVi": "Tôi định tham gia cuộc thi thiết kế nhưng chưa hoàn thành bản nháp."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "等作品准备好了，我再向大家介绍整个过程。",
+        "aVi": "Đợi tác phẩm sẵn sàng, tôi sẽ giới thiệu toàn bộ quá trình cho mọi người."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "我打算参加一个设计比赛，但是还没有完成初稿。",
+        "py": "wǒ dǎ suàn cān jiā yí gè shè jì bǐ sài， dàn shì hái méi yǒu wán chéng chū gǎo。",
+        "vi": "Tôi định tham gia cuộc thi thiết kế nhưng chưa hoàn thành bản nháp.",
+        "en": "I plan to enter a design competition, but have not finished my draft."
+      },
+      {
+        "zh": "与其到处宣布目标，不如先安排实际的工作。",
+        "py": "yǔ qí dào chù xuān bù mù biāo， bù rú xiān ān pái shí jì de gōng zuò。",
+        "vi": "Thay vì tuyên bố mục tiêu khắp nơi, chi bằng sắp xếp công việc thực tế trước.",
+        "en": "Rather than announcing my goal everywhere, I should organize the actual work first."
+      },
+      {
+        "zh": "遇到困难时，我会向值得信任的朋友请教。",
+        "py": "yù dào kùn nán shí， wǒ huì xiàng zhí de xìn rèn de péng yǒu qǐng jiào。",
+        "vi": "Khi gặp khó khăn, tôi sẽ hỏi ý kiến người bạn đáng tin.",
+        "en": "When I face difficulties, I ask a trusted friend for advice."
+      },
+      {
+        "zh": "等作品准备好了，我再向大家介绍整个过程。",
+        "py": "děng zuò pǐn zhǔn bèi hǎo le， wǒ zài xiàng dà jiā jiè shào zhěng gè guò chéng。",
+        "vi": "Đợi tác phẩm sẵn sàng, tôi sẽ giới thiệu toàn bộ quá trình cho mọi người.",
+        "en": "Once the work is ready, I will introduce the whole process."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“初稿” nghĩa là gì?",
+        "opts": [
+          "bản nháp đầu tiên",
+          "tuyên bố",
+          "tin tưởng",
+          "quá trình"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“宣布” nghĩa là gì?",
+        "opts": [
+          "bản nháp đầu tiên",
+          "tuyên bố",
+          "tin tưởng",
+          "quá trình"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“信任” nghĩa là gì?",
+        "opts": [
+          "bản nháp đầu tiên",
+          "tuyên bố",
+          "tin tưởng",
+          "quá trình"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“过程” nghĩa là gì?",
+        "opts": [
+          "bản nháp đầu tiên",
+          "tuyên bố",
+          "tin tưởng",
+          "quá trình"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "cdp-113",
+    "number": 113,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/07/podcast-113.html",
+    "sourceTitle": "🎙️ Podcast #113｜Is Lying Flat Giving Up or Waking Up?",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "躺平与生活的选择",
+    "titleVi": "Nằm yên và lựa chọn cuộc sống",
+    "titleEn": "Lying flat and life choices",
+    "youtubeId": "vhsPRlbzaac",
+    "level": "HSK 3–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "连续加班以后，小林开始重新考虑工作的意义。",
+        "py": "lián xù jiā bān yǐ hòu， xiǎo lín kāi shǐ chóng xīn kǎo lǜ gōng zuò de yì yì。",
+        "vi": "Sau nhiều ngày tăng ca liên tục, Tiểu Lâm bắt đầu suy nghĩ lại ý nghĩa công việc.",
+        "en": "After repeated overtime, Xiaolin began reconsidering the meaning of work."
+      },
+      {
+        "zh": "即使收入增加了，他也不愿意失去所有休息时间。",
+        "py": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xī shí jiān。",
+        "vi": "Dù thu nhập tăng, anh ấy cũng không muốn mất hết thời gian nghỉ ngơi.",
+        "en": "Even if his income rises, he does not want to lose all his rest time."
+      },
+      {
+        "zh": "他决定和经理商量，合理安排每周的任务。",
+        "py": "tā jué dìng hé jīng lǐ shāng liáng， hé lǐ ān pái měi zhōu de rèn wù。",
+        "vi": "Anh quyết định bàn với quản lý để sắp xếp hợp lý nhiệm vụ hằng tuần.",
+        "en": "He decided to discuss a reasonable weekly workload with his manager."
+      },
+      {
+        "zh": "对他来说，减少压力并不等于放弃责任。",
+        "py": "duì tā lái shuō， jiǎn shǎo yā lì bìng bù děng yú fàng qì zé rèn。",
+        "vi": "Với anh ấy, giảm áp lực không đồng nghĩa từ bỏ trách nhiệm.",
+        "en": "For him, reducing pressure does not mean abandoning responsibility."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "连续",
+        "py": "lián xù",
+        "vi": "liên tục",
+        "en": "continuous",
+        "example": "连续加班以后，小林开始重新考虑工作的意义。",
+        "examplePy": "lián xù jiā bān yǐ hòu， xiǎo lín kāi shǐ chóng xīn kǎo lǜ gōng zuò de yì yì。",
+        "exampleVi": "Sau nhiều ngày tăng ca liên tục, Tiểu Lâm bắt đầu suy nghĩ lại ý nghĩa công việc.",
+        "exampleEn": "After repeated overtime, Xiaolin began reconsidering the meaning of work."
+      },
+      {
+        "zh": "收入",
+        "py": "shōu rù",
+        "vi": "thu nhập",
+        "en": "income",
+        "example": "即使收入增加了，他也不愿意失去所有休息时间。",
+        "examplePy": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xī shí jiān。",
+        "exampleVi": "Dù thu nhập tăng, anh ấy cũng không muốn mất hết thời gian nghỉ ngơi.",
+        "exampleEn": "Even if his income rises, he does not want to lose all his rest time."
+      },
+      {
+        "zh": "合理",
+        "py": "hé lǐ",
+        "vi": "hợp lý",
+        "en": "reasonable",
+        "example": "他决定和经理商量，合理安排每周的任务。",
+        "examplePy": "tā jué dìng hé jīng lǐ shāng liáng， hé lǐ ān pái měi zhōu de rèn wù。",
+        "exampleVi": "Anh quyết định bàn với quản lý để sắp xếp hợp lý nhiệm vụ hằng tuần.",
+        "exampleEn": "He decided to discuss a reasonable weekly workload with his manager."
+      },
+      {
+        "zh": "责任",
+        "py": "zé rèn",
+        "vi": "trách nhiệm",
+        "en": "responsibility",
+        "example": "对他来说，减少压力并不等于放弃责任。",
+        "examplePy": "duì tā lái shuō， jiǎn shǎo yā lì bìng bù děng yú fàng qì zé rèn。",
+        "exampleVi": "Với anh ấy, giảm áp lực không đồng nghĩa từ bỏ trách nhiệm.",
+        "exampleEn": "For him, reducing pressure does not mean abandoning responsibility."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "即使……也……",
+        "meaning": "dù… cũng…",
+        "ex": "即使收入增加了，他也不愿意失去所有休息时间。",
+        "py": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xī shí jiān。",
+        "vi": "Dù thu nhập tăng, anh ấy cũng không muốn mất hết thời gian nghỉ ngơi.",
+        "note": "Nêu tình huống nhượng bộ; kết quả vẫn không thay đổi."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "连续加班以后，小林开始重新考虑工作的意义。",
+        "aVi": "Sau nhiều ngày tăng ca liên tục, Tiểu Lâm bắt đầu suy nghĩ lại ý nghĩa công việc."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "对他来说，减少压力并不等于放弃责任。",
+        "aVi": "Với anh ấy, giảm áp lực không đồng nghĩa từ bỏ trách nhiệm."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "连续加班以后，小林开始重新考虑工作的意义。",
+        "py": "lián xù jiā bān yǐ hòu， xiǎo lín kāi shǐ chóng xīn kǎo lǜ gōng zuò de yì yì。",
+        "vi": "Sau nhiều ngày tăng ca liên tục, Tiểu Lâm bắt đầu suy nghĩ lại ý nghĩa công việc.",
+        "en": "After repeated overtime, Xiaolin began reconsidering the meaning of work."
+      },
+      {
+        "zh": "即使收入增加了，他也不愿意失去所有休息时间。",
+        "py": "jí shǐ shōu rù zēng jiā le， tā yě bù yuàn yì shī qù suǒ yǒu xiū xī shí jiān。",
+        "vi": "Dù thu nhập tăng, anh ấy cũng không muốn mất hết thời gian nghỉ ngơi.",
+        "en": "Even if his income rises, he does not want to lose all his rest time."
+      },
+      {
+        "zh": "他决定和经理商量，合理安排每周的任务。",
+        "py": "tā jué dìng hé jīng lǐ shāng liáng， hé lǐ ān pái měi zhōu de rèn wù。",
+        "vi": "Anh quyết định bàn với quản lý để sắp xếp hợp lý nhiệm vụ hằng tuần.",
+        "en": "He decided to discuss a reasonable weekly workload with his manager."
+      },
+      {
+        "zh": "对他来说，减少压力并不等于放弃责任。",
+        "py": "duì tā lái shuō， jiǎn shǎo yā lì bìng bù děng yú fàng qì zé rèn。",
+        "vi": "Với anh ấy, giảm áp lực không đồng nghĩa từ bỏ trách nhiệm.",
+        "en": "For him, reducing pressure does not mean abandoning responsibility."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“连续” nghĩa là gì?",
+        "opts": [
+          "liên tục",
+          "thu nhập",
+          "hợp lý",
+          "trách nhiệm"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“收入” nghĩa là gì?",
+        "opts": [
+          "liên tục",
+          "thu nhập",
+          "hợp lý",
+          "trách nhiệm"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“合理” nghĩa là gì?",
+        "opts": [
+          "liên tục",
+          "thu nhập",
+          "hợp lý",
+          "trách nhiệm"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“责任” nghĩa là gì?",
+        "opts": [
+          "liên tục",
+          "thu nhập",
+          "hợp lý",
+          "trách nhiệm"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 0
+      }
+    ]
+  },
+  {
+    "id": "cdp-111",
+    "number": 111,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/06/podcast-111.html",
+    "sourceTitle": "🎙️ Podcast #111｜Chinese BBQ Culture: Midnight Street Food",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "夜市里的烧烤文化",
+    "titleVi": "Văn hóa đồ nướng ở chợ đêm",
+    "titleEn": "Barbecue at the night market",
+    "youtubeId": "U2BFzltZWSo",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "周五下班后，我们约好去附近的夜市吃烧烤。",
+        "py": "zhōu wǔ xià bān hòu， wǒ men yuē hǎo qù fù jìn de yè shì chī shāo kǎo。",
+        "vi": "Tan làm thứ sáu, chúng tôi hẹn đi ăn đồ nướng ở chợ đêm gần đó.",
+        "en": "After work on Friday, we arranged to eat barbecue at a nearby night market."
+      },
+      {
+        "zh": "与其每个人单独点菜，不如一起选几种口味分享。",
+        "py": "yǔ qí měi gè rén dān dú diǎn cài， bù rú yì qǐ xuǎn jǐ zhǒng kǒu wèi fēn xiǎng。",
+        "vi": "Thay vì mỗi người gọi riêng, chi bằng cùng chọn vài vị để chia sẻ.",
+        "en": "Rather than ordering separately, we could choose several flavors to share."
+      },
+      {
+        "zh": "老板问我们能不能吃辣，还提醒我们注意烤盘很烫。",
+        "py": "lǎo bǎn wèn wǒ men néng bù néng chī là， hái tí xǐng wǒ men zhù yì kǎo pán hěn tàng。",
+        "vi": "Chủ quán hỏi chúng tôi ăn cay được không và nhắc khay nướng rất nóng.",
+        "en": "The owner asked whether we could eat spicy food and warned us about the hot tray."
+      },
+      {
+        "zh": "热闹的气氛让大家暂时忘记了工作的疲劳。",
+        "py": "rè nào de qì fēn ràng dà jiā zàn shí wàng jì le gōng zuò de pí láo。",
+        "vi": "Không khí náo nhiệt khiến mọi người tạm quên mệt mỏi công việc.",
+        "en": "The lively atmosphere helped everyone briefly forget their work fatigue."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "附近",
+        "py": "fù jìn",
+        "vi": "gần đó",
+        "en": "nearby",
+        "example": "周五下班后，我们约好去附近的夜市吃烧烤。",
+        "examplePy": "zhōu wǔ xià bān hòu， wǒ men yuē hǎo qù fù jìn de yè shì chī shāo kǎo。",
+        "exampleVi": "Tan làm thứ sáu, chúng tôi hẹn đi ăn đồ nướng ở chợ đêm gần đó.",
+        "exampleEn": "After work on Friday, we arranged to eat barbecue at a nearby night market."
+      },
+      {
+        "zh": "口味",
+        "py": "kǒu wèi",
+        "vi": "khẩu vị",
+        "en": "flavor",
+        "example": "与其每个人单独点菜，不如一起选几种口味分享。",
+        "examplePy": "yǔ qí měi gè rén dān dú diǎn cài， bù rú yì qǐ xuǎn jǐ zhǒng kǒu wèi fēn xiǎng。",
+        "exampleVi": "Thay vì mỗi người gọi riêng, chi bằng cùng chọn vài vị để chia sẻ.",
+        "exampleEn": "Rather than ordering separately, we could choose several flavors to share."
+      },
+      {
+        "zh": "提醒",
+        "py": "tí xǐng",
+        "vi": "nhắc nhở",
+        "en": "remind",
+        "example": "老板问我们能不能吃辣，还提醒我们注意烤盘很烫。",
+        "examplePy": "lǎo bǎn wèn wǒ men néng bù néng chī là， hái tí xǐng wǒ men zhù yì kǎo pán hěn tàng。",
+        "exampleVi": "Chủ quán hỏi chúng tôi ăn cay được không và nhắc khay nướng rất nóng.",
+        "exampleEn": "The owner asked whether we could eat spicy food and warned us about the hot tray."
+      },
+      {
+        "zh": "气氛",
+        "py": "qì fēn",
+        "vi": "bầu không khí",
+        "en": "atmosphere",
+        "example": "热闹的气氛让大家暂时忘记了工作的疲劳。",
+        "examplePy": "rè nào de qì fēn ràng dà jiā zàn shí wàng jì le gōng zuò de pí láo。",
+        "exampleVi": "Không khí náo nhiệt khiến mọi người tạm quên mệt mỏi công việc.",
+        "exampleEn": "The lively atmosphere helped everyone briefly forget their work fatigue."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "与其……不如……",
+        "meaning": "thay vì… chi bằng…",
+        "ex": "与其每个人单独点菜，不如一起选几种口味分享。",
+        "py": "yǔ qí měi gè rén dān dú diǎn cài， bù rú yì qǐ xuǎn jǐ zhǒng kǒu wèi fēn xiǎng。",
+        "vi": "Thay vì mỗi người gọi riêng, chi bằng cùng chọn vài vị để chia sẻ.",
+        "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "周五下班后，我们约好去附近的夜市吃烧烤。",
+        "aVi": "Tan làm thứ sáu, chúng tôi hẹn đi ăn đồ nướng ở chợ đêm gần đó."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "热闹的气氛让大家暂时忘记了工作的疲劳。",
+        "aVi": "Không khí náo nhiệt khiến mọi người tạm quên mệt mỏi công việc."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "周五下班后，我们约好去附近的夜市吃烧烤。",
+        "py": "zhōu wǔ xià bān hòu， wǒ men yuē hǎo qù fù jìn de yè shì chī shāo kǎo。",
+        "vi": "Tan làm thứ sáu, chúng tôi hẹn đi ăn đồ nướng ở chợ đêm gần đó.",
+        "en": "After work on Friday, we arranged to eat barbecue at a nearby night market."
+      },
+      {
+        "zh": "与其每个人单独点菜，不如一起选几种口味分享。",
+        "py": "yǔ qí měi gè rén dān dú diǎn cài， bù rú yì qǐ xuǎn jǐ zhǒng kǒu wèi fēn xiǎng。",
+        "vi": "Thay vì mỗi người gọi riêng, chi bằng cùng chọn vài vị để chia sẻ.",
+        "en": "Rather than ordering separately, we could choose several flavors to share."
+      },
+      {
+        "zh": "老板问我们能不能吃辣，还提醒我们注意烤盘很烫。",
+        "py": "lǎo bǎn wèn wǒ men néng bù néng chī là， hái tí xǐng wǒ men zhù yì kǎo pán hěn tàng。",
+        "vi": "Chủ quán hỏi chúng tôi ăn cay được không và nhắc khay nướng rất nóng.",
+        "en": "The owner asked whether we could eat spicy food and warned us about the hot tray."
+      },
+      {
+        "zh": "热闹的气氛让大家暂时忘记了工作的疲劳。",
+        "py": "rè nào de qì fēn ràng dà jiā zàn shí wàng jì le gōng zuò de pí láo。",
+        "vi": "Không khí náo nhiệt khiến mọi người tạm quên mệt mỏi công việc.",
+        "en": "The lively atmosphere helped everyone briefly forget their work fatigue."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“附近” nghĩa là gì?",
+        "opts": [
+          "gần đó",
+          "khẩu vị",
+          "nhắc nhở",
+          "bầu không khí"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“口味” nghĩa là gì?",
+        "opts": [
+          "gần đó",
+          "khẩu vị",
+          "nhắc nhở",
+          "bầu không khí"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“提醒” nghĩa là gì?",
+        "opts": [
+          "gần đó",
+          "khẩu vị",
+          "nhắc nhở",
+          "bầu không khí"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“气氛” nghĩa là gì?",
+        "opts": [
+          "gần đó",
+          "khẩu vị",
+          "nhắc nhở",
+          "bầu không khí"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "cdp-112",
+    "number": 112,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/06/podcast-112.html",
+    "sourceTitle": "🎙️ Podcast #112｜Dragon Boat Festival: The Story of Qu Yuan, Zongzi, and Dragon Boats",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "端午节的传统",
+    "titleVi": "Truyền thống Tết Đoan Ngọ",
+    "titleEn": "Dragon Boat Festival traditions",
+    "youtubeId": "4KGh4HNyMJ8",
+    "level": "HSK 3–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "端午节快到了，邻居邀请我一起包粽子。",
+        "py": "duān wǔ jié kuài dào le， lín jū yāo qǐng wǒ yì qǐ bāo zòng zi。",
+        "vi": "Tết Đoan Ngọ sắp đến, hàng xóm mời tôi cùng gói bánh ú.",
+        "en": "The Dragon Boat Festival is approaching, and my neighbor invited me to make zongzi."
+      },
+      {
+        "zh": "即使我第一次尝试，她也耐心地教我每个步骤。",
+        "py": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn dì jiào wǒ měi gè bù zhòu。",
+        "vi": "Dù tôi thử lần đầu, cô ấy vẫn kiên nhẫn dạy từng bước.",
+        "en": "Even though it was my first attempt, she patiently taught me each step."
+      },
+      {
+        "zh": "我们一边准备材料，一边讨论各地不同的习俗。",
+        "py": "wǒ men yī biān zhǔn bèi cái liào， yī biān tǎo lùn gè dì bù tóng de xí sú。",
+        "vi": "Chúng tôi vừa chuẩn bị nguyên liệu vừa nói về phong tục khác nhau ở các vùng.",
+        "en": "We prepared ingredients while discussing different regional customs."
+      },
+      {
+        "zh": "下午大家去河边观看龙舟比赛，感受节日的热闹。",
+        "py": "xià wǔ dà jiā qù hé biān guān kàn lóng zhōu bǐ sài， gǎn shòu jié rì de rè nào。",
+        "vi": "Chiều mọi người ra bờ sông xem đua thuyền rồng, cảm nhận không khí lễ hội.",
+        "en": "In the afternoon, everyone watched the dragon boat race by the river and enjoyed the festival."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "邀请",
+        "py": "yāo qǐng",
+        "vi": "mời",
+        "en": "invite",
+        "example": "端午节快到了，邻居邀请我一起包粽子。",
+        "examplePy": "duān wǔ jié kuài dào le， lín jū yāo qǐng wǒ yì qǐ bāo zòng zi。",
+        "exampleVi": "Tết Đoan Ngọ sắp đến, hàng xóm mời tôi cùng gói bánh ú.",
+        "exampleEn": "The Dragon Boat Festival is approaching, and my neighbor invited me to make zongzi."
+      },
+      {
+        "zh": "步骤",
+        "py": "bù zhòu",
+        "vi": "bước thực hiện",
+        "en": "step",
+        "example": "即使我第一次尝试，她也耐心地教我每个步骤。",
+        "examplePy": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn dì jiào wǒ měi gè bù zhòu。",
+        "exampleVi": "Dù tôi thử lần đầu, cô ấy vẫn kiên nhẫn dạy từng bước.",
+        "exampleEn": "Even though it was my first attempt, she patiently taught me each step."
+      },
+      {
+        "zh": "习俗",
+        "py": "xí sú",
+        "vi": "phong tục",
+        "en": "custom",
+        "example": "我们一边准备材料，一边讨论各地不同的习俗。",
+        "examplePy": "wǒ men yī biān zhǔn bèi cái liào， yī biān tǎo lùn gè dì bù tóng de xí sú。",
+        "exampleVi": "Chúng tôi vừa chuẩn bị nguyên liệu vừa nói về phong tục khác nhau ở các vùng.",
+        "exampleEn": "We prepared ingredients while discussing different regional customs."
+      },
+      {
+        "zh": "观看",
+        "py": "guān kàn",
+        "vi": "xem",
+        "en": "watch",
+        "example": "下午大家去河边观看龙舟比赛，感受节日的热闹。",
+        "examplePy": "xià wǔ dà jiā qù hé biān guān kàn lóng zhōu bǐ sài， gǎn shòu jié rì de rè nào。",
+        "exampleVi": "Chiều mọi người ra bờ sông xem đua thuyền rồng, cảm nhận không khí lễ hội.",
+        "exampleEn": "In the afternoon, everyone watched the dragon boat race by the river and enjoyed the festival."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "即使……也……",
+        "meaning": "dù… cũng…",
+        "ex": "即使我第一次尝试，她也耐心地教我每个步骤。",
+        "py": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn dì jiào wǒ měi gè bù zhòu。",
+        "vi": "Dù tôi thử lần đầu, cô ấy vẫn kiên nhẫn dạy từng bước.",
+        "note": "Nêu tình huống nhượng bộ; kết quả vẫn không thay đổi."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "端午节快到了，邻居邀请我一起包粽子。",
+        "aVi": "Tết Đoan Ngọ sắp đến, hàng xóm mời tôi cùng gói bánh ú."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "下午大家去河边观看龙舟比赛，感受节日的热闹。",
+        "aVi": "Chiều mọi người ra bờ sông xem đua thuyền rồng, cảm nhận không khí lễ hội."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "端午节快到了，邻居邀请我一起包粽子。",
+        "py": "duān wǔ jié kuài dào le， lín jū yāo qǐng wǒ yì qǐ bāo zòng zi。",
+        "vi": "Tết Đoan Ngọ sắp đến, hàng xóm mời tôi cùng gói bánh ú.",
+        "en": "The Dragon Boat Festival is approaching, and my neighbor invited me to make zongzi."
+      },
+      {
+        "zh": "即使我第一次尝试，她也耐心地教我每个步骤。",
+        "py": "jí shǐ wǒ dì yī cì cháng shì， tā yě nài xīn dì jiào wǒ měi gè bù zhòu。",
+        "vi": "Dù tôi thử lần đầu, cô ấy vẫn kiên nhẫn dạy từng bước.",
+        "en": "Even though it was my first attempt, she patiently taught me each step."
+      },
+      {
+        "zh": "我们一边准备材料，一边讨论各地不同的习俗。",
+        "py": "wǒ men yī biān zhǔn bèi cái liào， yī biān tǎo lùn gè dì bù tóng de xí sú。",
+        "vi": "Chúng tôi vừa chuẩn bị nguyên liệu vừa nói về phong tục khác nhau ở các vùng.",
+        "en": "We prepared ingredients while discussing different regional customs."
+      },
+      {
+        "zh": "下午大家去河边观看龙舟比赛，感受节日的热闹。",
+        "py": "xià wǔ dà jiā qù hé biān guān kàn lóng zhōu bǐ sài， gǎn shòu jié rì de rè nào。",
+        "vi": "Chiều mọi người ra bờ sông xem đua thuyền rồng, cảm nhận không khí lễ hội.",
+        "en": "In the afternoon, everyone watched the dragon boat race by the river and enjoyed the festival."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“邀请” nghĩa là gì?",
+        "opts": [
+          "mời",
+          "bước thực hiện",
+          "phong tục",
+          "xem"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“步骤” nghĩa là gì?",
+        "opts": [
+          "mời",
+          "bước thực hiện",
+          "phong tục",
+          "xem"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“习俗” nghĩa là gì?",
+        "opts": [
+          "mời",
+          "bước thực hiện",
+          "phong tục",
+          "xem"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“观看” nghĩa là gì?",
+        "opts": [
+          "mời",
+          "bước thực hiện",
+          "phong tục",
+          "xem"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 0
+      }
+    ]
+  },
+  {
+    "id": "cdp-110",
+    "number": 110,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/06/podcast-110.html",
+    "sourceTitle": "🎙️ Podcast #110｜告别重复：如何活在当下？ | Stop the Repetitive Life Trap | Chinese Daily Podcast",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "在日常生活中发现变化",
+    "titleVi": "Nhận ra thay đổi trong đời thường",
+    "titleEn": "Finding variety in everyday life",
+    "youtubeId": "ZNUbLhGqwwg",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "我以前总觉得每天的生活都在重复。",
+        "py": "wǒ yǐ qián zǒng jué de měi tiān de shēng huó dōu zài chóng fù。",
+        "vi": "Trước đây tôi luôn cảm thấy cuộc sống mỗi ngày cứ lặp lại.",
+        "en": "I used to feel that every day was repeating itself."
+      },
+      {
+        "zh": "与其一直抱怨无聊，不如主动尝试一点变化。",
+        "py": "yǔ qí yì zhí bào yuàn wú liáo， bù rú zhǔ dòng cháng shì yì diǎn biàn huà。",
+        "vi": "Thay vì mãi than buồn chán, chi bằng chủ động thử thay đổi một chút.",
+        "en": "Rather than complaining about boredom, I could actively try a small change."
+      },
+      {
+        "zh": "今天我换了一条上班路线，发现了一家安静的书店。",
+        "py": "jīn tiān wǒ huàn le yī tiáo shàng bān lù xiàn， fā xiàn le yī jiā ān jìng de shū diàn。",
+        "vi": "Hôm nay tôi đổi đường đi làm và phát hiện một hiệu sách yên tĩnh.",
+        "en": "Today I took another route to work and discovered a quiet bookshop."
+      },
+      {
+        "zh": "晚上我把这段经历记下来，提醒自己观察身边的细节。",
+        "py": "wǎn shàng wǒ bǎ zhè duàn jīng lì jì xià lái， tí xǐng zì jǐ guān chá shēn biān de xì jié。",
+        "vi": "Tối tôi ghi trải nghiệm này lại để nhắc mình quan sát chi tiết quanh mình.",
+        "en": "That evening I wrote down the experience to remind myself to notice details around me."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "重复",
+        "py": "chóng fù",
+        "vi": "lặp lại",
+        "en": "repeat",
+        "example": "我以前总觉得每天的生活都在重复。",
+        "examplePy": "wǒ yǐ qián zǒng jué de měi tiān de shēng huó dōu zài chóng fù。",
+        "exampleVi": "Trước đây tôi luôn cảm thấy cuộc sống mỗi ngày cứ lặp lại.",
+        "exampleEn": "I used to feel that every day was repeating itself."
+      },
+      {
+        "zh": "抱怨",
+        "py": "bào yuàn",
+        "vi": "than phiền",
+        "en": "complain",
+        "example": "与其一直抱怨无聊，不如主动尝试一点变化。",
+        "examplePy": "yǔ qí yì zhí bào yuàn wú liáo， bù rú zhǔ dòng cháng shì yì diǎn biàn huà。",
+        "exampleVi": "Thay vì mãi than buồn chán, chi bằng chủ động thử thay đổi một chút.",
+        "exampleEn": "Rather than complaining about boredom, I could actively try a small change."
+      },
+      {
+        "zh": "路线",
+        "py": "lù xiàn",
+        "vi": "tuyến đường",
+        "en": "route",
+        "example": "今天我换了一条上班路线，发现了一家安静的书店。",
+        "examplePy": "jīn tiān wǒ huàn le yī tiáo shàng bān lù xiàn， fā xiàn le yī jiā ān jìng de shū diàn。",
+        "exampleVi": "Hôm nay tôi đổi đường đi làm và phát hiện một hiệu sách yên tĩnh.",
+        "exampleEn": "Today I took another route to work and discovered a quiet bookshop."
+      },
+      {
+        "zh": "细节",
+        "py": "xì jié",
+        "vi": "chi tiết",
+        "en": "detail",
+        "example": "晚上我把这段经历记下来，提醒自己观察身边的细节。",
+        "examplePy": "wǎn shàng wǒ bǎ zhè duàn jīng lì jì xià lái， tí xǐng zì jǐ guān chá shēn biān de xì jié。",
+        "exampleVi": "Tối tôi ghi trải nghiệm này lại để nhắc mình quan sát chi tiết quanh mình.",
+        "exampleEn": "That evening I wrote down the experience to remind myself to notice details around me."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "与其……不如……",
+        "meaning": "thay vì… chi bằng…",
+        "ex": "与其一直抱怨无聊，不如主动尝试一点变化。",
+        "py": "yǔ qí yì zhí bào yuàn wú liáo， bù rú zhǔ dòng cháng shì yì diǎn biàn huà。",
+        "vi": "Thay vì mãi than buồn chán, chi bằng chủ động thử thay đổi một chút.",
+        "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "我以前总觉得每天的生活都在重复。",
+        "aVi": "Trước đây tôi luôn cảm thấy cuộc sống mỗi ngày cứ lặp lại."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "晚上我把这段经历记下来，提醒自己观察身边的细节。",
+        "aVi": "Tối tôi ghi trải nghiệm này lại để nhắc mình quan sát chi tiết quanh mình."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "我以前总觉得每天的生活都在重复。",
+        "py": "wǒ yǐ qián zǒng jué de měi tiān de shēng huó dōu zài chóng fù。",
+        "vi": "Trước đây tôi luôn cảm thấy cuộc sống mỗi ngày cứ lặp lại.",
+        "en": "I used to feel that every day was repeating itself."
+      },
+      {
+        "zh": "与其一直抱怨无聊，不如主动尝试一点变化。",
+        "py": "yǔ qí yì zhí bào yuàn wú liáo， bù rú zhǔ dòng cháng shì yì diǎn biàn huà。",
+        "vi": "Thay vì mãi than buồn chán, chi bằng chủ động thử thay đổi một chút.",
+        "en": "Rather than complaining about boredom, I could actively try a small change."
+      },
+      {
+        "zh": "今天我换了一条上班路线，发现了一家安静的书店。",
+        "py": "jīn tiān wǒ huàn le yī tiáo shàng bān lù xiàn， fā xiàn le yī jiā ān jìng de shū diàn。",
+        "vi": "Hôm nay tôi đổi đường đi làm và phát hiện một hiệu sách yên tĩnh.",
+        "en": "Today I took another route to work and discovered a quiet bookshop."
+      },
+      {
+        "zh": "晚上我把这段经历记下来，提醒自己观察身边的细节。",
+        "py": "wǎn shàng wǒ bǎ zhè duàn jīng lì jì xià lái， tí xǐng zì jǐ guān chá shēn biān de xì jié。",
+        "vi": "Tối tôi ghi trải nghiệm này lại để nhắc mình quan sát chi tiết quanh mình.",
+        "en": "That evening I wrote down the experience to remind myself to notice details around me."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“重复” nghĩa là gì?",
+        "opts": [
+          "lặp lại",
+          "than phiền",
+          "tuyến đường",
+          "chi tiết"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“抱怨” nghĩa là gì?",
+        "opts": [
+          "lặp lại",
+          "than phiền",
+          "tuyến đường",
+          "chi tiết"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“路线” nghĩa là gì?",
+        "opts": [
+          "lặp lại",
+          "than phiền",
+          "tuyến đường",
+          "chi tiết"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“细节” nghĩa là gì?",
+        "opts": [
+          "lặp lại",
+          "than phiền",
+          "tuyến đường",
+          "chi tiết"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "cdp-108",
+    "number": 108,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/05/podcast-108.html",
+    "sourceTitle": "🎙️ Podcast #108｜学会倾听与消除误会 | How to Listen & Avoid Misunderstandings | Chinese Bedtime Story",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "先倾听，再判断",
+    "titleVi": "Lắng nghe trước, phán đoán sau",
+    "titleEn": "Listen before judging",
+    "youtubeId": "AI6Y37T772k",
+    "level": "HSK 4",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "客户说这个柜子不方便使用，我没有立刻反驳。",
+        "py": "kè hù shuō zhè ge guì zi bù fāng biàn shǐ yòng， wǒ méi yǒu lì kè fǎn bó。",
+        "vi": "Khách nói tủ này không tiện dùng, tôi không phản bác ngay.",
+        "en": "The customer said the cabinet was inconvenient, and I did not immediately argue."
+      },
+      {
+        "zh": "与其猜测他的意思，不如请他说明具体的问题。",
+        "py": "yǔ qí cāi cè tā de yì si， bù rú qǐng tā shuō míng jù tǐ de wèn tí。",
+        "vi": "Thay vì đoán ý khách, chi bằng mời khách nói rõ vấn đề cụ thể.",
+        "en": "Rather than guessing his meaning, I asked him to explain the specific problem."
+      },
+      {
+        "zh": "原来是抽屉的位置太低，并不是整个设计都不好。",
+        "py": "yuán lái shì chōu tì de wèi zhì tài dī， bìng bú shì zhěng gè shè jì dōu bù hǎo。",
+        "vi": "Hóa ra vị trí ngăn kéo quá thấp chứ không phải toàn bộ thiết kế đều dở.",
+        "en": "It turned out the drawer was too low, rather than the whole design being bad."
+      },
+      {
+        "zh": "认真倾听以后，我们很快消除了误会。",
+        "py": "rèn zhēn qīng tīng yǐ hòu， wǒ men hěn kuài xiāo chú le wù huì。",
+        "vi": "Sau khi lắng nghe kỹ, chúng tôi nhanh chóng xóa bỏ hiểu lầm.",
+        "en": "After listening carefully, we quickly cleared up the misunderstanding."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "反驳",
+        "py": "fǎn bó",
+        "vi": "phản bác",
+        "en": "refute",
+        "example": "客户说这个柜子不方便使用，我没有立刻反驳。",
+        "examplePy": "kè hù shuō zhè ge guì zi bù fāng biàn shǐ yòng， wǒ méi yǒu lì kè fǎn bó。",
+        "exampleVi": "Khách nói tủ này không tiện dùng, tôi không phản bác ngay.",
+        "exampleEn": "The customer said the cabinet was inconvenient, and I did not immediately argue."
+      },
+      {
+        "zh": "具体",
+        "py": "jù tǐ",
+        "vi": "cụ thể",
+        "en": "specific",
+        "example": "与其猜测他的意思，不如请他说明具体的问题。",
+        "examplePy": "yǔ qí cāi cè tā de yì si， bù rú qǐng tā shuō míng jù tǐ de wèn tí。",
+        "exampleVi": "Thay vì đoán ý khách, chi bằng mời khách nói rõ vấn đề cụ thể.",
+        "exampleEn": "Rather than guessing his meaning, I asked him to explain the specific problem."
+      },
+      {
+        "zh": "抽屉",
+        "py": "chōu tì",
+        "vi": "ngăn kéo",
+        "en": "drawer",
+        "example": "原来是抽屉的位置太低，并不是整个设计都不好。",
+        "examplePy": "yuán lái shì chōu tì de wèi zhì tài dī， bìng bú shì zhěng gè shè jì dōu bù hǎo。",
+        "exampleVi": "Hóa ra vị trí ngăn kéo quá thấp chứ không phải toàn bộ thiết kế đều dở.",
+        "exampleEn": "It turned out the drawer was too low, rather than the whole design being bad."
+      },
+      {
+        "zh": "误会",
+        "py": "wù huì",
+        "vi": "hiểu lầm",
+        "en": "misunderstanding",
+        "example": "认真倾听以后，我们很快消除了误会。",
+        "examplePy": "rèn zhēn qīng tīng yǐ hòu， wǒ men hěn kuài xiāo chú le wù huì。",
+        "exampleVi": "Sau khi lắng nghe kỹ, chúng tôi nhanh chóng xóa bỏ hiểu lầm.",
+        "exampleEn": "After listening carefully, we quickly cleared up the misunderstanding."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "与其……不如……",
+        "meaning": "thay vì… chi bằng…",
+        "ex": "与其猜测他的意思，不如请他说明具体的问题。",
+        "py": "yǔ qí cāi cè tā de yì si， bù rú qǐng tā shuō míng jù tǐ de wèn tí。",
+        "vi": "Thay vì đoán ý khách, chi bằng mời khách nói rõ vấn đề cụ thể.",
+        "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "客户说这个柜子不方便使用，我没有立刻反驳。",
+        "aVi": "Khách nói tủ này không tiện dùng, tôi không phản bác ngay."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "认真倾听以后，我们很快消除了误会。",
+        "aVi": "Sau khi lắng nghe kỹ, chúng tôi nhanh chóng xóa bỏ hiểu lầm."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "客户说这个柜子不方便使用，我没有立刻反驳。",
+        "py": "kè hù shuō zhè ge guì zi bù fāng biàn shǐ yòng， wǒ méi yǒu lì kè fǎn bó。",
+        "vi": "Khách nói tủ này không tiện dùng, tôi không phản bác ngay.",
+        "en": "The customer said the cabinet was inconvenient, and I did not immediately argue."
+      },
+      {
+        "zh": "与其猜测他的意思，不如请他说明具体的问题。",
+        "py": "yǔ qí cāi cè tā de yì si， bù rú qǐng tā shuō míng jù tǐ de wèn tí。",
+        "vi": "Thay vì đoán ý khách, chi bằng mời khách nói rõ vấn đề cụ thể.",
+        "en": "Rather than guessing his meaning, I asked him to explain the specific problem."
+      },
+      {
+        "zh": "原来是抽屉的位置太低，并不是整个设计都不好。",
+        "py": "yuán lái shì chōu tì de wèi zhì tài dī， bìng bú shì zhěng gè shè jì dōu bù hǎo。",
+        "vi": "Hóa ra vị trí ngăn kéo quá thấp chứ không phải toàn bộ thiết kế đều dở.",
+        "en": "It turned out the drawer was too low, rather than the whole design being bad."
+      },
+      {
+        "zh": "认真倾听以后，我们很快消除了误会。",
+        "py": "rèn zhēn qīng tīng yǐ hòu， wǒ men hěn kuài xiāo chú le wù huì。",
+        "vi": "Sau khi lắng nghe kỹ, chúng tôi nhanh chóng xóa bỏ hiểu lầm.",
+        "en": "After listening carefully, we quickly cleared up the misunderstanding."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“反驳” nghĩa là gì?",
+        "opts": [
+          "phản bác",
+          "cụ thể",
+          "ngăn kéo",
+          "hiểu lầm"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“具体” nghĩa là gì?",
+        "opts": [
+          "phản bác",
+          "cụ thể",
+          "ngăn kéo",
+          "hiểu lầm"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“抽屉” nghĩa là gì?",
+        "opts": [
+          "phản bác",
+          "cụ thể",
+          "ngăn kéo",
+          "hiểu lầm"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“误会” nghĩa là gì?",
+        "opts": [
+          "phản bác",
+          "cụ thể",
+          "ngăn kéo",
+          "hiểu lầm"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "cdp-105",
+    "number": 105,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/05/podcast-105.html",
+    "sourceTitle": "🎙️ Podcast #105｜HSK 4-5 | 酒逢知己千杯少 | Drinking with a True Friend | Chinese Daily Podcast",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "怎样建立真诚的友谊？",
+    "titleVi": "Xây dựng tình bạn chân thành",
+    "titleEn": "Building sincere friendships",
+    "youtubeId": "KtbmTlU9d3M",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "我和老朋友虽然住在不同城市，却一直保持联系。",
+        "py": "wǒ hé lǎo péng yǒu suī rán zhù zài bù tóng chéng shì， què yì zhí bǎo chí lián xì。",
+        "vi": "Tuy sống ở hai thành phố khác nhau, tôi và bạn cũ vẫn giữ liên lạc.",
+        "en": "Although my old friend and I live in different cities, we stay in touch."
+      },
+      {
+        "zh": "即使工作很忙，我们也会抽时间听对方说说近况。",
+        "py": "jí shǐ gōng zuò hěn máng， wǒ men yě huì chōu shí jiān tīng duì fāng shuō shuō jìn kuàng。",
+        "vi": "Dù bận làm việc, chúng tôi vẫn dành thời gian nghe tình hình của nhau.",
+        "en": "Even when work is busy, we make time to hear each other's news."
+      },
+      {
+        "zh": "真正的信任来自长期的相处，而不只是几句好听的话。",
+        "py": "zhēn zhèng de xìn rèn lái zì cháng qī de xiāng chǔ， ér bù zhǐ shì jǐ jù hǎo tīng de huà。",
+        "vi": "Sự tin tưởng thật sự đến từ gắn bó lâu dài, không chỉ vài lời dễ nghe.",
+        "en": "Real trust comes from spending time together, rather than a few pleasant words."
+      },
+      {
+        "zh": "当意见不同时，我们愿意坦诚交流，也尊重彼此的选择。",
+        "py": "dāng yì jiàn bù tóng shí， wǒ men yuàn yì tǎn chéng jiāo liú， yě zūn zhòng bǐ cǐ de xuǎn zé。",
+        "vi": "Khi ý kiến khác nhau, chúng tôi sẵn lòng trao đổi thẳng thắn và tôn trọng lựa chọn của nhau.",
+        "en": "When we disagree, we communicate openly and respect each other's choices."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "联系",
+        "py": "lián xì",
+        "vi": "liên lạc",
+        "en": "contact",
+        "example": "我和老朋友虽然住在不同城市，却一直保持联系。",
+        "examplePy": "wǒ hé lǎo péng yǒu suī rán zhù zài bù tóng chéng shì， què yì zhí bǎo chí lián xì。",
+        "exampleVi": "Tuy sống ở hai thành phố khác nhau, tôi và bạn cũ vẫn giữ liên lạc.",
+        "exampleEn": "Although my old friend and I live in different cities, we stay in touch."
+      },
+      {
+        "zh": "近况",
+        "py": "jìn kuàng",
+        "vi": "tình hình gần đây",
+        "en": "recent situation",
+        "example": "即使工作很忙，我们也会抽时间听对方说说近况。",
+        "examplePy": "jí shǐ gōng zuò hěn máng， wǒ men yě huì chōu shí jiān tīng duì fāng shuō shuō jìn kuàng。",
+        "exampleVi": "Dù bận làm việc, chúng tôi vẫn dành thời gian nghe tình hình của nhau.",
+        "exampleEn": "Even when work is busy, we make time to hear each other's news."
+      },
+      {
+        "zh": "相处",
+        "py": "xiāng chǔ",
+        "vi": "chung sống, giao thiệp",
+        "en": "get along",
+        "example": "真正的信任来自长期的相处，而不只是几句好听的话。",
+        "examplePy": "zhēn zhèng de xìn rèn lái zì cháng qī de xiāng chǔ， ér bù zhǐ shì jǐ jù hǎo tīng de huà。",
+        "exampleVi": "Sự tin tưởng thật sự đến từ gắn bó lâu dài, không chỉ vài lời dễ nghe.",
+        "exampleEn": "Real trust comes from spending time together, rather than a few pleasant words."
+      },
+      {
+        "zh": "坦诚",
+        "py": "tǎn chéng",
+        "vi": "thẳng thắn, chân thành",
+        "en": "frank",
+        "example": "当意见不同时，我们愿意坦诚交流，也尊重彼此的选择。",
+        "examplePy": "dāng yì jiàn bù tóng shí， wǒ men yuàn yì tǎn chéng jiāo liú， yě zūn zhòng bǐ cǐ de xuǎn zé。",
+        "exampleVi": "Khi ý kiến khác nhau, chúng tôi sẵn lòng trao đổi thẳng thắn và tôn trọng lựa chọn của nhau.",
+        "exampleEn": "When we disagree, we communicate openly and respect each other's choices."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "即使……也……",
+        "meaning": "dù… cũng…",
+        "ex": "即使工作很忙，我们也会抽时间听对方说说近况。",
+        "py": "jí shǐ gōng zuò hěn máng， wǒ men yě huì chōu shí jiān tīng duì fāng shuō shuō jìn kuàng。",
+        "vi": "Dù bận làm việc, chúng tôi vẫn dành thời gian nghe tình hình của nhau.",
+        "note": "Nêu tình huống nhượng bộ; kết quả vẫn không thay đổi."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "我和老朋友虽然住在不同城市，却一直保持联系。",
+        "aVi": "Tuy sống ở hai thành phố khác nhau, tôi và bạn cũ vẫn giữ liên lạc."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "当意见不同时，我们愿意坦诚交流，也尊重彼此的选择。",
+        "aVi": "Khi ý kiến khác nhau, chúng tôi sẵn lòng trao đổi thẳng thắn và tôn trọng lựa chọn của nhau."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "我和老朋友虽然住在不同城市，却一直保持联系。",
+        "py": "wǒ hé lǎo péng yǒu suī rán zhù zài bù tóng chéng shì， què yì zhí bǎo chí lián xì。",
+        "vi": "Tuy sống ở hai thành phố khác nhau, tôi và bạn cũ vẫn giữ liên lạc.",
+        "en": "Although my old friend and I live in different cities, we stay in touch."
+      },
+      {
+        "zh": "即使工作很忙，我们也会抽时间听对方说说近况。",
+        "py": "jí shǐ gōng zuò hěn máng， wǒ men yě huì chōu shí jiān tīng duì fāng shuō shuō jìn kuàng。",
+        "vi": "Dù bận làm việc, chúng tôi vẫn dành thời gian nghe tình hình của nhau.",
+        "en": "Even when work is busy, we make time to hear each other's news."
+      },
+      {
+        "zh": "真正的信任来自长期的相处，而不只是几句好听的话。",
+        "py": "zhēn zhèng de xìn rèn lái zì cháng qī de xiāng chǔ， ér bù zhǐ shì jǐ jù hǎo tīng de huà。",
+        "vi": "Sự tin tưởng thật sự đến từ gắn bó lâu dài, không chỉ vài lời dễ nghe.",
+        "en": "Real trust comes from spending time together, rather than a few pleasant words."
+      },
+      {
+        "zh": "当意见不同时，我们愿意坦诚交流，也尊重彼此的选择。",
+        "py": "dāng yì jiàn bù tóng shí， wǒ men yuàn yì tǎn chéng jiāo liú， yě zūn zhòng bǐ cǐ de xuǎn zé。",
+        "vi": "Khi ý kiến khác nhau, chúng tôi sẵn lòng trao đổi thẳng thắn và tôn trọng lựa chọn của nhau.",
+        "en": "When we disagree, we communicate openly and respect each other's choices."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“联系” nghĩa là gì?",
+        "opts": [
+          "liên lạc",
+          "tình hình gần đây",
+          "chung sống, giao thiệp",
+          "thẳng thắn, chân thành"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“近况” nghĩa là gì?",
+        "opts": [
+          "liên lạc",
+          "tình hình gần đây",
+          "chung sống, giao thiệp",
+          "thẳng thắn, chân thành"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“相处” nghĩa là gì?",
+        "opts": [
+          "liên lạc",
+          "tình hình gần đây",
+          "chung sống, giao thiệp",
+          "thẳng thắn, chân thành"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“坦诚” nghĩa là gì?",
+        "opts": [
+          "liên lạc",
+          "tình hình gần đây",
+          "chung sống, giao thiệp",
+          "thẳng thắn, chân thành"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 0
+      }
+    ]
+  },
+  {
+    "id": "cdp-98",
+    "number": 98,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/03/podcast-98.html",
+    "sourceTitle": "🎙️ Podcast #98｜如果这辈子不精彩怎么办？ What If Life Isn't \"Brilliant\"?",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "平凡的生活也有价值",
+    "titleVi": "Cuộc sống bình thường cũng có giá trị",
+    "titleEn": "The value of an ordinary life",
+    "youtubeId": "GlB6jmjjem8",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "看到别人在网上分享成绩，我有时会怀疑自己的价值。",
+        "py": "kàn dào bié rén zài wǎng shàng fēn xiǎng chéng jì， wǒ yǒu shí huì huái yí zì jǐ de jià zhí。",
+        "vi": "Thấy người khác chia sẻ thành tích trên mạng, đôi lúc tôi nghi ngờ giá trị bản thân.",
+        "en": "Seeing others share achievements online sometimes makes me question my own value."
+      },
+      {
+        "zh": "即使我的生活不够精彩，也不代表它没有意义。",
+        "py": "jí shǐ wǒ de shēng huó bù gòu jīng cǎi， yě bù dài biǎo tā méi yǒu yì yì。",
+        "vi": "Dù cuộc sống tôi chưa thật nổi bật, điều đó không có nghĩa nó vô nghĩa.",
+        "en": "Even if my life is not spectacular, it does not mean it is meaningless."
+      },
+      {
+        "zh": "认真完成工作、照顾家人，都是值得珍惜的事情。",
+        "py": "rèn zhēn wán chéng gōng zuò、 zhào gù jiā rén， dōu shì zhí de zhēn xī de shì qíng。",
+        "vi": "Làm việc chu đáo và chăm sóc gia đình đều là những điều đáng trân trọng.",
+        "en": "Doing my work carefully and caring for my family are both worth appreciating."
+      },
+      {
+        "zh": "我想按照自己的节奏生活，而不是总和别人比较。",
+        "py": "wǒ xiǎng àn zhào zì jǐ de jié zòu shēng huó， ér bú shì zǒng hé bié rén bǐ jiào。",
+        "vi": "Tôi muốn sống theo nhịp riêng, không phải lúc nào cũng so với người khác.",
+        "en": "I want to live at my own pace instead of constantly comparing myself with others."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "怀疑",
+        "py": "huái yí",
+        "vi": "nghi ngờ",
+        "en": "doubt",
+        "example": "看到别人在网上分享成绩，我有时会怀疑自己的价值。",
+        "examplePy": "kàn dào bié rén zài wǎng shàng fēn xiǎng chéng jì， wǒ yǒu shí huì huái yí zì jǐ de jià zhí。",
+        "exampleVi": "Thấy người khác chia sẻ thành tích trên mạng, đôi lúc tôi nghi ngờ giá trị bản thân.",
+        "exampleEn": "Seeing others share achievements online sometimes makes me question my own value."
+      },
+      {
+        "zh": "代表",
+        "py": "dài biǎo",
+        "vi": "đại diện, có nghĩa là",
+        "en": "represent",
+        "example": "即使我的生活不够精彩，也不代表它没有意义。",
+        "examplePy": "jí shǐ wǒ de shēng huó bù gòu jīng cǎi， yě bù dài biǎo tā méi yǒu yì yì。",
+        "exampleVi": "Dù cuộc sống tôi chưa thật nổi bật, điều đó không có nghĩa nó vô nghĩa.",
+        "exampleEn": "Even if my life is not spectacular, it does not mean it is meaningless."
+      },
+      {
+        "zh": "珍惜",
+        "py": "zhēn xī",
+        "vi": "trân trọng",
+        "en": "cherish",
+        "example": "认真完成工作、照顾家人，都是值得珍惜的事情。",
+        "examplePy": "rèn zhēn wán chéng gōng zuò、 zhào gù jiā rén， dōu shì zhí de zhēn xī de shì qíng。",
+        "exampleVi": "Làm việc chu đáo và chăm sóc gia đình đều là những điều đáng trân trọng.",
+        "exampleEn": "Doing my work carefully and caring for my family are both worth appreciating."
+      },
+      {
+        "zh": "节奏",
+        "py": "jié zòu",
+        "vi": "nhịp điệu",
+        "en": "pace",
+        "example": "我想按照自己的节奏生活，而不是总和别人比较。",
+        "examplePy": "wǒ xiǎng àn zhào zì jǐ de jié zòu shēng huó， ér bú shì zǒng hé bié rén bǐ jiào。",
+        "exampleVi": "Tôi muốn sống theo nhịp riêng, không phải lúc nào cũng so với người khác.",
+        "exampleEn": "I want to live at my own pace instead of constantly comparing myself with others."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "即使……也……",
+        "meaning": "dù… cũng…",
+        "ex": "即使我的生活不够精彩，也不代表它没有意义。",
+        "py": "jí shǐ wǒ de shēng huó bù gòu jīng cǎi， yě bù dài biǎo tā méi yǒu yì yì。",
+        "vi": "Dù cuộc sống tôi chưa thật nổi bật, điều đó không có nghĩa nó vô nghĩa.",
+        "note": "Nêu tình huống nhượng bộ; kết quả vẫn không thay đổi."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "看到别人在网上分享成绩，我有时会怀疑自己的价值。",
+        "aVi": "Thấy người khác chia sẻ thành tích trên mạng, đôi lúc tôi nghi ngờ giá trị bản thân."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "我想按照自己的节奏生活，而不是总和别人比较。",
+        "aVi": "Tôi muốn sống theo nhịp riêng, không phải lúc nào cũng so với người khác."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "看到别人在网上分享成绩，我有时会怀疑自己的价值。",
+        "py": "kàn dào bié rén zài wǎng shàng fēn xiǎng chéng jì， wǒ yǒu shí huì huái yí zì jǐ de jià zhí。",
+        "vi": "Thấy người khác chia sẻ thành tích trên mạng, đôi lúc tôi nghi ngờ giá trị bản thân.",
+        "en": "Seeing others share achievements online sometimes makes me question my own value."
+      },
+      {
+        "zh": "即使我的生活不够精彩，也不代表它没有意义。",
+        "py": "jí shǐ wǒ de shēng huó bù gòu jīng cǎi， yě bù dài biǎo tā méi yǒu yì yì。",
+        "vi": "Dù cuộc sống tôi chưa thật nổi bật, điều đó không có nghĩa nó vô nghĩa.",
+        "en": "Even if my life is not spectacular, it does not mean it is meaningless."
+      },
+      {
+        "zh": "认真完成工作、照顾家人，都是值得珍惜的事情。",
+        "py": "rèn zhēn wán chéng gōng zuò、 zhào gù jiā rén， dōu shì zhí de zhēn xī de shì qíng。",
+        "vi": "Làm việc chu đáo và chăm sóc gia đình đều là những điều đáng trân trọng.",
+        "en": "Doing my work carefully and caring for my family are both worth appreciating."
+      },
+      {
+        "zh": "我想按照自己的节奏生活，而不是总和别人比较。",
+        "py": "wǒ xiǎng àn zhào zì jǐ de jié zòu shēng huó， ér bú shì zǒng hé bié rén bǐ jiào。",
+        "vi": "Tôi muốn sống theo nhịp riêng, không phải lúc nào cũng so với người khác.",
+        "en": "I want to live at my own pace instead of constantly comparing myself with others."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“怀疑” nghĩa là gì?",
+        "opts": [
+          "nghi ngờ",
+          "đại diện, có nghĩa là",
+          "trân trọng",
+          "nhịp điệu"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“代表” nghĩa là gì?",
+        "opts": [
+          "nghi ngờ",
+          "đại diện, có nghĩa là",
+          "trân trọng",
+          "nhịp điệu"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“珍惜” nghĩa là gì?",
+        "opts": [
+          "nghi ngờ",
+          "đại diện, có nghĩa là",
+          "trân trọng",
+          "nhịp điệu"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“节奏” nghĩa là gì?",
+        "opts": [
+          "nghi ngờ",
+          "đại diện, có nghĩa là",
+          "trân trọng",
+          "nhịp điệu"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 0
+      }
+    ]
+  },
+  {
+    "id": "cdp-99",
+    "number": 99,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/03/podcast-99.html",
+    "sourceTitle": "🎙️ Podcast #99｜HSK 4-5 | Don't Wait for the Perfect Moment | 不要等待完美的时机 | Chinese daily podcast",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "别等完美的时机",
+    "titleVi": "Đừng chờ thời điểm hoàn hảo",
+    "titleEn": "Do not wait for the perfect moment",
+    "youtubeId": "rTOwIJeG7sM",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "我一直想开一个中文学习小组，却总觉得准备不足。",
+        "py": "wǒ yì zhí xiǎng kāi yí gè zhōng wén xué xí xiǎo zǔ， què zǒng jué de zhǔn bèi bù zú。",
+        "vi": "Tôi luôn muốn mở nhóm học tiếng Trung nhưng cứ thấy chuẩn bị chưa đủ.",
+        "en": "I have wanted to start a Chinese study group, but always feel underprepared."
+      },
+      {
+        "zh": "与其继续等待，不如先邀请两个朋友一起试试。",
+        "py": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng yǒu yì qǐ shì shì。",
+        "vi": "Thay vì tiếp tục đợi, chi bằng mời hai người bạn thử trước.",
+        "en": "Rather than waiting, I could invite two friends to try it first."
+      },
+      {
+        "zh": "第一次活动可能不顺利，但我们可以根据反馈调整。",
+        "py": "dì yī cì huó dòng kě néng bù shùn lì， dàn wǒ men kě yǐ gēn jù fǎn kuì tiáo zhěng。",
+        "vi": "Buổi đầu có thể chưa suôn sẻ nhưng chúng tôi có thể điều chỉnh theo phản hồi.",
+        "en": "The first session may not go smoothly, but we can adjust based on feedback."
+      },
+      {
+        "zh": "把目标变成一个具体行动，比反复犹豫更有帮助。",
+        "py": "bǎ mù biāo biàn chéng yí gè jù tǐ xíng dòng， bǐ fǎn fù yóu yù gèng yǒu bāng zhù。",
+        "vi": "Biến mục tiêu thành hành động cụ thể hữu ích hơn do dự mãi.",
+        "en": "Turning a goal into a concrete action is more helpful than repeated hesitation."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "不足",
+        "py": "bù zú",
+        "vi": "chưa đủ",
+        "en": "insufficient",
+        "example": "我一直想开一个中文学习小组，却总觉得准备不足。",
+        "examplePy": "wǒ yì zhí xiǎng kāi yí gè zhōng wén xué xí xiǎo zǔ， què zǒng jué de zhǔn bèi bù zú。",
+        "exampleVi": "Tôi luôn muốn mở nhóm học tiếng Trung nhưng cứ thấy chuẩn bị chưa đủ.",
+        "exampleEn": "I have wanted to start a Chinese study group, but always feel underprepared."
+      },
+      {
+        "zh": "等待",
+        "py": "děng dài",
+        "vi": "chờ đợi",
+        "en": "wait",
+        "example": "与其继续等待，不如先邀请两个朋友一起试试。",
+        "examplePy": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng yǒu yì qǐ shì shì。",
+        "exampleVi": "Thay vì tiếp tục đợi, chi bằng mời hai người bạn thử trước.",
+        "exampleEn": "Rather than waiting, I could invite two friends to try it first."
+      },
+      {
+        "zh": "反馈",
+        "py": "fǎn kuì",
+        "vi": "phản hồi",
+        "en": "feedback",
+        "example": "第一次活动可能不顺利，但我们可以根据反馈调整。",
+        "examplePy": "dì yī cì huó dòng kě néng bù shùn lì， dàn wǒ men kě yǐ gēn jù fǎn kuì tiáo zhěng。",
+        "exampleVi": "Buổi đầu có thể chưa suôn sẻ nhưng chúng tôi có thể điều chỉnh theo phản hồi.",
+        "exampleEn": "The first session may not go smoothly, but we can adjust based on feedback."
+      },
+      {
+        "zh": "犹豫",
+        "py": "yóu yù",
+        "vi": "do dự",
+        "en": "hesitate",
+        "example": "把目标变成一个具体行动，比反复犹豫更有帮助。",
+        "examplePy": "bǎ mù biāo biàn chéng yí gè jù tǐ xíng dòng， bǐ fǎn fù yóu yù gèng yǒu bāng zhù。",
+        "exampleVi": "Biến mục tiêu thành hành động cụ thể hữu ích hơn do dự mãi.",
+        "exampleEn": "Turning a goal into a concrete action is more helpful than repeated hesitation."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "与其……不如……",
+        "meaning": "thay vì… chi bằng…",
+        "ex": "与其继续等待，不如先邀请两个朋友一起试试。",
+        "py": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng yǒu yì qǐ shì shì。",
+        "vi": "Thay vì tiếp tục đợi, chi bằng mời hai người bạn thử trước.",
+        "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "我一直想开一个中文学习小组，却总觉得准备不足。",
+        "aVi": "Tôi luôn muốn mở nhóm học tiếng Trung nhưng cứ thấy chuẩn bị chưa đủ."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "把目标变成一个具体行动，比反复犹豫更有帮助。",
+        "aVi": "Biến mục tiêu thành hành động cụ thể hữu ích hơn do dự mãi."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "我一直想开一个中文学习小组，却总觉得准备不足。",
+        "py": "wǒ yì zhí xiǎng kāi yí gè zhōng wén xué xí xiǎo zǔ， què zǒng jué de zhǔn bèi bù zú。",
+        "vi": "Tôi luôn muốn mở nhóm học tiếng Trung nhưng cứ thấy chuẩn bị chưa đủ.",
+        "en": "I have wanted to start a Chinese study group, but always feel underprepared."
+      },
+      {
+        "zh": "与其继续等待，不如先邀请两个朋友一起试试。",
+        "py": "yǔ qí jì xù děng dài， bù rú xiān yāo qǐng liǎng gè péng yǒu yì qǐ shì shì。",
+        "vi": "Thay vì tiếp tục đợi, chi bằng mời hai người bạn thử trước.",
+        "en": "Rather than waiting, I could invite two friends to try it first."
+      },
+      {
+        "zh": "第一次活动可能不顺利，但我们可以根据反馈调整。",
+        "py": "dì yī cì huó dòng kě néng bù shùn lì， dàn wǒ men kě yǐ gēn jù fǎn kuì tiáo zhěng。",
+        "vi": "Buổi đầu có thể chưa suôn sẻ nhưng chúng tôi có thể điều chỉnh theo phản hồi.",
+        "en": "The first session may not go smoothly, but we can adjust based on feedback."
+      },
+      {
+        "zh": "把目标变成一个具体行动，比反复犹豫更有帮助。",
+        "py": "bǎ mù biāo biàn chéng yí gè jù tǐ xíng dòng， bǐ fǎn fù yóu yù gèng yǒu bāng zhù。",
+        "vi": "Biến mục tiêu thành hành động cụ thể hữu ích hơn do dự mãi.",
+        "en": "Turning a goal into a concrete action is more helpful than repeated hesitation."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“不足” nghĩa là gì?",
+        "opts": [
+          "chưa đủ",
+          "chờ đợi",
+          "phản hồi",
+          "do dự"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“等待” nghĩa là gì?",
+        "opts": [
+          "chưa đủ",
+          "chờ đợi",
+          "phản hồi",
+          "do dự"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“反馈” nghĩa là gì?",
+        "opts": [
+          "chưa đủ",
+          "chờ đợi",
+          "phản hồi",
+          "do dự"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“犹豫” nghĩa là gì?",
+        "opts": [
+          "chưa đủ",
+          "chờ đợi",
+          "phản hồi",
+          "do dự"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "cdp-95",
+    "number": 95,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/03/podcast-95.html",
+    "sourceTitle": "🎙️ Podcast #95｜HSK 4-5 | Generation Gap & Marriage Pressure (代沟与催婚) | Chinese daily podcast",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "代沟与家庭沟通",
+    "titleVi": "Khoảng cách thế hệ và giao tiếp gia đình",
+    "titleEn": "Generation gaps and family communication",
+    "youtubeId": "I_F3zDPap6o",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "每次回家，父母都会问我什么时候考虑结婚。",
+        "py": "měi cì huí jiā， fù mǔ dū huì wèn wǒ shén me shí hòu kǎo lǜ jié hūn。",
+        "vi": "Mỗi lần về nhà, bố mẹ đều hỏi khi nào tôi tính chuyện kết hôn.",
+        "en": "Whenever I go home, my parents ask when I will consider marriage."
+      },
+      {
+        "zh": "即使我们的观念不同，我也想认真听听他们的担心。",
+        "py": "jí shǐ wǒ men de guān niàn bù tóng， wǒ yě xiǎng rèn zhēn tīng tīng tā men de dān xīn。",
+        "vi": "Dù quan niệm khác nhau, tôi vẫn muốn nghe kỹ nỗi lo của họ.",
+        "en": "Even if our views differ, I want to listen carefully to their concerns."
+      },
+      {
+        "zh": "我告诉他们，自己目前更希望把事业安排稳定。",
+        "py": "wǒ gào sù tā men， zì jǐ mù qián gèng xī wàng bǎ shì yè ān pái wěn dìng。",
+        "vi": "Tôi nói hiện giờ mình muốn ổn định sự nghiệp hơn.",
+        "en": "I told them that, for now, I would prefer to establish a stable career."
+      },
+      {
+        "zh": "平静地解释自己的计划，比互相争吵更容易取得理解。",
+        "py": "píng jìng dì jiě shì zì jǐ de jì huà， bǐ hù xiāng zhēng chǎo gèng róng yì qǔ dé lǐ jiě。",
+        "vi": "Bình tĩnh giải thích kế hoạch dễ đạt được thấu hiểu hơn cãi nhau.",
+        "en": "Calmly explaining my plans makes understanding easier than arguing."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "结婚",
+        "py": "jié hūn",
+        "vi": "kết hôn",
+        "en": "marry",
+        "example": "每次回家，父母都会问我什么时候考虑结婚。",
+        "examplePy": "měi cì huí jiā， fù mǔ dū huì wèn wǒ shén me shí hòu kǎo lǜ jié hūn。",
+        "exampleVi": "Mỗi lần về nhà, bố mẹ đều hỏi khi nào tôi tính chuyện kết hôn.",
+        "exampleEn": "Whenever I go home, my parents ask when I will consider marriage."
+      },
+      {
+        "zh": "观念",
+        "py": "guān niàn",
+        "vi": "quan niệm",
+        "en": "viewpoint",
+        "example": "即使我们的观念不同，我也想认真听听他们的担心。",
+        "examplePy": "jí shǐ wǒ men de guān niàn bù tóng， wǒ yě xiǎng rèn zhēn tīng tīng tā men de dān xīn。",
+        "exampleVi": "Dù quan niệm khác nhau, tôi vẫn muốn nghe kỹ nỗi lo của họ.",
+        "exampleEn": "Even if our views differ, I want to listen carefully to their concerns."
+      },
+      {
+        "zh": "事业",
+        "py": "shì yè",
+        "vi": "sự nghiệp",
+        "en": "career",
+        "example": "我告诉他们，自己目前更希望把事业安排稳定。",
+        "examplePy": "wǒ gào sù tā men， zì jǐ mù qián gèng xī wàng bǎ shì yè ān pái wěn dìng。",
+        "exampleVi": "Tôi nói hiện giờ mình muốn ổn định sự nghiệp hơn.",
+        "exampleEn": "I told them that, for now, I would prefer to establish a stable career."
+      },
+      {
+        "zh": "争吵",
+        "py": "zhēng chǎo",
+        "vi": "cãi nhau",
+        "en": "argue",
+        "example": "平静地解释自己的计划，比互相争吵更容易取得理解。",
+        "examplePy": "píng jìng dì jiě shì zì jǐ de jì huà， bǐ hù xiāng zhēng chǎo gèng róng yì qǔ dé lǐ jiě。",
+        "exampleVi": "Bình tĩnh giải thích kế hoạch dễ đạt được thấu hiểu hơn cãi nhau.",
+        "exampleEn": "Calmly explaining my plans makes understanding easier than arguing."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "即使……也……",
+        "meaning": "dù… cũng…",
+        "ex": "即使我们的观念不同，我也想认真听听他们的担心。",
+        "py": "jí shǐ wǒ men de guān niàn bù tóng， wǒ yě xiǎng rèn zhēn tīng tīng tā men de dān xīn。",
+        "vi": "Dù quan niệm khác nhau, tôi vẫn muốn nghe kỹ nỗi lo của họ.",
+        "note": "Nêu tình huống nhượng bộ; kết quả vẫn không thay đổi."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "每次回家，父母都会问我什么时候考虑结婚。",
+        "aVi": "Mỗi lần về nhà, bố mẹ đều hỏi khi nào tôi tính chuyện kết hôn."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "平静地解释自己的计划，比互相争吵更容易取得理解。",
+        "aVi": "Bình tĩnh giải thích kế hoạch dễ đạt được thấu hiểu hơn cãi nhau."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "每次回家，父母都会问我什么时候考虑结婚。",
+        "py": "měi cì huí jiā， fù mǔ dū huì wèn wǒ shén me shí hòu kǎo lǜ jié hūn。",
+        "vi": "Mỗi lần về nhà, bố mẹ đều hỏi khi nào tôi tính chuyện kết hôn.",
+        "en": "Whenever I go home, my parents ask when I will consider marriage."
+      },
+      {
+        "zh": "即使我们的观念不同，我也想认真听听他们的担心。",
+        "py": "jí shǐ wǒ men de guān niàn bù tóng， wǒ yě xiǎng rèn zhēn tīng tīng tā men de dān xīn。",
+        "vi": "Dù quan niệm khác nhau, tôi vẫn muốn nghe kỹ nỗi lo của họ.",
+        "en": "Even if our views differ, I want to listen carefully to their concerns."
+      },
+      {
+        "zh": "我告诉他们，自己目前更希望把事业安排稳定。",
+        "py": "wǒ gào sù tā men， zì jǐ mù qián gèng xī wàng bǎ shì yè ān pái wěn dìng。",
+        "vi": "Tôi nói hiện giờ mình muốn ổn định sự nghiệp hơn.",
+        "en": "I told them that, for now, I would prefer to establish a stable career."
+      },
+      {
+        "zh": "平静地解释自己的计划，比互相争吵更容易取得理解。",
+        "py": "píng jìng dì jiě shì zì jǐ de jì huà， bǐ hù xiāng zhēng chǎo gèng róng yì qǔ dé lǐ jiě。",
+        "vi": "Bình tĩnh giải thích kế hoạch dễ đạt được thấu hiểu hơn cãi nhau.",
+        "en": "Calmly explaining my plans makes understanding easier than arguing."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“结婚” nghĩa là gì?",
+        "opts": [
+          "kết hôn",
+          "quan niệm",
+          "sự nghiệp",
+          "cãi nhau"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“观念” nghĩa là gì?",
+        "opts": [
+          "kết hôn",
+          "quan niệm",
+          "sự nghiệp",
+          "cãi nhau"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“事业” nghĩa là gì?",
+        "opts": [
+          "kết hôn",
+          "quan niệm",
+          "sự nghiệp",
+          "cãi nhau"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“争吵” nghĩa là gì?",
+        "opts": [
+          "kết hôn",
+          "quan niệm",
+          "sự nghiệp",
+          "cãi nhau"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 0
+      }
+    ]
+  },
+  {
+    "id": "cdp-72",
+    "number": 72,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2025/11/podcast-72.html",
+    "sourceTitle": "🎙️ Podcast #72｜HSK 4-5 | 水到渠成 | Everything Happens At The Right Time | The Four Rules of Life | Ep.3",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "准备好了，机会才有意义",
+    "titleVi": "Chuẩn bị để đón cơ hội",
+    "titleEn": "Preparing for opportunities",
+    "youtubeId": "diIpII_ceQo",
+    "level": "HSK 4–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "公司准备安排一个新项目，我希望有机会参加。",
+        "py": "gōng sī zhǔn bèi ān pái yí gè xīn xiàng mù， wǒ xī wàng yǒu jī huì cān jiā。",
+        "vi": "Công ty chuẩn bị triển khai dự án mới, tôi mong có cơ hội tham gia.",
+        "en": "The company is preparing a new project, and I hope to take part."
+      },
+      {
+        "zh": "与其只等经理通知，不如提前整理自己的作品。",
+        "py": "yǔ qí zhǐ děng jīng lǐ tōng zhī， bù rú tí qián zhěng lǐ zì jǐ de zuò pǐn。",
+        "vi": "Thay vì chỉ đợi quản lý báo, chi bằng chuẩn bị các tác phẩm trước.",
+        "en": "Rather than just waiting for the manager, I should organize my portfolio in advance."
+      },
+      {
+        "zh": "我还主动学习项目需要的技能，并向同事请教。",
+        "py": "wǒ hái zhǔ dòng xué xí xiàng mù xū yào de jì néng， bìng xiàng tóng shì qǐng jiào。",
+        "vi": "Tôi còn chủ động học kỹ năng dự án cần và hỏi đồng nghiệp.",
+        "en": "I also take the initiative to learn the required skills and ask colleagues for advice."
+      },
+      {
+        "zh": "机会出现时，充分的准备能让我更有信心。",
+        "py": "jī huì chū xiàn shí， chōng fèn de zhǔn bèi néng ràng wǒ gèng yǒu xìn xīn。",
+        "vi": "Khi cơ hội đến, chuẩn bị đầy đủ giúp tôi tự tin hơn.",
+        "en": "When an opportunity appears, thorough preparation can make me more confident."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "项目",
+        "py": "xiàng mù",
+        "vi": "dự án",
+        "en": "project",
+        "example": "公司准备安排一个新项目，我希望有机会参加。",
+        "examplePy": "gōng sī zhǔn bèi ān pái yí gè xīn xiàng mù， wǒ xī wàng yǒu jī huì cān jiā。",
+        "exampleVi": "Công ty chuẩn bị triển khai dự án mới, tôi mong có cơ hội tham gia.",
+        "exampleEn": "The company is preparing a new project, and I hope to take part."
+      },
+      {
+        "zh": "提前",
+        "py": "tí qián",
+        "vi": "trước thời hạn",
+        "en": "in advance",
+        "example": "与其只等经理通知，不如提前整理自己的作品。",
+        "examplePy": "yǔ qí zhǐ děng jīng lǐ tōng zhī， bù rú tí qián zhěng lǐ zì jǐ de zuò pǐn。",
+        "exampleVi": "Thay vì chỉ đợi quản lý báo, chi bằng chuẩn bị các tác phẩm trước.",
+        "exampleEn": "Rather than just waiting for the manager, I should organize my portfolio in advance."
+      },
+      {
+        "zh": "主动",
+        "py": "zhǔ dòng",
+        "vi": "chủ động",
+        "en": "take the initiative",
+        "example": "我还主动学习项目需要的技能，并向同事请教。",
+        "examplePy": "wǒ hái zhǔ dòng xué xí xiàng mù xū yào de jì néng， bìng xiàng tóng shì qǐng jiào。",
+        "exampleVi": "Tôi còn chủ động học kỹ năng dự án cần và hỏi đồng nghiệp.",
+        "exampleEn": "I also take the initiative to learn the required skills and ask colleagues for advice."
+      },
+      {
+        "zh": "充分",
+        "py": "chōng fèn",
+        "vi": "đầy đủ",
+        "en": "sufficient",
+        "example": "机会出现时，充分的准备能让我更有信心。",
+        "examplePy": "jī huì chū xiàn shí， chōng fèn de zhǔn bèi néng ràng wǒ gèng yǒu xìn xīn。",
+        "exampleVi": "Khi cơ hội đến, chuẩn bị đầy đủ giúp tôi tự tin hơn.",
+        "exampleEn": "When an opportunity appears, thorough preparation can make me more confident."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "与其……不如……",
+        "meaning": "thay vì… chi bằng…",
+        "ex": "与其只等经理通知，不如提前整理自己的作品。",
+        "py": "yǔ qí zhǐ děng jīng lǐ tōng zhī， bù rú tí qián zhěng lǐ zì jǐ de zuò pǐn。",
+        "vi": "Thay vì chỉ đợi quản lý báo, chi bằng chuẩn bị các tác phẩm trước.",
+        "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "公司准备安排一个新项目，我希望有机会参加。",
+        "aVi": "Công ty chuẩn bị triển khai dự án mới, tôi mong có cơ hội tham gia."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "机会出现时，充分的准备能让我更有信心。",
+        "aVi": "Khi cơ hội đến, chuẩn bị đầy đủ giúp tôi tự tin hơn."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "公司准备安排一个新项目，我希望有机会参加。",
+        "py": "gōng sī zhǔn bèi ān pái yí gè xīn xiàng mù， wǒ xī wàng yǒu jī huì cān jiā。",
+        "vi": "Công ty chuẩn bị triển khai dự án mới, tôi mong có cơ hội tham gia.",
+        "en": "The company is preparing a new project, and I hope to take part."
+      },
+      {
+        "zh": "与其只等经理通知，不如提前整理自己的作品。",
+        "py": "yǔ qí zhǐ děng jīng lǐ tōng zhī， bù rú tí qián zhěng lǐ zì jǐ de zuò pǐn。",
+        "vi": "Thay vì chỉ đợi quản lý báo, chi bằng chuẩn bị các tác phẩm trước.",
+        "en": "Rather than just waiting for the manager, I should organize my portfolio in advance."
+      },
+      {
+        "zh": "我还主动学习项目需要的技能，并向同事请教。",
+        "py": "wǒ hái zhǔ dòng xué xí xiàng mù xū yào de jì néng， bìng xiàng tóng shì qǐng jiào。",
+        "vi": "Tôi còn chủ động học kỹ năng dự án cần và hỏi đồng nghiệp.",
+        "en": "I also take the initiative to learn the required skills and ask colleagues for advice."
+      },
+      {
+        "zh": "机会出现时，充分的准备能让我更有信心。",
+        "py": "jī huì chū xiàn shí， chōng fèn de zhǔn bèi néng ràng wǒ gèng yǒu xìn xīn。",
+        "vi": "Khi cơ hội đến, chuẩn bị đầy đủ giúp tôi tự tin hơn.",
+        "en": "When an opportunity appears, thorough preparation can make me more confident."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“项目” nghĩa là gì?",
+        "opts": [
+          "dự án",
+          "trước thời hạn",
+          "chủ động",
+          "đầy đủ"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“提前” nghĩa là gì?",
+        "opts": [
+          "dự án",
+          "trước thời hạn",
+          "chủ động",
+          "đầy đủ"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“主动” nghĩa là gì?",
+        "opts": [
+          "dự án",
+          "trước thời hạn",
+          "chủ động",
+          "đầy đủ"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“充分” nghĩa là gì?",
+        "opts": [
+          "dự án",
+          "trước thời hạn",
+          "chủ động",
+          "đầy đủ"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "cdp-70",
+    "number": 70,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2025/11/podcast-70.html",
+    "sourceTitle": "🎙️ Podcast #70｜HSK 3 - 5 | 为什么你无法专注？Why Can't You Focus? Short Videos vs. Deep Learning | Chinese Daily Podcast",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "找回专注的时间",
+    "titleVi": "Lấy lại thời gian tập trung",
+    "titleEn": "Making time to focus",
+    "youtubeId": "z2YGfpZXPMk",
+    "level": "HSK 3–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "我本来只想看五分钟手机，结果耽误了半个小时。",
+        "py": "wǒ běn lái zhǐ xiǎng kàn wǔ fēn zhōng shǒu jī， jié guǒ dān wù le bàn gè xiǎo shí。",
+        "vi": "Tôi vốn chỉ định xem điện thoại năm phút, cuối cùng mất nửa giờ.",
+        "en": "I only intended to check my phone for five minutes, but lost half an hour."
+      },
+      {
+        "zh": "与其依靠意志忍住，不如把手机放到另一个房间。",
+        "py": "yǔ qí yī kào yì zhì rěn zhù， bù rú bǎ shǒu jī fàng dào lìng yí gè fáng jiān。",
+        "vi": "Thay vì cố nhịn bằng ý chí, chi bằng để điện thoại sang phòng khác.",
+        "en": "Rather than relying on willpower, I could put my phone in another room."
+      },
+      {
+        "zh": "开始学习前，我会确定一个小任务，并关掉通知。",
+        "py": "kāi shǐ xué xí qián， wǒ huì què dìng yí gè xiǎo rèn wù， bìng guān diào tōng zhī。",
+        "vi": "Trước khi học, tôi xác định một nhiệm vụ nhỏ và tắt thông báo.",
+        "en": "Before studying, I choose one small task and turn off notifications."
+      },
+      {
+        "zh": "完成任务以后再休息，这样比较容易保持专注。",
+        "py": "wán chéng rèn wù yǐ hòu zài xiū xī， zhè yàng bǐ jiào róng yì bǎo chí zhuān zhù。",
+        "vi": "Hoàn thành việc rồi nghỉ sẽ dễ giữ tập trung hơn.",
+        "en": "Resting after completing the task makes it easier to stay focused."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "耽误",
+        "py": "dān wù",
+        "vi": "làm lỡ, trì hoãn",
+        "en": "delay",
+        "example": "我本来只想看五分钟手机，结果耽误了半个小时。",
+        "examplePy": "wǒ běn lái zhǐ xiǎng kàn wǔ fēn zhōng shǒu jī， jié guǒ dān wù le bàn gè xiǎo shí。",
+        "exampleVi": "Tôi vốn chỉ định xem điện thoại năm phút, cuối cùng mất nửa giờ.",
+        "exampleEn": "I only intended to check my phone for five minutes, but lost half an hour."
+      },
+      {
+        "zh": "依靠",
+        "py": "yī kào",
+        "vi": "dựa vào",
+        "en": "rely on",
+        "example": "与其依靠意志忍住，不如把手机放到另一个房间。",
+        "examplePy": "yǔ qí yī kào yì zhì rěn zhù， bù rú bǎ shǒu jī fàng dào lìng yí gè fáng jiān。",
+        "exampleVi": "Thay vì cố nhịn bằng ý chí, chi bằng để điện thoại sang phòng khác.",
+        "exampleEn": "Rather than relying on willpower, I could put my phone in another room."
+      },
+      {
+        "zh": "确定",
+        "py": "què dìng",
+        "vi": "xác định",
+        "en": "determine",
+        "example": "开始学习前，我会确定一个小任务，并关掉通知。",
+        "examplePy": "kāi shǐ xué xí qián， wǒ huì què dìng yí gè xiǎo rèn wù， bìng guān diào tōng zhī。",
+        "exampleVi": "Trước khi học, tôi xác định một nhiệm vụ nhỏ và tắt thông báo.",
+        "exampleEn": "Before studying, I choose one small task and turn off notifications."
+      },
+      {
+        "zh": "专注",
+        "py": "zhuān zhù",
+        "vi": "tập trung",
+        "en": "focus",
+        "example": "完成任务以后再休息，这样比较容易保持专注。",
+        "examplePy": "wán chéng rèn wù yǐ hòu zài xiū xī， zhè yàng bǐ jiào róng yì bǎo chí zhuān zhù。",
+        "exampleVi": "Hoàn thành việc rồi nghỉ sẽ dễ giữ tập trung hơn.",
+        "exampleEn": "Resting after completing the task makes it easier to stay focused."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "与其……不如……",
+        "meaning": "thay vì… chi bằng…",
+        "ex": "与其依靠意志忍住，不如把手机放到另一个房间。",
+        "py": "yǔ qí yī kào yì zhì rěn zhù， bù rú bǎ shǒu jī fàng dào lìng yí gè fáng jiān。",
+        "vi": "Thay vì cố nhịn bằng ý chí, chi bằng để điện thoại sang phòng khác.",
+        "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "我本来只想看五分钟手机，结果耽误了半个小时。",
+        "aVi": "Tôi vốn chỉ định xem điện thoại năm phút, cuối cùng mất nửa giờ."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "完成任务以后再休息，这样比较容易保持专注。",
+        "aVi": "Hoàn thành việc rồi nghỉ sẽ dễ giữ tập trung hơn."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "我本来只想看五分钟手机，结果耽误了半个小时。",
+        "py": "wǒ běn lái zhǐ xiǎng kàn wǔ fēn zhōng shǒu jī， jié guǒ dān wù le bàn gè xiǎo shí。",
+        "vi": "Tôi vốn chỉ định xem điện thoại năm phút, cuối cùng mất nửa giờ.",
+        "en": "I only intended to check my phone for five minutes, but lost half an hour."
+      },
+      {
+        "zh": "与其依靠意志忍住，不如把手机放到另一个房间。",
+        "py": "yǔ qí yī kào yì zhì rěn zhù， bù rú bǎ shǒu jī fàng dào lìng yí gè fáng jiān。",
+        "vi": "Thay vì cố nhịn bằng ý chí, chi bằng để điện thoại sang phòng khác.",
+        "en": "Rather than relying on willpower, I could put my phone in another room."
+      },
+      {
+        "zh": "开始学习前，我会确定一个小任务，并关掉通知。",
+        "py": "kāi shǐ xué xí qián， wǒ huì què dìng yí gè xiǎo rèn wù， bìng guān diào tōng zhī。",
+        "vi": "Trước khi học, tôi xác định một nhiệm vụ nhỏ và tắt thông báo.",
+        "en": "Before studying, I choose one small task and turn off notifications."
+      },
+      {
+        "zh": "完成任务以后再休息，这样比较容易保持专注。",
+        "py": "wán chéng rèn wù yǐ hòu zài xiū xī， zhè yàng bǐ jiào róng yì bǎo chí zhuān zhù。",
+        "vi": "Hoàn thành việc rồi nghỉ sẽ dễ giữ tập trung hơn.",
+        "en": "Resting after completing the task makes it easier to stay focused."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“耽误” nghĩa là gì?",
+        "opts": [
+          "làm lỡ, trì hoãn",
+          "dựa vào",
+          "xác định",
+          "tập trung"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“依靠” nghĩa là gì?",
+        "opts": [
+          "làm lỡ, trì hoãn",
+          "dựa vào",
+          "xác định",
+          "tập trung"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“确定” nghĩa là gì?",
+        "opts": [
+          "làm lỡ, trì hoãn",
+          "dựa vào",
+          "xác định",
+          "tập trung"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“专注” nghĩa là gì?",
+        "opts": [
+          "làm lỡ, trì hoãn",
+          "dựa vào",
+          "xác định",
+          "tập trung"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "cdp-121",
+    "number": 121,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/08/podcast-121-eight-culinary-traditions.html",
+    "sourceTitle": "🎙️ Podcast #121｜中国菜与八大菜系 | Eight Culinary Traditions of Chinese Food",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "聊聊中国菜系",
+    "titleVi": "Tìm hiểu các trường phái ẩm thực Trung Hoa",
+    "titleEn": "Exploring Chinese regional cuisines",
+    "youtubeId": "ShLuafrl4BU",
+    "level": "HSK 4",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "朋友请我推荐一道中国菜，我先问他喜欢什么口味。",
+        "py": "péng yǒu qǐng wǒ tuī jiàn yī dào zhōng guó cài， wǒ xiān wèn tā xǐ huān shén me kǒu wèi。",
+        "vi": "Bạn nhờ giới thiệu món Trung Quốc, tôi hỏi bạn thích vị gì trước.",
+        "en": "A friend asked me to recommend a Chinese dish, so I first asked about his taste."
+      },
+      {
+        "zh": "即使来自同一个地区，不同家庭的做法也可能不同。",
+        "py": "jí shǐ lái zì tóng yī gè dì qū， bù tóng jiā tíng de zuò fǎ yě kě néng bù tóng。",
+        "vi": "Dù cùng một vùng, cách nấu của các gia đình vẫn có thể khác.",
+        "en": "Even within the same region, families may cook differently."
+      },
+      {
+        "zh": "了解一道菜时，除了材料，还可以注意烹饪的方法。",
+        "py": "liǎo jiě yī dào cài shí， chú le cái liào， hái kě yǐ zhù yì pēng rèn de fāng fǎ。",
+        "vi": "Khi tìm hiểu món ăn, ngoài nguyên liệu còn có thể chú ý phương pháp nấu.",
+        "en": "When exploring a dish, we can look at the cooking method as well as the ingredients."
+      },
+      {
+        "zh": "我们决定每个月尝试一种菜系，并记录自己的感受。",
+        "py": "wǒ men jué dìng měi gè yuè cháng shì yī zhǒng cài xì， bìng jì lù zì jǐ de gǎn shòu。",
+        "vi": "Chúng tôi quyết định mỗi tháng thử một trường phái ẩm thực và ghi cảm nhận.",
+        "en": "We decided to try one regional cuisine each month and record our impressions."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "推荐",
+        "py": "tuī jiàn",
+        "vi": "giới thiệu, đề xuất",
+        "en": "recommend",
+        "example": "朋友请我推荐一道中国菜，我先问他喜欢什么口味。",
+        "examplePy": "péng yǒu qǐng wǒ tuī jiàn yī dào zhōng guó cài， wǒ xiān wèn tā xǐ huān shén me kǒu wèi。",
+        "exampleVi": "Bạn nhờ giới thiệu món Trung Quốc, tôi hỏi bạn thích vị gì trước.",
+        "exampleEn": "A friend asked me to recommend a Chinese dish, so I first asked about his taste."
+      },
+      {
+        "zh": "地区",
+        "py": "dì qū",
+        "vi": "khu vực",
+        "en": "region",
+        "example": "即使来自同一个地区，不同家庭的做法也可能不同。",
+        "examplePy": "jí shǐ lái zì tóng yī gè dì qū， bù tóng jiā tíng de zuò fǎ yě kě néng bù tóng。",
+        "exampleVi": "Dù cùng một vùng, cách nấu của các gia đình vẫn có thể khác.",
+        "exampleEn": "Even within the same region, families may cook differently."
+      },
+      {
+        "zh": "材料",
+        "py": "cái liào",
+        "vi": "nguyên liệu",
+        "en": "ingredient",
+        "example": "了解一道菜时，除了材料，还可以注意烹饪的方法。",
+        "examplePy": "liǎo jiě yī dào cài shí， chú le cái liào， hái kě yǐ zhù yì pēng rèn de fāng fǎ。",
+        "exampleVi": "Khi tìm hiểu món ăn, ngoài nguyên liệu còn có thể chú ý phương pháp nấu.",
+        "exampleEn": "When exploring a dish, we can look at the cooking method as well as the ingredients."
+      },
+      {
+        "zh": "感受",
+        "py": "gǎn shòu",
+        "vi": "cảm nhận",
+        "en": "impression",
+        "example": "我们决定每个月尝试一种菜系，并记录自己的感受。",
+        "examplePy": "wǒ men jué dìng měi gè yuè cháng shì yī zhǒng cài xì， bìng jì lù zì jǐ de gǎn shòu。",
+        "exampleVi": "Chúng tôi quyết định mỗi tháng thử một trường phái ẩm thực và ghi cảm nhận.",
+        "exampleEn": "We decided to try one regional cuisine each month and record our impressions."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "即使……也……",
+        "meaning": "dù… cũng…",
+        "ex": "即使来自同一个地区，不同家庭的做法也可能不同。",
+        "py": "jí shǐ lái zì tóng yī gè dì qū， bù tóng jiā tíng de zuò fǎ yě kě néng bù tóng。",
+        "vi": "Dù cùng một vùng, cách nấu của các gia đình vẫn có thể khác.",
+        "note": "Nêu tình huống nhượng bộ; kết quả vẫn không thay đổi."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "朋友请我推荐一道中国菜，我先问他喜欢什么口味。",
+        "aVi": "Bạn nhờ giới thiệu món Trung Quốc, tôi hỏi bạn thích vị gì trước."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "我们决定每个月尝试一种菜系，并记录自己的感受。",
+        "aVi": "Chúng tôi quyết định mỗi tháng thử một trường phái ẩm thực và ghi cảm nhận."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "朋友请我推荐一道中国菜，我先问他喜欢什么口味。",
+        "py": "péng yǒu qǐng wǒ tuī jiàn yī dào zhōng guó cài， wǒ xiān wèn tā xǐ huān shén me kǒu wèi。",
+        "vi": "Bạn nhờ giới thiệu món Trung Quốc, tôi hỏi bạn thích vị gì trước.",
+        "en": "A friend asked me to recommend a Chinese dish, so I first asked about his taste."
+      },
+      {
+        "zh": "即使来自同一个地区，不同家庭的做法也可能不同。",
+        "py": "jí shǐ lái zì tóng yī gè dì qū， bù tóng jiā tíng de zuò fǎ yě kě néng bù tóng。",
+        "vi": "Dù cùng một vùng, cách nấu của các gia đình vẫn có thể khác.",
+        "en": "Even within the same region, families may cook differently."
+      },
+      {
+        "zh": "了解一道菜时，除了材料，还可以注意烹饪的方法。",
+        "py": "liǎo jiě yī dào cài shí， chú le cái liào， hái kě yǐ zhù yì pēng rèn de fāng fǎ。",
+        "vi": "Khi tìm hiểu món ăn, ngoài nguyên liệu còn có thể chú ý phương pháp nấu.",
+        "en": "When exploring a dish, we can look at the cooking method as well as the ingredients."
+      },
+      {
+        "zh": "我们决定每个月尝试一种菜系，并记录自己的感受。",
+        "py": "wǒ men jué dìng měi gè yuè cháng shì yī zhǒng cài xì， bìng jì lù zì jǐ de gǎn shòu。",
+        "vi": "Chúng tôi quyết định mỗi tháng thử một trường phái ẩm thực và ghi cảm nhận.",
+        "en": "We decided to try one regional cuisine each month and record our impressions."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“推荐” nghĩa là gì?",
+        "opts": [
+          "giới thiệu, đề xuất",
+          "khu vực",
+          "nguyên liệu",
+          "cảm nhận"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“地区” nghĩa là gì?",
+        "opts": [
+          "giới thiệu, đề xuất",
+          "khu vực",
+          "nguyên liệu",
+          "cảm nhận"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“材料” nghĩa là gì?",
+        "opts": [
+          "giới thiệu, đề xuất",
+          "khu vực",
+          "nguyên liệu",
+          "cảm nhận"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“感受” nghĩa là gì?",
+        "opts": [
+          "giới thiệu, đề xuất",
+          "khu vực",
+          "nguyên liệu",
+          "cảm nhận"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 0
+      }
+    ]
+  },
+  {
+    "id": "cdp-71",
+    "number": 71,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2025/11/podcast-71.html",
+    "sourceTitle": "🎙️ Podcast #71｜HSK 3 - 5 | Don't Visit at the Wrong Time! China Travel Tips | 别去错时间！中国旅行季节建议",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "什么时候去中国旅行？",
+    "titleVi": "Nên đi Trung Quốc vào lúc nào?",
+    "titleEn": "When to travel in China",
+    "youtubeId": "gLE66HLc7Ds",
+    "level": "HSK 3–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "计划旅行时，我会先了解目的地的天气和节假日。",
+        "py": "jì huà lǚ xíng shí， wǒ huì xiān liǎo jiě mù dì dì de tiān qì hé jié jià rì。",
+        "vi": "Khi lên kế hoạch du lịch, tôi tìm hiểu thời tiết và ngày nghỉ ở điểm đến trước.",
+        "en": "When planning a trip, I first check the destination's weather and holidays."
+      },
+      {
+        "zh": "与其临时订票，不如提前比较价格和交通方式。",
+        "py": "yǔ qí lín shí dìng piào， bù rú tí qián bǐ jiào jià gé hé jiāo tōng fāng shì。",
+        "vi": "Thay vì đặt vé sát giờ, chi bằng so giá và cách đi lại từ trước.",
+        "en": "Rather than booking at the last minute, I could compare prices and transport in advance."
+      },
+      {
+        "zh": "如果热门景点太拥挤，我们就选择附近的小城市。",
+        "py": "rú guǒ rè mén jǐng diǎn tài yōng jǐ， wǒ men jiù xuǎn zé fù jìn de xiǎo chéng shì。",
+        "vi": "Nếu điểm tham quan nổi tiếng quá đông, chúng tôi chọn thành phố nhỏ gần đó.",
+        "en": "If popular attractions are too crowded, we choose a nearby smaller city."
+      },
+      {
+        "zh": "行程不用安排得太满，留一些时间才能慢慢体验。",
+        "py": "xíng chéng bù yòng ān pái dé tài mǎn， liú yī xiē shí jiān cái néng màn màn tǐ yàn。",
+        "vi": "Lịch trình không cần quá kín, để chút thời gian mới từ từ trải nghiệm được.",
+        "en": "The itinerary need not be too packed; spare time lets us enjoy the experience."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "目的地",
+        "py": "mù dì dì",
+        "vi": "điểm đến",
+        "en": "destination",
+        "example": "计划旅行时，我会先了解目的地的天气和节假日。",
+        "examplePy": "jì huà lǚ xíng shí， wǒ huì xiān liǎo jiě mù dì dì de tiān qì hé jié jià rì。",
+        "exampleVi": "Khi lên kế hoạch du lịch, tôi tìm hiểu thời tiết và ngày nghỉ ở điểm đến trước.",
+        "exampleEn": "When planning a trip, I first check the destination's weather and holidays."
+      },
+      {
+        "zh": "临时",
+        "py": "lín shí",
+        "vi": "tạm thời, sát lúc",
+        "en": "at short notice",
+        "example": "与其临时订票，不如提前比较价格和交通方式。",
+        "examplePy": "yǔ qí lín shí dìng piào， bù rú tí qián bǐ jiào jià gé hé jiāo tōng fāng shì。",
+        "exampleVi": "Thay vì đặt vé sát giờ, chi bằng so giá và cách đi lại từ trước.",
+        "exampleEn": "Rather than booking at the last minute, I could compare prices and transport in advance."
+      },
+      {
+        "zh": "拥挤",
+        "py": "yōng jǐ",
+        "vi": "đông đúc",
+        "en": "crowded",
+        "example": "如果热门景点太拥挤，我们就选择附近的小城市。",
+        "examplePy": "rú guǒ rè mén jǐng diǎn tài yōng jǐ， wǒ men jiù xuǎn zé fù jìn de xiǎo chéng shì。",
+        "exampleVi": "Nếu điểm tham quan nổi tiếng quá đông, chúng tôi chọn thành phố nhỏ gần đó.",
+        "exampleEn": "If popular attractions are too crowded, we choose a nearby smaller city."
+      },
+      {
+        "zh": "体验",
+        "py": "tǐ yàn",
+        "vi": "trải nghiệm",
+        "en": "experience",
+        "example": "行程不用安排得太满，留一些时间才能慢慢体验。",
+        "examplePy": "xíng chéng bù yòng ān pái dé tài mǎn， liú yī xiē shí jiān cái néng màn màn tǐ yàn。",
+        "exampleVi": "Lịch trình không cần quá kín, để chút thời gian mới từ từ trải nghiệm được.",
+        "exampleEn": "The itinerary need not be too packed; spare time lets us enjoy the experience."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "与其……不如……",
+        "meaning": "thay vì… chi bằng…",
+        "ex": "与其临时订票，不如提前比较价格和交通方式。",
+        "py": "yǔ qí lín shí dìng piào， bù rú tí qián bǐ jiào jià gé hé jiāo tōng fāng shì。",
+        "vi": "Thay vì đặt vé sát giờ, chi bằng so giá và cách đi lại từ trước.",
+        "note": "So sánh hai cách làm và ưu tiên cách thứ hai."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "计划旅行时，我会先了解目的地的天气和节假日。",
+        "aVi": "Khi lên kế hoạch du lịch, tôi tìm hiểu thời tiết và ngày nghỉ ở điểm đến trước."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "行程不用安排得太满，留一些时间才能慢慢体验。",
+        "aVi": "Lịch trình không cần quá kín, để chút thời gian mới từ từ trải nghiệm được."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "计划旅行时，我会先了解目的地的天气和节假日。",
+        "py": "jì huà lǚ xíng shí， wǒ huì xiān liǎo jiě mù dì dì de tiān qì hé jié jià rì。",
+        "vi": "Khi lên kế hoạch du lịch, tôi tìm hiểu thời tiết và ngày nghỉ ở điểm đến trước.",
+        "en": "When planning a trip, I first check the destination's weather and holidays."
+      },
+      {
+        "zh": "与其临时订票，不如提前比较价格和交通方式。",
+        "py": "yǔ qí lín shí dìng piào， bù rú tí qián bǐ jiào jià gé hé jiāo tōng fāng shì。",
+        "vi": "Thay vì đặt vé sát giờ, chi bằng so giá và cách đi lại từ trước.",
+        "en": "Rather than booking at the last minute, I could compare prices and transport in advance."
+      },
+      {
+        "zh": "如果热门景点太拥挤，我们就选择附近的小城市。",
+        "py": "rú guǒ rè mén jǐng diǎn tài yōng jǐ， wǒ men jiù xuǎn zé fù jìn de xiǎo chéng shì。",
+        "vi": "Nếu điểm tham quan nổi tiếng quá đông, chúng tôi chọn thành phố nhỏ gần đó.",
+        "en": "If popular attractions are too crowded, we choose a nearby smaller city."
+      },
+      {
+        "zh": "行程不用安排得太满，留一些时间才能慢慢体验。",
+        "py": "xíng chéng bù yòng ān pái dé tài mǎn， liú yī xiē shí jiān cái néng màn màn tǐ yàn。",
+        "vi": "Lịch trình không cần quá kín, để chút thời gian mới từ từ trải nghiệm được.",
+        "en": "The itinerary need not be too packed; spare time lets us enjoy the experience."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“目的地” nghĩa là gì?",
+        "opts": [
+          "điểm đến",
+          "tạm thời, sát lúc",
+          "đông đúc",
+          "trải nghiệm"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“临时” nghĩa là gì?",
+        "opts": [
+          "điểm đến",
+          "tạm thời, sát lúc",
+          "đông đúc",
+          "trải nghiệm"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“拥挤” nghĩa là gì?",
+        "opts": [
+          "điểm đến",
+          "tạm thời, sát lúc",
+          "đông đúc",
+          "trải nghiệm"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“体验” nghĩa là gì?",
+        "opts": [
+          "điểm đến",
+          "tạm thời, sát lúc",
+          "đông đúc",
+          "trải nghiệm"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "cdp-100",
+    "number": 100,
+    "source": "Chinese Daily Podcast",
+    "sourceUrl": "https://chinesedailypodcast.blogspot.com/2026/04/podcast-100.html",
+    "sourceTitle": "🎙️ Podcast #100｜HSK 3–5 | Ancient Wisdom | 3 Chinese Fables for Critical Thinking | 成语故事 | Chinese daily podcast",
+    "sourceCheckedAt": "2026-11-08",
+    "titleZh": "从寓言中练习思考",
+    "titleVi": "Luyện suy nghĩ qua truyện ngụ ngôn",
+    "titleEn": "Thinking through fables",
+    "youtubeId": "3mHlegzXELA",
+    "level": "HSK 3–5",
+    "studyLevel": "HSK 4–5",
+    "duration": "—",
+    "collection": "hsk45-20261108",
+    "tags": [
+      "HSK4–HSK5",
+      "Bài mới"
+    ],
+    "learningGoals": [
+      "Nghe video gốc và ghi lại ba ý chính.",
+      "Luyện bốn câu minh họa cùng từ vựng và mẫu ngữ pháp theo chủ đề.",
+      "Tự nói 1–2 phút về chủ đề và nêu một ví dụ của bản thân."
+    ],
+    "reading": [
+      {
+        "zh": "读完一个寓言以后，老师让我们先说明自己的理解。",
+        "py": "dú wán yí gè yù yán yǐ hòu， lǎo shī ràng wǒ men xiān shuō míng zì jǐ de lǐ jiě。",
+        "vi": "Đọc xong truyện ngụ ngôn, giáo viên bảo chúng tôi giải thích cách hiểu trước.",
+        "en": "After we read a fable, the teacher asked us to explain our interpretations."
+      },
+      {
+        "zh": "即使结论看起来很合理，我们也应该检查它的条件。",
+        "py": "jí shǐ jié lùn kàn qǐ lái hěn hé lǐ， wǒ men yě yīng gāi jiǎn chá tā de tiáo jiàn。",
+        "vi": "Dù kết luận có vẻ hợp lý, chúng ta cũng nên kiểm tra điều kiện của nó.",
+        "en": "Even if a conclusion seems reasonable, we should examine its conditions."
+      },
+      {
+        "zh": "同一个方法换到不同的环境，未必能得到一样的结果。",
+        "py": "tóng yī gè fāng fǎ huàn dào bù tóng de huán jìng， wèi bì néng dé dào yī yàng de jié guǒ。",
+        "vi": "Cùng phương pháp ở môi trường khác chưa chắc cho kết quả giống nhau.",
+        "en": "The same method may not produce the same result in a different setting."
+      },
+      {
+        "zh": "讨论故事的目的，不只是记住道理，也是学会独立判断。",
+        "py": "tǎo lùn gù shì de mù dì， bù zhǐ shì jì zhù dào lǐ， yě shì xué huì dú lì pàn duàn。",
+        "vi": "Mục đích thảo luận truyện không chỉ nhớ bài học mà còn học phán đoán độc lập.",
+        "en": "Discussing a story is not only about remembering its lesson, but learning independent judgment."
+      }
+    ],
+    "vocabulary": [
+      {
+        "zh": "寓言",
+        "py": "yù yán",
+        "vi": "truyện ngụ ngôn",
+        "en": "fable",
+        "example": "读完一个寓言以后，老师让我们先说明自己的理解。",
+        "examplePy": "dú wán yí gè yù yán yǐ hòu， lǎo shī ràng wǒ men xiān shuō míng zì jǐ de lǐ jiě。",
+        "exampleVi": "Đọc xong truyện ngụ ngôn, giáo viên bảo chúng tôi giải thích cách hiểu trước.",
+        "exampleEn": "After we read a fable, the teacher asked us to explain our interpretations."
+      },
+      {
+        "zh": "结论",
+        "py": "jié lùn",
+        "vi": "kết luận",
+        "en": "conclusion",
+        "example": "即使结论看起来很合理，我们也应该检查它的条件。",
+        "examplePy": "jí shǐ jié lùn kàn qǐ lái hěn hé lǐ， wǒ men yě yīng gāi jiǎn chá tā de tiáo jiàn。",
+        "exampleVi": "Dù kết luận có vẻ hợp lý, chúng ta cũng nên kiểm tra điều kiện của nó.",
+        "exampleEn": "Even if a conclusion seems reasonable, we should examine its conditions."
+      },
+      {
+        "zh": "未必",
+        "py": "wèi bì",
+        "vi": "chưa chắc",
+        "en": "not necessarily",
+        "example": "同一个方法换到不同的环境，未必能得到一样的结果。",
+        "examplePy": "tóng yī gè fāng fǎ huàn dào bù tóng de huán jìng， wèi bì néng dé dào yī yàng de jié guǒ。",
+        "exampleVi": "Cùng phương pháp ở môi trường khác chưa chắc cho kết quả giống nhau.",
+        "exampleEn": "The same method may not produce the same result in a different setting."
+      },
+      {
+        "zh": "判断",
+        "py": "pàn duàn",
+        "vi": "phán đoán",
+        "en": "judge",
+        "example": "讨论故事的目的，不只是记住道理，也是学会独立判断。",
+        "examplePy": "tǎo lùn gù shì de mù dì， bù zhǐ shì jì zhù dào lǐ， yě shì xué huì dú lì pàn duàn。",
+        "exampleVi": "Mục đích thảo luận truyện không chỉ nhớ bài học mà còn học phán đoán độc lập.",
+        "exampleEn": "Discussing a story is not only about remembering its lesson, but learning independent judgment."
+      }
+    ],
+    "grammar": [
+      {
+        "pattern": "即使……也……",
+        "meaning": "dù… cũng…",
+        "ex": "即使结论看起来很合理，我们也应该检查它的条件。",
+        "py": "jí shǐ jié lùn kàn qǐ lái hěn hé lǐ， wǒ men yě yīng gāi jiǎn chá tā de tiáo jiàn。",
+        "vi": "Dù kết luận có vẻ hợp lý, chúng ta cũng nên kiểm tra điều kiện của nó.",
+        "note": "Nêu tình huống nhượng bộ; kết quả vẫn không thay đổi."
+      }
+    ],
+    "listeningQuestions": [
+      {
+        "q": "练习短文的开头介绍了什么情况？",
+        "vi": "Đầu đoạn luyện tập nêu tình huống gì?",
+        "a": "读完一个寓言以后，老师让我们先说明自己的理解。",
+        "aVi": "Đọc xong truyện ngụ ngôn, giáo viên bảo chúng tôi giải thích cách hiểu trước."
+      },
+      {
+        "q": "练习短文最后表达了什么做法或想法？",
+        "vi": "Cuối đoạn luyện tập nêu cách làm hoặc suy nghĩ gì?",
+        "a": "讨论故事的目的，不只是记住道理，也是学会独立判断。",
+        "aVi": "Mục đích thảo luận truyện không chỉ nhớ bài học mà còn học phán đoán độc lập."
+      }
+    ],
+    "shadowing": [
+      {
+        "zh": "读完一个寓言以后，老师让我们先说明自己的理解。",
+        "py": "dú wán yí gè yù yán yǐ hòu， lǎo shī ràng wǒ men xiān shuō míng zì jǐ de lǐ jiě。",
+        "vi": "Đọc xong truyện ngụ ngôn, giáo viên bảo chúng tôi giải thích cách hiểu trước.",
+        "en": "After we read a fable, the teacher asked us to explain our interpretations."
+      },
+      {
+        "zh": "即使结论看起来很合理，我们也应该检查它的条件。",
+        "py": "jí shǐ jié lùn kàn qǐ lái hěn hé lǐ， wǒ men yě yīng gāi jiǎn chá tā de tiáo jiàn。",
+        "vi": "Dù kết luận có vẻ hợp lý, chúng ta cũng nên kiểm tra điều kiện của nó.",
+        "en": "Even if a conclusion seems reasonable, we should examine its conditions."
+      },
+      {
+        "zh": "同一个方法换到不同的环境，未必能得到一样的结果。",
+        "py": "tóng yī gè fāng fǎ huàn dào bù tóng de huán jìng， wèi bì néng dé dào yī yàng de jié guǒ。",
+        "vi": "Cùng phương pháp ở môi trường khác chưa chắc cho kết quả giống nhau.",
+        "en": "The same method may not produce the same result in a different setting."
+      },
+      {
+        "zh": "讨论故事的目的，不只是记住道理，也是学会独立判断。",
+        "py": "tǎo lùn gù shì de mù dì， bù zhǐ shì jì zhù dào lǐ， yě shì xué huì dú lì pàn duàn。",
+        "vi": "Mục đích thảo luận truyện không chỉ nhớ bài học mà còn học phán đoán độc lập.",
+        "en": "Discussing a story is not only about remembering its lesson, but learning independent judgment."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "“寓言” nghĩa là gì?",
+        "opts": [
+          "truyện ngụ ngôn",
+          "kết luận",
+          "chưa chắc",
+          "phán đoán"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "“结论” nghĩa là gì?",
+        "opts": [
+          "truyện ngụ ngôn",
+          "kết luận",
+          "chưa chắc",
+          "phán đoán"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "“未必” nghĩa là gì?",
+        "opts": [
+          "truyện ngụ ngôn",
+          "kết luận",
+          "chưa chắc",
+          "phán đoán"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "“判断” nghĩa là gì?",
+        "opts": [
+          "truyện ngụ ngôn",
+          "kết luận",
+          "chưa chắc",
+          "phán đoán"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Cấu trúc trong câu thứ hai diễn tả điều gì?",
+        "opts": [
+          "Nhượng bộ",
+          "So sánh hai cách làm và ưu tiên cách thứ hai",
+          "Thứ tự thời gian",
+          "Số lượng chính xác"
+        ],
+        "ans": 0
+      }
+    ]
+  }
+]
