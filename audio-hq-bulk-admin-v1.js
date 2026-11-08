@@ -53,7 +53,7 @@
     const normalizer = lang === 'zh' ? normZh : normEn;
     if (lang === 'zh' && !hasHanzi(clean)) return;
     if (lang === 'en' && (!hasLatin(clean) || hasHanzi(clean))) return;
-    const key = lang === 'zh' ? JSON.stringify([lessonId, normalizer(clean)]) : normalizer(clean);
+    const key = JSON.stringify([lessonId, contentType, normalizer(clean)]);
     if (map.has(key)) return;
     map.set(key, {
       audio_key: `${lang}_${hashText(clean, normalizer)}`,
@@ -256,7 +256,7 @@
   }
 
   function setBusy(busy) {
-    ['lfAudioLanguage', 'lfAudioScan', 'lfAudioLesson', 'lfAudioGenerate'].forEach(id => {
+    ['lfAudioLanguage', 'lfAudioScan', 'lfAudioCategory', 'lfAudioContentType', 'lfAudioLesson', 'lfAudioGenerate'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.disabled = !!busy;
     });
@@ -320,11 +320,54 @@
     host.appendChild(note);
   }
 
+  function categoryOf(group) {
+    return group.lang + ':' + String(group.title).split(/\s+[-–—]\s+/)[0];
+  }
+
+  function filteredScanGroups() {
+    const category = document.getElementById('lfAudioCategory')?.value || 'all';
+    const type = document.getElementById('lfAudioContentType')?.value || 'all';
+    return (latestScan?.groups || []).filter(group => category === 'all' || categoryOf(group) === category)
+      .map(group => ({ ...group,
+        total: type === 'all' ? group.total : (group.typeTotals[type] || 0),
+        itemsMissing: group.itemsMissing.filter(item => type === 'all' || item.content_type === type)
+      })).filter(group => group.total);
+  }
+
   function selectedScanGroups() {
-    if (!latestScan) return [];
-    const select = document.getElementById('lfAudioLesson');
-    const wanted = select?.value || 'all';
-    return wanted === 'all' ? latestScan.groups : latestScan.groups.filter(group => group.key === wanted);
+    const wanted = document.getElementById('lfAudioLesson')?.value || 'all';
+    return filteredScanGroups().filter(group => wanted === 'all' || group.key === wanted);
+  }
+
+  function renderCategoryOptions() {
+    const selector = document.getElementById('lfAudioCategory');
+    if (!selector) return;
+    const prior = selector.value;
+    selector.replaceChildren();
+    selector.add(new Option('Tất cả giáo trình / nhóm', 'all'));
+    const categories = new Map();
+    (latestScan?.groups || []).forEach(group => categories.set(categoryOf(group),
+      languageLabel(group.lang) + ' — ' + String(group.title).split(/\s+[-–—]\s+/)[0]));
+    [...categories].sort((a,b) => a[1].localeCompare(b[1], 'vi')).forEach(([key,title]) => selector.add(new Option(title,key)));
+    if ([...selector.options].some(option => option.value === prior)) selector.value = prior;
+    selector.disabled = !latestScan || running;
+  }
+
+  function renderSelectedReport() {
+    const list = document.getElementById('lfAudioLessonList');
+    if (!list) return;
+    list.replaceChildren();
+    selectedScanGroups().forEach(group => {
+      const item = document.createElement('div');
+      item.className = 'lf-audio-lesson-row';
+      const title = document.createElement('strong');
+      title.textContent = languageLabel(group.lang) + ' — ' + group.title;
+      const count = document.createElement('span');
+      count.textContent = group.itemsMissing.length ? '⚠️ Thiếu ' + group.itemsMissing.length + '/' + group.total : '✅ Đủ ' + group.total + '/' + group.total;
+      item.append(title, count);
+      list.appendChild(item);
+    });
+    refreshGenerateButton();
   }
 
   function selectedMissingGroups() {
@@ -343,7 +386,7 @@
     const button = document.getElementById('lfAudioGenerate');
     if (!button) return;
     const missing = selectedMissingGroups().reduce((n, group) => n + group.itemsMissing.length, 0);
-    button.textContent = missing ? '🎙️ Tạo ' + missing + ' âm thanh còn thiếu' : '🎙️ Chưa có âm thanh cần tạo';
+    button.textContent = missing ? '🎙️ 2. Tạo ' + missing + ' âm thanh còn thiếu' : '🎙️ Chưa có âm thanh cần tạo';
     button.disabled = !isAdmin || !latestScan || !missing || running;
   }
 
@@ -352,10 +395,11 @@
     const list = document.getElementById('lfAudioLessonList');
     const selector = document.getElementById('lfAudioLesson');
     if (!summary || !list || !selector) return;
+    renderCategoryOptions();
     list.replaceChildren();
     const prior = selector.value || 'all';
     selector.replaceChildren();
-    selector.add(new Option('Tất cả bài tìm thấy', 'all'));
+    selector.add(new Option('Tất cả bài trong nhóm đã lọc', 'all'));
 
     if (!latestScan) {
       summary.textContent = 'Chưa kiểm tra âm thanh. Chọn ngôn ngữ và bấm "1. Kiểm tra".';
@@ -363,7 +407,7 @@
       refreshGenerateButton();
       return;
     }
-    const groups = latestScan.groups;
+    const groups = filteredScanGroups();
     const total = groups.reduce((n, group) => n + group.total, 0);
     const missing = groups.reduce((n, group) => n + group.itemsMissing.length, 0);
     const complete = total - missing;
@@ -371,20 +415,10 @@
     const ordered = [...groups].sort((a, b) => b.itemsMissing.length - a.itemsMissing.length || a.title.localeCompare(b.title, 'vi'));
     ordered.forEach(group => {
       selector.add(new Option(languageLabel(group.lang) + ' — ' + group.title + ' (thiếu ' + group.itemsMissing.length + ')', group.key));
-      const item = document.createElement('div');
-      item.className = 'lf-audio-lesson-row';
-      const title = document.createElement('strong');
-      title.textContent = languageLabel(group.lang) + ' — ' + group.title;
-      const count = document.createElement('span');
-      count.textContent = group.itemsMissing.length
-        ? '⚠️ Thiếu ' + group.itemsMissing.length + '/' + group.total
-        : '✅ Đủ ' + group.total + '/' + group.total;
-      item.append(title, count);
-      list.appendChild(item);
     });
     if ([...selector.options].some(option => option.value === prior)) selector.value = prior;
-    selector.disabled = false;
-    refreshGenerateButton();
+    selector.disabled = running;
+    renderSelectedReport();
   }
 
   async function performScan(scope) {
@@ -403,10 +437,11 @@
         const key = lang + ':' + String(item.lesson_id);
         let group = byLesson.get(key);
         if (!group) {
-          group = { key, lang, title: item.lesson_title || item.lesson_id, lessonId: item.lesson_id, total: 0, itemsMissing: [] };
+          group = { key, lang, title: item.lesson_title || item.lesson_id, lessonId: item.lesson_id, total: 0, typeTotals: {}, itemsMissing: [] };
           byLesson.set(key, group);
         }
         group.total++;
+        group.typeTotals[item.content_type] = (group.typeTotals[item.content_type] || 0) + 1;
         if (!stored.has(normalizer(item.text))) group.itemsMissing.push(item);
       });
       groups.push(...byLesson.values());
@@ -598,8 +633,11 @@
         '<option value="both">🌐 Cả hai ngôn ngữ</option></select></div>' +
         '<button id="lfAudioScan" type="button">🔎 1. Kiểm tra âm thanh</button></div>' +
         '<div id="lfAudioScanSummary" class="lf-audio-summary">Chưa kiểm tra. Bấm "1. Kiểm tra âm thanh" để xem bài nào còn thiếu. Chưa tạo file nào.</div>' +
+        '<div class="lf-audio-controls lf-audio-lesson-picker">' +
+        '<div><label for="lfAudioCategory">2. Chọn giáo trình / nhóm</label><select id="lfAudioCategory" disabled><option value="all">Tất cả giáo trình / nhóm</option></select></div>' +
+        '<div><label for="lfAudioContentType">Mục con cần cập nhật</label><select id="lfAudioContentType"><option value="all">Tất cả nội dung</option><option value="vocab">Từ vựng</option><option value="sentence">Câu luyện tập</option><option value="example">Câu ví dụ</option><option value="dialogue">Hội thoại</option><option value="grammar">Ngữ pháp</option><option value="speaking">Luyện nói</option></select></div></div>' +
         '<div class="lf-audio-lesson-picker"><label for="lfAudioLesson">Bài cần cập nhật (sau khi kiểm tra)</label>' +
-        '<select id="lfAudioLesson" disabled><option value="all">Tất cả bài tìm thấy</option></select></div>' +
+        '<select id="lfAudioLesson" disabled><option value="all">Tất cả bài trong nhóm đã lọc</option></select></div>' +
         '<div id="lfAudioLessonList" class="lf-audio-lesson-list" aria-label="Tình trạng âm thanh theo bài"></div>' +
         '<button id="lfAudioGenerate" class="lf-audio-generate" type="button" disabled>🎙️ 2. Kiểm tra trước khi tạo</button>' +
         '<p class="lf-audio-note">Bước 1 chỉ kiểm tra, không tốn lượt HeyGen. Bước 2 xác nhận mới tạo file. Trên điện thoại chỉ quét các bài đang có trong bộ nhớ, không tự tải các bộ từ điển lớn. Khi tạo nhiều bài, mỗi câu trùng chỉ tạo một lần.</p>' +
@@ -613,7 +651,13 @@
         renderScanReport();
         setStatus('Đã thay đổi ngôn ngữ. Bấm "1. Kiểm tra" để lấy danh sách bài.');
       });
-      panel.querySelector('#lfAudioLesson').addEventListener('change', refreshGenerateButton);
+      panel.querySelector('#lfAudioLesson').addEventListener('change', renderSelectedReport);
+      for (const id of ['lfAudioCategory', 'lfAudioContentType']) {
+        panel.querySelector('#' + id).addEventListener('change', () => {
+          panel.querySelector('#lfAudioLesson').value = 'all';
+          renderScanReport();
+        });
+      }
       panel.querySelector('#lfAudioScan').addEventListener('click', checkAudio);
       panel.querySelector('#lfAudioGenerate').addEventListener('click', generateSelected);
     }
