@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-v130b-podcast-hsk45';
+const CACHE_NAME = 'linguaflash-v131-expanded-podcasts';
 
 // Common startup shell. app.js is now the source of truth for English mobile UI
 // and HQ audio; the service worker only adds generic study helpers and caches them.
