@@ -1,6 +1,305 @@
 /* 51Talk Classic English Level 2 · User-supplied Unit 5 and Unit 6 Lesson 2 PDFs. */
 (() => {
   const lessons = [
+{
+  "id": "classicL2U4L2",
+  "unit": "Level 2 · Unit 4 · Lesson 2",
+  "title": "My Uncle Lives on a Farm",
+  "subtitle": "Quê hương · Cuộc sống nông trại · Kế hoạch kỳ nghỉ",
+  "level": "51Talk · Level 2",
+  "vocab": [
+    [
+      "hometown",
+      "/ˈhəʊmtaʊn/",
+      "Quê hương, quê quán",
+      "Trọng tâm · my/his/her hometown; Dennis' hometown."
+    ],
+    [
+      "farm",
+      "/fɑːm/",
+      "Nông trại, trang trại",
+      "Trọng tâm · live/work on a farm; dùng on trong những cụm này."
+    ],
+    [
+      "animal",
+      "/ˈænɪml/",
+      "Động vật, con vật",
+      "Trọng tâm · Số nhiều animals; look after the animals."
+    ],
+    [
+      "look after",
+      "/lʊk ˈɑːftə/",
+      "Chăm sóc, trông nom",
+      "Trọng tâm · look after + người/vật; đồng nghĩa take care of."
+    ],
+    [
+      "play with",
+      "/pleɪ wɪð/",
+      "Chơi đùa với",
+      "Trọng tâm · play with the animals; is playing with."
+    ],
+    [
+      "uncle",
+      "/ˈʌŋkl/",
+      "Chú, bác, cậu, dượng",
+      "My uncle lives on a farm."
+    ],
+    [
+      "aunt",
+      "/ɑːnt/",
+      "Cô, dì, bác gái, mợ",
+      "I will visit my aunt in California."
+    ],
+    [
+      "What is it like?",
+      "/wɒt ɪz ɪt laɪk/",
+      "Nơi đó có đặc điểm gì?",
+      "like là giới từ trong mẫu câu này; trả lời quiet, peaceful, beautiful."
+    ],
+    [
+      "farmer",
+      "/ˈfɑːmə/",
+      "Nông dân, chủ trang trại",
+      "The farmer lives on a farm."
+    ],
+    [
+      "help somebody (to) do something",
+      "/help ˈsʌmbədi tə duː ˈsʌmθɪŋ/",
+      "Giúp ai làm việc gì",
+      "Sau help + tân ngữ có thể dùng động từ nguyên mẫu có hoặc không có to."
+    ],
+    [
+      "holiday",
+      "/ˈhɒlədeɪ/",
+      "Kỳ nghỉ, ngày lễ",
+      "What will you do this holiday?"
+    ],
+    [
+      "visit",
+      "/ˈvɪzɪt/",
+      "Đến thăm",
+      "visit my uncle; không cần to trước người được thăm."
+    ],
+    [
+      "Washington",
+      "/ˈwɒʃɪŋtən/",
+      "Washington",
+      "Có thể chỉ bang Washington hoặc Washington, D.C.; PDF không xác định rõ."
+    ],
+    [
+      "California",
+      "/ˌkælɪˈfɔːniə/",
+      "Bang California",
+      "in California."
+    ],
+    [
+      "New York",
+      "/ˌnjuː ˈjɔːk/",
+      "New York",
+      "near New York = gần New York."
+    ],
+    [
+      "Do you want to come with me?",
+      "/duː juː wɒnt tə kʌm wɪð miː/",
+      "Bạn có muốn đi cùng mình không?",
+      "Lời mời; đáp Yes, I'd love to!"
+    ],
+    [
+      "Yes, I'd love to!",
+      "/jes aɪd lʌv tuː/",
+      "Có chứ, mình rất sẵn lòng!",
+      "I'd = I would; nhận lời mời."
+    ]
+  ],
+  "examples": [
+    [
+      "farm",
+      "The farmer lives on a farm.",
+      "Người nông dân sống ở một nông trại."
+    ],
+    [
+      "animal",
+      "Animals are our friends.",
+      "Động vật là những người bạn của chúng ta."
+    ],
+    [
+      "play with",
+      "The little girl is playing with her little white dog.",
+      "Cô bé đang chơi với chú chó nhỏ màu trắng của mình."
+    ],
+    [
+      "look after",
+      "We need to look after our dogs.",
+      "Chúng ta cần chăm sóc những chú chó của mình."
+    ],
+    [
+      "hometown",
+      "Dennis' hometown is very beautiful.",
+      "Quê hương của Dennis rất đẹp."
+    ],
+    [
+      "aunt",
+      "I will visit my aunt in California.",
+      "Tôi sẽ thăm cô/dì của tôi ở California."
+    ],
+    [
+      "New York",
+      "John lives on a big farm near New York.",
+      "John sống ở một nông trại lớn gần New York."
+    ],
+    [
+      "play with",
+      "I like to play with the animals there.",
+      "Tôi thích chơi với những con vật ở đó."
+    ]
+  ],
+  "dialogue": [
+    [
+      "Li Ning",
+      "Hi, Lily! What will you do this holiday?",
+      "Chào Lily! Kỳ nghỉ này bạn sẽ làm gì?"
+    ],
+    [
+      "Lily",
+      "I will visit my uncle in his hometown.",
+      "Mình sẽ thăm chú ở quê hương của chú ấy."
+    ],
+    [
+      "Li Ning",
+      "That's nice. Where does he live?",
+      "Tuyệt đấy. Chú ấy sống ở đâu?"
+    ],
+    [
+      "Lily",
+      "He lives on a big farm in California. I often help him look after the animals there.",
+      "Chú sống ở một nông trại lớn tại California. Mình thường giúp chú chăm sóc các con vật ở đó."
+    ],
+    [
+      "Li Ning",
+      "That's cool! I really like animals.",
+      "Hay thật! Mình rất thích động vật."
+    ],
+    [
+      "Lily",
+      "Do you want to come with me? We can play with the animals.",
+      "Bạn muốn đi cùng mình không? Chúng ta có thể chơi với các con vật."
+    ],
+    [
+      "Li Ning",
+      "Yes, I'd love to!",
+      "Có chứ, mình rất thích!"
+    ]
+  ],
+  "speaking": [
+    [
+      "Warm-up",
+      "Do you know your best friend's hometown? What is it like?",
+      "Bạn có biết quê của bạn thân mình không? Nơi đó như thế nào?"
+    ],
+    [
+      "You · Mẫu 1",
+      "Yes, I do. My best friend is Thuan. We grew up together, so we share the same hometown! It is a very peaceful, green, and friendly place.",
+      "Có. Bạn thân tôi là Thuận. Chúng tôi lớn lên cùng nhau nên có chung quê hương! Đó là nơi yên bình, xanh mát và thân thiện."
+    ],
+    [
+      "You · Mẫu 2",
+      "Yes, I know my best friend's hometown. It is a quiet and beautiful town in the countryside with many green trees and farms.",
+      "Có, tôi biết quê bạn thân mình. Đó là một thị trấn yên tĩnh, đẹp ở vùng quê với nhiều cây xanh và trang trại."
+    ],
+    [
+      "Teacher Eva",
+      "Hi, Harry! What will you do this holiday?",
+      "Chào Harry! Kỳ nghỉ này bạn sẽ làm gì?"
+    ],
+    [
+      "You (Harry)",
+      "Hi, Teacher! I will visit my uncle in his hometown.",
+      "Chào cô! Em sẽ về quê thăm chú."
+    ],
+    [
+      "Teacher Eva",
+      "That sounds great! Where does he live and what is it like?",
+      "Nghe tuyệt đấy! Chú bạn sống ở đâu và nơi đó thế nào?"
+    ],
+    [
+      "You (Harry)",
+      "He lives on a big farm. It is very quiet and beautiful with fresh air. I often help him look after the animals there, such as dogs, chickens, and cows.",
+      "Chú sống ở một nông trại lớn. Nơi đó yên tĩnh, đẹp và không khí trong lành. Em thường giúp chú chăm sóc các con vật như chó, gà và bò."
+    ],
+    [
+      "Teacher Eva",
+      "That's cool! I really like animals too.",
+      "Hay thật! Cô cũng rất thích động vật."
+    ],
+    [
+      "You (Harry)",
+      "Do you want to come with me? We can play with the animals and drink fresh coffee on the farm!",
+      "Cô có muốn đi cùng em không? Chúng ta có thể chơi với các con vật và uống cà phê mới pha ở nông trại!"
+    ]
+  ],
+  "grammar": [
+    [
+      "live/lives và giới từ",
+      "He/She/My uncle lives on a farm; lives in California; lives near New York. Sau does dùng live nguyên mẫu: Where does he live?"
+    ],
+    [
+      "Hiện tại tiếp diễn và động từ nguyên mẫu",
+      "is playing with = đang chơi cùng. need to + động từ; help somebody (to) do something có thể có hoặc không có to."
+    ],
+    [
+      "Kế hoạch và lời mời",
+      "What will you do this holiday? → I will visit ...; Do you want to come with me? → Yes, I'd love to!"
+    ],
+    [
+      "Sở hữu cách",
+      "PDF dùng Dennis' hometown; Dennis's hometown cũng được dùng theo quy ước biên tập khác. Không coi một cách viết là duy nhất."
+    ],
+    [
+      "Warm-up và Speak Out",
+      "Các câu trả lời về Thuận, quê hương và chuyến thăm nông trại là mẫu trong PDF; thay địa điểm bằng in Da Lat hoặc in the countryside nếu phù hợp thực tế. Phiên âm tên Thuận chỉ là gợi ý gần đúng."
+    ]
+  ],
+  "extras": [
+    [
+      "Bối cảnh",
+      "Li Ning và Lily ở Washington, nói về kỳ nghỉ."
+    ],
+    [
+      "Practice · Đáp án",
+      "1. I will visit my uncle in his hometown. 2. He lives on a big farm in California. I often help him look after the animals there. 3. Do you want to come with me? We can play with the animals."
+    ],
+    [
+      "Nguồn",
+      "Unit 4 Lesson 2 - My Uncle Lives on a Farm.pdf · 5 trang. Bổ sung bản dịch luyện nói và IPA toàn câu."
+    ]
+  ],
+  "ipa": {
+    "The farmer lives on a farm.": "/ðə ˈfɑːmə lɪvz ɒn ə fɑːm/",
+    "Animals are our friends.": "/ˈænɪmlz ɑː aʊə frendz/",
+    "The little girl is playing with her little white dog.": "/ðə ˈlɪtl ɡɜːl ɪz ˈpleɪɪŋ wɪð hə ˈlɪtl waɪt dɒɡ/",
+    "We need to look after our dogs.": "/wiː niːd tə lʊk ˈɑːftər aʊə dɒɡz/",
+    "Dennis' hometown is very beautiful.": "/ˈdenɪsɪz ˈhəʊmtaʊn ɪz ˈveri ˈbjuːtɪfl/",
+    "I will visit my aunt in California.": "/aɪ wɪl ˈvɪzɪt maɪ ɑːnt ɪn ˌkælɪˈfɔːniə/",
+    "John lives on a big farm near New York.": "/dʒɒn lɪvz ɒn ə bɪɡ fɑːm nɪə ˌnjuː ˈjɔːk/",
+    "I like to play with the animals there.": "/aɪ laɪk tə pleɪ wɪð ði ˈænɪmlz ðeə/",
+    "Hi, Lily! What will you do this holiday?": "/haɪ ˈlɪli wɒt wɪl juː duː ðɪs ˈhɒlədeɪ/",
+    "I will visit my uncle in his hometown.": "/aɪ wɪl ˈvɪzɪt maɪ ˈʌŋkl ɪn hɪz ˈhəʊmtaʊn/",
+    "That's nice. Where does he live?": "/ðæts naɪs weə dʌz hiː lɪv/",
+    "He lives on a big farm in California. I often help him look after the animals there.": "/hiː lɪvz ɒn ə bɪɡ fɑːm ɪn ˌkælɪˈfɔːniə aɪ ˈɒfn help hɪm lʊk ˈɑːftə ði ˈænɪmlz ðeə/",
+    "That's cool! I really like animals.": "/ðæts kuːl aɪ ˈrɪəli laɪk ˈænɪmlz/",
+    "Do you want to come with me? We can play with the animals.": "/duː juː wɒnt tə kʌm wɪð miː wiː kən pleɪ wɪð ði ˈænɪmlz/",
+    "Yes, I'd love to!": "/jes aɪd lʌv tuː/",
+    "Do you know your best friend's hometown? What is it like?": "/duː juː nəʊ jɔː best frendz ˈhəʊmtaʊn wɒt ɪz ɪt laɪk/",
+    "Yes, I do. My best friend is Thuan. We grew up together, so we share the same hometown! It is a very peaceful, green, and friendly place.": "/jes aɪ duː maɪ best frend ɪz tuən wiː ɡruː ʌp təˈɡeðə səʊ wiː ʃeə ðə seɪm ˈhəʊmtaʊn ɪt ɪz ə ˈveri ˈpiːsfl ɡriːn ənd ˈfrendli pleɪs/",
+    "Yes, I know my best friend's hometown. It is a quiet and beautiful town in the countryside with many green trees and farms.": "/jes aɪ nəʊ maɪ best frendz ˈhəʊmtaʊn ɪt ɪz ə ˈkwaɪət ənd ˈbjuːtɪfl taʊn ɪn ðə ˈkʌntrisaɪd wɪð ˈmeni ɡriːn triːz ənd fɑːmz/",
+    "Hi, Harry! What will you do this holiday?": "/haɪ ˈhæri wɒt wɪl juː duː ðɪs ˈhɒlədeɪ/",
+    "Hi, Teacher! I will visit my uncle in his hometown.": "/haɪ ˈtiːtʃə aɪ wɪl ˈvɪzɪt maɪ ˈʌŋkl ɪn hɪz ˈhəʊmtaʊn/",
+    "That sounds great! Where does he live and what is it like?": "/ðæt saʊndz ɡreɪt weə dʌz hiː lɪv ənd wɒt ɪz ɪt laɪk/",
+    "He lives on a big farm. It is very quiet and beautiful with fresh air. I often help him look after the animals there, such as dogs, chickens, and cows.": "/hiː lɪvz ɒn ə bɪɡ fɑːm ɪt ɪz ˈveri ˈkwaɪət ənd ˈbjuːtɪfl wɪð freʃ eə aɪ ˈɒfn help hɪm lʊk ˈɑːftə ði ˈænɪmlz ðeə sʌtʃ əz dɒɡz ˈtʃɪkɪnz ənd kaʊz/",
+    "That's cool! I really like animals too.": "/ðæts kuːl aɪ ˈrɪəli laɪk ˈænɪmlz tuː/",
+    "Do you want to come with me? We can play with the animals and drink fresh coffee on the farm!": "/duː juː wɒnt tə kʌm wɪð miː wiː kən pleɪ wɪð ði ˈænɪmlz ənd drɪŋk freʃ ˈkɒfi ɒn ðə fɑːm/"
+  }
+},
     ...(window.LF51_BUSINESS_UNIT1 || []),
   {
       id:'birthday', unit:'UNIT 1', title:'MY BIRTHDAY IS COMING!',

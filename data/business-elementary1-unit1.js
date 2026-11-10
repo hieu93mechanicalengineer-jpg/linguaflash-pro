@@ -1200,5 +1200,378 @@ window.LF51_BUSINESS_UNIT1 = [
         "unit 1 lesson 4.pdf · 8 trang · 51Talk Business English 180 Situational Conversations · Elementary. Hội thoại và Language Focus theo PDF; bản dịch và IPA được bổ sung. Phần Luyện nói là kịch bản mẫu cho đề Practice."
       ]
     ]
+  },
+  {
+    "id": "businessE1U1L5",
+    "unit": "Business English · Elementary 1 · Unit 1 · Lesson 5",
+    "title": "Communication with Your Boss",
+    "subtitle": "Giao tiếp với cấp trên · Xin định hướng · Đóng góp ý kiến",
+    "level": "Business English · Elementary 1",
+    "vocab": [
+      [
+        "have a word with somebody",
+        "/hæv ə wɜːd wɪð ˈsʌmbədi/",
+        "Trao đổi riêng vài lời với ai",
+        "Trọng tâm · May I have a word with you?; Could you spare me a minute?"
+      ],
+      [
+        "talk over",
+        "/tɔːk ˈəʊvə/",
+        "Thảo luận kỹ, bàn bạc",
+        "Trọng tâm · talk over the proposal with somebody; talk it over."
+      ],
+      [
+        "give somebody direction on",
+        "/ɡɪv ˈsʌmbədi dəˈrekʃn ɒn/",
+        "Cho ai định hướng về",
+        "Trọng tâm · Could/Would you give me some direction on ...?"
+      ],
+      [
+        "be on track",
+        "/biː ɒn træk/",
+        "Đang đúng hướng, đúng tiến độ",
+        "Trọng tâm · Everything is on track; trái nghĩa off track."
+      ],
+      [
+        "be reasonable",
+        "/biː ˈriːznəbl/",
+        "Hợp lý, có lý",
+        "Trọng tâm · Your suggestion is reasonable, but ..."
+      ],
+      [
+        "proposal",
+        "/prəˈpəʊzl/",
+        "Bản đề xuất",
+        "the latest proposal; revise a proposal."
+      ],
+      [
+        "sales forecast",
+        "/seɪlz ˈfɔːkɑːst/",
+        "Dự báo doanh số",
+        "make/revise the sales forecast."
+      ],
+      [
+        "market research",
+        "/ˈmɑːkɪt rɪˈsɜːtʃ/",
+        "Nghiên cứu thị trường",
+        "do market research."
+      ],
+      [
+        "target",
+        "/ˈtɑːɡɪt/",
+        "Nhắm tới; mục tiêu",
+        "target a younger audience; be targeted at a younger audience."
+      ],
+      [
+        "on a daily basis",
+        "/ɒn ə ˈdeɪli ˈbeɪsɪs/",
+        "Hằng ngày",
+        "= every day; on a weekly basis = hằng tuần."
+      ],
+      [
+        "revise",
+        "/rɪˈvaɪz/",
+        "Chỉnh sửa, sửa đổi",
+        "revise the proposal/drawing."
+      ],
+      [
+        "include",
+        "/ɪnˈkluːd/",
+        "Bao gồm, đưa vào",
+        "include your ideas."
+      ],
+      [
+        "How is ... coming?",
+        "/haʊ ɪz ˈkʌmɪŋ/",
+        "... tiến triển thế nào?",
+        "How is your proposal coming? = How is it going?"
+      ],
+      [
+        "key points",
+        "/kiː pɔɪnts/",
+        "Những điểm chính",
+        "What are the key points?"
+      ],
+      [
+        "audience",
+        "/ˈɔːdiəns/",
+        "Nhóm đối tượng khách hàng; khán giả",
+        "Trong bài marketing: target audience."
+      ],
+      [
+        "younger audience",
+        "/ˈjʌŋɡər ˈɔːdiəns/",
+        "Nhóm khách hàng trẻ hơn",
+        "target a younger audience."
+      ],
+      [
+        "traditional audience",
+        "/trəˈdɪʃənəl ˈɔːdiəns/",
+        "Nhóm khách hàng truyền thống",
+        "focus on our traditional audience."
+      ],
+      [
+        "bother",
+        "/ˈbɒðə/",
+        "Làm phiền",
+        "Sorry to bother you."
+      ],
+      [
+        "spare me a minute",
+        "/speə miː ə ˈmɪnɪt/",
+        "Dành cho tôi một phút",
+        "Could you spare me a minute?"
+      ]
+    ],
+    "examples": [
+      [
+        "Lịch sự · Câu 1",
+        "Sorry to bother you. Are you available?",
+        "Xin lỗi vì làm phiền. Anh/chị có đang rảnh không?"
+      ],
+      [
+        "have a word with somebody",
+        "Can I have a word with you?",
+        "Tôi có thể trao đổi với anh/chị vài lời không?"
+      ],
+      [
+        "talk over",
+        "Let's talk it over.",
+        "Chúng ta hãy bàn kỹ việc đó."
+      ],
+      [
+        "Thân mật · Câu 4",
+        "What's up? Do you have time now?",
+        "Có chuyện gì vậy? Bây giờ anh/chị có thời gian không?"
+      ],
+      [
+        "spare me a minute",
+        "Could you spare me a minute?",
+        "Anh/chị dành cho tôi một phút được không?"
+      ],
+      [
+        "Không nên dùng · Câu 6",
+        "If you don't take my advice, you will be sorry one day.",
+        "Nếu anh/chị không nghe lời khuyên của tôi, sẽ có ngày anh/chị hối hận."
+      ],
+      [
+        "sales forecast",
+        "Shall we make the sales forecast first?",
+        "Chúng ta làm dự báo doanh số trước nhé?"
+      ],
+      [
+        "give somebody direction on",
+        "Could you give me some direction on the proposal?",
+        "Anh/chị có thể cho tôi định hướng về bản đề xuất không?"
+      ]
+    ],
+    "dialogue": [
+      [
+        "Brook",
+        "Mr. Bush. May I have a word with you?",
+        "Thưa ông Bush, tôi có thể trao đổi với ông đôi lời không ạ?"
+      ],
+      [
+        "Bush",
+        "Sure. Go ahead.",
+        "Được. Bạn cứ nói đi."
+      ],
+      [
+        "Brook",
+        "Thanks. Have you read the proposal I sent you?",
+        "Cảm ơn. Ông đã đọc bản đề xuất tôi gửi chưa ạ?"
+      ],
+      [
+        "Bush",
+        "Yes. I have talked over the proposal with the assistant managers.",
+        "Rồi. Tôi đã bàn kỹ bản đề xuất với các phó phòng."
+      ],
+      [
+        "Brook",
+        "Would you give me some direction on the new product development plan?",
+        "Ông có thể cho tôi định hướng về kế hoạch phát triển sản phẩm mới không ạ?"
+      ],
+      [
+        "Bush",
+        "The market research and sales forecast should be revised. Please hand in the proposal again by the end of next week.",
+        "Phần nghiên cứu thị trường và dự báo doanh số cần sửa lại. Vui lòng nộp lại đề xuất chậm nhất vào cuối tuần sau."
+      ],
+      [
+        "Brook",
+        "OK, thank you, Mr. Bush. I will revise the proposal and include your ideas.",
+        "Vâng, cảm ơn ông Bush. Tôi sẽ sửa đề xuất và đưa ý kiến của ông vào."
+      ],
+      [
+        "Bush",
+        "How is your proposal coming?",
+        "Bản đề xuất của bạn tiến triển thế nào?"
+      ],
+      [
+        "Brook",
+        "I'm on track, Mr. Bush. Here is the latest proposal.",
+        "Mọi việc đúng tiến độ, thưa ông Bush. Đây là bản đề xuất mới nhất."
+      ],
+      [
+        "Bush",
+        "What are the key points?",
+        "Những điểm chính là gì?"
+      ],
+      [
+        "Brook",
+        "After several rounds of market research and discussions with the Marketing Department, we think our new product should target younger audience. The reasons are written in the proposal.",
+        "Sau nhiều vòng nghiên cứu thị trường và thảo luận với Phòng Marketing, chúng tôi nghĩ sản phẩm mới nên hướng tới khách hàng trẻ hơn. Các lý do nằm trong bản đề xuất."
+      ],
+      [
+        "Bush",
+        "Your suggestion is reasonable, but I think we should still focus on our traditional audience.",
+        "Đề xuất của bạn hợp lý, nhưng tôi nghĩ chúng ta vẫn nên tập trung vào khách hàng truyền thống."
+      ],
+      [
+        "Brook",
+        "I am afraid we are not doing well with the traditional audience according to the data in the proposal.",
+        "Tôi e rằng chúng ta chưa đạt kết quả tốt với nhóm khách hàng truyền thống, theo số liệu trong đề xuất."
+      ],
+      [
+        "Bush",
+        "All right. I will have a look. What is the best way to market our products?",
+        "Được. Tôi sẽ xem qua. Cách tốt nhất để tiếp thị sản phẩm của chúng ta là gì?"
+      ],
+      [
+        "Brook",
+        "Our audience will most likely find our products online. Younger people prefer online shopping.",
+        "Khách hàng rất có thể tìm thấy sản phẩm của chúng ta trên mạng. Người trẻ thích mua sắm trực tuyến hơn."
+      ],
+      [
+        "Bush",
+        "Okay. I will think about your proposal.",
+        "Được. Tôi sẽ cân nhắc đề xuất của bạn."
+      ]
+    ],
+    "speaking": [
+      [
+        "Warm-up",
+        "Do you often have a conversation with your boss? What do you usually talk about?",
+        "Bạn có thường trò chuyện với sếp không? Bạn thường nói về điều gì?"
+      ],
+      [
+        "You · Mẫu công việc",
+        "Yes, I communicate with my boss on a daily basis. We usually talk over production schedules, CAD technical drawings, furniture quality, and new product development plans.",
+        "Có, tôi trao đổi với sếp hằng ngày. Chúng tôi thường bàn về lịch sản xuất, bản vẽ kỹ thuật CAD, chất lượng nội thất và kế hoạch phát triển sản phẩm mới."
+      ],
+      [
+        "You (Luke)",
+        "Excuse me, Bill. Sorry to bother you. May I have a word with you?",
+        "Xin lỗi anh Bill. Xin lỗi vì làm phiền. Tôi trao đổi vài lời với anh được không?"
+      ],
+      [
+        "Teacher (Bill)",
+        "Sure, Luke. Go ahead. How is the new project in the African market coming?",
+        "Được, Luke. Bạn cứ nói đi. Dự án mới ở thị trường châu Phi tiến triển ra sao?"
+      ],
+      [
+        "You (Luke)",
+        "Everything is on track, Bill. Have you read the proposal I sent you yesterday? Would you give me some direction on this project?",
+        "Mọi việc đúng tiến độ, anh Bill. Anh đã đọc đề xuất tôi gửi hôm qua chưa? Anh cho tôi định hướng về dự án này được không?"
+      ],
+      [
+        "Teacher (Bill)",
+        "Yes, I have talked over your proposal with the team. What are the key points of your marketing plan?",
+        "Rồi, tôi đã bàn kỹ đề xuất với nhóm. Những điểm chính của kế hoạch tiếp thị là gì?"
+      ],
+      [
+        "You (Luke)",
+        "After doing market research, I think our new products should target a younger audience in the African market, and we should focus on online marketing.",
+        "Sau khi nghiên cứu thị trường, tôi nghĩ sản phẩm mới nên hướng tới khách hàng trẻ ở châu Phi và tập trung tiếp thị trực tuyến."
+      ],
+      [
+        "Teacher (Bill)",
+        "Your suggestion is reasonable, but should we revise the sales forecast first?",
+        "Đề xuất của bạn hợp lý, nhưng chúng ta có nên sửa dự báo doanh số trước không?"
+      ],
+      [
+        "You (Luke)",
+        "Sure, Bill! I will revise the sales forecast, include your ideas, and hand in the proposal again by the end of this week.",
+        "Vâng, anh Bill! Tôi sẽ sửa dự báo doanh số, bổ sung ý kiến của anh và nộp lại đề xuất chậm nhất vào cuối tuần này."
+      ]
+    ],
+    "grammar": [
+      [
+        "Xin phép và xin định hướng",
+        "May/Could I have a word with you? Could/Would you give me some direction on ...? Hỏi thời gian phù hợp trước khi trình bày."
+      ],
+      [
+        "Góp ý có căn cứ",
+        "I am afraid ... according to the data. Đây là cách làm mềm ý kiến khác biệt. Mức độ lịch sự tùy quan hệ, văn hóa và ngữ điệu; không phải mọi cách nói I disagree đều bất lịch sự."
+      ],
+      [
+        "target và audience",
+        "Giữ câu hội thoại theo PDF: target younger audience. Khi tự nói, dùng target a younger audience hoặc be targeted at a younger audience; không dùng target at ở dạng chủ động này."
+      ],
+      [
+        "Language Focus · Đáp án theo PDF",
+        "Chọn 1, 2, 5, 7, 8. Câu 3 Let's talk it over trực tiếp hơn, vẫn có thể phù hợp giữa người quen; câu 4 What's up? thân mật, tránh trong hoàn cảnh trang trọng; câu 6 có tính đe dọa, không nên dùng."
+      ],
+      [
+        "should be + quá khứ phân từ",
+        "The market research and sales forecast should be revised. Bị động: should be revised = nên được chỉnh sửa. by the end of next week = chậm nhất vào cuối tuần sau."
+      ],
+      [
+        "Đọc hiểu · Phần 1",
+        "Brook muốn biết sếp đã đọc đề xuất chưa và xin định hướng phát triển sản phẩm mới. Tiếp theo cô sẽ sửa nghiên cứu thị trường, dự báo doanh số, thêm ý kiến sếp và nộp lại cuối tuần sau."
+      ],
+      [
+        "Notes · Phần 2",
+        "Brook đề xuất hướng tới khách hàng trẻ và tiếp thị trực tuyến, dựa trên số liệu chưa tốt ở nhóm truyền thống. Bush ban đầu muốn giữ nhóm truyền thống, sau đó đồng ý xem xét đề xuất."
+      ],
+      [
+        "Role-play",
+        "Luke là Marketing Manager phụ trách dự án mới ở châu Phi, trao đổi với sếp Bill. Kịch bản luyện nói và câu trả lời công việc là mẫu từ PDF, có thể thay theo thực tế."
+      ]
+    ],
+    "extras": [
+      [
+        "Bối cảnh",
+        "Phần 1: Brook xin chỉ đạo về kế hoạch phát triển sản phẩm. Phần 2: vài tuần sau, Brook báo cáo và bảo vệ đề xuất bằng dữ liệu."
+      ],
+      [
+        "Nguồn",
+        "Business English Unit 1 Lesson 5 - Communication with Your Boss.pdf · 7 trang. Giữ hai phần hội thoại và 8 câu Language Focus; bổ sung bản dịch luyện nói, IPA toàn câu và ghi chú cách dùng."
+      ]
+    ],
+    "ipa": {
+      "Sorry to bother you. Are you available?": "/ˈsɒri tə ˈbɒðə juː ɑː juː əˈveɪləbl/",
+      "Can I have a word with you?": "/kæn aɪ hæv ə wɜːd wɪð juː/",
+      "Let's talk it over.": "/lets tɔːk ɪt ˈəʊvə/",
+      "What's up? Do you have time now?": "/wɒts ʌp duː juː hæv taɪm naʊ/",
+      "Could you spare me a minute?": "/kʊd juː speə miː ə ˈmɪnɪt/",
+      "If you don't take my advice, you will be sorry one day.": "/ɪf juː dəʊnt teɪk maɪ ədˈvaɪs juː wɪl biː ˈsɒri wʌn deɪ/",
+      "Shall we make the sales forecast first?": "/ʃæl wiː meɪk ðə seɪlz ˈfɔːkɑːst fɜːst/",
+      "Could you give me some direction on the proposal?": "/kʊd juː ɡɪv miː səm dəˈrekʃn ɒn ðə prəˈpəʊzl/",
+      "Mr. Bush. May I have a word with you?": "/ˈmɪstə bʊʃ meɪ aɪ hæv ə wɜːd wɪð juː/",
+      "Sure. Go ahead.": "/ʃʊə ɡəʊ əˈhed/",
+      "Thanks. Have you read the proposal I sent you?": "/θæŋks hæv juː red ðə prəˈpəʊzl aɪ sent juː/",
+      "Yes. I have talked over the proposal with the assistant managers.": "/jes aɪ hæv tɔːkt ˈəʊvə ðə prəˈpəʊzl wɪð ði əˈsɪstənt ˈmænɪdʒəz/",
+      "Would you give me some direction on the new product development plan?": "/wʊd juː ɡɪv miː səm dəˈrekʃn ɒn ðə njuː ˈprɒdʌkt dɪˈveləpmənt plæn/",
+      "The market research and sales forecast should be revised. Please hand in the proposal again by the end of next week.": "/ðə ˈmɑːkɪt rɪˈsɜːtʃ ənd seɪlz ˈfɔːkɑːst ʃʊd biː rɪˈvaɪzd pliːz hænd ɪn ðə prəˈpəʊzl əˈɡen baɪ ði end əv nekst wiːk/",
+      "OK, thank you, Mr. Bush. I will revise the proposal and include your ideas.": "/əʊˈkeɪ θæŋk juː ˈmɪstə bʊʃ aɪ wɪl rɪˈvaɪz ðə prəˈpəʊzl ənd ɪnˈkluːd jɔːr aɪˈdɪəz/",
+      "How is your proposal coming?": "/haʊ ɪz jɔː prəˈpəʊzl ˈkʌmɪŋ/",
+      "I'm on track, Mr. Bush. Here is the latest proposal.": "/aɪm ɒn træk ˈmɪstə bʊʃ hɪər ɪz ðə ˈleɪtɪst prəˈpəʊzl/",
+      "What are the key points?": "/wɒt ɑː ðə kiː pɔɪnts/",
+      "After several rounds of market research and discussions with the Marketing Department, we think our new product should target younger audience. The reasons are written in the proposal.": "/ˈɑːftə ˈsevrəl raʊndz əv ˈmɑːkɪt rɪˈsɜːtʃ ənd dɪˈskʌʃnz wɪð ðə ˈmɑːkɪtɪŋ dɪˈpɑːtmənt wiː θɪŋk aʊə njuː ˈprɒdʌkt ʃʊd ˈtɑːɡɪt ˈjʌŋɡər ˈɔːdiəns ðə ˈriːznz ɑː ˈrɪtn ɪn ðə prəˈpəʊzl/",
+      "Your suggestion is reasonable, but I think we should still focus on our traditional audience.": "/jɔː səˈdʒestʃən ɪz ˈriːznəbl bət aɪ θɪŋk wiː ʃʊd stɪl ˈfəʊkəs ɒn aʊə trəˈdɪʃənəl ˈɔːdiəns/",
+      "I am afraid we are not doing well with the traditional audience according to the data in the proposal.": "/aɪ æm əˈfreɪd wiː ɑː nɒt ˈduːɪŋ wel wɪð ðə trəˈdɪʃənəl ˈɔːdiəns əˈkɔːdɪŋ tə ðə ˈdeɪtə ɪn ðə prəˈpəʊzl/",
+      "All right. I will have a look. What is the best way to market our products?": "/ɔːl raɪt aɪ wɪl hæv ə lʊk wɒt ɪz ðə best weɪ tə ˈmɑːkɪt aʊə ˈprɒdʌkts/",
+      "Our audience will most likely find our products online. Younger people prefer online shopping.": "/aʊər ˈɔːdiəns wɪl məʊst ˈlaɪkli faɪnd aʊə ˈprɒdʌkts ˌɒnˈlaɪn ˈjʌŋɡə ˈpiːpl prɪˈfɜː ˌɒnˈlaɪn ˈʃɒpɪŋ/",
+      "Okay. I will think about your proposal.": "/əʊˈkeɪ aɪ wɪl θɪŋk əˈbaʊt jɔː prəˈpəʊzl/",
+      "Do you often have a conversation with your boss? What do you usually talk about?": "/duː juː ˈɒfn hæv ə ˌkɒnvəˈseɪʃn wɪð jɔː bɒs wɒt duː juː ˈjuːʒuəli tɔːk əˈbaʊt/",
+      "Yes, I communicate with my boss on a daily basis. We usually talk over production schedules, CAD technical drawings, furniture quality, and new product development plans.": "/jes aɪ kəˈmjuːnɪkeɪt wɪð maɪ bɒs ɒn ə ˈdeɪli ˈbeɪsɪs wiː ˈjuːʒuəli tɔːk ˈəʊvə prəˈdʌkʃn ˈʃedjuːlz kæd ˈteknɪkl ˈdrɔːɪŋz ˈfɜːnɪtʃə ˈkwɒləti ənd njuː ˈprɒdʌkt dɪˈveləpmənt plænz/",
+      "Excuse me, Bill. Sorry to bother you. May I have a word with you?": "/ɪkˈskjuːz miː bɪl ˈsɒri tə ˈbɒðə juː meɪ aɪ hæv ə wɜːd wɪð juː/",
+      "Sure, Luke. Go ahead. How is the new project in the African market coming?": "/ʃʊə luːk ɡəʊ əˈhed haʊ ɪz ðə njuː ˈprɒdʒekt ɪn ði ˈæfrɪkən ˈmɑːkɪt ˈkʌmɪŋ/",
+      "Everything is on track, Bill. Have you read the proposal I sent you yesterday? Would you give me some direction on this project?": "/ˈevriθɪŋ ɪz ɒn træk bɪl hæv juː red ðə prəˈpəʊzl aɪ sent juː ˈjestədeɪ wʊd juː ɡɪv miː səm dəˈrekʃn ɒn ðɪs ˈprɒdʒekt/",
+      "Yes, I have talked over your proposal with the team. What are the key points of your marketing plan?": "/jes aɪ hæv tɔːkt ˈəʊvə jɔː prəˈpəʊzl wɪð ðə tiːm wɒt ɑː ðə kiː pɔɪnts əv jɔː ˈmɑːkɪtɪŋ plæn/",
+      "After doing market research, I think our new products should target a younger audience in the African market, and we should focus on online marketing.": "/ˈɑːftə ˈduːɪŋ ˈmɑːkɪt rɪˈsɜːtʃ aɪ θɪŋk aʊə njuː ˈprɒdʌkts ʃʊd ˈtɑːɡɪt ə ˈjʌŋɡər ˈɔːdiəns ɪn ði ˈæfrɪkən ˈmɑːkɪt ənd wiː ʃʊd ˈfəʊkəs ɒn ˌɒnˈlaɪn ˈmɑːkɪtɪŋ/",
+      "Your suggestion is reasonable, but should we revise the sales forecast first?": "/jɔː səˈdʒestʃən ɪz ˈriːznəbl bət ʃʊd wiː rɪˈvaɪz ðə seɪlz ˈfɔːkɑːst fɜːst/",
+      "Sure, Bill! I will revise the sales forecast, include your ideas, and hand in the proposal again by the end of this week.": "/ʃʊə bɪl aɪ wɪl rɪˈvaɪz ðə seɪlz ˈfɔːkɑːst ɪnˈkluːd jɔːr aɪˈdɪəz ənd hænd ɪn ðə prəˈpəʊzl əˈɡen baɪ ði end əv ðɪs wiːk/"
+    }
   }
 ];
