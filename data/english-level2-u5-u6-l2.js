@@ -1,6 +1,7 @@
 /* 51Talk Classic English Level 2 · User-supplied Unit 5 and Unit 6 Lesson 2 PDFs. */
 (() => {
   const lessons = [
+    ...(window.LF51_CLASSIC_L4_U8_L2 || []),
 {
   "id": "classicL2U4L2",
   "unit": "Level 2 · Unit 4 · Lesson 2",
@@ -2284,3 +2285,4 @@
     }
   }
 })();
+

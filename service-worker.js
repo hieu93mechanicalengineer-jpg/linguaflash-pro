@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-v133-farm-boss-lessons';
+const CACHE_NAME = 'linguaflash-v134-weather-mp3';
 
 // Common startup shell. app.js is now the source of truth for English mobile UI
 // and HQ audio; the service worker only adds generic study helpers and caches them.
@@ -7,8 +7,8 @@ const CORE_ASSETS = [
   './theme.css?v=1',
   './supabase-config.js',
   './mobile-ui-v1.js',
-  './english-hq-audio-v1.js',
-  './chinese-hq-audio-v1.js',
+  './english-hq-audio-v1.js?v=134',
+  './chinese-hq-audio-v1.js?v=134',
   './english-audio-admin-v1.js',
   './chinese-audio-admin-v1.js',
   './audio-hq-bulk-admin-v1.js',
@@ -33,7 +33,9 @@ const CORE_ASSETS = [
   './data/youtube-podcast.js',
   './app.js',
   './data/business-elementary1-unit1.js?v=133',
-  './data/english-level2-u5-u6-l2.js?v=133',
+  './data/english-classic-l4-u8-l2.js?v=134',
+  './data/51talk-classic-level4-unit8-lesson2-weather.pdf',
+  './data/english-level2-u5-u6-l2.js?v=134',
   './app-core.js',
   './chinese-study-workspace.js?v=127',
   './english-unit2-data-v1.js',
@@ -107,7 +109,7 @@ async function transformIndexResponse(response) {
     /<script src="\.\/app\.js(?:\?v=\d+)?"><\/script>/,
     `<script src="./data/giahan-translation-practice-v2.js?v=90"></script>
 <script src="./data/giahan-translation-practice-tc2-fix-v1.js?v=90"></script>
-<script src="./app.js?v=133"></script>
+<script src="./app.js?v=134"></script>
 <script>
 (function(){
   var ua = String(navigator.userAgent || '');
@@ -266,4 +268,5 @@ self.addEventListener('fetch', event => {
 
   event.respondWith(fetch(req).catch(() => caches.match(req)));
 });
+
 

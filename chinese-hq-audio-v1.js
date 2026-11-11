@@ -38,7 +38,7 @@
       const allEntries = new Map();
       const pageSize = 500;
       for (let offset = 0; ; offset += pageSize) {
-        const page = endpoint + '&order=audio_key&limit=' + pageSize + '&offset=' + offset;
+        const page = endpoint + '&order=audio_key.asc&limit=' + pageSize + '&offset=' + offset;
         const response = await fetch(page, { headers: { apikey: API_KEY, Accept: 'application/json' }, cache: 'no-store' });
         if (!response.ok) throw new Error(`Chinese HQ manifest HTTP ${response.status}`);
         const rows = await response.json();

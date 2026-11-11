@@ -36,10 +36,16 @@
   async function refresh() {
     if (!SUPABASE_URL || !API_KEY) { manifestLoaded = true; return 0; }
     try {
-      const endpoint = `${SUPABASE_URL}/rest/v1/english_audio_manifest?select=audio_key,lesson_id,content_type,source_text,locale,generated_speed,storage_path,duration_seconds&locale=eq.en-US`;
-      const response = await fetch(endpoint, { headers: { apikey: API_KEY, Accept: 'application/json' }, cache: 'no-store' });
-      if (!response.ok) throw new Error(`HQ audio manifest HTTP ${response.status}`);
-      const rows = await response.json();
+      const endpoint = `${SUPABASE_URL}/rest/v1/english_audio_manifest?select=audio_key,lesson_id,content_type,source_text,locale,generated_speed,storage_path,duration_seconds&locale=eq.en-US` + "&order=audio_key.asc&limit=500";
+      const rows = [];
+      for (let offset = 0; ; offset += 500) {
+        const response = await fetch(endpoint + "&offset=" + offset, { headers: { apikey: API_KEY, Accept: "application/json" }, cache: "no-store" });
+        if (!response.ok) throw new Error("Audio manifest HTTP " + response.status);
+        const page = await response.json();
+        if (!Array.isArray(page)) throw new Error("Invalid audio manifest");
+        rows.push(...page);
+        if (page.length < 500) break;
+      }
       entries.clear();
       (Array.isArray(rows) ? rows : []).forEach(row => {
         if (row?.source_text && row?.storage_path) entries.set(norm(row.source_text), row);
