@@ -49,7 +49,7 @@
 
   function add(map, lang, text, lessonId = 'library', contentType = 'lesson', lessonTitle = '') {
     const clean = String(text || '').replace(/\s+/g, ' ').trim();
-    if (!clean) return;
+    if (!clean || /dictionary|trilingual|từ điển|词典/i.test(String(lessonId)+' '+String(lessonTitle))) return;
     const normalizer = lang === 'zh' ? normZh : normEn;
     if (lang === 'zh' && !hasHanzi(clean)) return;
     if (lang === 'en' && (!hasLatin(clean) || hasHanzi(clean))) return;
@@ -81,7 +81,7 @@
         await sleep(0);
       }
       const card = cards[index];
-      if (!card || String(card.lang || '') !== 'Tiếng Anh') continue;
+      if (!card || String(card.lang || '') !== 'Tiếng Anh' || /dictionary|trilingual|từ điển|词典/i.test([card.category,card.topic,card.sourceLabel].join(' '))) continue;
       const lessonId = card.topic || card.level || card.sourceLabel || 'cards';
       const lessonTitle = card.topic || card.sourceLabel || card.level || lessonId;
       if (card.cardType === 'sentence') add(en, 'en', card.chinese, lessonId, 'sentence', lessonTitle);
@@ -102,7 +102,7 @@
     for (let i = 0; i < cards.length; i++) {
       if (i && i % 160 === 0) await sleep(0);
       const card = cards[i];
-      if (!['zh','Tiếng Trung'].includes(card?.lang)) continue;
+      if (!['zh','Tiếng Trung'].includes(card?.lang) || /dictionary|trilingual|từ điển|词典/i.test([card.category,card.topic,card.sourceLabel].join(' '))) continue;
       const lesson = card.lang === 'zh'
         ? [card.category, card.topic].filter(Boolean).join(' - ').replace(/\s+[–—]\s+/g, ' - ')
         : card.topic || card.category;
@@ -214,23 +214,23 @@
     const table = lang === 'zh' ? 'chinese_audio_manifest' : 'english_audio_manifest';
     const locale = lang === 'zh' ? 'zh-CN' : 'en-US';
     const normalizer = lang === 'zh' ? normZh : normEn;
-    const result = new Set();
+    const result = new Map();
     for (let from = 0; ; from += 1000) {
       const { data, error } = await client
         .from(table)
-        .select('source_text')
+        .select('source_text,storage_path')
         .eq('locale', locale)
         .order('audio_key')
         .range(from, from + 999);
       if (error) throw error;
-      (data || []).forEach(row => row?.source_text && result.add(normalizer(row.source_text)));
+      (data || []).forEach(row => row?.source_text && result.set(normalizer(row.source_text),row.storage_path || ''));
       if (!data || data.length < 1000) break;
     }
     return result;
   }
 
   async function callGenerator(lang, items) {
-    const endpoint = lang === 'zh' ? 'generate-chinese-audio' : 'generate-english-audio';
+    const endpoint = 'generate-audio-mp3';
     const safeItems = items || [];
     if (!safeItems.length) throw new Error('Chưa có nội dung để tạo âm thanh.');
 
@@ -241,7 +241,7 @@
         Authorization: `Bearer ${session?.access_token || ''}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ model: MODEL, items: safeItems.map(item => ({ audio_key:item.audio_key, lesson_id:item.lesson_id, content_type:item.content_type, text:item.text })) })
+      body: JSON.stringify({ language: lang, items: safeItems.map(item => ({ audio_key:item.audio_key, lesson_id:item.lesson_id, content_type:item.content_type, text:item.text })) })
     });
     const raw = await response.text();
     let payload = null;
@@ -371,22 +371,25 @@
   }
 
   function selectedMissingGroups() {
-    const seen = new Set();
-    return selectedScanGroups().map(group => {
-      const itemsMissing = group.itemsMissing.filter(item => {
-        if (seen.has(item.audio_key)) return false;
-        seen.add(item.audio_key);
-        return true;
-      });
-      return { ...group, itemsMissing };
-    }).filter(group => group.itemsMissing.length);
+    // Small, resumable runs protect Supabase Free quota and iOS foreground time.
+    const seen=new Set(),groups=[];
+    let remaining=80;
+    for(const group of selectedScanGroups()) {
+      if(remaining<=0) break;
+      const itemsMissing=group.itemsMissing.filter(item=>{
+        if(seen.has(item.audio_key))return false;
+        seen.add(item.audio_key);return true;
+      }).slice(0,remaining);
+      if(itemsMissing.length){groups.push({...group,itemsMissing});remaining-=itemsMissing.length;}
+    }
+    return groups;
   }
 
   function refreshGenerateButton() {
     const button = document.getElementById('lfAudioGenerate');
     if (!button) return;
     const missing = selectedMissingGroups().reduce((n, group) => n + group.itemsMissing.length, 0);
-    button.textContent = missing ? '🎙️ 2. Tạo ' + missing + ' âm thanh còn thiếu' : '🎙️ Chưa có âm thanh cần tạo';
+    button.textContent = missing ? '🎙️ 2. Tạo tiếp ' + missing + ' MP3 (~60 kbps)' : '🎙️ Chưa có âm thanh cần tạo';
     button.disabled = !isAdmin || !latestScan || !missing || running;
   }
 
@@ -442,7 +445,7 @@
         }
         group.total++;
         group.typeTotals[item.content_type] = (group.typeTotals[item.content_type] || 0) + 1;
-        if (!stored.has(normalizer(item.text))) group.itemsMissing.push(item);
+        if (!stored.has(normalizer(item.text)) || !String(stored.get(normalizer(item.text))).toLowerCase().endsWith('.mp3')) group.itemsMissing.push(item);
       });
       groups.push(...byLesson.values());
     }
@@ -488,7 +491,7 @@
       return;
     }
     const headline = groups.length === 1 ? languageLabel(groups[0].lang) + ' — ' + groups[0].title : groups.length + ' bài/nhóm';
-    const confirmed = window.confirm('Sẽ tạo ' + total + ' âm thanh còn thiếu cho ' + headline + '.\nKhông ghi đè mục đã có. Có thể sử dụng hạn mức HeyGen Turbo Free.\n\nBắt đầu tạo?');
+    const confirmed = window.confirm('Sẽ tạo tối đa ' + total + ' MP3 mono 56 kbps (~60 kbps) cho ' + headline + '.\nKhông nén lại MP3 đã có. WAV cũ sẽ được giữ lại sau khi tạo MP3. Chỉ admin được dùng HeyGen Turbo Free.\n\nBắt đầu tạo?');
     if (!confirmed) { setStatus('Đã hủy tạo âm thanh. Chưa có file mới.'); return; }
     running = true;
     setBusy(true);
@@ -505,7 +508,7 @@
       for (let i = 0; i < groups.length; i++) {
         const group = groups[i];
         const row = outcome.lessons[i];
-        const batchSize = group.lang === 'zh' ? 10 : 8;
+        const batchSize = 4;
         for (let offset = 0; offset < group.itemsMissing.length; offset += batchSize) {
           const batch = group.itemsMissing.slice(offset, offset + batchSize);
           const current = processed + 1;
