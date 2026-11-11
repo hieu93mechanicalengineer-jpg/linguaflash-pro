@@ -28,8 +28,8 @@ window.LINGUAFLASH_SUPABASE = {
     tries += 1;
     if (window.supabase && typeof window.supabase.createClient === 'function') {
       clearInterval(timer);
-      addScript('data-lf-hq-audio-admin', './english-audio-admin-v1.js?v=76');
-      addScript('data-lf-hq-chinese-audio-admin', './chinese-audio-admin-v1.js?v=76');
+      addScript('data-lf-hq-audio-admin', './english-audio-admin-v1.js?v=136');
+      addScript('data-lf-hq-chinese-audio-admin', './chinese-audio-admin-v1.js?v=136');
       return;
     }
     if (tries >= 40) clearInterval(timer);
