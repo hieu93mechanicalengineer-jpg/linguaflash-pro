@@ -643,7 +643,7 @@
         '<select id="lfAudioLesson" disabled><option value="all">Tất cả bài trong nhóm đã lọc</option></select></div>' +
         '<div id="lfAudioLessonList" class="lf-audio-lesson-list" aria-label="Tình trạng âm thanh theo bài"></div>' +
         '<button id="lfAudioGenerate" class="lf-audio-generate" type="button" disabled>🎙️ 2. Kiểm tra trước khi tạo</button>' +
-        '<p class="lf-audio-note">Bước 1 chỉ kiểm tra, không tốn lượt HeyGen. Bước 2 xác nhận mới tạo file. Trên điện thoại chỉ quét các bài đang có trong bộ nhớ, không tự tải các bộ từ điển lớn. Khi tạo nhiều bài, mỗi câu trùng chỉ tạo một lần.</p>' +
+        '<p class="lf-audio-note">Bước 1 chỉ kiểm tra, không tốn lượt HeyGen. Bước 2 tạo tối đa 80 MP3 mono 56 kbps (xấp xỉ 60 kbps) mỗi lần; muốn tiếp tục hãy kiểm tra lại. Loại trừ toàn bộ TRILINGUAL DICTIONARY. File WAV cũ giữ nguyên để đối chiếu, không gọi HeyGen lại khi chỉ cần chuyển WAV sang MP3. Chỉ admin được tạo âm thanh, người dùng chỉ nghe.</p>' +
         '<div id="lfAudioProgress" hidden><progress id="lfAudioProgressBar" value="0" max="1"></progress>' +
         '<div id="lfAudioProgressText" aria-live="polite"></div></div>' +
         '<div id="' + STATUS_ID + '" role="status" aria-live="polite">Sẵn sàng. Chọn ngôn ngữ rồi bấm "Kiểm tra".</div>' +
