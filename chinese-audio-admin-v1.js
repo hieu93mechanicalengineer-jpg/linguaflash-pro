@@ -11,7 +11,7 @@
   const cfg = window.LINGUAFLASH_SUPABASE || {};
   const MODEL = 'heygen-voice-1-turbo-free';
   const VOICE_NAME = 'Shuxian · Clear & Trustworthy';
-  const BATCH_SIZE = 10;
+  const BATCH_SIZE = 4;
   const PANEL_ID = 'lfChineseAudioAdminPanel';
   const STATUS_ID = 'lfChineseAudioAdminStatus';
   const CREATE_ID = 'lfChineseAudioCreateButton';
@@ -141,16 +141,16 @@
 
   async function callGenerator(items) {
     if (!isAdmin || !session?.access_token) throw new Error('Chỉ tài khoản admin mới được tạo audio.');
-    const safeItems = (items || []).filter(item => item?.content_type === 'dialogue' && isDialogueText(item?.text));
-    if (!safeItems.length) throw new Error('Chính sách lưu trữ: tiếng Trung chỉ tạo HQ cho câu hội thoại.');
-    const response = await fetch(`${String(cfg.url || '').replace(/\/$/, '')}/functions/v1/generate-chinese-audio`, {
+    const safeItems = (items || []).filter(item => item?.text && !/dictionary|trilingual|từ điển|词典/i.test(String(item.lesson_id || '')));
+    if (!safeItems.length) throw new Error('Không có nội dung phù hợp, Dictionary bị loại trừ.');
+    const response = await fetch(`${String(cfg.url || '').replace(/\/$/, '')}/functions/v1/generate-audio-mp3`, {
       method: 'POST',
       headers: {
         apikey: cfg.anonKey,
         Authorization: `Bearer ${session.access_token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ model: MODEL, items: safeItems })
+      body: JSON.stringify({ language: 'zh', items: safeItems })
     });
     const raw = await response.text();
     let payload = null;
@@ -249,8 +249,8 @@
     if (!isAdmin || !session?.access_token || !hasHanzi(clean)) return false;
     if (window.LFChineseHQAudio?.has?.(clean)) return true;
 
-    // Critical storage rule: only dialogue lines are eligible for new HQ files.
-    if (!isDialogueText(clean)) return false;
+    const scope = [document.getElementById('studyCategoryFilter')?.value,document.getElementById('studyTopicFilter')?.value].join(' ');
+    if (/dictionary|trilingual|từ điển|词典/i.test(scope) || !document.getElementById('tab-library')?.classList.contains('hidden')) return false;
 
     const key = `zh_${hashText(clean)}`;
     if (pendingOnDemand.has(key)) return pendingOnDemand.get(key);
@@ -259,8 +259,8 @@
       try {
         const result = await callGenerator([{
           audio_key: key,
-          lesson_id: dialogueLessonIdForText(clean),
-          content_type: 'dialogue',
+          lesson_id: isDialogueText(clean) ? dialogueLessonIdForText(clean) : (document.getElementById('studyTopicFilter')?.value || 'chinese-study'),
+          content_type: isDialogueText(clean) ? 'dialogue' : contentType,
           text: clean
         }]);
         const ok = Number(result.generated || 0) > 0 || (result.results || []).some(row => row?.ok);
