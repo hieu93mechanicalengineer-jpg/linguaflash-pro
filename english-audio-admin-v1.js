@@ -10,7 +10,7 @@
   const cfg = window.LINGUAFLASH_SUPABASE || {};
   const MODEL = 'heygen-voice-1-turbo-free';
   const VOICE_NAME = 'Nadine · Calm & Gentle';
-  const BATCH_SIZE = 8;
+  const BATCH_SIZE = 4;
   const STATUS_ID = 'lf51AudioAdminStatus';
   const BUTTON_ID = 'lf51AudioAdminButton';
 
@@ -134,14 +134,14 @@
 
   async function callGenerator(items) {
     if (!isAdmin || !session?.access_token) throw new Error('Chỉ tài khoản admin mới được tạo audio.');
-    const response = await fetch(`${String(cfg.url || '').replace(/\/$/, '')}/functions/v1/generate-english-audio`, {
+    const response = await fetch(`${String(cfg.url || '').replace(/\/$/, '')}/functions/v1/generate-audio-mp3`, {
       method: 'POST',
       headers: {
         apikey: cfg.anonKey,
         Authorization: `Bearer ${session.access_token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ model: MODEL, items })
+      body: JSON.stringify({ language: 'en', items })
     });
 
     const raw = await response.text();
@@ -207,6 +207,8 @@
   async function ensureAudio(text, contentType = 'lesson') {
     const clean = String(text || '').replace(/\s+/g, ' ').trim();
     if (!isAdmin || !session?.access_token || !clean) return false;
+    const scope = [document.getElementById('studyCategoryFilter')?.value,document.getElementById('studyTopicFilter')?.value].join(' ');
+    if (/dictionary|trilingual|từ điển|词典/i.test(scope) || !document.getElementById('tab-library')?.classList.contains('hidden')) return false;
     if (window.LFEnglishHQAudio?.has?.(clean)) return true;
 
     const key = `en_${hashText(clean)}`;
