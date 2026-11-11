@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-v136-audio-mp3';
+const CACHE_NAME = 'linguaflash-v137-chinese-wav-cleanup';
 
 // Common startup shell. app.js is now the source of truth for English mobile UI
 // and HQ audio; the service worker only adds generic study helpers and caches them.
