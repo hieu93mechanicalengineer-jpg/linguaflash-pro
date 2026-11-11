@@ -560,6 +560,73 @@
     }
   }
 
+
+  // One-time, admin-gated cleanup of Chinese WAV originals after MP3 migration.
+  // All removals are performed by Supabase Storage API with counterpart checks.
+  let chineseWavCleanupRunning=false;
+  async function cleanupChineseWav() {
+    if(chineseWavCleanupRunning||running)return;
+    if(!isAdmin||!session?.access_token) {
+      window.alert('Chỉ tài khoản admin được xóa WAV cũ. Hãy đăng nhập lại.');
+      return;
+    }
+    if(!window.confirm('Đã xác minh 1.070 WAV tiếng Trung có đủ MP3 thay thế và manifest không còn dùng WAV.\n\nXóa vĩnh viễn CHỈ file WAV trong bucket chinese-audio? File MP3 và tiếng Anh giữ nguyên.'))return;
+    const button=document.getElementById('lfChineseWavCleanupButton');
+    const status=document.getElementById('lfChineseWavCleanupStatus');
+    chineseWavCleanupRunning=true;
+    if(button)button.disabled=true;
+    let offset=0,totalDeleted=0,totalBytes=0,batches=0;
+    try {
+      while(batches++<200){
+        if(status)status.textContent='⏳ Đang dọn WAV tiếng Trung: đã xử lý '+offset+' mục, đã xóa '+totalDeleted+' file…';
+        const res=await fetch(String(cfg.url||'').replace(/\/$/,'')+'/functions/v1/cleanup-chinese-wav',{
+          method:'POST',
+          headers:{apikey:cfg.anonKey,Authorization:'Bearer '+session.access_token,'Content-Type':'application/json'},
+          body:JSON.stringify({action:'cleanup-chinese-wav-only',cursor:offset,limit:80})
+        });
+        const raw=await res.text();
+        let payload={};try{payload=JSON.parse(raw)}catch(_){}
+        if(!res.ok)throw Error(payload.error||'Lỗi xóa WAV: HTTP '+res.status);
+        totalDeleted+=Number(payload.deleted||0);
+        totalBytes+=Number(payload.estimated_bytes_removed||0);
+        offset=Number(payload.next_cursor||offset);
+        if(payload.done)break;
+        await sleep(80);
+      }
+      if(status)status.textContent='✅ Hoàn tất dọn WAV tiếng Trung: '+totalDeleted+' file; ước tính giải phóng '+(totalBytes/1048576).toFixed(2)+' MB. MP3 và tiếng Anh được giữ nguyên.';
+    }catch(error){
+      if(status)status.textContent='⚠️ Đã xóa '+totalDeleted+' WAV, sau đó dừng: '+String(error.message||error)+'. Có thể bấm lại để tiếp tục, không xóa MP3.';
+    }finally{
+      chineseWavCleanupRunning=false;
+      if(button)button.disabled=false;
+    }
+  }
+
+  function ensureChineseWavCleanupButton() {
+    const panel=document.getElementById(PANEL_ID);
+    if(!panel)return;
+    const existing=document.getElementById('lfChineseWavCleanupButton');
+    if(!isAdmin){if(existing)existing.parentElement?.remove();return;}
+    if(existing)return;
+    const area=document.createElement('div');
+    area.style.cssText='margin-top:12px;padding:12px;border:1px solid #94a3b8;border-radius:12px;background:rgba(148,163,184,.08)';
+    const label=document.createElement('div');
+    label.textContent='🧹 Dọn file WAV cũ — chỉ tiếng Trung';
+    label.style.cssText='font-weight:800;margin-bottom:6px';
+    const btn=document.createElement('button');
+    btn.id='lfChineseWavCleanupButton';
+    btn.type='button';
+    btn.textContent='Xóa WAV tiếng Trung đã có MP3';
+    btn.style.cssText='font-weight:750;padding:11px 14px;min-height:44px;border:1px solid #eab308;background:#fef3c7;color:#713f12;border-radius:10px;cursor:pointer';
+    btn.addEventListener('click',cleanupChineseWav);
+    const status=document.createElement('div');
+    status.id='lfChineseWavCleanupStatus';
+    status.style.cssText='font-size:.8rem;color:#64748b;margin-top:7px;line-height:1.5;overflow-wrap:anywhere';
+    status.textContent='Chỉ xóa WAV có MP3 cùng tên và không còn được bài học sử dụng. Thao tác không thể hoàn tác.';
+    area.append(label,btn,status);
+    panel.appendChild(area);
+  }
+
   // Legacy API compatibility. This only scans; generation always needs an explicit second click.
   function run(scope) {
     const select = document.getElementById('lfAudioLanguage');
@@ -726,7 +793,7 @@
       }
       const { data } = await client.auth.getSession();
       session = data?.session || null;
-      if (!session?.user) { isAdmin = false; return false; }
+      if (!session?.user) { isAdmin = false; ensureChineseWavCleanupButton(); return false; }
       const { data: admin, error } = await client
         .from('linguaflash_admins')
         .select('role')
@@ -734,6 +801,7 @@
         .maybeSingle();
       isAdmin = !error && !!admin;
       ensurePanel();
+      ensureChineseWavCleanupButton();
       return isAdmin;
     } catch (error) {
       console.warn('[HQ Bulk] admin init skipped', error);
