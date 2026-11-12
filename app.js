@@ -71,7 +71,7 @@
     document.write('<script src="./english-desktop-unit2-bridge-v1.js?v=127"><\/script>');
   }
 
-  document.write('<script src="./audio-hq-bulk-admin-v1.js?v=137"><\/script>');
+  document.write('<script src="./audio-hq-bulk-admin-v1.js?v=138"><\/script>');
   document.write('<script src="./chinese-dialogue-hq-status-v1.js?v=105"><\/script>');
   document.write('<script src="./english-dialogue-transcript-v1.js?v=117"><\/script>');
   document.write('<script src="./study-session-v1.js?v=120"><\/script>');
