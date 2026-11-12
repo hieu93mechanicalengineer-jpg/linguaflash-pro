@@ -608,6 +608,84 @@
     }
   }
 
+  let englishWavCleanupRunning=false;
+  async function cleanupEnglishWav() {
+    if(englishWavCleanupRunning||running)return;
+    if(!isAdmin||!session?.access_token){
+      window.alert('Chỉ tài khoản quản trị mới có thể xóa file WAV.');
+      return;
+    }
+    const button=document.getElementById('lfEnglishWavCleanupButton');
+    const status=document.getElementById('lfEnglishWavCleanupStatus');
+    const endpoint=String(cfg.url||'').replace(/\/$/,'')+'/functions/v1/cleanup-english-wav';
+    const invoke=async(body)=>{
+      const res=await fetch(endpoint,{method:'POST',headers:{
+        apikey:cfg.anonKey,Authorization:'Bearer '+session.access_token,'Content-Type':'application/json'
+      },body:JSON.stringify(body)});
+      const raw=await res.text();
+      let data={};try{data=JSON.parse(raw)}catch(_){}
+      if(!res.ok)throw Error(data.error||raw||'Supabase HTTP '+res.status);
+      return data;
+    };
+    englishWavCleanupRunning=true;
+    if(button)button.disabled=true;
+    let deleted=0,planned=0;
+    try{
+      if(status)status.textContent='🔎 Đang kiểm kê WAV tiếng Anh trên Supabase…';
+      const preview=await invoke({action:'preview'});
+      const all=Array.isArray(preview.paths)?preview.paths:[];
+      planned=all.length;
+      const refs=Number(preview.referenced_by_lessons||0);
+      if(!planned){if(status)status.textContent='✅ Không còn file WAV nào trong english-audio.';return;}
+      const accepted=window.confirm('XÓA VĨNH VIỄN '+planned+' FILE WAV TIẾNG ANH?\n'+
+        'Có '+refs+' file vẫn được bài học tham chiếu; các đoạn này có thể mất âm thanh nếu chưa có MP3 thay thế.\n'+
+        'Tất cả MP3 và file tiếng Trung sẽ được giữ nguyên.\n'+
+        'KHÔNG thể khôi phục WAV sau khi xóa.\n\nBạn xác nhận xóa toàn bộ WAV tiếng Anh?');
+      if(!accepted){if(status)status.textContent='Đã hủy. Chưa xóa file nào.';return;}
+      for(let i=0;i<all.length;i+=40){
+        const batch=all.slice(i,i+40);
+        const result=await invoke({action:'delete-batch',paths:batch});
+        deleted+=Number(result.deleted||0);
+        if(status)status.textContent='⏳ Đã xóa '+deleted+'/'+planned+' WAV tiếng Anh. Giữ nguyên toàn bộ MP3…';
+        if(i+40<all.length)await sleep(90);
+      }
+      if(status)status.textContent='🔎 Đang đối chiếu lại kho lưu trữ…';
+      const after=await invoke({action:'preview'});
+      const remaining=Number(after.count||0);
+      if(status)status.textContent=remaining===0
+        ?'✅ Đã xác nhận Supabase không còn WAV tiếng Anh. Đã xóa '+deleted+' file; MP3 và tiếng Trung được giữ nguyên.'
+        :'⚠️ Đã xóa '+deleted+' WAV nhưng vẫn còn '+remaining+' WAV. Bấm lại để tiếp tục phần còn lại.';
+    }catch(e){
+      if(status)status.textContent='⚠️ Đã xóa '+deleted+'/'+planned+' file trước khi dừng: '+String(e?.message||e)+'. Có thể bấm lại để tiếp tục; MP3 được giữ nguyên.';
+    }finally{
+      englishWavCleanupRunning=false;
+      if(button)button.disabled=false;
+    }
+  }
+
+  function ensureEnglishWavCleanupButton() {
+    const panel=document.getElementById(PANEL_ID);
+    if(!panel)return;
+    const existing=document.getElementById('lfEnglishWavCleanupButton');
+    if(!isAdmin){if(existing)existing.parentElement?.remove();return;}
+    if(existing)return;
+    const area=document.createElement('div');
+    area.style.cssText='margin-top:12px;padding:12px;border:1px solid #fca5a5;border-radius:12px;background:rgba(254,226,226,.25)';
+    const label=document.createElement('div');
+    label.textContent='🗑️ Xóa WAV tiếng Anh để giải phóng dung lượng';
+    label.style.cssText='font-weight:800;margin-bottom:6px';
+    const btn=document.createElement('button');
+    btn.id='lfEnglishWavCleanupButton';btn.type='button';
+    btn.textContent='Xóa toàn bộ WAV tiếng Anh';
+    btn.style.cssText='font-weight:750;padding:11px 14px;min-height:44px;border:1px solid #b91c1c;background:#fee2e2;color:#991b1b;border-radius:10px;cursor:pointer';
+    btn.addEventListener('click',cleanupEnglishWav);
+    const status=document.createElement('div');
+    status.id='lfEnglishWavCleanupStatus';
+    status.style.cssText='font-size:.8rem;color:#7f1d1d;margin-top:7px;line-height:1.5;overflow-wrap:anywhere';
+    status.textContent='Chỉ tài khoản quản trị. Hệ thống sẽ kiểm tra lại trước khi xóa; WAV còn được bài học sử dụng cũng sẽ bị xóa. Thao tác không thể hoàn tác.';
+    area.append(label,btn,status);panel.appendChild(area);
+  }
+
   function ensureChineseWavCleanupButton() {
     const panel=document.getElementById(PANEL_ID);
     if(!panel)return;
@@ -799,7 +877,7 @@
       }
       const { data } = await client.auth.getSession();
       session = data?.session || null;
-      if (!session?.user) { isAdmin = false; ensureChineseWavCleanupButton(); return false; }
+      if (!session?.user) { isAdmin = false; ensureChineseWavCleanupButton(); ensureEnglishWavCleanupButton(); return false; }
       const { data: admin, error } = await client
         .from('linguaflash_admins')
         .select('role')
@@ -808,6 +886,7 @@
       isAdmin = !error && !!admin;
       ensurePanel();
       ensureChineseWavCleanupButton();
+      ensureEnglishWavCleanupButton();
       return isAdmin;
     } catch (error) {
       console.warn('[HQ Bulk] admin init skipped', error);
