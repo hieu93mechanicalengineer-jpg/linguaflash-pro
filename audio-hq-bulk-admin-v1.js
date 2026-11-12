@@ -302,16 +302,16 @@
     summary.className = 'lf-audio-run-title';
     const state = last.status === 'complete' ? '✅ Đã kết thúc' : last.status === 'running' ? '⚠️ Lần chạy trước chưa ghi nhận kết thúc' : '⚠️ Đã dừng / có lỗi';
     const stamp = new Date(last.updatedAt || Date.now()).toLocaleString('vi-VN');
-    summary.textContent = state + ' · ' + stamp + ' · Đã tạo ' + (last.generated || 0) + '/' + (last.target || 0) + ' · Lỗi ' + (last.failed || 0);
+    summary.textContent = state + ' · ' + stamp + ' · Đã tạo ' + (last.generated || 0) + '/' + (last.target || 0) + ' · Đã có ' + (last.skipped || 0) + ' · Chờ WAV→MP3 ' + (last.conversionPending || 0) + ' · Lỗi ' + (last.failed || 0);
     host.appendChild(summary);
-    const rows = (last.lessons || []).filter(x => x.generated || x.failed || x.error);
+    const rows = (last.lessons || []).filter(x => x.generated || x.failed || x.error || x.conversionPending);
     if (!rows.length) return;
     const list = document.createElement('div');
     list.className = 'lf-audio-run-list';
     rows.forEach(row => {
       const item = document.createElement('div');
       item.className = 'lf-audio-lesson-row';
-      item.textContent = languageLabel(row.lang) + ' — ' + row.title + ': đã tạo ' + (row.generated || 0) + ', lỗi ' + (row.failed || 0) + (row.error ? ' · ' + row.error : '');
+      item.textContent = languageLabel(row.lang) + ' — ' + row.title + ': đã tạo ' + (row.generated || 0) + ', chờ WAV→MP3 ' + (row.conversionPending || 0) + ', lỗi ' + (row.failed || 0) + (row.error ? ' · ' + row.error : '');
       list.appendChild(item);
     });
     host.appendChild(list);
@@ -389,7 +389,7 @@
     const button = document.getElementById('lfAudioGenerate');
     if (!button) return;
     const missing = selectedMissingGroups().reduce((n, group) => n + group.itemsMissing.length, 0);
-    button.textContent = missing ? '🎙️ 2. Tạo tiếp ' + missing + ' MP3 (~60 kbps)' : '🎙️ Chưa có âm thanh cần tạo';
+    button.textContent = missing ? '🎙️ 2. Xử lý ' + missing + ' mục (MP3 64 kbps)' : '🎙️ Chưa có âm thanh cần tạo';
     button.disabled = !isAdmin || !latestScan || !missing || running;
   }
 
@@ -414,7 +414,7 @@
     const total = groups.reduce((n, group) => n + group.total, 0);
     const missing = groups.reduce((n, group) => n + group.itemsMissing.length, 0);
     const complete = total - missing;
-    summary.textContent = 'Đã quét ' + groups.length + ' bài/nhóm · ' + complete + '/' + total + ' âm thanh đã có · còn thiếu ' + missing + '.';
+    summary.textContent = 'Đã quét ' + groups.length + ' bài/nhóm · ' + complete + '/' + total + ' mục đã có MP3 · còn ' + missing + ' mục cần tạo mới hoặc chuyển WAV.';
     const ordered = [...groups].sort((a, b) => b.itemsMissing.length - a.itemsMissing.length || a.title.localeCompare(b.title, 'vi'));
     ordered.forEach(group => {
       selector.add(new Option(languageLabel(group.lang) + ' — ' + group.title + ' (thiếu ' + group.itemsMissing.length + ')', group.key));
@@ -491,14 +491,14 @@
       return;
     }
     const headline = groups.length === 1 ? languageLabel(groups[0].lang) + ' — ' + groups[0].title : groups.length + ' bài/nhóm';
-    const confirmed = window.confirm('Sẽ tạo tối đa ' + total + ' MP3 mono 56 kbps (~60 kbps) cho ' + headline + '.\nKhông nén lại MP3 đã có. WAV cũ sẽ được giữ lại sau khi tạo MP3. Chỉ admin được dùng HeyGen Turbo Free.\n\nBắt đầu tạo?');
+    const confirmed = window.confirm('Sẽ xử lý tối đa ' + total + ' mục MP3 mono 64 kbps cho ' + headline + '.\nMP3 đã có được bỏ qua; WAV gốc được giữ nguyên và đánh dấu chờ chuyển đổi ngoài Supabase, không tạo lại giọng.\n\nBắt đầu?');
     if (!confirmed) { setStatus('Đã hủy tạo âm thanh. Chưa có file mới.'); return; }
     running = true;
     setBusy(true);
     const outcome = {
       status: 'running', updatedAt: Date.now(), scope: latestScan.scope,
-      target: total, generated: 0, failed: 0,
-      lessons: groups.map(group => ({ key: group.key, lang: group.lang, title: group.title, generated: 0, failed: 0, error: '' }))
+      target: total, generated: 0, skipped: 0, conversionPending: 0, failed: 0,
+      lessons: groups.map(group => ({ key: group.key, lang: group.lang, title: group.title, generated: 0, skipped: 0, conversionPending: 0, failed: 0, error: '' }))
     };
     saveRunReport(outcome);
     let processed = 0;
@@ -508,7 +508,7 @@
       for (let i = 0; i < groups.length; i++) {
         const group = groups[i];
         const row = outcome.lessons[i];
-        const batchSize = 4;
+        const batchSize = 1; // Journal each successfully generated MP3 immediately
         for (let offset = 0; offset < group.itemsMissing.length; offset += batchSize) {
           const batch = group.itemsMissing.slice(offset, offset + batchSize);
           const current = processed + 1;
@@ -524,14 +524,20 @@
           }
           const generated = Number(payload.generated || 0);
           const failed = Number(payload.failed || 0);
+          const skipped = Number(payload.skipped || 0);
+          const pending = (payload.results || []).filter(item => item.conversion_pending).length;
           row.generated += generated;
+          row.skipped += skipped;
+          row.conversionPending += pending;
           row.failed += failed;
           outcome.generated += generated;
+          outcome.skipped += skipped;
+          outcome.conversionPending += pending;
           outcome.failed += failed;
           processed += batch.length;
           outcome.updatedAt = Date.now();
           saveRunReport(outcome);
-          setProgress(processed, total, 'Đã xử lý ' + processed + '/' + total + ' · tạo được ' + outcome.generated + ' · lỗi ' + outcome.failed);
+          setProgress(processed, total, 'Đã xử lý ' + processed + '/' + total + ' · tạo ' + outcome.generated + ' · chờ WAV→MP3 ' + outcome.conversionPending + ' · lỗi ' + outcome.failed);
           if (failed) {
             const failure = payload.results?.find(item => item.ok === false);
             row.error = String(failure?.error || 'Dịch vụ tạo giọng báo lỗi.');
@@ -540,15 +546,15 @@
           if (offset + batchSize < group.itemsMissing.length) await sleep(250);
         }
       }
-      outcome.status = outcome.failed ? 'partial' : 'complete';
+      outcome.status = outcome.failed || outcome.conversionPending ? 'partial' : 'complete';
       outcome.updatedAt = Date.now();
       saveRunReport(outcome);
-      setStatus((outcome.failed ? '⚠️' : '✅') + ' Đã xử lý xong ' + processed + '/' + total + ': tạo ' + outcome.generated + ', lỗi ' + outcome.failed + '. Bấm "Kiểm tra" lại để đối chiếu bài còn thiếu.', outcome.failed ? 'error' : 'ok');
+      setStatus((outcome.failed ? '⚠️' : '✅') + ' Đã xử lý ' + processed + '/' + total + ': tạo mới ' + outcome.generated + ', đã có ' + outcome.skipped + ', chờ chuyển WAV ' + outcome.conversionPending + ', lỗi ' + outcome.failed + '. Bấm "Kiểm tra" để cập nhật dữ liệu.', outcome.failed ? 'error' : outcome.conversionPending ? 'info' : 'ok');
     } catch (error) {
       outcome.status = 'partial';
       outcome.updatedAt = Date.now();
       saveRunReport(outcome);
-      setStatus('⚠️ Đã dừng khi xử lý ' + processed + '/' + total + ' mục. Đã tạo ' + outcome.generated + ', lỗi đã báo ' + outcome.failed + '. ' + String(error?.message || error) + '. Kiểm tra lại để tiếp tục các mục thiếu.', 'error');
+      setStatus('⚠️ Đã dừng tại ' + processed + '/' + total + ' mục. Đã tạo ' + outcome.generated + ', chờ chuyển WAV ' + outcome.conversionPending + ', lỗi báo ' + outcome.failed + '. Sau khi kiểm tra lại, những mục đã thành công sẽ được bỏ qua. ' + String(error?.message || error) + '. Kiểm tra lại để tiếp tục các mục thiếu.', 'error');
     } finally {
       running = false;
       const languages = new Set(groups.map(group => group.lang));
@@ -710,7 +716,7 @@
         '<select id="lfAudioLesson" disabled><option value="all">Tất cả bài trong nhóm đã lọc</option></select></div>' +
         '<div id="lfAudioLessonList" class="lf-audio-lesson-list" aria-label="Tình trạng âm thanh theo bài"></div>' +
         '<button id="lfAudioGenerate" class="lf-audio-generate" type="button" disabled>🎙️ 2. Kiểm tra trước khi tạo</button>' +
-        '<p class="lf-audio-note">Bước 1 chỉ kiểm tra, không tốn lượt HeyGen. Bước 2 tạo tối đa 80 MP3 mono 56 kbps (xấp xỉ 60 kbps) mỗi lần; muốn tiếp tục hãy kiểm tra lại. Loại trừ toàn bộ TRILINGUAL DICTIONARY. File WAV cũ giữ nguyên để đối chiếu, không gọi HeyGen lại khi chỉ cần chuyển WAV sang MP3. Chỉ admin được tạo âm thanh, người dùng chỉ nghe.</p>' +
+        '<p class="lf-audio-note">Bước 1 chỉ kiểm tra, không tốn lượt HeyGen. Bước 2 xử lý tối đa 80 mục/lần, MP3 mono 64 kbps trực tiếp từ HeyGen. WAV đã có chỉ đánh dấu chờ chuyển đổi ngoài Supabase, không tạo lại giọng. Muốn tiếp tục hãy kiểm tra lại. Loại trừ toàn bộ TRILINGUAL DICTIONARY. File WAV cũ giữ nguyên để đối chiếu. Chỉ admin được tạo âm thanh, người dùng chỉ nghe.</p>' +
         '<div id="lfAudioProgress" hidden><progress id="lfAudioProgressBar" value="0" max="1"></progress>' +
         '<div id="lfAudioProgressText" aria-live="polite"></div></div>' +
         '<div id="' + STATUS_ID + '" role="status" aria-live="polite">Sẵn sàng. Chọn ngôn ngữ rồi bấm "Kiểm tra".</div>' +
