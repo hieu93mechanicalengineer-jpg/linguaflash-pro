@@ -491,7 +491,7 @@
       return;
     }
     const headline = groups.length === 1 ? languageLabel(groups[0].lang) + ' — ' + groups[0].title : groups.length + ' bài/nhóm';
-    const confirmed = window.confirm('Sẽ xử lý tối đa ' + total + ' mục MP3 mono 64 kbps cho ' + headline + '.\nMP3 đã có được bỏ qua; WAV gốc được giữ nguyên và đánh dấu chờ chuyển đổi ngoài Supabase, không tạo lại giọng.\n\nBắt đầu?');
+    const confirmed = window.confirm('Sẽ xử lý tối đa ' + total + ' mục MP3 mono 64 kbps cho ' + headline + '.\nMP3 đã có sẽ được bỏ qua. Nếu WAV vẫn còn trong kho, giữ nguyên và báo chờ chuyển đổi. Nếu WAV đã bị xóa, tạo lại trực tiếp MP3 64 kbps bằng giọng HeyGen đã thiết lập cho ngôn ngữ này.\n\nBắt đầu?');
     if (!confirmed) { setStatus('Đã hủy tạo âm thanh. Chưa có file mới.'); return; }
     running = true;
     setBusy(true);
