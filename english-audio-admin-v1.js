@@ -19,6 +19,7 @@
   let isAdmin = false;
   let generating = false;
   const pendingOnDemand = new Map();
+  let hometownRepairTask = null;
 
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const norm = value => String(value || '')
@@ -132,7 +133,7 @@
     return items.filter(item => !existing.has(norm(item.text)));
   }
 
-  async function callGenerator(items) {
+  async function callGenerator(items, options = {}) {
     if (!isAdmin || !session?.access_token) throw new Error('Chỉ tài khoản admin mới được tạo audio.');
     const response = await fetch(`${String(cfg.url || '').replace(/\/$/, '')}/functions/v1/generate-audio-mp3`, {
       method: 'POST',
@@ -141,7 +142,7 @@
         Authorization: `Bearer ${session.access_token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ language: 'en', items })
+      body: JSON.stringify({ language: 'en', items, ...(options.repair_hometown ? { repair_hometown: true } : {}) })
     });
 
     const raw = await response.text();
@@ -278,6 +279,40 @@
     top.appendChild(wrap);
   }
 
+  // One-time, admin-authorized recovery for the 'hometown' clip.
+  // The earlier MP3 is stored, but it was reported inaudible on iPhone.
+  // Use a new versioned path so the browser never replays the cached old file.
+  async function repairHometown() {
+    if (!isAdmin || !session?.access_token) return false;
+    if (hometownRepairTask) return hometownRepairTask;
+    hometownRepairTask = (async () => {
+      await window.LFEnglishHQAudio?.ready;
+      const current = window.LFEnglishHQAudio?.getEntry?.('hometown');
+      if (!current) return false;
+      if (/\/en_kvmekm-repair-20261112\.mp3$/i.test(String(current.storage_path || ''))) return true;
+      if (!/\/en_kvmekm\.mp3$/i.test(String(current.storage_path || ''))) return false;
+      const items = [{
+        audio_key: 'en_kvmekm',
+        lesson_id: '51Talk English - Level 2 · Unit 4 · Lesson 2 · My Uncle Lives on a Farm',
+        content_type: 'vocab',
+        text: 'hometown'
+      }];
+      const report = await callGenerator(items, { repair_hometown: true });
+      const status = report.results?.[0];
+      if (!status?.ok) throw new Error(status?.error || 'Không tạo được âm thanh hometown');
+      await window.LFEnglishHQAudio?.refresh?.();
+      const updated = window.LFEnglishHQAudio?.getEntry?.('hometown');
+      const success = /\/en_kvmekm-repair-20261112\.mp3$/i.test(String(updated?.storage_path || ''));
+      if (success) setStatus('✅ Đã cập nhật âm thanh riêng cho từ hometown. Hãy bấm nghe lại.', 'ok');
+      return success;
+    })().catch(error => {
+      console.warn('[LinguaFlash hometown audio repair]', error);
+      setStatus('⚠️ Chưa thể cập nhật hometown: ' + String(error?.message || error), 'error');
+      return false;
+    });
+    return hometownRepairTask;
+  }
+
   async function initAuth() {
     if (!cfg.url || !cfg.anonKey || !window.supabase?.createClient) return;
     try {
@@ -297,6 +332,7 @@
 
       isAdmin = true;
       ensureAdminControl();
+      void repairHometown();
 
       client.auth.onAuthStateChange(async (_event, newSession) => {
         session = newSession || null;
@@ -307,7 +343,10 @@
         }
         const { data: nextAdmin } = await client.from('linguaflash_admins').select('role').eq('user_id', session.user.id).maybeSingle();
         isAdmin = !!nextAdmin;
-        if (isAdmin) setTimeout(ensureAdminControl, 50);
+        if (isAdmin) {
+          setTimeout(ensureAdminControl, 50);
+          void repairHometown();
+        }
         else document.getElementById(BUTTON_ID)?.parentElement?.remove();
       });
     } catch (error) {
@@ -330,6 +369,7 @@
     collectCurrentLessonAudio,
     generateCurrentLesson,
     ensureAudio,
+    repairHometown,
     canGenerate: () => isAdmin && !!session?.access_token,
     model: MODEL,
     voice: VOICE_NAME
