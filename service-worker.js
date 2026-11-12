@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-v137-chinese-wav-cleanup';
+const CACHE_NAME = 'linguaflash-v138-hometown-audio-repair';
 
 // Common startup shell. app.js is now the source of truth for English mobile UI
 // and HQ audio; the service worker only adds generic study helpers and caches them.
@@ -9,7 +9,7 @@ const CORE_ASSETS = [
   './mobile-ui-v1.js',
   './english-hq-audio-v1.js?v=134',
   './chinese-hq-audio-v1.js?v=134',
-  './english-audio-admin-v1.js',
+  './english-audio-admin-v1.js?v=141',
   './chinese-audio-admin-v1.js',
   './audio-hq-bulk-admin-v1.js',
   './icons/icon-192.png',
@@ -109,7 +109,7 @@ async function transformIndexResponse(response) {
     /<script src="\.\/app\.js(?:\?v=\d+)?"><\/script>/,
     `<script src="./data/giahan-translation-practice-v2.js?v=90"></script>
 <script src="./data/giahan-translation-practice-tc2-fix-v1.js?v=90"></script>
-<script src="./app.js?v=134"></script>
+<script src="./app.js?v=141"></script>
 <script>
 (function(){
   var ua = String(navigator.userAgent || '');
