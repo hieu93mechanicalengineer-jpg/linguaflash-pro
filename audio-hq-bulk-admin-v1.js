@@ -470,7 +470,7 @@
       const scan = await performScan(scope);
       const missing = scan.groups.reduce((n, group) => n + group.itemsMissing.length, 0);
       setStatus(missing
-        ? '✅ Đã kiểm tra. Còn ' + missing + ' âm thanh chưa có. Chọn bài muốn tạo và bấm "2. Tạo". Chưa tạo file nào.'
+        ? '✅ Đã kiểm tra. Còn ' + missing + ' âm thanh chưa có. Chọn bài muốn tạo và bấm "2. Tạo". Nhật ký bên dưới là kết quả tạo trước đó.'
         : '✅ Đã kiểm tra. Các nội dung tìm thấy đều đã có âm thanh. Không cần tạo mới.', 'ok');
     } catch (error) {
       console.error('[LinguaFlash HQ Audio scan]', error);
@@ -850,10 +850,10 @@
       if (!isAdmin) {
         setStatus('🔒 Bạn cần đăng nhập tài khoản quản trị để kiểm tra và tạo âm thanh.');
         void initAuth().then(ok => {
-          if (ok) setStatus('Sẵn sàng. Bấm "1. Kiểm tra" để xem bài nào thiếu âm thanh; chưa tạo file nào.');
+          if (ok) setStatus('Sẵn sàng. Bấm "1. Kiểm tra" để đối chiếu kho âm thanh; xem Nhật ký bên dưới để biết kết quả lần tạo gần nhất.');
         });
       } else {
-        if (!latestScan && !running) setStatus('Sẵn sàng. Bấm "1. Kiểm tra" để xem bài nào còn thiếu; chưa tạo file nào.');
+        if (!latestScan && !running) setStatus('Sẵn sàng. Bấm "1. Kiểm tra" để đối chiếu kho âm thanh; xem Nhật ký bên dưới để biết kết quả lần tạo gần nhất.');
       }
       panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
