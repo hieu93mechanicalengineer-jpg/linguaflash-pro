@@ -1,6 +1,670 @@
 /* 51Talk Classic English Level 2 · User-supplied Unit 5 and Unit 6 Lesson 2 PDFs. */
 (() => {
   const lessons = [
+{
+  "id": "classicL4U4L2",
+  "unit": "Level 4 · Unit 4 · Lesson 2",
+  "title": "Mid-Autumn Festival",
+  "subtitle": "Tết Trung thu · Gia đình · Âm lịch",
+  "level": "51Talk · Level 4",
+  "vocab": [
+    [
+      "lunar month",
+      "/ˈluːnə mʌnθ/",
+      "Tháng âm lịch",
+      "the 8th lunar month; 农历月 (nónglì yuè)."
+    ],
+    [
+      "differ from",
+      "/ˈdɪfə frɒm/",
+      "Khác với",
+      "A differs from B = A is different from B; 不同于 (bùtóng yú)."
+    ],
+    [
+      "celebrate",
+      "/ˈselɪbreɪt/",
+      "Ăn mừng, đón lễ",
+      "celebrate a festival/birthday; 庆祝 (qìngzhù)."
+    ],
+    [
+      "enjoy the full moon",
+      "/ɪnˈdʒɔɪ ðə fʊl muːn/",
+      "Thưởng trăng tròn",
+      "admire the full moon; 赏月 (shǎng yuè)."
+    ],
+    [
+      "tasty",
+      "/ˈteɪsti/",
+      "Ngon",
+      "a simple but tasty meal; 美味的 (měiwèi de)."
+    ],
+    [
+      "Mid-Autumn Festival",
+      "/ˌmɪd ˈɔːtəm ˈfestɪvl/",
+      "Tết Trung thu",
+      "中秋节 (Zhōngqiū Jié)."
+    ],
+    [
+      "mooncake",
+      "/ˈmuːnkeɪk/",
+      "Bánh trung thu",
+      "月饼 (yuèbǐng)."
+    ],
+    [
+      "filling",
+      "/ˈfɪlɪŋ/",
+      "Nhân bánh",
+      "a cake with a certain filling; 馅 (xiàn)."
+    ],
+    [
+      "fall on",
+      "/fɔːl ɒn/",
+      "Rơi vào (ngày)",
+      "The festival falls on...; 适逢 (shìféng)."
+    ],
+    [
+      "get together",
+      "/ɡet təˈɡeðə/",
+      "Tụ họp",
+      "get together for dinner; 团聚 (tuánjù)."
+    ],
+    [
+      "taste",
+      "/teɪst/",
+      "Nếm; hương vị",
+      "taste (động từ/danh từ), tasty (tính từ); 品尝 (pǐncháng)."
+    ],
+    [
+      "method",
+      "/ˈmeθəd/",
+      "Phương pháp",
+      "a method for studying English; 方法 (fāngfǎ)."
+    ],
+    [
+      "completely",
+      "/kəmˈpliːtli/",
+      "Hoàn toàn",
+      "differ completely; 完全 (wánquán)."
+    ],
+    [
+      "sit outdoors",
+      "/sɪt ˌaʊtˈdɔːz/",
+      "Ngồi ngoài trời",
+      "outdoors là trạng từ; 坐在户外 (zuò zài hùwài)."
+    ],
+    [
+      "on campus",
+      "/ɒn ˈkæmpəs/",
+      "Trong khuôn viên trường",
+      "在校园里 (zài xiàoyuán lǐ)."
+    ],
+    [
+      "can't wait to",
+      "/kɑːnt weɪt tə/",
+      "Nóng lòng muốn",
+      "can't wait to + động từ; 迫不及待 (pò bù jí dài)."
+    ],
+    [
+      "lotus seed paste",
+      "/ˈləʊtəs siːd peɪst/",
+      "Nhân hạt sen",
+      "莲蓉 (liánróng)."
+    ],
+    [
+      "salted egg yolk",
+      "/ˈsɔːltɪd eɡ jəʊk/",
+      "Lòng đỏ trứng muối",
+      "咸蛋黄 (xián dànhuáng)."
+    ],
+    [
+      "lantern",
+      "/ˈlæntən/",
+      "Đèn lồng",
+      "灯笼 (dēnglong)."
+    ]
+  ],
+  "examples": [
+    [
+      "lunar month",
+      "The Chinese New Year falls on the 1st day of the 1st lunar month.",
+      "Tết Nguyên đán rơi vào ngày mùng một tháng Giêng âm lịch."
+    ],
+    [
+      "differ from",
+      "Jim's method for studying English differs from yours completely.",
+      "Phương pháp học tiếng Anh của Jim hoàn toàn khác phương pháp của bạn."
+    ],
+    [
+      "celebrate",
+      "Julia is going to celebrate her husband's birthday at home with some friends.",
+      "Julia sẽ tổ chức sinh nhật cho chồng ở nhà cùng vài người bạn."
+    ],
+    [
+      "enjoy the full moon",
+      "People sit outdoors after dinner to enjoy the full moon on Mid-Autumn Festival.",
+      "Mọi người ngồi ngoài trời sau bữa tối để thưởng trăng vào Tết Trung thu."
+    ],
+    [
+      "tasty",
+      "I had a simple but tasty meal.",
+      "Tôi đã ăn một bữa đơn giản nhưng ngon miệng."
+    ]
+  ],
+  "dialogue": [
+    [
+      "Daisy",
+      "Jane, do you have any plans for Friday night?",
+      "Jane, tối thứ Sáu bạn có kế hoạch gì không?"
+    ],
+    [
+      "Jane",
+      "I don't think so. Why do you ask?",
+      "Mình nghĩ là không. Sao bạn hỏi vậy?"
+    ],
+    [
+      "Daisy",
+      "Well, it is Mid-Autumn Festival this Friday. My family will have a special dinner. Would you like to come?",
+      "À, thứ Sáu này là Tết Trung thu. Gia đình mình sẽ có một bữa tối đặc biệt. Bạn có muốn đến không?"
+    ],
+    [
+      "Jane",
+      "I'd love to. Thank you so much for inviting me, but I don't know anything about this festival. Is it always on a Friday?",
+      "Mình rất muốn. Cảm ơn bạn đã mời, nhưng mình chưa biết gì về lễ này. Lễ này luôn vào thứ Sáu à?"
+    ],
+    [
+      "Daisy",
+      "Not always. The festival falls on the 15th day of the 8th lunar month, so the date of this festival differs from year to year.",
+      "Không phải lúc nào cũng vậy. Lễ rơi vào ngày 15 tháng 8 âm lịch, nên ngày dương lịch thay đổi mỗi năm."
+    ],
+    [
+      "Jane",
+      "That is interesting. How do you celebrate this festival?",
+      "Thật thú vị. Các bạn đón lễ này như thế nào?"
+    ],
+    [
+      "Daisy",
+      "Well, the two main things we do are enjoying the full moon and eating mooncakes.",
+      "Hai hoạt động chính là thưởng trăng và ăn bánh trung thu."
+    ],
+    [
+      "Jane",
+      "What is a mooncake?",
+      "Bánh trung thu là gì?"
+    ],
+    [
+      "Daisy",
+      "It's a round cake with a certain filling. It's so tasty!",
+      "Đó là bánh tròn có nhân bên trong. Ngon lắm!"
+    ],
+    [
+      "Jane",
+      "Oh, I can't wait to taste the mooncake now!",
+      "Ồ, giờ mình nóng lòng muốn nếm bánh trung thu quá!"
+    ]
+  ],
+  "speaking": [
+    [
+      "Eva",
+      "Hey, Harry! I heard Mid-Autumn Festival is coming. What is the date exactly?",
+      "Chào Harry! Cô nghe nói Trung thu sắp đến. Chính xác là ngày nào nhỉ?"
+    ],
+    [
+      "Harry",
+      "Hi, Teacher Eva! It falls on the 15th day of the 8th lunar month, so the exact date on the solar calendar differs from year to year.",
+      "Chào cô Eva! Lễ vào ngày 15 tháng 8 âm lịch nên ngày cụ thể theo dương lịch thay đổi mỗi năm."
+    ],
+    [
+      "Eva",
+      "That's cool! How do you usually celebrate the Mid-Autumn Festival with your family?",
+      "Hay quá! Em thường đón Trung thu với gia đình thế nào?"
+    ],
+    [
+      "Harry",
+      "On that day, my family and I visit our parents and get together for a cozy dinner. I also love rolling up my sleeves to help my wife prepare a simple but tasty meal.",
+      "Hôm đó gia đình em đến thăm bố mẹ và tụ họp ăn tối ấm cúng. Em cũng thích xắn tay áo giúp vợ chuẩn bị bữa ăn đơn giản mà ngon."
+    ],
+    [
+      "Eva",
+      "What do you do after dinner?",
+      "Sau bữa tối em làm gì?"
+    ],
+    [
+      "Harry",
+      "After dinner, we sit outdoors to enjoy the full moon, eat mooncakes, and drink hot oolong tea. The mooncakes with lotus seed and salted egg yolk fillings are so tasty! My son also loves playing with colorful lanterns.",
+      "Sau bữa tối cả nhà ngồi ngoài trời thưởng trăng, ăn bánh và uống trà ô long nóng. Bánh nhân hạt sen và trứng muối rất ngon! Con trai em cũng thích chơi đèn lồng nhiều màu."
+    ]
+  ],
+  "grammar": [
+    [
+      "Ngày lễ",
+      "fall on + ngày; the 15th day of the 8th lunar month = ngày 15 tháng 8 âm lịch. Ngày âm lịch cố định; ngày dương lịch thay đổi. 'This Friday' chỉ thuộc tình huống hội thoại."
+    ],
+    [
+      "Hỏi cách đón lễ",
+      "How do you celebrate the Mid-Autumn Festival with your family in Vietnam? → We get together, have a big dinner, eat tasty mooncakes, and enjoy the full moon."
+    ],
+    [
+      "so ... that",
+      "The mooncakes are so tasty that my son wants to eat them every day! = Bánh ngon đến mức con trai tôi muốn ăn mỗi ngày."
+    ],
+    [
+      "outdoor / outdoors; enjoy",
+      "outdoor + danh từ (outdoor activities); outdoors là trạng từ (sit outdoors). enjoy + danh từ/V-ing."
+    ],
+    [
+      "Đọc hiểu và điền từ",
+      "Lễ vào 15/8 âm lịch; mooncake là bánh tròn có nhân. Đáp án điền từ: lunar month / celebrate / eating mooncakes / tasty."
+    ],
+    [
+      "Chọn hoạt động",
+      "Trung thu: đoàn tụ, bữa tối gia đình, thưởng trăng, ăn bánh, đèn lồng. Không chọn cây thông Noel, trick-or-treat hoặc đua thuyền rồng."
+    ]
+  ],
+  "extras": [
+    [
+      "Nguồn",
+      "Unit 4 Lesson 2 - Mid-Autumn Festival.pdf (5 trang). Hội thoại và phần luyện nói được giữ theo tài liệu; IPA câu được bổ sung theo tiếng Anh Anh."
+    ]
+  ],
+  "ipa": {
+    "The Chinese New Year falls on the 1st day of the 1st lunar month.": "/ðə ˌtʃaɪˈniːz njuː jɪə fɔːlz ɒn ðə fɜːst deɪ əv ðə fɜːst ˈluːnə mʌnθ/",
+    "Jim's method for studying English differs from yours completely.": "/dʒɪmz ˈmeθəd fə ˈstʌdiɪŋ ˈɪŋɡlɪʃ ˈdɪfəz frəm jɔːz kəmˈpliːtli/",
+    "Julia is going to celebrate her husband's birthday at home with some friends.": "/ˈdʒuːliə ɪz ˈɡəʊɪŋ tə ˈselɪbreɪt hə ˈhʌzbəndz ˈbɜːθdeɪ ət həʊm wɪð səm frendz/",
+    "People sit outdoors after dinner to enjoy the full moon on Mid-Autumn Festival.": "/ˈpiːpl sɪt ˌaʊtˈdɔːz ˈɑːftə ˈdɪnə tə ɪnˈdʒɔɪ ðə fʊl muːn ɒn ˌmɪd ˈɔːtəm ˈfestɪvl/",
+    "I had a simple but tasty meal.": "/aɪ hæd ə ˈsɪmpl bət ˈteɪsti miːl/",
+    "Jane, do you have any plans for Friday night?": "/dʒeɪn duː juː hæv ˈeni plænz fə ˈfraɪdeɪ naɪt/",
+    "I don't think so. Why do you ask?": "/aɪ dəʊnt θɪŋk səʊ waɪ duː juː ɑːsk/",
+    "Well, it is Mid-Autumn Festival this Friday. My family will have a special dinner. Would you like to come?": "/wel ɪt ɪz ˌmɪd ˈɔːtəm ˈfestɪvl ðɪs ˈfraɪdeɪ maɪ ˈfæməli wɪl hæv ə ˈspeʃl ˈdɪnə wʊd juː laɪk tə kʌm/",
+    "I'd love to. Thank you so much for inviting me, but I don't know anything about this festival. Is it always on a Friday?": "/aɪd lʌv tə θæŋk juː səʊ mʌtʃ fər ɪnˈvaɪtɪŋ miː bət aɪ dəʊnt nəʊ ˈeniθɪŋ əˈbaʊt ðɪs ˈfestɪvl ɪz ɪt ˈɔːlweɪz ɒn ə ˈfraɪdeɪ/",
+    "Not always. The festival falls on the 15th day of the 8th lunar month, so the date of this festival differs from year to year.": "/nɒt ˈɔːlweɪz ðə ˈfestɪvl fɔːlz ɒn ðə ˌfɪfˈtiːnθ deɪ əv ði eɪtθ ˈluːnə mʌnθ səʊ ðə deɪt əv ðɪs ˈfestɪvl ˈdɪfəz frəm jɪə tə jɪə/",
+    "That is interesting. How do you celebrate this festival?": "/ðæt ɪz ˈɪntrəstɪŋ haʊ duː juː ˈselɪbreɪt ðɪs ˈfestɪvl/",
+    "Well, the two main things we do are enjoying the full moon and eating mooncakes.": "/wel ðə tuː meɪn θɪŋz wiː duː ɑːr ɪnˈdʒɔɪɪŋ ðə fʊl muːn ænd ˈiːtɪŋ ˈmuːnkeɪks/",
+    "What is a mooncake?": "/wɒt ɪz ə ˈmuːnkeɪk/",
+    "It's a round cake with a certain filling. It's so tasty!": "/ɪts ə raʊnd keɪk wɪð ə ˈsɜːtn ˈfɪlɪŋ ɪts səʊ ˈteɪsti/",
+    "Oh, I can't wait to taste the mooncake now!": "/əʊ aɪ kɑːnt weɪt tə teɪst ðə ˈmuːnkeɪk naʊ/",
+    "Hey, Harry! I heard Mid-Autumn Festival is coming. What is the date exactly?": "/heɪ ˈhæri aɪ hɜːd ˌmɪd ˈɔːtəm ˈfestɪvl ɪz ˈkʌmɪŋ wɒt ɪz ðə deɪt ɪɡˈzæktli/",
+    "Hi, Teacher Eva! It falls on the 15th day of the 8th lunar month, so the exact date on the solar calendar differs from year to year.": "/haɪ ˈtiːtʃər ˈiːvə ɪt fɔːlz ɒn ðə ˌfɪfˈtiːnθ deɪ əv ði eɪtθ ˈluːnə mʌnθ səʊ ði ɪɡˈzækt deɪt ɒn ðə ˈsəʊlə ˈkælɪndə ˈdɪfəz frəm jɪə tə jɪə/",
+    "That's cool! How do you usually celebrate the Mid-Autumn Festival with your family?": "/ðæts kuːl haʊ duː juː ˈjuːʒuəli ˈselɪbreɪt ðə ˌmɪd ˈɔːtəm ˈfestɪvl wɪð jɔː ˈfæməli/",
+    "On that day, my family and I visit our parents and get together for a cozy dinner. I also love rolling up my sleeves to help my wife prepare a simple but tasty meal.": "/ɒn ðæt deɪ maɪ ˈfæməli ænd aɪ ˈvɪzɪt aʊə ˈpeərənts ænd ɡet təˈɡeðə fər ə ˈkəʊzi ˈdɪnə aɪ ˈɔːlsəʊ lʌv ˈrəʊlɪŋ ʌp maɪ sliːvz tə help maɪ waɪf prɪˈpeər ə ˈsɪmpl bət ˈteɪsti miːl/",
+    "What do you do after dinner?": "/wɒt duː juː duː ˈɑːftə ˈdɪnə/",
+    "After dinner, we sit outdoors to enjoy the full moon, eat mooncakes, and drink hot oolong tea. The mooncakes with lotus seed and salted egg yolk fillings are so tasty! My son also loves playing with colorful lanterns.": "/ˈɑːftə ˈdɪnə wiː sɪt ˌaʊtˈdɔːz tə ɪnˈdʒɔɪ ðə fʊl muːn iːt ˈmuːnkeɪks ænd drɪŋk hɒt ˈuːlɒŋ tiː ðə ˈmuːnkeɪks wɪð ˈləʊtəs siːd ænd ˈsɔːltɪd eɡ jəʊk ˈfɪlɪŋz ɑː səʊ ˈteɪsti maɪ sʌn ˈɔːlsəʊ lʌvz ˈpleɪɪŋ wɪð ˈkʌləfl ˈlæntənz/"
+  }
+},
+{
+  "id": "eva20261113",
+  "unit": "Teacher Eva · 13/11/2026 · English 158",
+  "title": "Review & Corrections – Weather and Daily Life",
+  "subtitle": "Sửa lỗi buổi học 13/11 · Phát âm · Thời tiết · Sinh hoạt",
+  "level": "51Talk · Level 4",
+  "vocab": [
+    [
+      "lightning",
+      "/ˈlaɪtnɪŋ/",
+      "Tia chớp, sét",
+      "闪电 (shǎndiàn). Không đếm được."
+    ],
+    [
+      "thunder",
+      "/ˈθʌndə/",
+      "Sấm",
+      "雷声 (léishēng). Phân biệt âm thanh thunder và tia sáng lightning."
+    ],
+    [
+      "attract",
+      "/əˈtrækt/",
+      "Thu hút",
+      "吸引 (xīyǐn). attract attention = thu hút sự chú ý."
+    ],
+    [
+      "metal",
+      "/ˈmetl/",
+      "Kim loại",
+      "金属 (jīnshǔ). Kim loại dẫn điện; không phải chất hút sét."
+    ],
+    [
+      "open field",
+      "/ˈəʊpən fiːld/",
+      "Cánh đồng trống",
+      "空旷的田野 (kōngkuàng de tiányě)."
+    ],
+    [
+      "natural disaster",
+      "/ˈnætʃrəl dɪˈzɑːstə/",
+      "Thiên tai",
+      "自然灾害 (zìrán zāihài)."
+    ],
+    [
+      "earthquake",
+      "/ˈɜːθkweɪk/",
+      "Động đất",
+      "地震 (dìzhèn)."
+    ],
+    [
+      "flood",
+      "/flʌd/",
+      "Lũ lụt",
+      "洪水 (hóngshuǐ)."
+    ],
+    [
+      "storm",
+      "/stɔːm/",
+      "Bão, giông",
+      "暴风雨 (bàofēngyǔ)."
+    ],
+    [
+      "once or twice a year",
+      "/wʌns ɔː twaɪs ə jɪə/",
+      "Một hoặc hai lần mỗi năm",
+      "每年一两次 (měi nián yī liǎng cì)."
+    ],
+    [
+      "vegetable",
+      "/ˈvedʒtəbl/",
+      "Rau, củ",
+      "蔬菜 (shūcài). Ba âm tiết, nhấn âm đầu."
+    ],
+    [
+      "relieve stress",
+      "/rɪˈliːv stres/",
+      "Giảm căng thẳng",
+      "缓解压力 (huǎnjiě yālì). Chú ý /v/ và /str/."
+    ],
+    [
+      "snow",
+      "/snəʊ/",
+      "Tuyết; có tuyết rơi",
+      "雪 (xuě). /sn/, không đọc thành slow."
+    ],
+    [
+      "every now and then",
+      "/ˈevri naʊ ən ðen/",
+      "Thỉnh thoảng",
+      "偶尔 (ǒu'ěr). Chú ý /v/ và /r/ trong every."
+    ],
+    [
+      "dry",
+      "/draɪ/",
+      "Khô",
+      "干燥的 (gānzào de). Cụm phụ âm /dr/."
+    ],
+    [
+      "hot",
+      "/hɒt/",
+      "Nóng",
+      "热的 (rè de). Phân biệt hot /hɒt/ với hard /hɑːd/."
+    ],
+    [
+      "exercise",
+      "/ˈeksəsaɪz/",
+      "Tập thể dục; bài tập",
+      "锻炼 (duànliàn). Nhấn âm đầu, kết thúc /z/."
+    ],
+    [
+      "temperature",
+      "/ˈtemprətʃə/",
+      "Nhiệt độ",
+      "温度 (wēndù). Nhấn âm đầu."
+    ],
+    [
+      "by bus",
+      "/baɪ bʌs/",
+      "Bằng xe buýt, xe khách",
+      "坐公共汽车 (zuò gōnggòng qìchē). Không có a/the."
+    ],
+    [
+      "by plane",
+      "/baɪ pleɪn/",
+      "Bằng máy bay",
+      "坐飞机 (zuò fēijī). plane /pleɪn/ khác plan /plæn/."
+    ],
+    [
+      "rains a lot",
+      "/reɪnz ə lɒt/",
+      "Mưa nhiều",
+      "经常下雨 (jīngcháng xiàyǔ). Nối âm /zə/."
+    ],
+    [
+      "days off",
+      "/deɪz ɒf/",
+      "Những ngày nghỉ",
+      "休息日 (xiūxi rì). seven days off: days có s."
+    ]
+  ],
+  "examples": [
+    [
+      "Quá khứ · meals",
+      "Today, I arrived home at 7 PM and had dinner at home.",
+      "Hôm nay tôi về đến nhà lúc 7 giờ tối và ăn tối ở nhà."
+    ],
+    [
+      "Hiện tại hoàn thành",
+      "I have never been to Sapa.",
+      "Tôi chưa từng đến Sa Pa."
+    ],
+    [
+      "Kỳ nghỉ",
+      "During the Tet holiday, I have seven days off and go back to my hometown.",
+      "Trong kỳ nghỉ Tết tôi được nghỉ bảy ngày và về quê."
+    ],
+    [
+      "Di chuyển",
+      "It takes six hours by bus.",
+      "Đi xe khách mất sáu tiếng."
+    ],
+    [
+      "go + V-ing",
+      "In the morning, I sometimes go running.",
+      "Buổi sáng thỉnh thoảng tôi đi chạy bộ."
+    ],
+    [
+      "go + V-ing",
+      "They will go swimming.",
+      "Họ sẽ đi bơi."
+    ],
+    [
+      "like + V-ing",
+      "I don't like going out when it's this hot.",
+      "Tôi không thích ra ngoài khi trời nóng thế này."
+    ],
+    [
+      "go to bed",
+      "At night, I go to bed late.",
+      "Buổi tối tôi đi ngủ muộn."
+    ],
+    [
+      "There are",
+      "There are two seasons in Ho Chi Minh City.",
+      "Thành phố Hồ Chí Minh có hai mùa."
+    ],
+    [
+      "now that",
+      "Now that I work, I don't have a summer holiday.",
+      "Giờ tôi đi làm nên không có kỳ nghỉ hè."
+    ]
+  ],
+  "dialogue": [
+    [
+      "Câu hỏi luyện thêm",
+      "How do you relieve stress?",
+      "Bạn giải tỏa căng thẳng bằng cách nào?"
+    ],
+    [
+      "Trả lời luyện thêm",
+      "Helping my wife with the housework makes me feel happy.",
+      "Giúp vợ làm việc nhà khiến tôi vui."
+    ],
+    [
+      "Câu hỏi luyện thêm",
+      "How often do you visit your hometown?",
+      "Bạn về quê thường xuyên thế nào?"
+    ],
+    [
+      "Trả lời luyện thêm",
+      "We visit our hometown once or twice a year.",
+      "Chúng tôi về quê một hoặc hai lần mỗi năm."
+    ]
+  ],
+  "speaking": [
+    [
+      "1 · Gia đình và giảm stress",
+      "Good evening, Teacher Eva! Today, I arrived home at 7 PM and had dinner at home with my family.",
+      "Chào buổi tối cô Eva! Hôm nay em về đến nhà lúc 7 giờ tối và ăn tối cùng gia đình."
+    ],
+    [
+      "1 · Gia đình và giảm stress",
+      "We had rice and vegetable soup.",
+      "Chúng em ăn cơm và canh rau."
+    ],
+    [
+      "1 · Gia đình và giảm stress",
+      "Both my wife and I are working, so helping my wife with the housework and cooking makes me feel comfortable and happy.",
+      "Cả vợ em và em đều đi làm, nên giúp vợ làm việc nhà và nấu ăn khiến em thoải mái và vui."
+    ],
+    [
+      "1 · Gia đình và giảm stress",
+      "That is how I relieve my stress!",
+      "Đó là cách em giải tỏa căng thẳng!"
+    ],
+    [
+      "2 · Thời tiết · bài mẫu",
+      "There are two seasons in Ho Chi Minh City: the dry season and the rainy season.",
+      "Thành phố Hồ Chí Minh có hai mùa: mùa khô và mùa mưa."
+    ],
+    [
+      "2 · Thời tiết · bài mẫu",
+      "In the afternoon, it is very hot and the temperature is up to 35 degrees, so it's too hot to do outdoor activities.",
+      "Buổi chiều rất nóng, nhiệt độ lên đến 35 độ, nên quá nóng để hoạt động ngoài trời."
+    ],
+    [
+      "2 · Thời tiết · bài mẫu",
+      "However, in the evening, it is cooler, around 25 degrees.",
+      "Tuy nhiên buổi tối mát hơn, khoảng 25 độ."
+    ],
+    [
+      "2 · Thời tiết · đã biên tập",
+      "During the rainy season, parts of Vietnam experience storms, floods, thunder, and lightning.",
+      "Trong mùa mưa, một số vùng ở Việt Nam có bão, lũ, sấm và sét."
+    ],
+    [
+      "3 · Miền Bắc và về quê · đã biên tập",
+      "In northern Vietnam, like in Hanoi and Sapa, there are four seasons.",
+      "Ở miền Bắc Việt Nam, như Hà Nội và Sa Pa, có bốn mùa."
+    ],
+    [
+      "3 · Miền Bắc và về quê · đã biên tập",
+      "Actually, I have never been to Sapa because it is very far from where I live.",
+      "Thực ra em chưa từng đến Sa Pa vì nơi đó rất xa chỗ em sống."
+    ],
+    [
+      "3 · Miền Bắc và về quê",
+      "During the Tet holiday, I have seven days off, so my family goes back to my hometown in Lam Dong.",
+      "Trong kỳ nghỉ Tết em được nghỉ bảy ngày nên gia đình em về quê ở Lâm Đồng."
+    ],
+    [
+      "3 · Miền Bắc và về quê",
+      "It takes about six hours by bus, and we visit our hometown once or twice a year.",
+      "Đi xe khách mất khoảng sáu tiếng và chúng em về quê một hoặc hai lần mỗi năm."
+    ],
+    [
+      "4 · Thói quen và kỳ nghỉ",
+      "I don't exercise every day because I usually go to bed late at night on weekdays.",
+      "Em không tập thể dục hằng ngày vì thường ngủ muộn vào những ngày trong tuần."
+    ],
+    [
+      "4 · Thói quen và kỳ nghỉ",
+      "However, every now and then, I go running in the morning on the weekend.",
+      "Tuy nhiên thỉnh thoảng em chạy bộ vào buổi sáng cuối tuần."
+    ],
+    [
+      "4 · Thói quen và kỳ nghỉ",
+      "When I was in high school, I had a long summer holiday, but now that I go to work, I don't have a summer holiday anymore.",
+      "Khi học cấp ba em có kỳ nghỉ hè dài, nhưng giờ đi làm nên không còn nghỉ hè nữa."
+    ]
+  ],
+  "grammar": [
+    [
+      "1 · arrived home / had dinner",
+      "arrived at home → arrived home; have a dinner → had dinner trong lời kể quá khứ. home là trạng từ sau arrive/go; thường không dùng a trước tên bữa ăn thông thường."
+    ],
+    [
+      "2 · have never been to",
+      "have a been go / don't have been → I have never been to Sapa. Hiện tại hoàn thành: have/has + past participle; been to = từng đến."
+    ],
+    [
+      "3 · hometown / số nhiều",
+      "go back to my hometown; seven days off; six hours by bus. hometown là danh từ nên cần to; days/hours có s khi số lượng lớn hơn một."
+    ],
+    [
+      "4 · go + V-ing",
+      "go running, go swimming (không dùng go to running). They will go swimming."
+    ],
+    [
+      "5 · like / enjoy / go to bed",
+      "like + V-ing hoặc to V đều có thể đúng tùy ngữ cảnh; enjoy chỉ dùng V-ing. go to bed late = đi ngủ muộn."
+    ],
+    [
+      "6 · There are / now that",
+      "There are two seasons... vì seasons số nhiều. Now that I work... = Bây giờ tôi đi làm nên..."
+    ],
+    [
+      "Luyện phát âm · 1–3",
+      "Theo ghi chú: vegetable /ˈvedʒtəbl/ (10:25); relieve stress /rɪˈliːv stres/ (11:58); snow /snəʊ/ và Hanoi /hæˈnɔɪ/ (15:01–15:14). Phần mềm nhận sai không đủ chứng minh phát âm sai; cần đối chiếu ghi âm."
+    ],
+    [
+      "Luyện phát âm · 4–6",
+      "every now and then /ˈevri naʊ ən ðen/ (27:04, 33:08); dry /draɪ/, hot /hɒt/ (27:43, 34:04); exercise /ˈeksəsaɪz/ (28:39–30:08). Luyện cụm phụ âm, nhấn âm đầu và âm cuối."
+    ],
+    [
+      "Luyện phát âm · 7–9",
+      "temperature /ˈtemprətʃə/ (13:19, 38:50); by bus /baɪ bʌs/, by plane /baɪ pleɪn/ (16:53–17:04); rains a lot /reɪnz ə lɒt/ (34:32, 36:48). Phân biệt plane/plan; nối /zə/."
+    ],
+    [
+      "Hiệu đính thông tin trong PDF",
+      "Không dùng 'Metal attracts lightning' làm kiến thức: kim loại không hút sét nhưng dẫn điện. Không đưa lời khuyên 'tắt điện thoại vì hút sét' vào thẻ. Nguồn: https://www.weather.gov/safety/lightning-myths"
+    ],
+    [
+      "Ghi chú biên tập bài nói",
+      "Bốn chủ đề được giữ theo PDF. Bỏ khẳng định tuyệt đối 'HCM không có động đất', 'Hà Nội không bao giờ có tuyết' và ước lượng hành trình Sa Pa chưa xác minh khỏi thẻ. Nhiệt độ 35/25 độ và thời gian về quê là dữ kiện của bài nói mẫu, không phải dự báo hoặc chỉ dẫn hành trình."
+    ]
+  ],
+  "extras": [
+    [
+      "Nguồn",
+      "Tổng Hợp & Sửa Lỗi Buổi Học 13_11 (Teacher Eva).pdf, 5 trang. Bài riêng để ôn lỗi; Q&A là câu luyện thêm, không phải bản chép lời. IPA Anh Anh bổ sung để luyện đọc."
+    ]
+  ],
+  "ipa": {
+    "Today, I arrived home at 7 PM and had dinner at home.": "/təˈdeɪ aɪ əˈraɪvd həʊm ət ˈsevn piː em ænd hæd ˈdɪnər ət həʊm/",
+    "I have never been to Sapa.": "/aɪ hæv ˈnevə biːn tə ˈsɑːpɑː/",
+    "During the Tet holiday, I have seven days off and go back to my hometown.": "/ˈdjʊərɪŋ ðə tet ˈhɒlədeɪ aɪ hæv ˈsevn deɪz ɒf ænd ɡəʊ bæk tə maɪ ˈhəʊmtaʊn/",
+    "It takes six hours by bus.": "/ɪt teɪks sɪks ˈaʊəz baɪ bʌs/",
+    "In the morning, I sometimes go running.": "/ɪn ðə ˈmɔːnɪŋ aɪ ˈsʌmtaɪmz ɡəʊ ˈrʌnɪŋ/",
+    "They will go swimming.": "/ðeɪ wɪl ɡəʊ ˈswɪmɪŋ/",
+    "I don't like going out when it's this hot.": "/aɪ dəʊnt laɪk ˈɡəʊɪŋ aʊt wen ɪts ðɪs hɒt/",
+    "At night, I go to bed late.": "/ət naɪt aɪ ɡəʊ tə bed leɪt/",
+    "There are two seasons in Ho Chi Minh City.": "/ðeər ɑː tuː ˈsiːznz ɪn həʊ tʃiː mɪn ˈsɪti/",
+    "Now that I work, I don't have a summer holiday.": "/naʊ ðət aɪ wɜːk aɪ dəʊnt hæv ə ˈsʌmə ˈhɒlədeɪ/",
+    "How do you relieve stress?": "/haʊ duː juː rɪˈliːv stres/",
+    "Helping my wife with the housework makes me feel happy.": "/ˈhelpɪŋ maɪ waɪf wɪð ðə ˈhaʊswɜːk meɪks miː fiːl ˈhæpi/",
+    "How often do you visit your hometown?": "/haʊ ˈɒfn duː juː ˈvɪzɪt jɔː ˈhəʊmtaʊn/",
+    "We visit our hometown once or twice a year.": "/wiː ˈvɪzɪt aʊə ˈhəʊmtaʊn wʌns ɔː twaɪs ə jɪə/",
+    "Good evening, Teacher Eva! Today, I arrived home at 7 PM and had dinner at home with my family.": "/ɡʊd ˈiːvnɪŋ ˈtiːtʃər ˈiːvə təˈdeɪ aɪ əˈraɪvd həʊm ət ˈsevn piː em ænd hæd ˈdɪnər ət həʊm wɪð maɪ ˈfæməli/",
+    "We had rice and vegetable soup.": "/wiː hæd raɪs ænd ˈvedʒtəbl suːp/",
+    "Both my wife and I are working, so helping my wife with the housework and cooking makes me feel comfortable and happy.": "/bəʊθ maɪ waɪf ænd aɪ ɑː ˈwɜːkɪŋ səʊ ˈhelpɪŋ maɪ waɪf wɪð ðə ˈhaʊswɜːk ænd ˈkʊkɪŋ meɪks miː fiːl ˈkʌmftəbl ænd ˈhæpi/",
+    "That is how I relieve my stress!": "/ðæt ɪz haʊ aɪ rɪˈliːv maɪ stres/",
+    "There are two seasons in Ho Chi Minh City: the dry season and the rainy season.": "/ðeər ɑː tuː ˈsiːznz ɪn həʊ tʃiː mɪn ˈsɪti ðə draɪ ˈsiːzn ænd ðə ˈreɪni ˈsiːzn/",
+    "In the afternoon, it is very hot and the temperature is up to 35 degrees, so it's too hot to do outdoor activities.": "/ɪn ði ˌɑːftəˈnuːn ɪt ɪz ˈveri hɒt ænd ðə ˈtemprətʃər ɪz ʌp tə ˈθɜːti faɪv dɪˈɡriːz səʊ ɪts tuː hɒt tə duː ˈaʊtdɔːr ækˈtɪvətiz/",
+    "However, in the evening, it is cooler, around 25 degrees.": "/haʊˈevər ɪn ði ˈiːvnɪŋ ɪt ɪz ˈkuːlər əˈraʊnd ˈtwenti faɪv dɪˈɡriːz/",
+    "During the rainy season, parts of Vietnam experience storms, floods, thunder, and lightning.": "/ˈdjʊərɪŋ ðə ˈreɪni ˈsiːzn pɑːts əv ˌvjetˈnæm ɪkˈspɪəriəns stɔːmz flʌdz ˈθʌndər ænd ˈlaɪtnɪŋ/",
+    "In northern Vietnam, like in Hanoi and Sapa, there are four seasons.": "/ɪn ˈnɔːðən ˌvjetˈnæm laɪk ɪn hæˈnɔɪ ænd ˈsɑːpɑː ðeər ɑː fɔː ˈsiːznz/",
+    "Actually, I have never been to Sapa because it is very far from where I live.": "/ˈæktʃuəli aɪ hæv ˈnevə biːn tə ˈsɑːpɑː bɪˈkɒz ɪt ɪz ˈveri fɑː frəm weər aɪ lɪv/",
+    "During the Tet holiday, I have seven days off, so my family goes back to my hometown in Lam Dong.": "/ˈdjʊərɪŋ ðə tet ˈhɒlədeɪ aɪ hæv ˈsevn deɪz ɒf səʊ maɪ ˈfæməli ɡəʊz bæk tə maɪ ˈhəʊmtaʊn ɪn læm dɒŋ/",
+    "It takes about six hours by bus, and we visit our hometown once or twice a year.": "/ɪt teɪks əˈbaʊt sɪks ˈaʊəz baɪ bʌs ænd wiː ˈvɪzɪt aʊə ˈhəʊmtaʊn wʌns ɔː twaɪs ə jɪə/",
+    "I don't exercise every day because I usually go to bed late at night on weekdays.": "/aɪ dəʊnt ˈeksəsaɪz ˈevri deɪ bɪˈkɒz aɪ ˈjuːʒuəli ɡəʊ tə bed leɪt ət naɪt ɒn ˈwiːkdeɪz/",
+    "However, every now and then, I go running in the morning on the weekend.": "/haʊˈevər ˈevri naʊ ən ðen aɪ ɡəʊ ˈrʌnɪŋ ɪn ðə ˈmɔːnɪŋ ɒn ðə ˌwiːkˈend/",
+    "When I was in high school, I had a long summer holiday, but now that I go to work, I don't have a summer holiday anymore.": "/wen aɪ wəz ɪn haɪ skuːl aɪ hæd ə lɒŋ ˈsʌmə ˈhɒlədeɪ bət naʊ ðət aɪ ɡəʊ tə wɜːk aɪ dəʊnt hæv ə ˈsʌmə ˈhɒlədeɪ ˌeniˈmɔː/"
+  }
+},
     ...(window.LF51_CLASSIC_L4_U8_L2 || []),
 {
   "id": "classicL2U4L2",

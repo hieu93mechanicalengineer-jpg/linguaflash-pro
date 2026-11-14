@@ -41,9 +41,9 @@
   document.write('<script src="./english-unit2-data-v1.js?v=105"><\/script>');
   document.write('<script src="./data/english-51talk-lessons-v1.js?v=105"><\/script>');
   document.write('<script src="./english-unit2-study-cards-v1.js?v=105"><\/script>');
-  document.write('<script src="./data/business-elementary1-unit1.js?v=133"><\/script>');
+  document.write('<script src="./data/business-elementary1-unit1.js?v=20261114"><\/script>');
   document.write('<script src="./data/english-classic-l4-u8-l2.js?v=134"><\/script>');
-  document.write('<script src="./data/english-level2-u5-u6-l2.js?v=134"><\/script>');
+  document.write('<script src="./data/english-level2-u5-u6-l2.js?v=20261114"><\/script>');
   document.write('<script src="./app-core.js?v=123"><\/script>');
 
   document.write('<script src="./audio-native-bridge-v1.js?v=105"><\/script>');

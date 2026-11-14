@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-v138-hometown-audio-repair';
+const CACHE_NAME = 'linguaflash-v142-lessons-nov14';
 
 // Common startup shell. app.js is now the source of truth for English mobile UI
 // and HQ audio; the service worker only adds generic study helpers and caches them.
@@ -32,10 +32,10 @@ const CORE_ASSETS = [
   './giahan-usage-hotfix-v1.js',
   './data/youtube-podcast.js',
   './app.js',
-  './data/business-elementary1-unit1.js?v=133',
+  './data/business-elementary1-unit1.js?v=20261114',
   './data/english-classic-l4-u8-l2.js?v=134',
   './data/51talk-classic-level4-unit8-lesson2-weather.pdf',
-  './data/english-level2-u5-u6-l2.js?v=134',
+  './data/english-level2-u5-u6-l2.js?v=20261114',
   './app-core.js',
   './chinese-study-workspace.js?v=127',
   './english-unit2-data-v1.js',
@@ -109,7 +109,7 @@ async function transformIndexResponse(response) {
     /<script src="\.\/app\.js(?:\?v=\d+)?"><\/script>/,
     `<script src="./data/giahan-translation-practice-v2.js?v=90"></script>
 <script src="./data/giahan-translation-practice-tc2-fix-v1.js?v=90"></script>
-<script src="./app.js?v=141"></script>
+<script src="./app.js?v=20261114"></script>
 <script>
 (function(){
   var ua = String(navigator.userAgent || '');

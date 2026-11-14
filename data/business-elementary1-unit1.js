@@ -1,4 +1,4 @@
-/* 51Talk Business English · Elementary 1 · New Job, New Knowledge */
+/* Business English · Elementary 1 · Unit 1 */
 window.LF51_BUSINESS_UNIT1 = [
   {
     "dialogue": [
@@ -1572,6 +1572,349 @@ window.LF51_BUSINESS_UNIT1 = [
       "After doing market research, I think our new products should target a younger audience in the African market, and we should focus on online marketing.": "/ˈɑːftə ˈduːɪŋ ˈmɑːkɪt rɪˈsɜːtʃ aɪ θɪŋk aʊə njuː ˈprɒdʌkts ʃʊd ˈtɑːɡɪt ə ˈjʌŋɡər ˈɔːdiəns ɪn ði ˈæfrɪkən ˈmɑːkɪt ənd wiː ʃʊd ˈfəʊkəs ɒn ˌɒnˈlaɪn ˈmɑːkɪtɪŋ/",
       "Your suggestion is reasonable, but should we revise the sales forecast first?": "/jɔː səˈdʒestʃən ɪz ˈriːznəbl bət ʃʊd wiː rɪˈvaɪz ðə seɪlz ˈfɔːkɑːst fɜːst/",
       "Sure, Bill! I will revise the sales forecast, include your ideas, and hand in the proposal again by the end of this week.": "/ʃʊə bɪl aɪ wɪl rɪˈvaɪz ðə seɪlz ˈfɔːkɑːst ɪnˈkluːd jɔːr aɪˈdɪəz ənd hænd ɪn ðə prəˈpəʊzl əˈɡen baɪ ði end əv ðɪs wiːk/"
+    }
+  },
+  {
+    "id": "businessE1U1L6",
+    "unit": "Business English · Elementary 1 · Unit 1 · Lesson 6",
+    "title": "Review – A Brand-New Start in Your Career",
+    "subtitle": "Nhận việc mới · Giới thiệu công ty · Trách nhiệm công việc",
+    "level": "51Talk · Business Elementary 1",
+    "vocab": [
+      [
+        "report to work",
+        "/rɪˈpɔːt tə wɜːk/",
+        "Trình diện nhận việc",
+        "I was told to report to work here; 到岗报到 (dào gǎng bàodào)."
+      ],
+      [
+        "get to know",
+        "/ɡet tə nəʊ/",
+        "Làm quen, tìm hiểu",
+        "get to know my colleagues; 逐渐了解 (zhújiàn liǎojiě)."
+      ],
+      [
+        "job responsibility",
+        "/dʒɒb rɪˌspɒnsəˈbɪləti/",
+        "Trách nhiệm công việc",
+        "Số nhiều: job responsibilities; 工作职责 (gōngzuò zhízé)."
+      ],
+      [
+        "job duty",
+        "/dʒɒb ˈdjuːti/",
+        "Nhiệm vụ công việc",
+        "My main duty is to...; 工作任务 (gōngzuò rènwu)."
+      ],
+      [
+        "market share",
+        "/ˈmɑːkɪt ʃeə/",
+        "Thị phần",
+        "own 35 percent of the market share; 市场份额 (shìchǎng fèn'é)."
+      ],
+      [
+        "set up",
+        "/set ʌp/",
+        "Thành lập, thiết lập",
+        "have been set up = đã được thành lập; 设立 (shèlì)."
+      ],
+      [
+        "take a seat",
+        "/teɪk ə siːt/",
+        "Mời ngồi",
+        "Please take a seat; 请坐 (qǐng zuò)."
+      ],
+      [
+        "on the rise",
+        "/ɒn ðə raɪz/",
+        "Đang tăng lên",
+        "Our market share is on the rise; 正在上升 (zhèngzài shàngshēng)."
+      ],
+      [
+        "May I have your attention, please?",
+        "/meɪ aɪ hæv jɔː əˈtenʃn pliːz/",
+        "Xin mọi người chú ý",
+        "Lịch sự trước khi thông báo; 请大家注意 (qǐng dàjiā zhùyì)."
+      ],
+      [
+        "brand-new",
+        "/ˌbrænd ˈnjuː/",
+        "Hoàn toàn mới",
+        "a brand-new start; 全新的 (quánxīn de)."
+      ],
+      [
+        "on-boarding training",
+        "/ˈɒnbɔːdɪŋ ˈtreɪnɪŋ/",
+        "Đào tạo hội nhập",
+        "Cũng viết onboarding training; 入职培训 (rùzhí péixùn)."
+      ],
+      [
+        "Branding Department",
+        "/ˈbrændɪŋ dɪˈpɑːtmənt/",
+        "Phòng thương hiệu",
+        "品牌部 (pǐnpái bù)."
+      ],
+      [
+        "copywriter",
+        "/ˈkɒpiraɪtə/",
+        "Người viết nội dung quảng cáo",
+        "广告文案撰稿人 (guǎnggào wén'àn zhuàngǎorén)."
+      ],
+      [
+        "supervisor",
+        "/ˈsuːpəvaɪzə/",
+        "Người quản lý trực tiếp",
+        "主管 (zhǔguǎn)."
+      ],
+      [
+        "competitor",
+        "/kəmˈpetɪtə/",
+        "Đối thủ cạnh tranh",
+        "竞争对手 (jìngzhēng duìshǒu)."
+      ],
+      [
+        "overseas branches",
+        "/ˌəʊvəˈsiːz ˈbrɑːntʃɪz/",
+        "Các chi nhánh ở nước ngoài",
+        "海外分公司 (hǎiwài fēngōngsī)."
+      ],
+      [
+        "grow rapidly",
+        "/ɡrəʊ ˈræpɪdli/",
+        "Phát triển nhanh chóng",
+        "迅速发展 (xùnsù fāzhǎn)."
+      ],
+      [
+        "make progress",
+        "/meɪk ˈprəʊɡres/",
+        "Tiến bộ",
+        "Không dùng a trước progress; 取得进步 (qǔdé jìnbù)."
+      ],
+      [
+        "brief",
+        "/briːf/",
+        "Bản tóm tắt yêu cầu nhiệm vụ",
+        "give someone a brief; 任务说明 (rènwu shuōmíng)."
+      ],
+      [
+        "data collecting",
+        "/ˈdeɪtə kəˈlektɪŋ/",
+        "Thu thập dữ liệu",
+        "Cũng dùng data collection; 数据收集 (shùjù shōují)."
+      ]
+    ],
+    "examples": [
+      [
+        "report to work",
+        "I was told to report to work here.",
+        "Tôi được hướng dẫn đến đây trình diện nhận việc."
+      ],
+      [
+        "get to know",
+        "I hope to get to know my colleagues soon.",
+        "Tôi hy vọng sớm làm quen với các đồng nghiệp."
+      ],
+      [
+        "take a seat",
+        "Nice to meet you. Please take a seat.",
+        "Rất vui được gặp bạn. Mời bạn ngồi."
+      ],
+      [
+        "on the rise",
+        "The number of our clients is on the rise.",
+        "Số lượng khách hàng của chúng tôi đang tăng."
+      ],
+      [
+        "May I have your attention, please?",
+        "May I have your attention, please?",
+        "Xin mọi người chú ý một chút được không ạ?"
+      ],
+      [
+        "Nhiệm vụ",
+        "What am I supposed to do?",
+        "Tôi cần phải làm gì?"
+      ],
+      [
+        "Đọc hiểu",
+        "Her main job responsibility is to answer phone calls for the Branding Department.",
+        "Trách nhiệm chính của cô ấy là trả lời điện thoại cho phòng thương hiệu."
+      ]
+    ],
+    "dialogue": [
+      [
+        "Linda · 1",
+        "Good morning. My name is Linda. I'm the new secretary for the Branding Department. I was told to report to work here.",
+        "Chào buổi sáng. Tôi là Linda, thư ký mới của phòng thương hiệu. Tôi được hướng dẫn đến đây nhận việc."
+      ],
+      [
+        "Judy · 1",
+        "Yes. Hi, I am Judy, the copywriter. Welcome.",
+        "Vâng. Chào bạn, tôi là Judy, người viết nội dung quảng cáo. Chào mừng bạn."
+      ],
+      [
+        "Linda · 1",
+        "Hi, Judy. It is nice to meet you. I hope to get to know my colleagues soon.",
+        "Chào Judy. Rất vui được gặp bạn. Tôi hy vọng sớm làm quen với đồng nghiệp."
+      ],
+      [
+        "Judy · 1",
+        "Please take your seat. I will introduce you to the other co-workers after they are all here.",
+        "Mời bạn ngồi. Khi mọi người đến đủ, tôi sẽ giới thiệu bạn với các đồng nghiệp khác."
+      ],
+      [
+        "Linda · 1",
+        "Thanks. Do you know what my specific job duty is?",
+        "Cảm ơn. Bạn biết nhiệm vụ cụ thể của tôi là gì không?"
+      ],
+      [
+        "Judy · 1",
+        "Your main duty is to answer phone calls for our department. Your supervisor Bob will explain your job responsibilities in detail later.",
+        "Nhiệm vụ chính của bạn là trả lời điện thoại cho phòng. Quản lý Bob sẽ giải thích chi tiết trách nhiệm của bạn sau."
+      ],
+      [
+        "Judy · 2",
+        "What do you know about our company?",
+        "Bạn biết gì về công ty chúng ta?"
+      ],
+      [
+        "Linda · 2",
+        "I was told at the on-boarding training that our company is a leader in the advertising industry. Our biggest competitor is Lions. It owns the biggest market share at about 38 percent while we own 35 percent.",
+        "Trong buổi đào tạo hội nhập tôi được biết công ty là doanh nghiệp dẫn đầu ngành quảng cáo. Đối thủ lớn nhất là Lions, chiếm khoảng 38% thị phần, còn chúng ta chiếm 35%."
+      ],
+      [
+        "Judy · 2",
+        "Yes. Our market share has been on the rise lately. Over 15 branches have been set up all around the world.",
+        "Đúng vậy. Thị phần gần đây đang tăng. Hơn 15 chi nhánh đã được thành lập khắp thế giới."
+      ],
+      [
+        "Linda · 2",
+        "The company has been growing rapidly. That is why I want to join this company. I hope I can make progress with all of you.",
+        "Công ty đang phát triển nhanh. Đó là lý do tôi muốn gia nhập. Tôi hy vọng có thể cùng tiến bộ với mọi người."
+      ],
+      [
+        "Judy · 2",
+        "You will. OK, everyone is here now. Let me introduce you to everyone. Hello, everybody. May I have your attention, please? Today we have a new colleague, Linda.",
+        "Chắc chắn rồi. Giờ mọi người đã đến đủ. Để tôi giới thiệu bạn. Xin chào cả nhà, xin chú ý một chút. Hôm nay chúng ta có đồng nghiệp mới là Linda."
+      ]
+    ],
+    "speaking": [
+      [
+        "Justin",
+        "Good morning! My name is Justin. I'm the new employee in the IT Department. I was told to report to work here.",
+        "Chào buổi sáng! Tôi là Justin, nhân viên mới của phòng IT. Tôi được hướng dẫn đến đây nhận việc."
+      ],
+      [
+        "Alex",
+        "Good morning, Justin! I'm Alex. Nice to meet you. Please take a seat.",
+        "Chào Justin! Tôi là Alex. Rất vui được gặp bạn. Mời bạn ngồi."
+      ],
+      [
+        "Justin",
+        "Thanks, Alex. I hope to get to know everyone soon. Do you know what my specific job responsibility is?",
+        "Cảm ơn Alex. Tôi hy vọng sớm làm quen mọi người. Bạn biết trách nhiệm cụ thể của tôi là gì không?"
+      ],
+      [
+        "Alex",
+        "Sure! Your main job duty is data collecting for our IT projects. Our supervisor will give you a brief for the task later.",
+        "Được chứ! Nhiệm vụ chính của bạn là thu thập dữ liệu cho các dự án IT. Quản lý sẽ đưa bản tóm tắt yêu cầu sau."
+      ],
+      [
+        "Justin",
+        "Got it! Could you also tell me some basic information about our company's business?",
+        "Hiểu rồi! Bạn cho tôi biết thông tin cơ bản về hoạt động kinh doanh của công ty được không?"
+      ],
+      [
+        "Alex",
+        "Of course! Our company is a leader in the Internet trade industry. Currently, our company owns 46% of the market share, and our business is on the rise. Besides, two overseas branches have been set up.",
+        "Tất nhiên! Công ty dẫn đầu ngành thương mại Internet. Hiện công ty chiếm 46% thị phần và đang phát triển. Ngoài ra, hai chi nhánh ở nước ngoài đã được thành lập."
+      ],
+      [
+        "Justin",
+        "Wow, the company is growing rapidly! I hope I can make progress with all of you.",
+        "Ồ, công ty phát triển nhanh thật! Tôi hy vọng cùng tiến bộ với mọi người."
+      ],
+      [
+        "Alex",
+        "You definitely will! Let me introduce you to our team. May I have your attention, please? Today we have a new colleague, Justin!",
+        "Chắc chắn rồi! Để tôi giới thiệu bạn với nhóm. Xin mọi người chú ý, hôm nay chúng ta có đồng nghiệp mới là Justin!"
+      ],
+      [
+        "Nội thất · bài mẫu",
+        "Our company is located in Southern Vietnam. We are a leader in the furniture manufacturing industry.",
+        "Công ty chúng tôi ở miền Nam Việt Nam. Chúng tôi là doanh nghiệp dẫn đầu ngành sản xuất nội thất."
+      ],
+      [
+        "Nội thất · bài mẫu",
+        "Our main products are wooden beds (including headboards, footboards, and side rails), cabinets, and tables. Our export market share has been on the rise lately.",
+        "Sản phẩm chính là giường gỗ (gồm đầu giường, đuôi giường và vai giường), tủ và bàn. Thị phần xuất khẩu gần đây đang tăng."
+      ],
+      [
+        "Nội thất · bài mẫu",
+        "My main job responsibility is working on CAD technical drawings, checking product structure, and managing the furniture production process.",
+        "Trách nhiệm chính của tôi là làm bản vẽ kỹ thuật CAD, kiểm tra kết cấu sản phẩm và quản lý quy trình sản xuất nội thất."
+      ]
+    ],
+    "grammar": [
+      [
+        "Ghép tình huống · Language Focus",
+        "1 Khách đến văn phòng → d Nice to meet you. Please take a seat. 2 Giới thiệu kinh doanh → c The number of our clients is on the rise. 3 Thu hút chú ý → b May I have your attention, please? 4 Ngày đầu nhận việc → a I was told to report to work here."
+      ],
+      [
+        "Trình diện và làm quen",
+        "I was told to + V = Tôi được hướng dẫn làm gì (bị động quá khứ). get to know nhấn mạnh quá trình làm quen; know là đã biết."
+      ],
+      [
+        "Nhiệm vụ",
+        "My main duty is to + V. My job responsibility is + V-ing. Câu hỏi gián tiếp: Do you know what my job duty is? (không đảo is)."
+      ],
+      [
+        "Phát triển và thành lập",
+        "has been growing rapidly: hiện tại hoàn thành tiếp diễn. have been set up: bị động hiện tại hoàn thành. progress không đếm được, không dùng make a progress."
+      ],
+      [
+        "Đọc hiểu",
+        "Linda trả lời điện thoại cho Branding Department. Công ty quảng cáo có 35% thị phần, đối thủ Lions 38%, hơn 15 chi nhánh. Đây là số liệu trong tình huống giáo trình. Bài đóng vai IT dùng 46% và 2 chi nhánh nước ngoài."
+      ],
+      [
+        "Thực hành",
+        "Đóng vai Alex trả lời Justin: nhiệm vụ thu thập dữ liệu; supervisor giao brief; ngành Internet trade. Phần nội thất là bài mẫu, cần thay số liệu và mô tả cho đúng công ty thực tế."
+      ]
+    ],
+    "extras": [
+      [
+        "Nguồn",
+        "Business English Unit 1 Lesson 6 - Review A Brand-New Start in Your Career.pdf (6 trang). Phần đóng vai được ghép lại từ dòng bị ngắt giữa trang 5–6."
+      ]
+    ],
+    "ipa": {
+      "I was told to report to work here.": "/aɪ wəz təʊld tə rɪˈpɔːt tə wɜːk hɪə/",
+      "I hope to get to know my colleagues soon.": "/aɪ həʊp tə ɡet tə nəʊ maɪ ˈkɒliːɡz suːn/",
+      "Nice to meet you. Please take a seat.": "/naɪs tə miːt juː pliːz teɪk ə siːt/",
+      "The number of our clients is on the rise.": "/ðə ˈnʌmbər əv aʊə ˈklaɪənts ɪz ɒn ðə raɪz/",
+      "May I have your attention, please?": "/meɪ aɪ hæv jɔː əˈtenʃn pliːz/",
+      "What am I supposed to do?": "/wɒt əm aɪ səˈpəʊzd tə duː/",
+      "Her main job responsibility is to answer phone calls for the Branding Department.": "/hə meɪn dʒɒb rɪˌspɒnsəˈbɪləti ɪz tə ˈɑːnsə fəʊn kɔːlz fə ðə ˈbrændɪŋ dɪˈpɑːtmənt/",
+      "Good morning. My name is Linda. I'm the new secretary for the Branding Department. I was told to report to work here.": "/ɡʊd ˈmɔːnɪŋ maɪ neɪm ɪz ˈlɪndə aɪm ðə njuː ˈsekrətri fə ðə ˈbrændɪŋ dɪˈpɑːtmənt aɪ wəz təʊld tə rɪˈpɔːt tə wɜːk hɪə/",
+      "Yes. Hi, I am Judy, the copywriter. Welcome.": "/jes haɪ aɪ əm ˈdʒuːdi ðə ˈkɒpiraɪtə ˈwelkəm/",
+      "Hi, Judy. It is nice to meet you. I hope to get to know my colleagues soon.": "/haɪ ˈdʒuːdi ɪt ɪz naɪs tə miːt juː aɪ həʊp tə ɡet tə nəʊ maɪ ˈkɒliːɡz suːn/",
+      "Please take your seat. I will introduce you to the other co-workers after they are all here.": "/pliːz teɪk jɔː siːt aɪ wɪl ˌɪntrəˈdjuːs juː tə ði ˈʌðə ˈkəʊwɜːkəz ˈɑːftə ðeɪ ɑːr ɔːl hɪə/",
+      "Thanks. Do you know what my specific job duty is?": "/θæŋks duː juː nəʊ wɒt maɪ spəˈsɪfɪk dʒɒb ˈdjuːti ɪz/",
+      "Your main duty is to answer phone calls for our department. Your supervisor Bob will explain your job responsibilities in detail later.": "/jɔː meɪn ˈdjuːti ɪz tə ˈɑːnsə fəʊn kɔːlz fər aʊə dɪˈpɑːtmənt jɔː ˈsuːpəvaɪzə bɒb wɪl ɪkˈspleɪn jɔː dʒɒb rɪˌspɒnsəˈbɪlətiz ɪn ˈdiːteɪl ˈleɪtə/",
+      "What do you know about our company?": "/wɒt duː juː nəʊ əˈbaʊt aʊə ˈkʌmpəni/",
+      "I was told at the on-boarding training that our company is a leader in the advertising industry. Our biggest competitor is Lions. It owns the biggest market share at about 38 percent while we own 35 percent.": "/aɪ wəz təʊld ət ði ˈɒnbɔːdɪŋ ˈtreɪnɪŋ ðət aʊə ˈkʌmpəni ɪz ə ˈliːdər ɪn ði ˈædvətaɪzɪŋ ˈɪndəstri aʊə ˈbɪɡɪst kəmˈpetɪtə ɪz ˈlaɪənz ɪt əʊnz ðə ˈbɪɡɪst ˈmɑːkɪt ʃeər ət əˈbaʊt ˈθɜːti eɪt pəˈsent waɪl wiː əʊn ˈθɜːti faɪv pəˈsent/",
+      "Yes. Our market share has been on the rise lately. Over 15 branches have been set up all around the world.": "/jes aʊə ˈmɑːkɪt ʃeə hæz biːn ɒn ðə raɪz ˈleɪtli ˈəʊvə ˌfɪfˈtiːn ˈbrɑːntʃɪz hæv biːn set ʌp ɔːl əˈraʊnd ðə wɜːld/",
+      "The company has been growing rapidly. That is why I want to join this company. I hope I can make progress with all of you.": "/ðə ˈkʌmpəni hæz biːn ˈɡrəʊɪŋ ˈræpɪdli ðæt ɪz waɪ aɪ wɒnt tə dʒɔɪn ðɪs ˈkʌmpəni aɪ həʊp aɪ kən meɪk ˈprəʊɡres wɪð ɔːl əv juː/",
+      "You will. OK, everyone is here now. Let me introduce you to everyone. Hello, everybody. May I have your attention, please? Today we have a new colleague, Linda.": "/juː wɪl əʊˈkeɪ ˈevriwʌn ɪz hɪə naʊ let miː ˌɪntrəˈdjuːs juː tə ˈevriwʌn həˈləʊ ˈevribɒdi meɪ aɪ hæv jɔː əˈtenʃn pliːz təˈdeɪ wiː hæv ə njuː ˈkɒliːɡ ˈlɪndə/",
+      "Good morning! My name is Justin. I'm the new employee in the IT Department. I was told to report to work here.": "/ɡʊd ˈmɔːnɪŋ maɪ neɪm ɪz ˈdʒʌstɪn aɪm ðə njuː ɪmˈplɔɪiː ɪn ði aɪ tiː dɪˈpɑːtmənt aɪ wəz təʊld tə rɪˈpɔːt tə wɜːk hɪə/",
+      "Good morning, Justin! I'm Alex. Nice to meet you. Please take a seat.": "/ɡʊd ˈmɔːnɪŋ ˈdʒʌstɪn aɪm ˈælɪks naɪs tə miːt juː pliːz teɪk ə siːt/",
+      "Thanks, Alex. I hope to get to know everyone soon. Do you know what my specific job responsibility is?": "/θæŋks ˈælɪks aɪ həʊp tə ɡet tə nəʊ ˈevriwʌn suːn duː juː nəʊ wɒt maɪ spəˈsɪfɪk dʒɒb rɪˌspɒnsəˈbɪləti ɪz/",
+      "Sure! Your main job duty is data collecting for our IT projects. Our supervisor will give you a brief for the task later.": "/ʃʊə jɔː meɪn dʒɒb ˈdjuːti ɪz ˈdeɪtə kəˈlektɪŋ fər aʊər aɪ tiː ˈprɒdʒekts aʊə ˈsuːpəvaɪzə wɪl ɡɪv juː ə briːf fə ðə tɑːsk ˈleɪtə/",
+      "Got it! Could you also tell me some basic information about our company's business?": "/ɡɒt ɪt kʊd juː ˈɔːlsəʊ tel miː səm ˈbeɪsɪk ˌɪnfəˈmeɪʃn əˈbaʊt aʊə ˈkʌmpəniz ˈbɪznəs/",
+      "Of course! Our company is a leader in the Internet trade industry. Currently, our company owns 46% of the market share, and our business is on the rise. Besides, two overseas branches have been set up.": "/əv kɔːs aʊə ˈkʌmpəni ɪz ə ˈliːdər ɪn ði ˈɪntənet treɪd ˈɪndəstri ˈkʌrəntli aʊə ˈkʌmpəni əʊnz ˈfɔːti sɪks pəˈsent əv ðə ˈmɑːkɪt ʃeər ænd aʊə ˈbɪznəs ɪz ɒn ðə raɪz bɪˈsaɪdz tuː ˌəʊvəˈsiːz ˈbrɑːntʃɪz hæv biːn set ʌp/",
+      "Wow, the company is growing rapidly! I hope I can make progress with all of you.": "/waʊ ðə ˈkʌmpəni ɪz ˈɡrəʊɪŋ ˈræpɪdli aɪ həʊp aɪ kən meɪk ˈprəʊɡres wɪð ɔːl əv juː/",
+      "You definitely will! Let me introduce you to our team. May I have your attention, please? Today we have a new colleague, Justin!": "/juː ˈdefɪnətli wɪl let miː ˌɪntrəˈdjuːs juː tə aʊə tiːm meɪ aɪ hæv jɔː əˈtenʃn pliːz təˈdeɪ wiː hæv ə njuː ˈkɒliːɡ ˈdʒʌstɪn/",
+      "Our company is located in Southern Vietnam. We are a leader in the furniture manufacturing industry.": "/aʊə ˈkʌmpəni ɪz ləʊˈkeɪtɪd ɪn ˈsʌðən ˌvjetˈnæm wiː ɑːr ə ˈliːdər ɪn ðə ˈfɜːnɪtʃə ˌmænjuˈfæktʃərɪŋ ˈɪndəstri/",
+      "Our main products are wooden beds (including headboards, footboards, and side rails), cabinets, and tables. Our export market share has been on the rise lately.": "/aʊə meɪn ˈprɒdʌkts ɑː ˈwʊdn bedz ɪnˈkluːdɪŋ ˈhedbɔːdz ˈfʊtbɔːdz ænd saɪd reɪlz ˈkæbɪnəts ænd ˈteɪblz aʊər ˈekspɔːt ˈmɑːkɪt ʃeə hæz biːn ɒn ðə raɪz ˈleɪtli/",
+      "My main job responsibility is working on CAD technical drawings, checking product structure, and managing the furniture production process.": "/maɪ meɪn dʒɒb rɪˌspɒnsəˈbɪləti ɪz ˈwɜːkɪŋ ɒn kæd ˈteknɪkl ˈdrɔːɪŋz ˈtʃekɪŋ ˈprɒdʌkt ˈstrʌktʃər ænd ˈmænɪdʒɪŋ ðə ˈfɜːnɪtʃə prəˈdʌkʃn ˈprəʊses/"
     }
   }
 ];
