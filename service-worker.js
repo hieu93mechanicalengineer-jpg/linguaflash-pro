@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-v142-lessons-nov14';
+const CACHE_NAME = 'linguaflash-v143-due-review-routing';
 
 // Common startup shell. app.js is now the source of truth for English mobile UI
 // and HQ audio; the service worker only adds generic study helpers and caches them.
@@ -31,30 +31,30 @@ const CORE_ASSETS = [
   './giahan-usage-examples-v2.js',
   './giahan-usage-hotfix-v1.js',
   './data/youtube-podcast.js',
-  './app.js',
+  './app.js?v=143',
   './data/business-elementary1-unit1.js?v=20261114',
   './data/english-classic-l4-u8-l2.js?v=134',
   './data/51talk-classic-level4-unit8-lesson2-weather.pdf',
   './data/english-level2-u5-u6-l2.js?v=20261114',
-  './app-core.js',
+  './app-core.js?v=143',
   './chinese-study-workspace.js?v=127',
   './english-unit2-data-v1.js',
   './english-class158-health-data-v1.js',
-  './english-mobile-lessons-v1.js',
+  './english-mobile-lessons-v1.js?v=143',
   './english-mobile-51talk-entry-v1.js',
   './english-mobile-practice-v1.js',
   './english-mobile-practice-layout-fix-v1.js',
   './english-mobile-unit2-bridge-v1.js',
   './english-mobile-class158-health-bridge-v1.js',
   './english-mobile-class158-bridge-v1.js',
-  './english-mobile-workspace-parity-v1.js',
+  './english-mobile-workspace-parity-v1.js?v=143',
   './english-mobile-direction-v1.js',
   './english-mobile-playlist-v1.js',
   './english-mobile-language-visibility-v1.js',
-  './english-desktop-unit2-bridge-v1.js',
-  './english-51talk-desktop-workspace-v1.js',
-  './english-51talk-class158-work-v1.js',
-  './english-51talk-review-trainer-v1.js',
+  './english-desktop-unit2-bridge-v1.js?v=143',
+  './english-51talk-desktop-workspace-v1.js?v=143',
+  './english-51talk-class158-work-v1.js?v=143',
+  './english-51talk-review-trainer-v1.js?v=143',
   './lazy-large-packs.js',
   './study-answer-mode.js',
   './study-answer-alternatives-v1.js',
@@ -109,7 +109,7 @@ async function transformIndexResponse(response) {
     /<script src="\.\/app\.js(?:\?v=\d+)?"><\/script>/,
     `<script src="./data/giahan-translation-practice-v2.js?v=90"></script>
 <script src="./data/giahan-translation-practice-tc2-fix-v1.js?v=90"></script>
-<script src="./app.js?v=20261114"></script>
+<script src="./app.js?v=143"></script>
 <script>
 (function(){
   var ua = String(navigator.userAgent || '');
@@ -132,9 +132,9 @@ async function transformIndexResponse(response) {
     './study-filter-prefs.js?v=90'
   ];
   var desktopScripts = [
-    './english-51talk-desktop-workspace-v1.js?v=127',
-    './english-51talk-class158-work-v1.js?v=118',
-    './english-51talk-review-trainer-v1.js?v=119',
+    './english-51talk-desktop-workspace-v1.js?v=143',
+    './english-51talk-class158-work-v1.js?v=143',
+    './english-51talk-review-trainer-v1.js?v=143',
     './lazy-large-packs.js?v=90',
     './study-answer-mode.js?v=90',
     './study-input-mobile-hotfix-v1.js?v=90',
@@ -268,5 +268,6 @@ self.addEventListener('fetch', event => {
 
   event.respondWith(fetch(req).catch(() => caches.match(req)));
 });
+
 
 

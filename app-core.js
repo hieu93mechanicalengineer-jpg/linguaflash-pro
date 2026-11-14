@@ -1110,6 +1110,7 @@
     }
 
     function renderCurrentCard() {
+      if (document.getElementById('studyDueOnly')?.checked || document.getElementById('lf51DesktopWorkspace')?.dataset.dueReview === 'true') window.lfSharedStudySync?.();
       const container = document.getElementById('flashcardContainer');
       const emptyState = document.getElementById('studyEmptyState');
 
@@ -2971,3 +2972,4 @@
     try { loadDailyGoalSettings(); } catch (e) { console.warn('Daily goals:', e); }
 
     try { updateDeleteAdminUI(); } catch (e) {}
+

@@ -11,7 +11,7 @@
 
   try {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', './english-51talk-desktop-workspace-v1.js?v=127', false);
+    xhr.open('GET', './english-51talk-desktop-workspace-v1.js?v=143', false);
     xhr.send(null);
     if (xhr.status >= 200 && xhr.status < 300 && xhr.responseText) {
       let code = window.LF51InjectUnit2IntoWorkspaceSource(xhr.responseText);
@@ -26,4 +26,5 @@
     console.warn('LinguaFlash desktop lesson bridge fallback:', error);
   }
 })();
+
 

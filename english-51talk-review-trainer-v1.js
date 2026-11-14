@@ -15,7 +15,10 @@
   let useChoices = false;
 
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const chinese = () => root()?.dataset.language === 'zh' && !window.lfChineseStudy?.targetEnglish;
+  const dueReview = () => root()?.dataset.dueReview === 'true';
+  const chinese = () => root()?.dataset.language === 'zh' && (dueReview() || !window.lfChineseStudy?.targetEnglish);
+  const referenceLabel = () => dueReview() ? 'tiếng Việt' : window.lfChineseStudy?.refLabel;
+  const referenceCode = () => dueReview() ? 'VI' : window.lfChineseStudy?.refCode;
   const norm = s => chinese()?String(s||'').normalize('NFKC').replace(/[\s\p{P}]/gu,''): String(s || '').toLowerCase().normalize('NFKC').replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
   const root = () => document.getElementById('lf51DesktopWorkspace');
   const isReview = () => !!root()?.querySelector('.lf51d-tab.active[data-tab="review"]');
@@ -50,7 +53,7 @@
 
   function modeBar(){
     const source = chinese() ? 'Trung' : 'Anh';
-    const reference = chinese() ? ({VI:'Việt',EN:'Anh','VI/EN':'Việt + Anh'}[window.lfChineseStudy.refCode]) : 'Việt';
+    const reference = chinese() ? ({VI:'Việt',EN:'Anh','VI/EN':'Việt + Anh'}[referenceCode()]) : 'Việt';
     const options = [['en-vi',source+' → '+reference+' · Lật thẻ'],['vi-en',reference+' → '+source],['listen','Nghe '+source+' · Chép lại']];
     const phonetic = document.getElementById('togglePhonetic');
     return `<div class="lf51rt-modes">
@@ -114,11 +117,11 @@
     if (mode === 'en-vi') {
       body = `<div class="lf51d-key">Mặt kiểm tra: ${chinese()?'Tiếng Trung':'Tiếng Anh'}</div>
         <div class="lf51d-reviewq">${esc(en)}</div>
-        <div class="lf51rt-hint">Tự nhớ nghĩa ${chinese()?window.lfChineseStudy.refLabel:'tiếng Việt'} trước khi xem đáp án.</div>
+        <div class="lf51rt-hint">Tự nhớ nghĩa ${chinese()?referenceLabel():'tiếng Việt'} trước khi xem đáp án.</div>
         <div class="lf51rt-actions"><button type="button" class="lf51d-btn soft" data-rt-audio="${esc(en)}">🔊 Nghe</button><button type="button" class="lf51d-btn primary" data-rt-reveal>Hiện đáp án</button></div>
         <div class="lf51rt-answer" data-rt-answer hidden><b>${esc(vi)}</b>${ipa?`<div class="lf51d-ipa" style="margin-top:7px">${esc(ipa)}</div>`:''}</div>`;
     } else if (mode === 'vi-en') {
-      body = `<div class="lf51d-key">Mặt kiểm tra: ${chinese()?window.lfChineseStudy.refLabel:'Tiếng Việt'}</div>
+      body = `<div class="lf51d-key">Mặt kiểm tra: ${chinese()?referenceLabel():'Tiếng Việt'}</div>
         <div class="lf51d-reviewq">${esc(vi)}</div>
         <div class="lf51rt-hint">Hãy tự tạo lại câu/từ ${chinese()?'tiếng Trung':'tiếng Anh'}, không nhìn gợi ý.</div>
         <input class="lf51rt-input" id="lf51rtInput" autocomplete="off" spellcheck="false" maxlength="1000" placeholder="Nhập ${chinese()?'tiếng Trung':'tiếng Anh'}...">
@@ -362,3 +365,4 @@
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,0),{once:true});else setTimeout(init,0);
 })();
+

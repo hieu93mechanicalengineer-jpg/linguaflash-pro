@@ -344,7 +344,7 @@
 
   function sync() {
     if (!isMobileDevice()) { setActive(false); return; }
-    const on = selected51Talk();
+    const on = !document.getElementById('studyDueOnly')?.checked && selected51Talk();
     if (on) {
       const inferred = inferLesson();
       if (inferred && LESSONS[inferred]) lessonId = inferred;
@@ -383,7 +383,7 @@
       });
     }
 
-    ['studyLangFilter','studyCategoryFilter','studyTopicFilter'].forEach(id => {
+    ['studyLangFilter','studyCategoryFilter','studyTopicFilter','studyDueOnly'].forEach(id => {
       const el = document.getElementById(id);
       if (el && el.dataset.lfEnglishMobileBound !== '1') {
         el.dataset.lfEnglishMobileBound = '1';

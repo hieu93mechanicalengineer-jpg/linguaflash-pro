@@ -222,9 +222,11 @@
   const locale=()=>learningChinese()?'zh-CN':'en-US';
   function L(){return chinese()?window.lfChineseStudy.lesson():LESSONS[state.lesson]||LESSONS.birthday;}
   function phonetic(text){return chinese()?(document.getElementById('togglePhonetic')?.checked?L().phonetics.get(text)||'':''):IPA[text]||'';}
+  const dueReview = () => !!document.getElementById('studyDueOnly')?.checked;
   function active(){
     if(document.getElementById('tab-study')?.classList.contains('hidden'))return false;
     const lang=document.getElementById('studyLangFilter')?.value||'';
+    if(dueReview() && !document.body.classList.contains('lf-focus-mode')) return lang==='Tiếng Anh' || lang==='Tiếng Trung';
     if(chinese())return !document.body.classList.contains('lf-focus-mode');
     if(lang!=='Tiếng Anh') return false;
     const cat=document.getElementById('studyCategoryFilter')?.value||'';
@@ -240,8 +242,21 @@
   const reviewTie = new Map();
   let reviewWake, nextLessonDue;
   function reviewLesson() { return !chinese() && window.lf51WorkReview?.active() ? window.lf51WorkReview.lesson : L(); }
-  window.lf51ReviewOptions = sentence => sentence ? reviewLesson().examples.map(row=>row[1]) : reviewLesson().vocab.map(row=>row[0]);
+  window.lf51ReviewOptions = sentence => dueReview() ? reviewItems().filter(row => (row.type === 'Câu mẫu') === !!sentence).map(row => row.en) : sentence ? reviewLesson().examples.map(row=>row[1]) : reviewLesson().vocab.map(row=>row[0]);
   function reviewItems() {
+    if (dueReview()) {
+      // Use the scheduled queue, never a lesson's vocabulary or synthetic cards.
+      const lang = document.getElementById('studyLangFilter')?.value || 'Tiếng Anh';
+      const now = Date.now();
+      nextLessonDue = Infinity;
+      return (typeof filteredDeck === 'undefined' ? [] : filteredDeck)
+        .filter(card => Number(card.nextReview || 0) <= now &&
+          (!!card.repetitions || !!card.needsReview || isStudyStep(card)))
+        .map((card, index) => ({id:String(card.id), card, index, topic:card.topic,
+          type:card.cardType === 'sentence' ? 'Câu mẫu' : 'Từ vựng',
+          en:getCardTextInLanguage(card, lang), vi:getCardTextInLanguage(card, 'Tiếng Việt'),
+          ipa:card.phonetic || '', due:Number(card.nextReview || 0)}));
+    }
     const lesson = reviewLesson();
     const topic = lesson.topic || (lesson.id === 'poodle' && window.LF51_UNIT2_STUDY_TOPIC_V1) || '51Talk English - ' + lesson.unit + ' · ' + lesson.title;
     const pool = chinese()?[]:allCards.filter(c => c.lang === 'Tiếng Anh' && (c.topic === topic || String(c.topic).toLowerCase().includes(lesson.title.toLowerCase())));
@@ -278,6 +293,7 @@
     return card;
   };
   window.lf51RefreshRatedReview = () => {
+    if (dueReview()) { applyStudyFilters(); return; }
     if (!chinese() && window.lf51WorkReview?.active()) return window.lf51WorkReview.advance();
     state.review=0;state.reveal=false;render();
   };
@@ -294,6 +310,7 @@
     if(document.getElementById('lf51dStyleV1'))return;
     const s=document.createElement('style');s.id='lf51dStyleV1';s.textContent=`
       #lf51DesktopWorkspace{display:none;width:min(1320px,100%);margin:10px auto 18px;color:#132238;font-family:inherit}#lf51DesktopWorkspace.on{display:block}
+      body.lf51-desktop-active:has(#lf51DesktopWorkspace[data-due-review="true"]) #studyEmptyState{display:none!important}
       body.lf51-desktop-active #flashcardContainer,body.lf51-desktop-active #studyAnswerPanel,body.lf51-desktop-active #lf51GrammarPanel,body.lf51-desktop-active #lf51PatternPractice,body.lf51-desktop-active #lf51Listening{display:none!important}
       .lf-unit-practice summary{cursor:pointer;padding:10px 14px;color:#3730a3;font-weight:750}
       @media(min-width:900px){#lf51DesktopWorkspace.lf-unit2 .lf51d-shell{height:auto;min-height:0;display:grid;grid-template-columns:minmax(190px,24%) minmax(0,1fr);grid-template-rows:auto 1fr auto}#lf51DesktopWorkspace.lf-unit2 .lf51d-top{grid-area:1/1;display:grid;align-content:start;gap:8px}#lf51DesktopWorkspace.lf-unit2 .lf-unit-practice{grid-area:2/1}#lf51DesktopWorkspace.lf-unit2 .lf-unit-practice .lf51d-tabs{grid-template-columns:1fr}#lf51DesktopWorkspace.lf-unit2 .lf51d-grid{grid-area:1/2/3/3;display:block}#lf51DesktopWorkspace.lf-unit2 .lf51d-coach{max-height:270px;overflow:auto}#lf51DesktopWorkspace.lf-unit2 .lf51d-quickbar{grid-column:1/-1}}
@@ -338,10 +355,11 @@
   function renderSpeaking(){const x=L(),s=x.speaking[state.speaking]||x.speaking[0];return `${pager('5. Luyện nói',x.speaking.length,state.speaking,'speaking')}<div class="lf51d-body"><div class="lf51d-speakrow"><div class="lf51d-role">${esc(s[0])}</div><div class="lf51d-speaktext">${esc(s[1])}</div>${phonetic(s[1]) || x.ipa?.[s[1]] ? `<div class="lf51d-ipa">${esc(phonetic(s[1]) || x.ipa?.[s[1]])}</div>` : ''}${s[2] && x.ipa ? `<div class="lf51d-vi">${esc(s[2])}</div>` : ''}<div style="margin-top:9px"><button class="lf51d-btn soft" data-audio="${esc(s[1])}">🔊 Nghe mẫu</button> <button class="lf51d-btn primary" data-record>🎙️ Nói câu này</button></div><div id="lf51dSpeechResult" class="lf51d-result"></div></div><div class="lf51d-info"><b>Gợi ý:</b> Nghe 1 lần → đọc theo chậm → nói lại không nhìn câu → cuối cùng thay thông tin trong câu bằng thông tin thật của bạn.</div></div>${nav('speaking',x.speaking.length)}`;}
   function renderReview(){const items=reviewItems();clearTimeout(reviewWake);
     if (!items.length) {
+      if (dueReview()) return '<div class="lf51d-body" role="status">Không còn thẻ đến hạn trong bộ lọc và mục tiêu ôn hiện tại. Bạn có thể đổi bộ lọc hoặc tắt “Chỉ ôn thẻ đến hạn” để học bài.</div>';
       const midnight = new Date(); midnight.setHours(24,0,0,0);
       reviewWake = setTimeout(() => { if (state.tab === 'review') render(); }, Math.max(50,Math.min(nextLessonDue,midnight.getTime())-Date.now()+50));
       return '<div class="lf51d-body">Đã hết thẻ cần ôn trong bài theo lịch và mục tiêu hôm nay.</div>';
-    }state.review=(state.review+items.length)%items.length;const q=items[state.review];return `<div class="lf51d-sectionhead"><h2>6. Ôn nhanh</h2><div class="lf51d-count">${state.review+1} / ${items.length}</div></div><div class="lf51d-body"><div class="lf51d-review"><div class="lf51d-reviewcard" data-review-id="${esc(q.id)}" data-source-text="${esc(q.en)}" data-translation="${esc(q.vi)}" data-phonetic="${esc(q.ipa || '')}"><div class="lf51d-key">${esc(q.type)}</div><div class="lf51d-reviewq">${esc(q.en)}</div>${q.ipa?`<div class="lf51d-ipa">${esc(q.ipa)}</div>`:''}${state.reveal?`<div class="lf51d-reviewa">${esc(q.vi)}</div>`:''}<div style="margin-top:15px"><button class="lf51d-btn soft" data-audio="${esc(q.en)}">🔊 Nghe</button> <button class="lf51d-btn primary" data-reveal>${state.reveal?'Ẩn đáp án':state.lesson==='poodle'?'Xem đáp án (Alt+A)':'Hiện đáp án'}</button></div></div></div></div>${nav('review',items.length)}`;}
+    }state.review=(state.review+items.length)%items.length;const q=items[state.review];return `<div class="lf51d-sectionhead"><h2>${dueReview()?'Ôn thẻ đến hạn':'6. Ôn nhanh'}</h2><div class="lf51d-count">${state.review+1} / ${items.length}</div></div><div class="lf51d-body"><div class="lf51d-review"><div class="lf51d-reviewcard" data-review-id="${esc(q.id)}" data-source-text="${esc(q.en)}" data-translation="${esc(q.vi)}" data-phonetic="${esc(q.ipa || '')}"><div class="lf51d-key">${esc(q.type)}</div><div class="lf51d-reviewq">${esc(q.en)}</div>${q.ipa?`<div class="lf51d-ipa">${esc(q.ipa)}</div>`:''}${state.reveal?`<div class="lf51d-reviewa">${esc(q.vi)}</div>`:''}<div style="margin-top:15px"><button class="lf51d-btn soft" data-audio="${esc(q.en)}">🔊 Nghe</button> <button class="lf51d-btn primary" data-reveal>${state.reveal?'Ẩn đáp án':state.lesson==='poodle'?'Xem đáp án (Alt+A)':'Hiện đáp án'}</button></div></div></div></div>${nav('review',items.length)}`;}
   function hasContent(){return state.tab==='review' || !!L()[state.tab]?.length;}
   function renderMain(){if(!hasContent())return '<div class="lf51d-body">Bài đã chọn chưa có nội dung riêng cho mục này.</div>';if(state.tab==='vocab')return renderVocab();if(state.tab==='examples')return renderExamples();if(state.tab==='dialogue')return renderDialogue();if(state.tab==='grammar')return renderGrammar();if(state.tab==='speaking')return renderSpeaking();return renderReview();}
 
@@ -353,13 +371,27 @@
     reference.dataset.available=String(chinese());
     reference.querySelectorAll('[data-ref-lang]').forEach(b=>b.setAttribute('aria-pressed',String(!window.lfChineseStudy?.targetEnglish && b.dataset.refLang===window.lfChineseStudy?.reference)));
     const mark=methods.querySelector('[data-mark]');
-    const marked=isLearned();mark.textContent=marked?'✅ Đã học':'○ Đánh dấu đã học';mark.setAttribute('aria-pressed',String(marked));mark.hidden=!!window.lf51WorkReview?.active();
+    const marked=dueReview()?false:isLearned();mark.textContent=marked?'✅ Đã học':'○ Đánh dấu đã học';mark.setAttribute('aria-pressed',String(marked));mark.hidden=dueReview() || !!window.lf51WorkReview?.active();
     methods.querySelectorAll('[data-method]').forEach(b=>b.setAttribute('aria-pressed',String(state.tab==='review' && b.dataset.method===window.lfReviewMode?.())));
   }
-  function render(){const r=ensureRoot();if(!r)return;const x=L();updateStudyControls();r.dataset.language=chinese()?"zh":"en";r.dataset.target=learningChinese()?"zh":"en";const pilot=!chinese() && state.lesson==='poodle';r.classList.toggle('lf-unit2',pilot);const tabs=[['vocab','📚 Từ vựng'],['examples','📝 Câu mẫu'],['dialogue','💬 Hội thoại'],['grammar','📘 Ngữ pháp'],['speaking','🗣️ Luyện nói'],['review','🧠 Ôn nhanh']];r.innerHTML=`<div class="lf51d-shell"><div class="lf51d-top"><div class="lf51d-brand">${chinese()?esc((document.getElementById("studyCategoryFilter")?.value==="ALL"?"Khóa học":document.getElementById("studyCategoryFilter")?.value)+" · "+(learningChinese()?"Tiếng Trung":"Tiếng Anh")):"51Talk English"}</div><select class="lf51d-select" data-lesson-select>${chinese()?window.lfChineseStudy.topics().map(t=>`<option value="${esc(t)}" ${t===x.topic?'selected':''}>${esc(t==='ALL'?'Tất cả bài':t)}</option>`).join(''):Object.values(LESSONS).map(y=>`<option value="${y.id}" ${y.id===state.lesson?'selected':''}>${esc(y.unit)} · ${esc(y.title)}</option>`).join('')}</select>${chinese()?`<button type="button" class="lf-target-chip" data-study-target aria-pressed="${window.lfChineseStudy.targetEnglish}">${window.lfChineseStudy.targetEnglish?"🇨🇳 Học tiếng Trung":"🇬🇧 Học tiếng Anh"}</button>`:""}<div class="lf51d-badge">${pilot?'Alt+P · Nghe':'Desktop Workspace'}</div></div>${pilot?'<details class="lf-unit-practice"><summary>Luyện bài này</summary>':''}<div class="lf51d-tabs">${tabs.map(t=>`<button class="lf51d-tab ${state.tab===t[0]?'active':''}" data-tab="${t[0]}">${t[1]}</button>`).join('')}</div>${pilot?'</details>':''}<div class="lf51d-grid"><main class="lf51d-main">${renderMain()}</main><aside class="lf51d-coach">${renderCoach()}</aside></div></div>`;window.lfRefreshStudyDirection?.();}
+  function renderDueReview(r) {
+    window.lf51WorkReview?.suspend?.();
+    clearTimeout(reviewWake);
+    const lang = document.getElementById('studyLangFilter')?.value || 'Tiếng Anh';
+    r.dataset.language = lang === 'Tiếng Trung' ? 'zh' : 'en';
+    r.dataset.target = r.dataset.language;
+    r.dataset.dueReview = 'true';
+    r.classList.remove('lf-unit2');
+    const items = reviewItems();
+    state.review = Math.max(0, Math.min(Number(currentIndex) || 0, items.length - 1));
+    updateStudyControls();
+    document.querySelectorAll('#lfStudyMethods [data-method]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.method===window.lfReviewMode?.())));
+    r.innerHTML = `<div class="lf51d-shell"><div class="lf51d-top"><div class="lf51d-brand">Ôn thẻ đến hạn · ${esc(lang)}</div></div><div class="lf51d-tabs"><button type="button" class="lf51d-tab active" data-tab="review">🧠 Thẻ đến hạn</button></div><div class="lf51d-body">${esc(items[state.review]?.topic || 'Hàng đợi theo lịch ôn và bộ lọc hiện tại')}</div><div class="lf51d-grid" style="display:block!important"><main class="lf51d-main">${renderReview()}</main></div></div>`;
+  }
+  function render(){const r=ensureRoot();if(!r)return;if(dueReview()){renderDueReview(r);return;}r.dataset.dueReview='false';const x=L();updateStudyControls();r.dataset.language=chinese()?"zh":"en";r.dataset.target=learningChinese()?"zh":"en";const pilot=!chinese() && state.lesson==='poodle';r.classList.toggle('lf-unit2',pilot);const tabs=[['vocab','📚 Từ vựng'],['examples','📝 Câu mẫu'],['dialogue','💬 Hội thoại'],['grammar','📘 Ngữ pháp'],['speaking','🗣️ Luyện nói'],['review','🧠 Ôn nhanh']];r.innerHTML=`<div class="lf51d-shell"><div class="lf51d-top"><div class="lf51d-brand">${chinese()?esc((document.getElementById("studyCategoryFilter")?.value==="ALL"?"Khóa học":document.getElementById("studyCategoryFilter")?.value)+" · "+(learningChinese()?"Tiếng Trung":"Tiếng Anh")):"51Talk English"}</div><select class="lf51d-select" data-lesson-select>${chinese()?window.lfChineseStudy.topics().map(t=>`<option value="${esc(t)}" ${t===x.topic?'selected':''}>${esc(t==='ALL'?'Tất cả bài':t)}</option>`).join(''):Object.values(LESSONS).map(y=>`<option value="${y.id}" ${y.id===state.lesson?'selected':''}>${esc(y.unit)} · ${esc(y.title)}</option>`).join('')}</select>${chinese()?`<button type="button" class="lf-target-chip" data-study-target aria-pressed="${window.lfChineseStudy.targetEnglish}">${window.lfChineseStudy.targetEnglish?"🇨🇳 Học tiếng Trung":"🇬🇧 Học tiếng Anh"}</button>`:""}<div class="lf51d-badge">${pilot?'Alt+P · Nghe':'Desktop Workspace'}</div></div>${pilot?'<details class="lf-unit-practice"><summary>Luyện bài này</summary>':''}<div class="lf51d-tabs">${tabs.map(t=>`<button class="lf51d-tab ${state.tab===t[0]?'active':''}" data-tab="${t[0]}">${t[1]}</button>`).join('')}</div>${pilot?'</details>':''}<div class="lf51d-grid"><main class="lf51d-main">${renderMain()}</main><aside class="lf51d-coach">${renderCoach()}</aside></div></div>`;window.lfRefreshStudyDirection?.();}
 
   function checkValue(input,expected,result){const el=document.getElementById(input),out=document.getElementById(result);if(!el||!out)return;const ok=norm(el.value)===norm(expected);out.textContent=ok?'✅ Chính xác.':`❌ Chưa đúng. Đáp án: ${expected}`;out.style.color=ok?'#15803d':'#b42318';}
-  function step(type,delta){const x=L();const map={vocab:['vocab',x.vocab.length],example:['example',x.examples.length],grammar:['grammar',x.grammar.length],speaking:['speaking',x.speaking.length],review:['review',reviewItems().length]};const m=map[type];if(!m||!m[1])return;state[m[0]]=(state[m[0]]+Number(delta)+m[1])%m[1];state.reveal=false;render();}
+  function step(type,delta){if(dueReview() && type==='review'){const n=reviewItems().length;if(n){currentIndex=(state.review+Number(delta)+n)%n;renderCurrentCard();}return;}const x=L();const map={vocab:['vocab',x.vocab.length],example:['example',x.examples.length],grammar:['grammar',x.grammar.length],speaking:['speaking',x.speaking.length],review:['review',reviewItems().length]};const m=map[type];if(!m||!m[1])return;state[m[0]]=(state[m[0]]+Number(delta)+m[1])%m[1];state.reveal=false;render();}
   function startRecognition(){const C=window.SpeechRecognition||window.webkitSpeechRecognition;if(!C){const o=document.getElementById('lf51dSpeechResult');if(o)o.textContent='Trình duyệt này chưa hỗ trợ nhận diện giọng nói.';return;}try{recognition?.abort?.();recognition=new C();recognition.lang=locale();recognition.interimResults=false;recognition.maxAlternatives=1;const o=document.getElementById('lf51dSpeechResult');if(o)o.textContent='🎙️ Đang nghe...';recognition.onresult=e=>{const t=e.results?.[0]?.[0]?.transcript||'';if(o)o.textContent=`Bạn nói: ${t}`;};recognition.onerror=()=>{if(o)o.textContent='Không nhận được giọng nói. Hãy thử lại.';};recognition.start();}catch(_){}}
   function bind(){const r=ensureRoot();if(!r||r.dataset.bound)return;r.dataset.bound='1';r.addEventListener('click',e=>{const b=e.target.closest('button');if(b?.hasAttribute('data-study-target')){window.lfChineseStudy.toggleTarget();return;}if(b?.dataset.tab){state.tab=b.dataset.tab;state.tool='coach';render();return;}if(b?.dataset.audio){speak(b.dataset.audio);return;}if(b?.dataset.speed){speak(focus().text,Number(b.dataset.speed));return;}if(b?.dataset.step){const [t,d]=b.dataset.step.split(':');step(t,d);return;}if(b?.hasAttribute('data-reveal')){state.reveal=!state.reveal;render();return;}if(b?.hasAttribute('data-toggle-translation')){state.showTranslation=!state.showTranslation;render();return;}if(b?.hasAttribute('data-play-dialogue')){playSequence(L().dialogue.map(x=>x[1]));return;}if(b?.hasAttribute('data-record')){startRecognition();return;}if(b?.dataset.tool){state.tool=b.dataset.tool;if(b.dataset.tool==='flash')state.tab='review';render();return;}if(b?.hasAttribute('data-learned')){toggleLearned();return;}if(b?.hasAttribute('data-check-main')){const e0=L().examples[state.example]||L().examples[0];if(!e0)return;checkValue('lf51dMainAnswer',e0[1],'lf51dMainResult');return;}if(b?.hasAttribute('data-check-coach')){checkValue('lf51dCoachInput',focus().text,'lf51dCoachResult');return;}if(b?.hasAttribute('data-check-dictation')){checkValue('lf51dDictationInput',focus().text,'lf51dDictationResult');return;}const line=e.target.closest('[data-dialogue-line]');if(line){state.dialogueLine=Number(line.dataset.dialogueLine)||0;render();}});r.addEventListener('change',e=>{if(e.target.matches('[data-lesson-select]')){if(chinese()){const sel=document.getElementById('studyTopicFilter');sel.value=e.target.value;sel.dispatchEvent(new Event('change',{bubbles:true}));return;}
       const previous=state.lesson;state.lesson=e.target.value;
@@ -373,7 +405,7 @@
         }
       }
       state.vocab=state.example=state.grammar=state.speaking=state.review=state.dialogueLine=0;state.reveal=false;render();}});r.addEventListener('input',e=>{if(e.target.id==='lf51dNote')saveNote(e.target.value);});}
-  function sync(){ensureStyle();const r=ensureRoot();if(!r)return;const on=active();r.classList.toggle('on',on);document.body.classList.toggle('lf51-desktop-active',on);if(!on)return;const inf=chinese()?L().id:inferLesson() || (state.lesson.startsWith("zh:")?"birthday":state.lesson);if(inf&&inf!==state.lesson){state.lesson=inf;state.vocab=state.example=state.grammar=state.speaking=state.review=state.dialogueLine=0;}render();}
+  function sync(){ensureStyle();const r=ensureRoot();if(!r)return;const on=active();r.classList.toggle('on',on);document.body.classList.toggle('lf51-desktop-active',on);if(!on)return;if(dueReview()){render();return;}const inf=chinese()?L().id:inferLesson() || (state.lesson.startsWith("zh:")?"birthday":state.lesson);if(inf&&inf!==state.lesson){state.lesson=inf;state.vocab=state.example=state.grammar=state.speaking=state.review=state.dialogueLine=0;}render();}
   const bookmarkKey='lf_unit2_position_v1';
   function bookmarkUnit(){
     if(chinese() || state.lesson!=='poodle')return;
@@ -407,9 +439,10 @@
   function init(){
     document.getElementById('lfStudyMethods')?.addEventListener('click',e=>{
       const b=e.target.closest('button');if(!b)return;
-      if(b.hasAttribute('data-mark')){toggleLearned();return;}
+      if(b.hasAttribute('data-mark')){if(!dueReview())toggleLearned();return;}
       if(!b.dataset.method)return;
       const r=ensureRoot();if(!r?.classList.contains('on'))return;
+      if(dueReview()){window.lfSetReviewMode?.(b.dataset.method);return;}
       if(window.lf51WorkReview?.active())r.querySelector('[data-w158-tab="review"]')?.click();
       else if(state.tab!=='review'){state.tab='review';state.tool='coach';state.reveal=false;render();}
       window.lfSetReviewMode?.(b.dataset.method);
@@ -418,6 +451,7 @@
     ensureStyle();ensureRoot();bind();
     document.getElementById('togglePhonetic')?.addEventListener('change',()=>{if(chinese())sync();});
     new MutationObserver(records=>{const enabled=document.body.classList.contains('lf-focus-mode');if(records.some(r=>(r.oldValue||'').split(' ').includes('lf-focus-mode')!==enabled))sync();}).observe(document.body,{attributes:true,attributeOldValue:true,attributeFilter:['class']});
-    ensureRoot()?.addEventListener('click',bookmarkUnit);document.addEventListener('keydown',unitShortcut);['studyLangFilter','studyCategoryFilter','studyTopicFilter'].forEach(id=>document.getElementById(id)?.addEventListener('change',()=>setTimeout(sync,0)));setTimeout(sync,200);setTimeout(sync,1000);}
+    ensureRoot()?.addEventListener('click',bookmarkUnit);document.addEventListener('keydown',unitShortcut);['studyLangFilter','studyCategoryFilter','studyTopicFilter','studyDueOnly'].forEach(id=>document.getElementById(id)?.addEventListener('change',()=>setTimeout(sync,0)));setTimeout(sync,200);setTimeout(sync,1000);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
+

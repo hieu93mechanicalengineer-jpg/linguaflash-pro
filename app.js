@@ -44,7 +44,7 @@
   document.write('<script src="./data/business-elementary1-unit1.js?v=20261114"><\/script>');
   document.write('<script src="./data/english-classic-l4-u8-l2.js?v=134"><\/script>');
   document.write('<script src="./data/english-level2-u5-u6-l2.js?v=20261114"><\/script>');
-  document.write('<script src="./app-core.js?v=123"><\/script>');
+  document.write('<script src="./app-core.js?v=143"><\/script>');
 
   document.write('<script src="./audio-native-bridge-v1.js?v=105"><\/script>');
   document.write('<script src="./english-hq-audio-v1.js?v=134"><\/script>');
@@ -56,19 +56,19 @@
   document.write('<script src="./english-class158-health-data-v1.js?v=105"><\/script>');
 
   if (mobile) {
-    document.write('<script src="./english-mobile-lessons-v1.js?v=125"><\/script>');
+    document.write('<script src="./english-mobile-lessons-v1.js?v=143"><\/script>');
     document.write('<script src="./english-mobile-51talk-entry-v1.js?v=105"><\/script>');
     document.write('<script src="./english-mobile-practice-v1.js?v=105"><\/script>');
     document.write('<script src="./english-mobile-practice-layout-fix-v1.js?v=105"><\/script>');
     document.write('<script src="./english-mobile-unit2-bridge-v1.js?v=105"><\/script>');
     document.write('<script src="./english-mobile-class158-health-bridge-v1.js?v=105"><\/script>');
     document.write('<script src="./english-mobile-class158-bridge-v1.js?v=105"><\/script>');
-    document.write('<script src="./english-mobile-workspace-parity-v1.js?v=127"><\/script>');
+    document.write('<script src="./english-mobile-workspace-parity-v1.js?v=143"><\/script>');
     document.write('<script src="./english-mobile-direction-v1.js?v=119"><\/script>');
     document.write('<script src="./english-mobile-playlist-v1.js?v=118"><\/script>');
     document.write('<script src="./english-mobile-language-visibility-v1.js?v=117"><\/script>');
   } else {
-    document.write('<script src="./english-desktop-unit2-bridge-v1.js?v=127"><\/script>');
+    document.write('<script src="./english-desktop-unit2-bridge-v1.js?v=143"><\/script>');
   }
 
   document.write('<script src="./audio-hq-bulk-admin-v1.js?v=139"><\/script>');
@@ -81,6 +81,7 @@
   document.write('<script src="./study-list-hanzi-zoom-v1.js?v=105"><\/script>');
   document.write('<script src="./chinese-study-workspace.js?v=127"><\/script>');
   document.write('<script src="./fsrs-scheduler-v1.js?v=115"><\/script>');
-  document.write('<script src="./english-51talk-review-trainer-v1.js?v=120"><\/script>');
+  document.write('<script src="./english-51talk-review-trainer-v1.js?v=143"><\/script>');
 })();
+
 
