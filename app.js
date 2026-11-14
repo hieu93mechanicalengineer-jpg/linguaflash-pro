@@ -79,7 +79,7 @@
   document.write('<script src="./study-list-mode-v1.js?v=127"><\/script>');
   document.write('<script src="./study-list-auto-font-v1.js?v=105"><\/script>');
   document.write('<script src="./study-list-hanzi-zoom-v1.js?v=105"><\/script>');
-  document.write('<script src="./chinese-study-workspace.js?v=127"><\/script>');
+  document.write('<script src="./chinese-study-workspace.js?v=144"><\/script>');
   document.write('<script src="./fsrs-scheduler-v1.js?v=115"><\/script>');
   document.write('<script src="./english-51talk-review-trainer-v1.js?v=143"><\/script>');
 })();

@@ -19,6 +19,17 @@
   function englishTarget(){
     return select('studyLangFilter')?.value==='Tiếng Anh' && courseSelected() || targetEnglish;
   }
+  // Match a textbook lesson independently of its vocabulary/translation subsection.
+  function matchesDialogue(d, category, topic){
+    if(category!=='ALL' && d.course!==category)return false;
+    if(topic==='ALL')return true;
+    if(d.topic===topic || d.course===getCardCategory({topic}) && d.topic===parseCategoryAndTopic(topic).sub)return true;
+    const requestedCourse=category==='ALL'?getCardCategory({topic}):category;
+    if(requestedCourse!=='Gia Hân' || d.course!=='Gia Hân')return false;
+    const identity=value=>String(value||'').match(/Trung cấp\s*(\d+)\s*[-–—]\s*Bài\s*(\d+)(?!\d)/i);
+    const wanted=identity(topic), actual=identity(d.topic);
+    return !!(wanted && actual && Number(wanted[1])===Number(actual[1]) && Number(wanted[2])===Number(actual[2]));
+  }
   let cached, ref, size, scope, topics;
   function lesson(requestedTopic,reference=refLang){
     const category=select('studyCategoryFilter').value, topic=requestedTopic ?? select('studyTopicFilter').value;
@@ -48,8 +59,7 @@
     }
     topics=['ALL',...names].filter(Boolean);
     if(typeof DIALOGUES_DB!=='undefined')for(const d of Object.values(DIALOGUES_DB)){
-      if(!String(d.language).startsWith('zh') || category!=='ALL' && d.course!==category)continue;
-      if(topic!=='ALL' && !(d.topic===topic || d.course===getCardCategory({topic}) && d.topic===parseCategoryAndTopic(topic).sub))continue;
+      if(!String(d.language).startsWith('zh') || !matchesDialogue(d,category,topic))continue;
       for(const l of d.lines){if(english){if(l.en)dialogue.push([l.speaker,l.en,l.vn]);}else dialogue.push([l.speaker,l.cn,translation(l.vn,l.en,reference)]);if(l.pinyin)phonetics.set(l.cn,l.pinyin);}
     }
     if(typeof GIA_HAN_GRAMMAR_DB!=='undefined' && (category==='ALL'||category==='Gia Hân')){

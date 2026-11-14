@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflash-v143-due-review-routing';
+const CACHE_NAME = 'linguaflash-v144-giahan-dialogue';
 
 // Common startup shell. app.js is now the source of truth for English mobile UI
 // and HQ audio; the service worker only adds generic study helpers and caches them.
@@ -37,7 +37,7 @@ const CORE_ASSETS = [
   './data/51talk-classic-level4-unit8-lesson2-weather.pdf',
   './data/english-level2-u5-u6-l2.js?v=20261114',
   './app-core.js?v=143',
-  './chinese-study-workspace.js?v=127',
+  './chinese-study-workspace.js?v=144',
   './english-unit2-data-v1.js',
   './english-class158-health-data-v1.js',
   './english-mobile-lessons-v1.js?v=143',
