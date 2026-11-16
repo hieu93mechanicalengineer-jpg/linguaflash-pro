@@ -41,19 +41,25 @@
       var type=/^(dialogue|conversation|hội thoại)$/.test(rawType)?'dialogue':/^(sentence|câu|câu mẫu)$/.test(rawType)?'sentence':'vocab';
       var word=field(item,['word','term']), meaning=field(item,['meaning','translation_vi']);
       var other=field(item,['chinese','translation_other']);
-      if(type==='dialogue'){
-        var en=field(item,['en','english']), zh=field(item,['zh','cn','chinese_text']), vi=field(item,['vi','vietnamese']);
-        word=word||(language==='en'?en:zh);
-        meaning=meaning||vi;
-        other=other||(language==='en'?zh:en);
+      // Existing LinguaFlash sentence schema is ALWAYS word=Vietnamese,
+      // meaning=Chinese, chinese=English, independently of course language.
+      if(type==='dialogue' || type==='sentence'){
+        var en=field(item,['en','english']) || (language==='en'?word:other);
+        var zh=field(item,['zh','cn','chinese_text']) || (language==='zh'?word:other);
+        var vi=field(item,['vi','vietnamese']) || meaning;
+        word=vi; meaning=zh; other=en;
       }
-      if(!word||!meaning){invalid++;return;}
+      if(!word||!meaning|| (type!=='vocab'&&!other)){invalid++;return;}
       var section=field(item,['topic','section']);
       var topic=!section?category+' - '+title:(section.indexOf(category+' - ')===0?section:category+' - '+section);
       var card={
         lang:language==='en'?'Tiếng Anh':'Tiếng Trung',
         cardType:type==='dialogue'?'sentence':type,word:word,meaning:meaning,chinese:other,
-        phonetic:field(item,['phonetic','ipa','pinyin']),
+        phonetic:type==='vocab'
+          ? field(item,['phonetic','ipa','pinyin'])
+          : field(item,['zhPinyin','chinesePinyin','pinyin']),
+        englishIpa:field(item,['enIpa','ipa']),
+        chinesePinyin:field(item,['zhPinyin','chinesePinyin','pinyin']),
         example:field(item,['example']),exampleTrans:field(item,['exampleTrans','example_translation']),
         topic:topic,category:category,level:field(item,['level'])||title,
         speaker:type==='dialogue'?field(item,['speaker']):'',
@@ -91,7 +97,9 @@
         topic:field(r,['Topic','topic','Chủ đề']),
         speaker:field(r,['Speaker','speaker','Người nói']),
         en:field(r,['English','en']),zh:field(r,['Chinese','zh','cn']),
-        vi:field(r,['Vietnamese','vi','Tiếng Việt'])
+        vi:field(r,['Vietnamese','vi','Tiếng Việt']),
+        zhPinyin:field(r,['Chinese Pinyin','zhPinyin','Pinyin Trung']),
+        enIpa:field(r,['English IPA','enIpa','IPA Anh'])
       };})
     };
   }
@@ -117,8 +125,8 @@
           language:lesson.language==='zh'?'zh-CN':'en-US',
           lines:lines.map(function(c){return {
             speaker:c.speaker, vn:c.meaning,
-            en:lesson.language==='en'?c.word:c.chinese,
-            cn:lesson.language==='zh'?c.word:c.chinese,
+            en:c.chinese,
+            cn:c.meaning,
             lang:lesson.language==='zh'?'zh-CN':'en-US'
           };})
         };
