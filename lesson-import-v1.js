@@ -120,17 +120,27 @@
       });
       var lines=cards.filter(function(c){return !!asText(c.speaker);});
       if(lines.length && typeof DIALOGUES_DB!=='undefined') {
-        DIALOGUES_DB['lfimp_'+lesson.lesson_id]={
-          course:lesson.category,topic:lesson.title,title:lesson.title,
-          language:lesson.language==='zh'?'zh-CN':'en-US',
-          lines:lines.map(function(c){return {
-            speaker:c.speaker, vn:c.word,
-            en:c.chinese,
-            cn:c.meaning,
-            lang:lesson.language==='zh'?'zh-CN':'en-US'
-          };})
-        };
-        dialogue=true;
+        var groups=new Map();
+        lines.forEach(function(c){
+          var section=asText(c.topic)||lesson.title;
+          if(!groups.has(section))groups.set(section,[]);
+          groups.get(section).push(c);
+        });
+        groups.forEach(function(turns,section){
+          var display=section.indexOf(lesson.category+' - ')===0
+            ? section.slice(lesson.category.length+3) : section;
+          DIALOGUES_DB['lfimp_'+lesson.lesson_id+'_'+hash(section)]={
+            course:lesson.category,topic:display,title:lesson.title+' · '+display,
+            language:lesson.language==='zh'?'zh-CN':'en-US',
+            lines:turns.map(function(c){return {
+              speaker:c.speaker, vn:c.word,
+              en:c.chinese,
+              cn:c.meaning,
+              lang:lesson.language==='zh'?'zh-CN':'en-US'
+            };})
+          };
+          dialogue=true;
+        });
       }
     });
     if(modified){loadData();if(typeof renderManageTable==='function')renderManageTable();}
