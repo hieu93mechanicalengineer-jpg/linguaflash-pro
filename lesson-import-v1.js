@@ -124,7 +124,7 @@
           course:lesson.category,topic:lesson.title,title:lesson.title,
           language:lesson.language==='zh'?'zh-CN':'en-US',
           lines:lines.map(function(c){return {
-            speaker:c.speaker, vn:c.meaning,
+            speaker:c.speaker, vn:c.word,
             en:c.chinese,
             cn:c.meaning,
             lang:lesson.language==='zh'?'zh-CN':'en-US'
