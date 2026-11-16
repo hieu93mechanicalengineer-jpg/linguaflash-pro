@@ -82,6 +82,7 @@
   document.write('<script src="./chinese-study-workspace.js?v=144"><\/script>');
   document.write('<script src="./fsrs-scheduler-v1.js?v=115"><\/script>');
   document.write('<script src="./english-51talk-review-trainer-v1.js?v=143"><\/script>');
+  document.write('<script src="./lesson-import-v1.js?v=1"><\/script>');
 })();
 
 
